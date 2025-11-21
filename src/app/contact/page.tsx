@@ -1,7 +1,7 @@
 // src/app/contact/page.tsx
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { FaWhatsapp, FaEnvelope, FaHeadset, FaClock } from 'react-icons/fa'; // FaHeadset added for support
+import { FaWhatsapp, FaEnvelope, FaHeadset, FaClock } from 'react-icons/fa';
 import { ConsultationForm } from '@/components/ConsultationForm';
 
 export const metadata: Metadata = {
@@ -14,9 +14,9 @@ export default function ContactPage() {
   return (
     <div className="c-page-container">
       <header className="c-page-header">
-        <h1>Let's Build Together</h1>
+        <h1>Let&apos;s Build Together</h1>
         <p>
-          Your free 30-minute strategy session is the first step. Use the form below, or reach out to the appropriate channel directly. We're ready to listen.
+          Your free 30-minute strategy session is the first step. Use the form below, or reach out to the appropriate channel directly. We&apos;re ready to listen.
         </p>
       </header>
 
@@ -27,7 +27,6 @@ export default function ContactPage() {
             For the fastest response, please direct your inquiry to the relevant department below. All inquiries are typically answered within one business day.
           </p>
           
-          {/* --- STRATEGIC REFINEMENT: Channeled Email Contacts --- */}
           <ul className="c-contact__details">
             <li>
               <span><FaEnvelope /></span>
