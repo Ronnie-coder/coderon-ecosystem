@@ -1,4 +1,4 @@
-// CORRECTED: src/app/playroom/page.tsx
+// CORRECTED AND VERIFIED: src/app/playroom/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -34,7 +34,6 @@ const PlayroomPage = () => {
                   <h3 className="c-playroom-card__title">{project.title}</h3>
                   <p className="c-playroom-card__description">{project.description}</p>
                   <div className="c-playroom-card__tech-stack">
-                    {/* FIX: Added explicit 'string' type for the 'tech' parameter */}
                     {project.tech.map((tech: string) => <span key={tech}>{tech}</span>)}
                   </div>
                 </div>
@@ -58,7 +57,6 @@ const PlayroomPage = () => {
                   <h3 className="c-playroom-card__title">{demo.title}</h3>
                   <p className="c-playroom-card__description">{demo.description}</p>
                   <div className="c-playroom-card__tech-stack">
-                    {/* FIX: Added explicit 'string' type for the 'tech' parameter */}
                     {demo.tech.map((tech: string) => <span key={tech}>{tech}</span>)}
                   </div>
                 </div>
@@ -67,7 +65,7 @@ const PlayroomPage = () => {
                     Launch Demo <FaArrowRight />
                   </div>
                 </div>
-              </a >
+              </Link> {/* FIX: Corrected the malformed closing tag */}
             ))}
           </div>
         </div>
