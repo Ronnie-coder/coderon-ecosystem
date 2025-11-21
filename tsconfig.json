@@ -1,3 +1,4 @@
+// CORRECTED: tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2017",
@@ -30,12 +31,10 @@
   },
   "include": [
     "next-env.d.ts",
+    "src/types/global.d.ts", // CRITICAL FIX: Explicitly include the global type definitions file.
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next\\dev/types/**/*.ts",
-    ".next\\dev/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
