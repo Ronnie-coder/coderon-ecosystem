@@ -2,10 +2,10 @@
 
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image'; // NEW: Import the Image component
+import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'About Coderon | Our Mission & Founder', // REFINED: More descriptive title
+  title: 'About Coderon | Our Mission & Founder',
   description: "Learn about Coderon's mission, born from founder Ronnie Nyamhute's dedication to building Africa's digital future and putting African innovation on the global map.",
   alternates: {
     canonical: '/about',
@@ -25,7 +25,7 @@ export default function AboutPage() {
         <section className="c-founder-section">
           <div className="c-founder-section__image">
             <Image 
-              src="/images/ronnie-nyamhute.jpg" // The image you will add
+              src="/images/ronnie-nyamhute.jpg"
               alt="Ronnie Nyamhute, Founder of Coderon"
               width={400}
               height={400}
@@ -35,14 +35,14 @@ export default function AboutPage() {
           <div className="c-founder-section__content">
             <h2>The Story Behind the Code</h2>
             <blockquote>
-              "I believe the immense talent within Africa deserves a prominent place on the world's digital stage. Coderon was created to bridge that gap—to combine world-class technology with a uniquely African perspective."
+              <p>&ldquo;I believe the immense talent within Africa deserves a prominent place on the world&apos;s digital stage. Coderon was created to bridge that gap—to combine world-class technology with a uniquely African perspective.&rdquo;</p>
               <footer>- Ronnie Nyamhute, Founder</footer>
             </blockquote>
             <p>
               This journey was fueled by a passion for technology and a deep-seated desire to see African businesses thrive. We saw a continent rich with innovation but often underserved by modern digital tools.
             </p>
             <p>
-              Every project we undertake is a step towards that goal. We don't just build websites or software; we build digital foundations for African entrepreneurs to compete, succeed, and lead globally.
+              Every project we undertake is a step towards that goal. We don&apos;t just build websites or software; we build digital foundations for African entrepreneurs to compete, succeed, and lead globally.
             </p>
           </div>
         </section>
@@ -59,7 +59,7 @@ export default function AboutPage() {
             <div className="c-value-card">
               <div className="c-value-card__icon">✓</div>
               <h3>Purpose-Driven Innovation</h3>
-              <p>Our work is guided by our mission. We innovate not for technology's sake, but to create real, tangible impact for our partners.</p>
+              <p>Our work is guided by our mission. We innovate not for technology&apos;s sake, but to create real, tangible impact for our partners.</p>
             </div>
             <div className="c-value-card">
               <div className="c-value-card__icon">✓</div>
@@ -72,7 +72,7 @@ export default function AboutPage() {
         {/* REFINED: Final Call to Action */}
         <aside className="c-page-cta">
           <h2>Partner With Us</h2>
-          <p>Whether you're a startup with a bold idea or an established enterprise seeking digital transformation, let's build the future together.</p>
+          <p>Whether you&apos;re a startup with a bold idea or an established enterprise seeking digital transformation, let&apos;s build the future together.</p>
           <Link href="/contact" className="cta-button">
             Start the Conversation
           </Link>
