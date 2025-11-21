@@ -1,3 +1,4 @@
+// CORRECTED: src/app/playroom/[slug]/page.tsx
 import { liveProjects } from '@/data/playroomData';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -53,16 +54,17 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
             <div className="c-case-study__meta-item">
               <h3>ROLE</h3>
-              {roles.map(role => <p key={role}>{role}</p>)}
+              {/* FIX: Added explicit 'string' type for the 'role' parameter */}
+              {roles.map((role: string) => <p key={role}>{role}</p>)}
             </div>
             <div className="c-case-study__meta-item">
               <h3>SERVICES</h3>
-              {servicesDelivered.map(service => <p key={service}>{service}</p>)}
+              {/* FIX: Added explicit 'string' type for the 'service' parameter */}
+              {servicesDelivered.map((service: string) => <p key={service}>{service}</p>)}
             </div>
           </aside>
         </div>
         
-        {/* CORRECTIVE ACTION: Added narrative section that renders conditionally */}
         {(project.narrative_challenge || project.narrative_solution || project.narrative_results) && (
           <div className="c-case-study__narrative">
             {project.narrative_challenge && (
@@ -81,7 +83,8 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               <section className="c-case-study__narrative-section">
                 <h2>The Results</h2>
                 <ul>
-                  {project.narrative_results.map((result, index) => <li key={index}>{result}</li>)}
+                  {/* FIX: Added explicit 'string' and 'number' types for parameters */}
+                  {project.narrative_results.map((result: string, index: number) => <li key={index}>{result}</li>)}
                 </ul>
               </section>
             )}
