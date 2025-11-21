@@ -1,12 +1,13 @@
 // src/types/global.d.ts
 
 // This tells TypeScript that the global 'window' object can have a 'gtag' property.
+// src/types/global.d.ts - REPLACE THE WINDOW INTERFACE ONLY
+
 interface Window {
-  gtag: (
-    event: 'config' | 'event',
-    action: string,
-    params?: { [key: string]: any }
-  ) => void;
+  gtag: {
+    (event: 'config', measurementId: string, config: { page_path: string; }): void;
+    (event: 'event', eventName: string, eventParams?: { [key: string]: any; }): void;
+  };
 }
 
 // CORRECTIVE ACTION: Upgraded the PlayroomProject type to support a full narrative.
