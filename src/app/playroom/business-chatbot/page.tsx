@@ -1,5 +1,4 @@
-// src/app/playroom/business-chatbot/page.tsx
-
+// CORRECTED: src/app/playroom/business-chatbot/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -16,7 +15,7 @@ const BusinessChatbotPage = () => {
       <div className="playroom-demo__header">
         <h1>Demo: Business AI Chatbot</h1>
         <p>
-          This is a live example of an intelligent chatbot. It can be trained on your company's data to answer questions, book meetings, and improve customer engagement.
+          This is a live example of an intelligent chatbot. It can be trained on your company&apos;s data to answer questions, book meetings, and improve customer engagement.
         </p>
         <Link href="/playroom" className="playroom-demo__back-link">
           &larr; Back to Playroom

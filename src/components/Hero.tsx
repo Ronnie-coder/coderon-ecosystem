@@ -1,4 +1,4 @@
-// src/components/Hero.tsx (REPLACE ENTIRE FILE)
+// CORRECTED: src/components/Hero.tsx
 "use client";
 
 import { motion, Variants } from 'framer-motion';
@@ -9,7 +9,7 @@ const Hero = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 }, 
+      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
     },
   };
 
@@ -19,7 +19,6 @@ const Hero = () => {
       y: 0,
       opacity: 1,
       skewY: 0,
-      // --- TYPESCRIPT FIX: Replaced number array with string literal ---
       transition: { duration: 0.8, ease: "easeOut" },
     },
   };
@@ -33,7 +32,7 @@ const Hero = () => {
           animate="visible"
         >
           <motion.h1 className="c-hero__title" variants={textItemVariants}>
-            Building Africa's Future with <span>Code & Purpose</span>
+            Building Africa&apos;s Future with <span>Code & Purpose</span>
           </motion.h1>
 
           <motion.p className="c-hero__subtitle" variants={textItemVariants}>

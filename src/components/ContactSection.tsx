@@ -1,3 +1,4 @@
+// CORRECTED: src/components/ContactSection.tsx
 "use client";
 
 import { useState } from 'react';
@@ -6,7 +7,7 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({ name: '', email: '', service: 'Web Development', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState('');
-  const [isError, setIsError] = useState(false); // To track message type
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -41,7 +42,7 @@ const ContactSection = () => {
       <div className="c-contact__wrapper">
         <div className="c-contact__info">
           <h2>Book Your Free Strategy Session</h2>
-          <p>Ready to discuss your project? Schedule a complimentary 30-minute call. We'll explore your goals, identify key opportunities, and provide initial, actionable recommendations. No strings attached.</p>
+          <p>Ready to discuss your project? Schedule a complimentary 30-minute call. We&apos;ll explore your goals, identify key opportunities, and provide initial, actionable recommendations. No strings attached.</p>
           <ul className="c-contact__details">
             <li><span>📍</span> Based in South Africa, Serving all of Africa.</li>
             <li><span>🕒</span> Business Hours: Mon - Fri, 9:00 - 17:00 (SAST)</li>
@@ -71,7 +72,6 @@ const ContactSection = () => {
             <textarea id="message" name="message" className="c-form__textarea" required value={formData.message} onChange={handleChange} disabled={isSubmitting} />
           </div>
           <button type="submit" className="c-form__button" disabled={isSubmitting}>{isSubmitting ? 'Sending...' : 'Send Message'}</button>
-          {/* FIX: Replaced inline style with a dynamic className */}
           {formMessage && (
             <p className={`c-form__message ${isError ? 'c-form__message--error' : 'c-form__message--success'}`}>
               {formMessage}

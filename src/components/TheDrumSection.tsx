@@ -1,4 +1,4 @@
-// src/components/TheDrumSection.tsx (REPLACE ENTIRE FILE)
+// CORRECTED: src/components/TheDrumSection.tsx
 "use client";
 
 import { useRef } from 'react';
@@ -22,7 +22,6 @@ const TheDrumSection = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
   };
 
-  // --- CONTENT SYNCHRONIZATION: Updated with the latest three journal entries ---
   const articles = [
     {
       slug: '/journal/why-we-chose-angular-for-palmsure',
@@ -47,14 +46,13 @@ const TheDrumSection = () => {
       animate={isInView ? 'visible' : 'hidden'}
     >
       <div className="c-drum-section__grid">
-        {/* --- CARD 1: THE MISSION --- */}
         <motion.div className="c-drum-section__card c-drum-section__card--mission" variants={itemVariants}>
           <div className="c-drum-section__header">
             <FaBullhorn className="c-drum-section__icon" />
             <h3 className="c-drum-section__heading">Our Mission</h3>
           </div>
           <p className="c-drum-section__quote">
-            "We are here to put Africa on the map by helping each other rise."
+            &ldquo;We are here to put Africa on the map by helping each other rise.&rdquo;
           </p>
           <div className="c-drum-section__footer">
             <a
@@ -70,7 +68,6 @@ const TheDrumSection = () => {
           </div>
         </motion.div>
 
-        {/* --- CARD 2: THE JOURNAL --- */}
         <motion.div className="c-drum-section__card c-drum-section__card--journal" variants={itemVariants}>
           <div className="c-drum-section__header">
              <h3 className="c-drum-section__heading">From the Drum</h3>

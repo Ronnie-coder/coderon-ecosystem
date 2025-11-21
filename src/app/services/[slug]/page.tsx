@@ -1,15 +1,13 @@
-// src/app/services/[slug]/page.tsx
+// CORRECTED: src/app/services/[slug]/page.tsx
 import { services } from '@/data/servicesData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-// CORRECTIVE ACTION: Type remains Promise-aware.
-type PageProps = { params: Promise<{ slug: string }> };
+type PageProps = { params: { slug: string } };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // CORRECTIVE ACTION: 'await' is used to correctly resolve the slug from the Promise.
-  const { slug } = await params;
+  const { slug } = params;
   const service = services.find(s => s.slug === slug);
 
   if (!service) return { title: 'Service Not Found' };
@@ -23,10 +21,8 @@ export async function generateStaticParams() {
   return services.map(service => ({ slug: service.slug }));
 }
 
-// CORRECTIVE ACTION: Component is correctly defined as 'async'.
 export default async function ServiceDetailPage({ params }: PageProps) {
-  // CORRECTIVE ACTION: 'await' is used to correctly resolve the slug from the Promise.
-  const { slug } = await params;
+  const { slug } = params;
   const service = services.find(s => s.slug === slug);
 
   if (!service) { notFound(); }
@@ -46,7 +42,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <div className="container service-grid">
           <div className="service-description-prose">
             <h2>Our Approach</h2>
-            {/* UI REFINEMENT: Split description for better readability */}
             {detailedDescription.split('\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
@@ -55,7 +50,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           <div className="service-benefits-panel">
             <h3>Key Benefits</h3>
             <ul className="benefits-list">
-              {/* UI REFINEMENT: Rendering benefits with icons */}
               {benefits.map((benefit, index) => (
                 <li key={index} className="benefit-item">
                   <benefit.icon className="benefit-icon" />
@@ -70,7 +64,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       <section className="cta-section">
         <div className="container">
           <h2>Ready to Leverage This Solution?</h2>
-          <p>Let's discuss how our {title} expertise can help you achieve your business goals.</p>
+          <p>Let&apos;s discuss how our {title} expertise can help you achieve your business goals.</p>
           <Link href="/contact" className="btn btn-primary">Schedule a Free Consultation</Link>
         </div>
       </section>

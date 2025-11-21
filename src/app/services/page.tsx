@@ -1,4 +1,4 @@
-// src/app/services/page.tsx
+// CORRECTED: src/app/services/page.tsx
 import { services } from '@/data/servicesData';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -25,7 +25,6 @@ export default function ServicesPage() {
             <h2 className="c-service-item__title">{service.title}</h2>
             <p className="c-service-item__description">{service.detailedDescription}</p>
             <ul className="c-service-item__benefits-list">
-              {/* --- ENHANCEMENT: Rendering benefit with icon and text --- */}
               {service.benefits.map((benefit, index) => (
                 <li key={index} className="c-service-item__benefit">
                   <benefit.icon className="c-service-item__benefit-icon" />
@@ -39,7 +38,7 @@ export default function ServicesPage() {
 
       <aside className="c-page-cta">
         <h2>Ready to Start Your Project?</h2>
-        <p>Let's discuss how our expertise can align with your vision to create something exceptional.</p>
+        <p>Let&apos;s discuss how our expertise can align with your vision to create something exceptional.</p>
         <Link href="/contact" className="cta-button">
           Get in Touch
         </Link>

@@ -1,6 +1,5 @@
-// src/app/privacy-policy/page.tsx
+// CORRECTED: src/app/privacy-policy/page.tsx
 import { Metadata } from 'next';
-import Link from 'next/link'; // Import Link for mailto and tel links
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Coderon",
@@ -8,14 +7,14 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "November 19, 2025"; // Updated to a realistic date
+  const lastUpdated = "November 19, 2025";
 
   return (
     <main className="l-legal-page">
       <div className="l-legal-page__container">
         <h1>Privacy Policy</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
-        <p>Coderon (Pty) Ltd ("we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you visit coderon.co.za (the "Site"), in compliance with South Africa's Protection of Personal Information Act (POPIA).</p>
+        <p>Coderon (Pty) Ltd (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you visit coderon.co.za (the &quot;Site&quot;), in compliance with South Africa&apos;s Protection of Personal Information Act (POPIA).</p>
         
         <h2>1. Information We Collect</h2>
         <p>We collect information you voluntarily provide to us, such as your name, email address, and project details when you use our contact form. We also collect anonymous data (e.g., IP address, browser type) via standard server logs and analytics tools to improve our Site.</p>
@@ -37,7 +36,6 @@ export default function PrivacyPolicyPage() {
         <h2>5. Your Rights Under POPIA</h2>
         <p>You have the right to access, correct, or request the deletion of your personal data held by us. To exercise these rights, please contact our Information Officer at the address below.</p>
         
-        {/* --- REFINED: Contact Information --- */}
         <h2>6. Contact Us</h2>
         <p>For any questions regarding this policy, please contact us:</p>
         <ul>

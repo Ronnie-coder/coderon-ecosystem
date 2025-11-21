@@ -1,4 +1,4 @@
-// src/components/emails/ContactEmail.tsx
+// CORRECTED: src/components/emails/ContactEmail.tsx
 import * as React from 'react';
 import { Html, Head, Body, Container, Heading, Text, Section, Hr } from '@react-email/components';
 
@@ -15,7 +15,7 @@ export const ContactEmail: React.FC<Readonly<ContactEmailProps>> = ({ name, emai
     <Body style={main}>
       <Container style={container}>
         <Heading style={heading}>New Project Inquiry from Coderon Website</Heading>
-        <Text style={paragraph}>You've received a new message from your contact form.</Text>
+        <Text style={paragraph}>You&apos;ve received a new message from your contact form.</Text>
         <Hr style={hr} />
         <Section>
           <Text><strong>From:</strong> {name}</Text>

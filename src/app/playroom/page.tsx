@@ -1,3 +1,4 @@
+// CORRECTED: src/app/playroom/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -16,7 +17,7 @@ const PlayroomPage = () => {
         <div className="c-playroom__header">
           <h1 className="c-playroom__title">Welcome to the Coderon Showroom.</h1>
           <p className="c-playroom__subtitle">
-            Don't just take our word for it. Explore live projects and interact with our technical demos to see the quality of our work in action.
+            Don&apos;t just take our word for it. Explore live projects and interact with our technical demos to see the quality of our work in action.
           </p>
         </div>
 

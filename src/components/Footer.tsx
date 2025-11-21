@@ -1,4 +1,4 @@
-// src/components/Footer.tsx
+// CORRECTED: src/components/Footer.tsx
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -21,13 +21,12 @@ const Footer = () => {
     <footer className="c-footer">
       <div className="c-footer__container">
         <div className="c-footer__grid">
-          {/* Column 1: Brand & Socials */}
           <div className="c-footer__col c-footer__col--brand">
             <Link href="/" className="c-footer__logo-link">
               <span className="c-footer__logo-text">CODERON</span>
             </Link>
             <p className="c-footer__tagline">
-              Driving Africa's digital future with world-class, robust technology solutions.
+              Driving Africa&apos;s digital future with world-class, robust technology solutions.
             </p>
             <div className="c-footer__social">
               <a href="https://github.com/Ronnie-coder" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
@@ -35,8 +34,6 @@ const Footer = () => {
               <a href="https://x.com/Coderon28" target="_blank" rel="noopener noreferrer" aria-label="X (formerly Twitter)"><FaTwitter /></a>
             </div>
           </div>
-
-          {/* Column 2: Navigation Links */}
           <div className="c-footer__col c-footer__col--links">
             <h4 className="c-footer__col-heading">Explore</h4>
             <ul className="c-footer__link-list">
@@ -47,16 +44,12 @@ const Footer = () => {
               <li><Link href="/journal">Journal</Link></li>
             </ul>
           </div>
-
-          {/* --- NEW COLUMN: Products --- */}
           <div className="c-footer__col c-footer__col--links">
             <h4 className="c-footer__col-heading">Products</h4>
             <ul className="c-footer__link-list">
               <li><a href="https://app.coderon.co.za" target="_blank" rel="noopener noreferrer">QuotePilot SaaS</a></li>
             </ul>
           </div>
-
-          {/* Column 4: Contact Information */}
           <div className="c-footer__col c-footer__col--contact">
             <h4 className="c-footer__col-heading">Get in Touch</h4>
             <ul className="c-footer__link-list">
@@ -66,7 +59,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
         <div className="c-footer__bottom-bar">
           <div className="c-footer__legal-info">
             <span>&copy; {currentYear} Coderon (Pty) Ltd.</span>

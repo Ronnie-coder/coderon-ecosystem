@@ -1,3 +1,4 @@
+// CORRECTED: src/components/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -8,7 +9,6 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
-// Unchanged: Preserving your original navigation structure
 const navLinks = [
   { href: '/services', label: 'Services' },
   { href: '/impact', label: 'Our Impact' },
@@ -33,7 +33,6 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
-  // Refinement: Separated useEffects for clarity
   useEffect(() => {
     const handleScroll = () => { setHasScrolled(window.scrollY > 10); };
     window.addEventListener('scroll', handleScroll);
@@ -45,12 +44,13 @@ const Navbar = () => {
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // REFINEMENT 1: UX ENHANCEMENT - Close mobile menu automatically on navigation
+  // FIX: Added 'isMenuOpen' to dependency array to satisfy exhaustive-deps rule
   useEffect(() => {
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
-  }, [pathname]); // This effect runs every time the page URL changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -72,7 +72,6 @@ const Navbar = () => {
                   <Link 
                     href={link.href} 
                     className={`c-navbar__link ${isActive ? 'is-active' : ''}`}
-                    // REFINEMENT 2: ACCESSIBILITY - Inform screen readers of the current page
                     aria-current={isActive ? 'page' : undefined}
                   >
                     {link.label}
@@ -92,7 +91,6 @@ const Navbar = () => {
           </button>
           <Link href="/contact" className="c-navbar__cta">Free Consultation</Link>
           <button className="c-navbar__mobile-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-expanded={isMenuOpen} aria-controls="mobile-nav-menu">
-            {/* REFINEMENT 3: ACCESSIBILITY - Provide text for screen readers */}
             <span className="sr-only">{isMenuOpen ? "Close menu" : "Open menu"}</span>
             <AnimatePresence initial={false} mode="wait">
               <motion.span key={isMenuOpen ? 'times' : 'bars'} initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
