@@ -1,0 +1,105 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-drum-section {
+  padding: $spacing-xxl $spacing-lg;
+  background-color: var(--background-alt);
+}
+
+.c-drum-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xl;
+  max-width: $container-max-width;
+  margin: 0 auto;
+}
+
+.c-drum-section__card {
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-color-hover);
+  }
+}
+
+.c-drum-section__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.c-drum-section__icon {
+  font-size: 1.5rem;
+  color: var(--primary-gold);
+}
+
+.c-drum-section__heading {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 0;
+}
+
+.c-drum-section__quote {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--primary-gold);
+  padding-left: $spacing-md;
+  margin-top: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  flex-grow: 1;
+}
+
+.c-drum-section__text {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: $spacing-lg;
+}
+
+.c-drum-section__article-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: $spacing-lg;
+  flex-grow: 1;
+
+  li {
+    margin-bottom: $spacing-md;
+    a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+  }
+}
+
+.c-drum-section__footer {
+  margin-top: auto;
+  padding-top: $spacing-md;
+}
+
+.c-drum-section__button {
+  @include cta-button;
+  // --- THE SURGICAL FIX: This forces the text color to be correct, overriding any conflicts. ---
+  color: var(--text-on-gold) !important;
+}
+
+.c-drum-section__button--secondary {
+  @include cta-button-secondary;
+}
+
+@media (max-width: 900px) {
+  .c-drum-section__grid {
+    grid-template-columns: 1fr;
+  }
+}

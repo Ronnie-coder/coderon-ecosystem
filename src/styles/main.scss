@@ -1,0 +1,60 @@
+// src/styles/main.scss (REPLACE ENTIRE FILE)
+
+// This file is the single source of truth for all global styles.
+// The order of imports matters.
+
+// 1. Core setup: variables, mixins, and base styles.
+@use 'variables';
+@use 'mixins';
+@use 'base';
+
+// 2. All component-specific styles.
+@use 'navbar';
+@use 'hero';
+@use 'services';
+@use 'impact';
+@use 'contact';
+@use 'footer';
+@use 'services-page';
+@use 'impact-page';
+@use 'back-to-top';
+@use 'about-page';
+@use 'playroom';
+@use 'sales-dashboard';
+@use 'sentiment-analyzer';
+@use 'fleet-tracker';
+@use 'testimonials-section';
+@use 'the-drum-section';
+@use 'journal-page';
+@use 'article-page';
+@use 'quotepilot-cta';
+
+// 3. Global utilities and overrides. This MUST come after component styles.
+// --- CRITICAL FIX: Moved to the end to win the specificity war ---
+@use 'buttons'; 
+
+
+// 4. Any raw CSS rules come AFTER all @use statements.
+.playroom-demo {
+  &__header {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 2.5rem auto;
+
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #D4AF37;
+    }
+  }
+}

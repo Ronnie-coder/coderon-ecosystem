@@ -1,0 +1,69 @@
+@use 'variables' as *;
+
+// =============================================
+// CODERON - V4.0 - THEME-AWARE BASE STYLES
+// =============================================
+
+// -- CSS RESET --
+// A simple reset for consistency across browsers.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// -- GLOBAL STYLES --
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  // --- UPDATED: Using CSS variables for dynamic theming ---
+  background-color: var(--background-color);
+  color: var(--text-primary);
+
+  // SCSS variables for fonts/layout are still valid and used here
+  font-family: $font-primary;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: $header-height;
+
+  // Added for smooth theme transitions
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+a {
+  // --- UPDATED: Using CSS variables for colors ---
+  color: var(--primary-gold);
+  text-decoration: none;
+  transition: color var(--transition-speed) ease;
+
+  &:hover {
+    color: var(--primary-gold-hover);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  // --- UPDATED: Using CSS variables for colors ---
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+}
+
+p {
+  // --- UPDATED: Using CSS variables for colors ---
+  margin-bottom: $spacing-md;
+  color: var(--text-secondary);
+}
+
+// -- UTILITY CLASSES --
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 $spacing-lg;
+}

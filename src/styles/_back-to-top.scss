@@ -1,0 +1,48 @@
+// src/styles/_back-to-top.scss (REPLACE ENTIRE FILE)
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-back-to-top {
+  position: fixed;
+  bottom: $spacing-lg;
+  
+  // --- SPATIAL RELOCATION: Mission-critical change from right to left. ---
+  left: $spacing-lg;
+  right: auto; // Unset the right property to prevent conflicts.
+
+  z-index: 1000;
+
+  // --- REFACTORED: Use the consistent CTA button mixin for base styles ---
+  @include cta-button;
+
+  // --- Overrides to style it as a circular FAB ---
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  padding: 0; // Override padding from the mixin
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // --- UPDATED: Use the theme-aware shadow variable ---
+  box-shadow: var(--shadow-fab);
+
+  // Visibility state transitions
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  // Refined hover effect
+  &:hover {
+    // The background-color change is already handled by the mixin
+    transform: translateY(-3px) scale(1.05);
+  }
+}

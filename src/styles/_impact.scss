@@ -1,0 +1,66 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-impact {
+  padding: $spacing-xxl 0;
+  background-color: var(--background-color);
+}
+
+.c-impact-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: $spacing-xl;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+.c-impact-feature__image-wrapper {
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  box-shadow: var(--shadow-strong);
+  line-height: 0;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.c-impact-feature__content {
+  @media (max-width: 900px) {
+    margin-top: $spacing-lg;
+  }
+
+  h3 {
+    color: var(--primary-gold);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: $spacing-sm;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .cta-button {
+    @include cta-button;
+  }
+}

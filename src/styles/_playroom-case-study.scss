@@ -1,0 +1,143 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-case-study {
+  padding-bottom: $spacing-xxl;
+}
+
+.c-case-study__header {
+  padding: $spacing-xxl 0;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.c-case-study__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    &:hover { color: var(--primary-gold); }
+}
+
+.c-case-study__title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--text-primary);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.c-case-study__client {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: $spacing-sm;
+}
+
+.c-case-study__main-content {
+  padding: $spacing-xxl 0;
+  display: flex;
+  gap: $spacing-xl * 2;
+  border-bottom: 1px solid var(--border-color);
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: $spacing-xl;
+    padding-bottom: $spacing-xl;
+  }
+}
+
+.c-case-study__overview {
+  flex: 2;
+  h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: $spacing-md;
+  }
+  p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.c-case-study__details {
+  flex: 1;
+  min-width: 250px;
+}
+
+.c-case-study__meta-item {
+  margin-bottom: $spacing-lg;
+  h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: $spacing-sm;
+  }
+  p {
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// --- Narrative Section Styles ---
+.c-case-study__narrative {
+  padding: $spacing-xxl 0;
+  max-width: 800px; // Constrain width for better readability
+  margin: 0 auto;
+}
+
+.c-case-study__narrative-section {
+  margin-bottom: $spacing-xl * 1.5;
+
+  h2 {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  p {
+    line-height: 1.9;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+  }
+
+  ul {
+    list-style-position: inside;
+    padding-left: $spacing-sm;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  li {
+    margin-bottom: $spacing-md;
+    padding-left: $spacing-sm;
+    &::marker {
+      color: var(--primary-gold);
+    }
+  }
+}
+
+.c-case-study__image-wrapper {
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  box-shadow: var(--shadow-strong);
+  line-height: 0;
+  margin-top: $spacing-xl; // Add space above the image
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

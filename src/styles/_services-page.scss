@@ -1,0 +1,227 @@
+// src/styles/_services-page.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+}
+
+.c-page-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid var(--border-color);
+  
+  h1 {
+    font-size: 3rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-sm;
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+  p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.c-service-item {
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid var(--border-color);
+  
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  &__title {
+    font-size: 2rem;
+    color: var(--primary-gold);
+    margin-bottom: $spacing-md;
+  }
+
+  &__description {
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    line-height: 1.7;
+  }
+
+  &__benefits-list {
+    list-style: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-md;
+  }
+
+  // --- ENHANCEMENT: Updated benefit styles to support icons ---
+  &__benefit {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+
+    // The old ::before is now replaced by a dedicated icon class
+  }
+
+  &__benefit-icon {
+    color: var(--primary-gold);
+    font-size: 1.2rem;
+    flex-shrink: 0; // Prevent icon from shrinking
+  }
+}
+
+.c-page-cta {
+  text-align: center;
+  margin-top: $spacing-xl;
+  padding: $spacing-xl;
+  background-color: var(--surface-color);
+  border-radius: $border-radius-md;
+  
+  h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin: $spacing-sm auto $spacing-lg auto;
+    max-width: 500px;
+  }
+
+  .cta-button {
+    @include cta-button;
+  }
+}
+
+// --- NEW: Styles for the Service Detail Page ([slug]) ---
+.service-detail-page {
+  padding-bottom: $spacing-xxl;
+}
+
+.service-hero {
+  text-align: center;
+  padding: $spacing-xxl $spacing-lg;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+
+  h1 {
+    font-size: 3.5rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-sm;
+  }
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+.service-content {
+  padding-top: $spacing-xxl;
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 $spacing-lg;
+  }
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-xxl;
+  align-items: flex-start;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+  }
+}
+
+.service-description-prose {
+  line-height: 1.8;
+  color: var(--text-secondary);
+
+  h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+  }
+  
+  p {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.service-benefits-panel {
+  position: sticky;
+  top: 120px; // Adjust based on your navbar height
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: var(--text-primary);
+  }
+
+  .benefit-icon {
+    color: var(--primary-gold);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+}
+
+.cta-section {
+  text-align: center;
+  margin-top: $spacing-xxl;
+  padding-top: $spacing-xxl;
+  border-top: 1px solid var(--border-color);
+
+  .container {
+    max-width: 800px;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin: $spacing-sm auto $spacing-lg auto;
+    max-width: 500px;
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,106 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// REFINEMENT 3 (Supporting): Utility class for screen reader accessibility text
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.c-navbar {
+  height: $header-height;
+  width: 100%;
+  padding: 0 $spacing-lg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+
+  &.has-scrolled {
+    background-color: var(--navbar-bg);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--border-color);
+  }
+
+  &__container {
+    max-width: $container-max-width;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  &__logo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    // REFINEMENT 4: AESTHETICS - Add professional hover animation
+    transition: letter-spacing 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      letter-spacing: 0.15em;
+      color: var(--primary-gold);
+    }
+  }
+
+  &__desktop-nav {
+    display: none;
+    @media (min-width: 992px) {
+      display: flex;
+      ul { display: flex; list-style: none; gap: $spacing-lg; }
+    }
+  }
+
+  &__link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    position: relative;
+    padding: $spacing-sm 0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    &::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: var(--primary-gold); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s ease; }
+    &:hover { color: var(--text-primary); &::after { transform: scaleX(1); transform-origin: bottom left; } }
+    &.is-active { color: var(--text-primary); font-weight: 600; &::after { transform: scaleX(1); background-color: var(--text-primary); } }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+  
+  &__theme-toggle {
+    background: none; border: none; color: var(--text-secondary); font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.2s ease;
+    &:hover { color: var(--text-primary); background-color: var(--surface-color); }
+  }
+
+  // The global .cta-button class now handles the desktop button styling
+  .cta-button {
+    display: none;
+    @media (min-width: 992px) { display: inline-flex; }
+  }
+
+  &__mobile-toggle {
+    display: block; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer;
+    @media (min-width: 992px) { display: none; }
+  }
+
+  &__mobile-nav {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--background-color); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; z-index: -1;
+    .c-navbar__link { font-size: 1.5rem; }
+    .cta-button { display: block; width: 80%; max-width: 300px; text-align: center; margin-top: 1rem; }
+  }
+}

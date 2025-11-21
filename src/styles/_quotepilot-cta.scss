@@ -1,0 +1,65 @@
+// src/styles/_quotepilot-cta.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-quotepilot-cta {
+  // --- VISUAL UPGRADE: Background image and parallax effect ---
+  position: relative; // Required for the overlay
+  padding: $spacing-xxl * 1.5 0;
+  text-align: center;
+  background-image: url('/images/quotepilot-showcase-v2.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; // Creates the parallax effect
+
+  // --- VISUAL UPGRADE: Dark overlay for text readability ---
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0.6));
+    z-index: 1;
+  }
+
+  &__container {
+    position: relative; // Ensures content is on top of the overlay
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__heading {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #FFFFFF; // --- COLOR ADJUSTED for dark background ---
+    margin-bottom: $spacing-xs;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  &__subheading {
+    font-size: 1.25rem;
+    color: #E0E0E0; // --- COLOR ADJUSTED for dark background ---
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: $spacing-lg;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    padding: $spacing-xl $spacing-md;
+    background-attachment: scroll; // Disables parallax on mobile for performance
+
+    &__heading {
+      font-size: 2.25rem;
+    }
+    
+    &__subheading {
+      font-size: 1.1rem;
+    }
+  }
+}

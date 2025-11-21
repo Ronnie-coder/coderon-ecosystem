@@ -1,0 +1,40 @@
+// src/styles/_legal-page.scss
+@use 'variables' as *;
+
+.l-legal-page {
+  padding: $spacing-xl $spacing-lg;
+  
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-top: $spacing-xl;
+    margin-bottom: $spacing-md;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: $spacing-sm;
+  }
+
+  p, li {
+    margin-bottom: $spacing-md;
+  }
+
+  ul {
+    padding-left: $spacing-lg;
+  }
+
+  strong {
+    color: var(--text-primary);
+  }
+}

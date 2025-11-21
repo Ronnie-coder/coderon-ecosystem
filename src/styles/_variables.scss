@@ -1,0 +1,45 @@
+// -- TYPOGRAPHY, SPACING, LAYOUT --
+$font-primary: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-secondary: var(--font-roboto-mono), monospace;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+$spacing-xl: 4rem;
+$spacing-xxl: 8rem;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$container-max-width: 1200px;
+$header-height: 80px;
+
+// -- DYNAMIC COLOR THEME SYSTEM (Using CSS Variables) --
+:root, [data-theme="light"] {
+  --background-color: #FFFFFF;
+  --background-alt: #F7F7F7;
+  --surface-color: #F7F7F7;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --border-color: #EAEAEA;
+  --border-color-hover: #D0D0D0;
+  --navbar-bg: rgba(255, 255, 255, 0.75);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --primary-gold: #D4AF37;
+  --primary-gold-hover: #E7C668;
+  --primary-gold-rgb: 212, 175, 55;
+  --text-on-gold: #111111;
+}
+
+[data-theme="dark"] {
+  --background-color: #111111;
+  --background-alt: #0A0A0A;
+  --surface-color: #1A1A1A;
+  --text-primary: #F0F0F0;
+  --text-secondary: #A0A0A0;
+  --border-color: #333333;
+  --border-color-hover: #444444;
+  --navbar-bg: rgba(17, 17, 17, 0.75);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.25);
+}

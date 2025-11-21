@@ -1,0 +1,38 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-article-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.c-article-list__item {
+  display: block;
+  padding: $spacing-lg;
+  // --- UPDATED: Uses CSS variables ---
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-gold);
+    transform: translateY(-3px);
+    // --- UPDATED: Uses theme-aware shadow variable ---
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+.c-article-list__title {
+  font-size: 1.5rem;
+  // --- UPDATED: Uses CSS variables ---
+  color: var(--text-primary);
+  margin-bottom: $spacing-sm;
+}
+
+.c-article-list__read-more {
+  // --- UPDATED: Uses CSS variables ---
+  color: var(--primary-gold);
+  font-weight: 600;
+}

@@ -1,0 +1,119 @@
+@use 'variables' as *;
+
+// --- NEW: Founder Section Styles ---
+.c-founder-section {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: $spacing-xl;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+.c-founder-section__image {
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: $border-radius-md;
+    box-shadow: var(--shadow-strong);
+  }
+}
+
+.c-founder-section__content {
+  h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+  }
+  
+  blockquote {
+    border-left: 3px solid var(--primary-gold);
+    padding-left: $spacing-md;
+    margin: 0 0 $spacing-lg 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+
+    footer {
+      font-style: normal;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: $spacing-sm;
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// --- REFINED: Values Section Styles ---
+.c-values-section {
+  margin-top: $spacing-xl * 1.5;
+  padding-top: $spacing-xl;
+  border-top: 1px solid var(--border-color);
+  
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-lg;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-lg;
+  }
+}
+
+.c-value-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  // NEW: Styled icon
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(var(--primary-gold-rgb), 0.1);
+    color: var(--primary-gold);
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-bottom: $spacing-md;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+  }
+}

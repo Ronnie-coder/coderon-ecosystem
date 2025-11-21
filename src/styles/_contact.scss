@@ -1,0 +1,111 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ... (c-contact__wrapper, __info, __details, __whatsapp-btn styles remain the same) ...
+.c-contact__wrapper { max-width: $container-max-width; margin: $spacing-xl auto 0; display: grid; grid-template-columns: 1fr 1.25fr; gap: $spacing-xl * 1.5; @media (max-width: 900px) { grid-template-columns: 1fr; gap: $spacing-xl; } }
+.c-contact__info { h2 { font-size: 2rem; font-weight: 600; color: var(--text-primary); margin-bottom: $spacing-md; } p { color: var(--text-secondary); margin-bottom: $spacing-lg; line-height: 1.7; } }
+.c-contact__details { list-style: none; padding: 0; margin-bottom: $spacing-lg; li { color: var(--text-secondary); margin-bottom: $spacing-md; display: flex; align-items: center; gap: $spacing-sm; span { color: var(--primary-gold); font-size: 1.2rem; flex-shrink: 0; } } }
+.c-contact__whatsapp-btn { display: inline-flex; align-items: center; gap: $spacing-sm; background-color: #25D366; color: #fff !important; padding: $spacing-md $spacing-lg; border-radius: $border-radius-md; font-weight: bold; transition: background-color 0.3s ease, transform 0.3s ease; text-decoration: none; svg { width: 24px; height: 24px; } &:hover { background-color: #1DAE54; transform: translateY(-3px); } }
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.c-form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.c-form__label {
+  color: var(--text-secondary);
+  margin-bottom: $spacing-sm;
+  font-size: 0.9rem;
+}
+
+.c-form__input, .c-form__textarea {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: $font-primary;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  -webkit-appearance: none; // Removes default OS styling
+  -moz-appearance: none;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 3px rgba(var(--primary-gold-rgb), 0.2);
+  }
+}
+
+// NEW: Wrapper for custom select arrow
+.c-form__select-wrapper {
+  position: relative;
+  &::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: $spacing-md;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+  }
+}
+
+.c-form__textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.c-form__button {
+  @include cta-button; 
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+  
+  &:disabled {
+    background-color: var(--border-color);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// NEW: Styles for your dynamic form messages
+.c-form__message {
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  margin-top: $spacing-sm;
+  font-weight: 500;
+  
+  &--success {
+    background-color: rgba(var(--primary-gold-rgb), 0.1);
+    color: var(--primary-gold);
+    border: 1px solid var(--primary-gold);
+  }
+  
+  &--error {
+    background-color: rgba(var(--negative-color-rgb), 0.1);
+    color: var(--negative-color);
+    border: 1px solid var(--negative-color);
+  }
+}
+
+// NEW: Replaces the old success message style for better reusability
+.c-form__success-message {
+  background-color: var(--surface-color);
+  border-left: 4px solid var(--primary-gold);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  text-align: center;
+  svg { color: var(--primary-gold); font-size: 2.5rem; margin-bottom: $spacing-md; }
+  h3 { color: var(--text-primary); font-size: 1.5rem; margin-bottom: $spacing-sm; }
+  p { color: var(--text-secondary); line-height: 1.6; }
+}

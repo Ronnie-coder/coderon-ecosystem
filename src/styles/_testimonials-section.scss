@@ -1,0 +1,130 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-testimonials {
+  padding: $spacing-xl * 1.5 $spacing-lg;
+  background-color: var(--surface-color);
+  text-align: center;
+}
+
+.c-testimonials__header {
+  margin-bottom: $spacing-xl;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.c-testimonials__heading {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: $spacing-sm;
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.c-testimonials__subheading {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.c-testimonials__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  // REFINEMENT: Responsive grid that handles 2 or 3 items gracefully
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-xl;
+}
+
+.c-testimonial-card {
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  &__logo-wrapper {
+    height: 60px;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    object-fit: contain;
+    // REFINEMENT: Adds theme awareness to logos for consistency
+    [data-theme="dark"] & {
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+  }
+  
+  &__quote {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 $spacing-lg 0;
+    flex-grow: 1;
+    font-style: italic;
+    
+    &::before {
+      content: '“';
+      font-size: 3.5rem;
+      color: var(--primary-gold);
+      font-weight: bold;
+      display: block;
+      line-height: 1;
+      margin-left: -10px;
+    }
+  }
+
+  // --- NEW: STYLES FOR AUTHOR ATTRIBUTION ---
+  &__author-info {
+    margin-bottom: $spacing-lg;
+    padding-top: $spacing-md;
+    border-top: 1px solid var(--border-color);
+  }
+
+  &__author-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__author-role {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  // --- END NEW STYLES ---
+
+  &__link {
+    color: var(--primary-gold);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    align-self: flex-start; // Ensures link stays at the bottom left
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Retained for backward compatibility, but auto-fit is now primary
+@media (max-width: 900px) {
+  .c-testimonials__grid {
+    gap: $spacing-lg;
+  }
+}

@@ -1,0 +1,117 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+}
+
+.c-page-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid var(--border-color);
+  h1 { font-size: 3rem; color: var(--text-primary); margin-bottom: $spacing-sm; @media (max-width: 768px) { font-size: 2.5rem; }}
+  p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto; }
+}
+
+.c-project-card {
+  background-color: var(--surface-color);
+  border-radius: $border-radius-md;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: $spacing-xl * 1.5;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  
+  &:hover { 
+    box-shadow: var(--shadow-strong); 
+    transform: translateY(-4px); 
+  }
+}
+
+.c-project-card__image {
+  img { 
+    width: 100%; 
+    height: auto; 
+    display: block; 
+  }
+}
+
+.c-project-card__body {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $spacing-xl;
+  gap: $spacing-xl;
+
+  @media (max-width: 900px) {
+    padding: $spacing-lg;
+    gap: $spacing-lg;
+  }
+}
+
+.c-project-card__content {
+  flex: 2;
+  min-width: 300px;
+}
+
+.c-project-card__client { 
+  color: var(--primary-gold); 
+  font-weight: 600; 
+  margin-bottom: $spacing-sm; 
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.c-project-card__title { 
+  font-size: 1.8rem; 
+  color: var(--text-primary); 
+  margin-bottom: $spacing-md; 
+}
+
+.c-project-card__description { 
+  color: var(--text-secondary); 
+  margin: 0 0 $spacing-lg 0; 
+  line-height: 1.7;
+}
+
+.cta-button {
+  @include cta-button;
+}
+
+.c-project-card__details {
+  flex: 1;
+  min-width: 220px;
+  padding-left: $spacing-xl;
+  border-left: 1px solid var(--border-color);
+
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+    padding-left: 0;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+.c-project-card__meta-item {
+  margin-bottom: $spacing-lg;
+  &:last-child { margin-bottom: 0; }
+}
+
+.c-project-card__meta-heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: $spacing-sm;
+}
+
+.c-project-card__meta-content {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.5;
+}

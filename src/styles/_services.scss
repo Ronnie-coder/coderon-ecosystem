@@ -1,0 +1,105 @@
+@use 'variables' as *;
+
+.c-services {
+  padding: $spacing-xxl $spacing-lg;
+  background-color: var(--background-color);
+  text-align: center;
+
+  &__heading {
+    margin-bottom: $spacing-sm;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  &__subheading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    max-width: 600px;
+    margin: 0 auto $spacing-xl auto;
+    color: var(--text-primary);
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-lg;
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+}
+
+// NOTE: The card itself is now an anchor tag <a>
+.c-service-card {
+  display: block; // Ensures the link takes up the full grid space
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-decoration: none; // Removes default link underline
+  position: relative; // Needed for positioning the 'Learn More' element
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+
+    // NEW: On card hover, reveal the learn more element
+    .c-service-card__learn-more {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-gold);
+    background-color: rgba(var(--primary-gold-rgb), 0.1);
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: $spacing-lg;
+    transition: transform 0.3s ease; // Added for hover effect
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-sm;
+  }
+
+  &__description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0; 
+  }
+
+  // --- NEW: Styles for the "Learn More" CTA ---
+  &__learn-more {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
+    color: var(--primary-gold);
+    font-weight: 600;
+    opacity: 0; // Hidden by default
+    transform: translateY(10px); // Start slightly lower
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    svg {
+      transition: transform 0.3s ease;
+    }
+  }
+}

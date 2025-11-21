@@ -1,0 +1,52 @@
+// src/styles/_hero.scss (REPLACE ENTIRE FILE)
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-hero {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl $spacing-lg;
+  text-align: center;
+  overflow: hidden;
+
+  &__container {
+    max-width: 900px;
+  }
+
+  &__title {
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: $spacing-md;
+    color: var(--text-primary);
+    span { color: var(--primary-gold); }
+  }
+
+  &__subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto $spacing-lg auto;
+  }
+
+  &__cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+
+    // --- FINAL STRIKE: Specificity override to win the war ---
+    // This ensures that any .cta-button inside this component
+    // is styled correctly, defeating any residual generic styles.
+    .cta-button {
+      @include cta-button;
+    }
+    .cta-button-secondary {
+      @include cta-button-secondary;
+    }
+  }
+}
