@@ -34,7 +34,8 @@ const PlayroomPage = () => {
                   <h3 className="c-playroom-card__title">{project.title}</h3>
                   <p className="c-playroom-card__description">{project.description}</p>
                   <div className="c-playroom-card__tech-stack">
-                    {project.tech.map(tech => <span key={tech}>{tech}</span>)}
+                    {/* FIX: Added explicit 'string' type for the 'tech' parameter */}
+                    {project.tech.map((tech: string) => <span key={tech}>{tech}</span>)}
                   </div>
                 </div>
                 <div className="c-playroom-card__footer">
@@ -57,7 +58,8 @@ const PlayroomPage = () => {
                   <h3 className="c-playroom-card__title">{demo.title}</h3>
                   <p className="c-playroom-card__description">{demo.description}</p>
                   <div className="c-playroom-card__tech-stack">
-                    {demo.tech.map(tech => <span key={tech}>{tech}</span>)}
+                    {/* FIX: Added explicit 'string' type for the 'tech' parameter */}
+                    {demo.tech.map((tech: string) => <span key={tech}>{tech}</span>)}
                   </div>
                 </div>
                 <div className="c-playroom-card__footer">
@@ -65,7 +67,7 @@ const PlayroomPage = () => {
                     Launch Demo <FaArrowRight />
                   </div>
                 </div>
-              </Link>
+              </a >
             ))}
           </div>
         </div>
