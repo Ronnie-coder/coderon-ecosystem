@@ -8,15 +8,15 @@ import { FaArrowLeft } from 'react-icons/fa';
 export async function generateStaticParams() {
   const paths = liveProjects
     .filter(p => p.caseStudyUrl)
-    // FIX: Convert the numeric 'id' to a string to match the expected slug type.
-    .map(p => ({ slug: p.id.toString() }));
+    // FIX: ID is now correctly a string, no conversion needed.
+    .map(p => ({ slug: p.id }));
   return paths;
 }
 
 export default function CaseStudyPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  // FIX: Convert the project's numeric 'id' to a string before comparing with the string 'slug'.
-  const project = liveProjects.find(p => p.id.toString() === slug);
+  // FIX: ID is now a string, allowing for a direct comparison with the string slug.
+  const project = liveProjects.find(p => p.id === slug);
 
   if (!project) {
     notFound();

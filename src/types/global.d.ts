@@ -1,7 +1,7 @@
-// REINFORCED: src/types/global.d.ts
+// DEFINITIVE FIX: src/types/global.d.ts
 
 export interface PlayroomProject {
-  id: number;
+  id: string; // FIX: ID is a string, not a number, to match the actual data.
   category: string;
   title: string;
   description: string;
@@ -9,9 +9,6 @@ export interface PlayroomProject {
   tech: string[];
   liveUrl: string;
   caseStudyUrl?: string;
-  // --- ADDITIONS START ---
-  // Adding these optional properties to prevent subsequent type errors
-  // in the [slug] page component.
   client?: string;
   year?: string;
   roles?: string[];
@@ -19,11 +16,10 @@ export interface PlayroomProject {
   narrative_challenge?: string;
   narrative_solution?: string;
   narrative_results?: string[];
-  // --- ADDITIONS END ---
 }
 
 export interface PlayroomDemo {
-  id: number;
+  id: string; // FIX: ID is a string, not a number, to match the actual data.
   category: string;
   title: string;
   description: string;
