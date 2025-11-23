@@ -1,4 +1,4 @@
-// CORRECTED: src/app/playroom/[slug]/page.tsx
+// DEFINITIVE FIX: src/app/playroom/[slug]/page.tsx
 import { liveProjects } from '@/data/playroomData';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -8,13 +8,15 @@ import { FaArrowLeft } from 'react-icons/fa';
 export async function generateStaticParams() {
   const paths = liveProjects
     .filter(p => p.caseStudyUrl)
-    .map(p => ({ slug: p.id }));
+    // FIX: Convert the numeric 'id' to a string to match the expected slug type.
+    .map(p => ({ slug: p.id.toString() }));
   return paths;
 }
 
 export default function CaseStudyPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  const project = liveProjects.find(p => p.id === slug);
+  // FIX: Convert the project's numeric 'id' to a string before comparing with the string 'slug'.
+  const project = liveProjects.find(p => p.id.toString() === slug);
 
   if (!project) {
     notFound();
@@ -54,12 +56,10 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
             <div className="c-case-study__meta-item">
               <h3>ROLE</h3>
-              {/* FIX: Added explicit 'string' type for the 'role' parameter */}
               {roles.map((role: string) => <p key={role}>{role}</p>)}
             </div>
             <div className="c-case-study__meta-item">
               <h3>SERVICES</h3>
-              {/* FIX: Added explicit 'string' type for the 'service' parameter */}
               {servicesDelivered.map((service: string) => <p key={service}>{service}</p>)}
             </div>
           </aside>
@@ -83,7 +83,6 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               <section className="c-case-study__narrative-section">
                 <h2>The Results</h2>
                 <ul>
-                  {/* FIX: Added explicit 'string' and 'number' types for parameters */}
                   {project.narrative_results.map((result: string, index: number) => <li key={index}>{result}</li>)}
                 </ul>
               </section>

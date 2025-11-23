@@ -1,8 +1,5 @@
 // REINFORCED: src/types/global.d.ts
 
-// --- Type Definitions for Playroom Data ---
-// These interfaces define the 'shape' of your project and demo objects,
-// neutralizing the type error.
 export interface PlayroomProject {
   id: number;
   category: string;
@@ -11,7 +8,18 @@ export interface PlayroomProject {
   imageUrl: string;
   tech: string[];
   liveUrl: string;
-  caseStudyUrl?: string; // The '?' makes this property optional.
+  caseStudyUrl?: string;
+  // --- ADDITIONS START ---
+  // Adding these optional properties to prevent subsequent type errors
+  // in the [slug] page component.
+  client?: string;
+  year?: string;
+  roles?: string[];
+  servicesDelivered?: string[];
+  narrative_challenge?: string;
+  narrative_solution?: string;
+  narrative_results?: string[];
+  // --- ADDITIONS END ---
 }
 
 export interface PlayroomDemo {
@@ -23,11 +31,8 @@ export interface PlayroomDemo {
   href: string;
 }
 
-// --- Global Augmentations ---
-// This section augments existing global types, like adding 'gtag' to the Window object.
 declare global {
   interface Window {
-    // This provides a precise signature for the gtag function on the window object.
     gtag: (
       command: 'config' | 'event',
       target: string,
@@ -35,6 +40,3 @@ declare global {
     ) => void;
   }
 }
-
-// Note: The previous 'export {};' is no longer needed. The 'export interface'
-// statements above automatically designate this file as a module, satisfying TypeScript's requirements.
