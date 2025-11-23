@@ -1,4 +1,3 @@
-// CORRECTED AND VERIFIED: src/app/playroom/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -65,7 +64,7 @@ const PlayroomPage = () => {
                     Launch Demo <FaArrowRight />
                   </div>
                 </div>
-              </Link> {/* FIX: Corrected the malformed closing tag */}
+              </Link>
             ))}
           </div>
         </div>
