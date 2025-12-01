@@ -29,7 +29,7 @@ const QuotePilotCtaSection = () => {
           making you look professional and helping you get paid faster.
         </p>
         {/* --- WORKAROUND REMOVED: Reverted to the correct, simple markup --- */}
-        <Link href="https://app.coderon.co.za" className="cta-button" target="_blank" rel="noopener noreferrer">
+        <Link href="https://quotepilot.coderon.co.za/" className="cta-button" target="_blank" rel="noopener noreferrer">
            Streamline Your Business Now
         </Link>
       </motion.div>

@@ -69,7 +69,7 @@ export const projects: Project[] = [
     tags: ['SaaS', 'Next.js', 'Supabase', 'PostgreSQL'],
     description: 'To empower African entrepreneurs, we built QuotePilot: a smart, simple, and free quote generator. This production-ready tool showcases our ability to build, ship, and maintain our own software products.',
     imageUrl: '/images/quotepilot-showcase-v2.png',
-    liveUrl: 'https://app.coderon.co.za/',
+    liveUrl: 'https://quotepilot.coderon.co.za/',
     year: 2025,
     // REFINED ROLES based on SPEC:
     roles: [

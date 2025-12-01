@@ -10,11 +10,11 @@ export const liveProjects: PlayroomProject[] = [
     category: 'SaaS Product',
     description: 'A production-ready invoice & quote generator for African SMEs, built with a robust Supabase backend and a clean Next.js frontend.',
     tech: ['SaaS', 'Next.js', 'Supabase', 'TypeScript'],
-    liveUrl: 'https://app.coderon.co.za/',
+    liveUrl: 'https://quotepilot.coderon.co.za/',
     imageUrl: '/images/playroom/quotepilot-v1.png',
     caseStudyUrl: '/playroom/quotepilot',
     client: 'Coderon (Internal Product)',
-    year: '2023',
+    year: '2025',
     roles: ['Lead Developer', 'UI/UX Designer', 'Product Manager'],
     servicesDelivered: ['Full-Stack Development', 'SaaS Architecture', 'Database Design', 'UI/UX'],
     // CORRECTIVE ACTION: Added the full case study narrative.

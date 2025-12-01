@@ -47,7 +47,7 @@ const Footer = () => {
           <div className="c-footer__col c-footer__col--links">
             <h4 className="c-footer__col-heading">Products</h4>
             <ul className="c-footer__link-list">
-              <li><a href="https://app.coderon.co.za" target="_blank" rel="noopener noreferrer">QuotePilot SaaS</a></li>
+              <li><a href="https://quotepilot.coderon.co.za/" target="_blank" rel="noopener noreferrer">QuotePilot SaaS</a></li>
             </ul>
           </div>
           <div className="c-footer__col c-footer__col--contact">
