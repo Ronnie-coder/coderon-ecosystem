@@ -1,7 +1,7 @@
 // DEFINITIVE FIX: src/types/global.d.ts
 
 export interface PlayroomProject {
-  id: string; // FIX: ID is a string, not a number, to match the actual data.
+  id: string;
   category: string;
   title: string;
   description: string;
@@ -9,6 +9,8 @@ export interface PlayroomProject {
   tech: string[];
   liveUrl: string;
   caseStudyUrl?: string;
+  // --- ADDED MISSING FIELD BELOW ---
+  clientLogo?: string; 
   client?: string;
   year?: string;
   roles?: string[];
@@ -19,7 +21,7 @@ export interface PlayroomProject {
 }
 
 export interface PlayroomDemo {
-  id: string; // FIX: ID is a string, not a number, to match the actual data.
+  id: string;
   category: string;
   title: string;
   description: string;
