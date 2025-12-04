@@ -1,38 +1,222 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-.c-article-list {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
+/* =========================================
+   1. GLOBAL PAGE LAYOUT (Default = Dark)
+   ========================================= */
+.journal-page {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  // DEFAULT: DARK MODE
+  background-color: #050505; // Deep black/grey
+  color: #ffffff; 
 }
 
-.c-article-list__item {
-  display: block;
-  padding: $spacing-lg;
-  // --- UPDATED: Uses CSS variables ---
-  border: 1px solid var(--border-color);
-  border-radius: $border-radius-md;
-  text-decoration: none;
-  transition: all 0.2s ease;
+/* =========================================
+   2. HERO SECTION
+   ========================================= */
+.journal-hero {
+  text-align: center;
+  margin-bottom: 6rem;
+  padding: 0 $spacing-md;
 
-  &:hover {
-    border-color: var(--primary-gold);
-    transform: translateY(-3px);
-    // --- UPDATED: Uses theme-aware shadow variable ---
-    box-shadow: var(--shadow-card-hover);
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: $spacing-sm;
+    letter-spacing: -0.02em;
+    color: #ffffff; // Force White
+  }
+
+  p {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.6); // Muted White
   }
 }
 
-.c-article-list__title {
-  font-size: 1.5rem;
-  // --- UPDATED: Uses CSS variables ---
-  color: var(--text-primary);
-  margin-bottom: $spacing-sm;
+/* =========================================
+   3. CARD GRID
+   ========================================= */
+.journal-list {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: $spacing-lg;
+  }
 }
 
-.c-article-list__read-more {
-  // --- UPDATED: Uses CSS variables ---
-  color: var(--primary-gold);
-  font-weight: 600;
+/* =========================================
+   4. CARD COMPONENT (Default = Glass/Dark)
+   ========================================= */
+.journal-card-link {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.journal-card {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // DARK MODE STYLES
+  background: rgba(255, 255, 255, 0.05); // Visible Glass
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  &:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-gold, #FFD700);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+
+    .card-read-more {
+      color: var(--primary-gold, #FFD700);
+      padding-left: 8px;
+    }
+  }
+}
+
+// BROWSER HEADER (Dark)
+.card-browser-header {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3); // Darker top bar
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+
+  .browser-dots {
+    display: flex;
+    gap: 6px;
+    span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2); 
+    }
+  }
+}
+
+// CARD CONTENT (Dark)
+.card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .card-meta {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #ffffff; // FORCE WHITE
+    margin-bottom: 12px;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8); // High contrast grey
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .card-read-more {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    transition: all 0.2s ease;
+  }
+}
+
+/* =========================================
+   5. LIGHT MODE OVERRIDES (The Fix)
+   ========================================= */
+// Note: We use :global to pierce CSS modules if necessary, 
+// and check multiple selectors to ensure we catch the theme switch.
+
+:global(body.light-mode), 
+:global([data-theme='light']) {
+  
+  // PAGE BACKGROUND
+  .journal-page {
+    background-color: #f8f9fa; // Clean Off-White
+  }
+
+  // HERO TEXT
+  .journal-hero {
+    h1 { color: #111111; } // PURE BLACK
+    p { color: #555555; }
+  }
+
+  // CARD STYLES
+  .journal-card {
+    background: #ffffff; // Solid White
+    border: 1px solid #e5e5e5; // Light Grey Border
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); // Soft Shadow
+    backdrop-filter: none; // No blur needed on solid white
+
+    &:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); // Deep Shadow
+      border-color: #d1d5db;
+    }
+  }
+
+  // BROWSER HEADER (Light)
+  .card-browser-header {
+    background: #f3f4f6; // Light Grey Header (like Safari)
+    border-bottom: 1px solid #e5e5e5;
+
+    .browser-dots span {
+      background: #d1d5db; // Grey dots
+    }
+  }
+
+  // CARD CONTENT (Light)
+  .card-content {
+    .card-meta {
+      color: #6b7280; // Cool Grey
+    }
+
+    .card-title {
+      color: #111827; // Almost Black
+    }
+
+    .card-description {
+      color: #374151; // Dark Grey for readability
+    }
+
+    .card-read-more {
+      color: #111827; // Dark link
+    }
+  }
 }

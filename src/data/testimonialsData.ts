@@ -5,20 +5,20 @@ export interface Testimonial {
   logoWidth: number;
   logoHeight: number;
   quote: string;
-  authorName: string;      // Added for professional attribution
-  authorRole: string;      // Added for credibility
+  authorName: string;
+  authorRole: string;
   siteUrl: string;
 }
 
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    logoUrl: '/images/gifted-tours-logo.svg',
+    logoUrl: '/images/gifted-tours-logo.png',
     logoAlt: 'Gifted Tours Logo',
     logoWidth: 160,
     logoHeight: 50,
     quote: "I was truly amazed. My website is now running smoothly, I'm able to receive emails, and I've got more reach to customers. I would highly recommend Coderon. I was amazed with the work.",
-    authorName: 'Gifted',
+    authorName: 'Gifted Team',
     authorRole: 'Shuttle & Tour Services',
     siteUrl: 'https://www.giftedtours.co.za',
   },
@@ -29,20 +29,19 @@ export const testimonials: Testimonial[] = [
     logoWidth: 150,
     logoHeight: 50,
     quote: 'Coderon led our complete digital transformation, migrating decades of paper-based processes to a robust web platform. It was more than code; it was about honoring a legacy with purpose-driven technology.',
-    authorName: 'Palmsure Team',
+    authorName: 'Palmsure',
     authorRole: 'Insurance Brokers',
-    siteUrl: 'https://palmsure-coperate-hani.vercel.app/',
+    siteUrl: 'https://www.palmsure.co.za/',
   },
   {
     id: 3,
-    // ACTION REQUIRED: Ensure 'md-travels-logo.png' is in the /public/images directory
-    logoUrl: '/images/md-travels-logo.png', 
+    logoUrl: '/images/md-travels-logo.png',
     logoAlt: 'MD Travels Logo',
     logoWidth: 140,
     logoHeight: 45,
     quote: "We needed more than just a website; we needed a reliable technical partner. Coderon's full-stack expertise delivered a fast, robust platform and continues to provide the critical support we need to grow.",
     authorName: 'MD Travels',
-    authorRole: 'Shuttle & Tour Services',
+    authorRole: 'Corporate Transport',
     siteUrl: 'https://mdtravels.co.za/',
   },
 ];

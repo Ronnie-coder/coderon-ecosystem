@@ -5,7 +5,6 @@
 // =============================================
 
 // -- CSS RESET --
-// A simple reset for consistency across browsers.
 *,
 *::before,
 *::after {
@@ -16,27 +15,30 @@
 
 // -- GLOBAL STYLES --
 html {
+  // 1. Enable Smooth Scrolling by default
   scroll-behavior: smooth;
+  
+  // 2. IRON PROTOCOL: Accessibility Override
+  // If user requests reduced motion in their OS, disable the scroll effect.
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
 
 body {
-  // --- UPDATED: Using CSS variables for dynamic theming ---
   background-color: var(--background-color);
   color: var(--text-primary);
-
-  // SCSS variables for fonts/layout are still valid and used here
   font-family: $font-primary;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; // Crisper text on Mac
   -moz-osx-font-smoothing: grayscale;
   padding-top: $header-height;
 
-  // Added for smooth theme transitions
+  // Smooth Theme Transitions
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 a {
-  // --- UPDATED: Using CSS variables for colors ---
   color: var(--primary-gold);
   text-decoration: none;
   transition: color var(--transition-speed) ease;
@@ -47,14 +49,12 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  // --- UPDATED: Using CSS variables for colors ---
   color: var(--text-primary);
   line-height: 1.2;
   margin-bottom: $spacing-md;
 }
 
 p {
-  // --- UPDATED: Using CSS variables for colors ---
   margin-bottom: $spacing-md;
   color: var(--text-secondary);
 }

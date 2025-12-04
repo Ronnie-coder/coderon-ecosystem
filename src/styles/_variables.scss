@@ -9,10 +9,18 @@ $spacing-lg: 2rem;
 $spacing-xl: 4rem;
 $spacing-xxl: 8rem;
 
+// -- BORDER RADIUS (Updated to fix build errors) --
 $border-radius-sm: 4px;
 $border-radius-md: 8px;
+$border-radius-lg: 16px; // Added this to fix the undefined variable error
+
 $container-max-width: 1200px;
 $header-height: 80px;
+
+// -- SASS COLOR VARIABLES (Added to fix build errors & support mixins) --
+$brand-primary: #D4AF37;
+$text-primary-static: #111111; 
+$text-secondary-static: #555555;
 
 // -- DYNAMIC COLOR THEME SYSTEM (Using CSS Variables) --
 :root, [data-theme="light"] {
@@ -28,8 +36,10 @@ $header-height: 80px;
 
   --primary-gold: #D4AF37;
   --primary-gold-hover: #E7C668;
-  --primary-gold-rgb: 212, 175, 55;
+  --primary-gold-rgb: 212, 175, 55; // Used for transparency
   --text-on-gold: #111111;
+  
+  --transition-speed: 0.3s;
 }
 
 [data-theme="dark"] {

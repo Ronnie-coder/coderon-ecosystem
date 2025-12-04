@@ -1,52 +1,73 @@
-// src/styles/_hero.scss (REPLACE ENTIRE FILE)
 @use 'variables' as *;
 @use 'mixins' as *;
 
 .c-hero {
-  min-height: 100vh;
+  min-height: 90vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-xl $spacing-lg;
+  // Using your specific spacing variables
+  padding: $spacing-xxl $spacing-md; 
   text-align: center;
   overflow: hidden;
+  position: relative;
+  
+  // FIX: Used CSS Variable RGB for transparency. This works with your variables file.
+  background: radial-gradient(circle at 50% 50%, rgba(var(--primary-gold-rgb), 0.08) 0%, transparent 70%);
 
   &__container {
-    max-width: 900px;
+    max-width: 1000px;
+    margin: 0 auto;
+    z-index: 2;
+    padding: 0 $spacing-sm;
   }
 
   &__title {
-    font-size: clamp(2.5rem, 5vw, 4.2rem);
-    font-weight: 700;
+    // Responsive font sizing
+    font-size: clamp(2.5rem, 5vw, 4.5rem); 
+    font-weight: 800;
     line-height: 1.1;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     color: var(--text-primary);
-    span { color: var(--primary-gold); }
+    letter-spacing: -0.02em;
+
+    span { 
+      color: var(--primary-gold); 
+      display: inline-block;
+    }
   }
 
   &__subtitle {
-    font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
     color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto $spacing-lg auto;
+    max-width: 800px;
+    margin: 0 auto $spacing-xl auto;
+    line-height: 1.6;
+    font-weight: 400;
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
   }
 
   &__cta-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: $spacing-md;
-    margin-top: $spacing-lg;
-
-    // --- FINAL STRIKE: Specificity override to win the war ---
-    // This ensures that any .cta-button inside this component
-    // is styled correctly, defeating any residual generic styles.
+    
+    // Ensure generic styles don't override these
     .cta-button {
       @include cta-button;
+      min-width: 180px;
     }
+    
     .cta-button-secondary {
       @include cta-button-secondary;
+      min-width: 180px;
     }
   }
 }

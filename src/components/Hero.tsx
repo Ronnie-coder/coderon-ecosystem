@@ -1,4 +1,3 @@
-// CORRECTED: src/components/Hero.tsx
 "use client";
 
 import { motion, Variants } from 'framer-motion';
@@ -31,20 +30,22 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
+          {/* HEADLINE: Precise Brand Statement */}
           <motion.h1 className="c-hero__title" variants={textItemVariants}>
-            Building Africa&apos;s Future with <span>Code & Purpose</span>
+            Driving Africa&apos;s <span>Digital Future</span>
           </motion.h1>
 
+          {/* SUBTITLE: The "How" */}
           <motion.p className="c-hero__subtitle" variants={textItemVariants}>
-            We design and build world-class web applications and AI systems that empower African businesses to thrive on the global stage.
+            With world-class, robust technology solutions. We specialize in <strong>Web Development</strong>, <strong>AI Integration</strong>, and <strong>Custom Software</strong> built for scale.
           </motion.p>
 
           <motion.div className="c-hero__cta-group" variants={textItemVariants}>
-            <Link href="/services" className="cta-button">
-              Explore Our Services
+            <Link href="/contact" className="cta-button">
+              Free Consultation
             </Link>
-            <Link href="/playroom" className="cta-button-secondary">
-              View Our Work
+            <Link href="/services" className="cta-button-secondary">
+              Explore Services
             </Link>
           </motion.div>
         </motion.div>

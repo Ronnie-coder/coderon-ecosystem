@@ -1,11 +1,12 @@
-// src/styles/_services-page.scss
 @use 'variables' as *;
 @use 'mixins' as *;
 
+// --- PAGE CONTAINER & HEADER ---
 .c-page-container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: $spacing-xl $spacing-lg;
+  min-height: 100vh;
 }
 
 .c-page-header {
@@ -13,215 +14,261 @@
   margin-bottom: $spacing-xl;
   padding-bottom: $spacing-lg;
   border-bottom: 1px solid var(--border-color);
-  
+
   h1 {
     font-size: 3rem;
-    color: var(--text-primary);
+    color: var(--text-primary); 
     margin-bottom: $spacing-sm;
+    
     @media (max-width: 768px) {
       font-size: 2.5rem;
     }
   }
+
   p {
     font-size: 1.2rem;
     color: var(--text-secondary);
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 }
 
-.c-service-item {
-  margin-bottom: $spacing-xl;
-  padding-bottom: $spacing-xl;
-  border-bottom: 1px solid var(--border-color);
-  
-  &:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+// --- SERVICES GRID ---
+.c-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-xl;
+  margin: $spacing-xl 0;
+}
+
+.c-service-card {
+  background-color: var(--surface-color); 
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+
+    .c-service-card__icon-wrapper {
+      color: var(--primary-gold);
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .c-service-card__arrow {
+      transform: translateX(5px);
+    }
   }
-  
-  &__title {
-    font-size: 2rem;
-    color: var(--primary-gold);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
     margin-bottom: $spacing-md;
+  }
+
+  &__icon-wrapper {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius-sm;
+    background: var(--background-color);
+    transition: all 0.3s ease;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
   }
 
   &__description {
     color: var(--text-secondary);
-    margin-bottom: $spacing-lg;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
   }
 
-  &__benefits-list {
+  &__benefits-preview {
     list-style: none;
-    padding-left: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: $spacing-md;
+    padding: 0;
+    margin: 0 0 auto 0;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    font-size: 0.85rem;
+    
+    li {
+      margin-bottom: $spacing-xs;
+    }
   }
 
-  // --- ENHANCEMENT: Updated benefit styles to support icons ---
-  &__benefit {
+  &__footer {
+    margin-top: $spacing-lg;
+    padding-top: $spacing-md;
+    border-top: 1px solid var(--border-color);
+  }
+
+  &__link {
     display: flex;
     align-items: center;
-    gap: $spacing-sm;
+    gap: $spacing-xs;
     color: var(--text-primary);
-    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
 
-    // The old ::before is now replaced by a dedicated icon class
+    &:hover {
+      color: var(--primary-gold);
+    }
   }
-
-  &__benefit-icon {
-    color: var(--primary-gold);
-    font-size: 1.2rem;
-    flex-shrink: 0; // Prevent icon from shrinking
+  
+  &__arrow {
+    transition: transform 0.2s ease;
   }
 }
 
+// --- CTA SECTION (INDEX PAGE) ---
 .c-page-cta {
   text-align: center;
   margin-top: $spacing-xl;
   padding: $spacing-xl;
   background-color: var(--surface-color);
   border-radius: $border-radius-md;
+  border: 1px solid var(--border-color);
   
   h2 {
     font-size: 2rem;
     color: var(--text-primary);
+    margin-bottom: $spacing-sm;
   }
 
   p {
     color: var(--text-secondary);
-    margin: $spacing-sm auto $spacing-lg auto;
+    margin: 0 auto $spacing-lg auto;
     max-width: 500px;
   }
 
-  .cta-button {
-    @include cta-button;
+  // FIXED: BUTTON STYLING (GOLD)
+  .btn-primary {
+    display: inline-block;
+    background-color: var(--primary-gold); // Always Gold
+    color: #000000;                      // Always Black text
+    padding: 14px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      opacity: 0.95;
+    }
   }
 }
 
-// --- NEW: Styles for the Service Detail Page ([slug]) ---
-.service-detail-page {
-  padding-bottom: $spacing-xxl;
-}
-
+// --- DETAIL PAGE SPECIFICS ---
 .service-hero {
   text-align: center;
   padding: $spacing-xxl $spacing-lg;
   background-color: var(--surface-color);
   border-bottom: 1px solid var(--border-color);
 
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: $spacing-lg;
+    color: var(--text-secondary);
+    text-decoration: none;
+    
+    &:hover { color: var(--primary-gold); }
+  }
+
   h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: var(--text-primary);
-    margin-bottom: $spacing-sm;
   }
   .subtitle {
-    font-size: 1.25rem;
     color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto;
   }
 }
 
 .service-content {
-  padding-top: $spacing-xxl;
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 $spacing-lg;
-  }
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: $spacing-xxl;
-  align-items: flex-start;
-
-  @media (max-width: 992px) {
-    grid-template-columns: 1fr;
-    gap: $spacing-xl;
-  }
+  padding-top: $spacing-xl;
 }
 
 .service-description-prose {
-  line-height: 1.8;
   color: var(--text-secondary);
-
-  h2 {
-    font-size: 2rem;
-    color: var(--text-primary);
-    margin-bottom: $spacing-md;
-  }
-  
-  p {
-    margin-bottom: $spacing-md;
-  }
+  h2 { color: var(--text-primary); }
 }
 
 .service-benefits-panel {
-  position: sticky;
-  top: 120px; // Adjust based on your navbar height
-  background-color: var(--surface-color);
+  background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: $border-radius-md;
   padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  position: sticky;
+  top: 100px; // Stick to top on scroll
 
   h3 {
-    font-size: 1.5rem;
-    margin-bottom: $spacing-lg;
-    padding-bottom: $spacing-md;
-    border-bottom: 1px solid var(--border-color);
     color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-sm;
   }
-
+  
   .benefits-list {
     list-style: none;
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
   }
 
   .benefit-item {
     display: flex;
-    align-items: center;
     gap: $spacing-sm;
-    color: var(--text-primary);
-  }
-
-  .benefit-icon {
-    color: var(--primary-gold);
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-}
-
-.cta-section {
-  text-align: center;
-  margin-top: $spacing-xxl;
-  padding-top: $spacing-xxl;
-  border-top: 1px solid var(--border-color);
-
-  .container {
-    max-width: 800px;
-  }
-
-  h2 {
-    font-size: 2.5rem;
-    color: var(--text-primary);
-  }
-
-  p {
+    margin-bottom: $spacing-md;
     color: var(--text-secondary);
-    margin: $spacing-sm auto $spacing-lg auto;
-    max-width: 500px;
-    font-size: 1.1rem;
+    
+    .icon-box { 
+      color: var(--primary-gold); 
+      margin-top: 2px;
+    }
+  }
+
+  .cta-wrapper {
+    margin-top: $spacing-lg;
+  }
+
+  // FIXED: FULL WIDTH BUTTON (GOLD)
+  .btn-full-width {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: var(--primary-gold); // Always Gold
+    color: #000000;                      // Always Black Text
+    padding: 14px;
+    border-radius: $border-radius-md;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
   }
 }

@@ -68,7 +68,7 @@ export const projects: Project[] = [
     title: 'A Free Quote System for African SMEs',
     tags: ['SaaS', 'Next.js', 'Supabase', 'PostgreSQL'],
     description: 'To empower African entrepreneurs, we built QuotePilot: a smart, simple, and free quote generator. This production-ready tool showcases our ability to build, ship, and maintain our own software products.',
-    imageUrl: '/images/quotepilot-showcase-v2.png',
+    imageUrl: '/images/quotepilot-showcase.png',
     liveUrl: 'https://quotepilot.coderon.co.za/',
     year: 2025,
     // REFINED ROLES based on SPEC:
@@ -96,7 +96,7 @@ export const projects: Project[] = [
     description: "Developed a high-performance booking and information platform using Svelte, featuring multi-language support to cater to a diverse clientele and seamless deployment for maximum uptime.",
     imageUrl: '/images/md-travels-showcase.png',
     liveUrl: 'https://mdtravels.co.za/',
-    year: 2024,
+    year: 2025,
     // REFINED ROLES based on SPEC:
     roles: [
       'Full-Stack Developer',

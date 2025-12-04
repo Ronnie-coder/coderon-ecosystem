@@ -1,40 +1,114 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-.c-page-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: $spacing-xl $spacing-lg;
+/* =========================================
+   1. GLOBAL PAGE LAYOUT
+   ========================================= */
+.impact-page {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 9rem; // Clears fixed navbar
+  padding-bottom: 6rem;
+  
+  // THEME ADAPTIVE BACKGROUNDS
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.c-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+/* =========================================
+   2. HEADER
+   ========================================= */
 .c-page-header {
   text-align: center;
-  margin-bottom: $spacing-xl;
+  margin-bottom: 5rem;
   padding-bottom: $spacing-lg;
-  border-bottom: 1px solid var(--border-color);
-  h1 { font-size: 3rem; color: var(--text-primary); margin-bottom: $spacing-sm; @media (max-width: 768px) { font-size: 2.5rem; }}
-  p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin-left: auto; margin-right: auto; }
-}
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 
-.c-project-card {
-  background-color: var(--surface-color);
-  border-radius: $border-radius-md;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  margin-bottom: $spacing-xl * 1.5;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  
-  &:hover { 
-    box-shadow: var(--shadow-strong); 
-    transform: translateY(-4px); 
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: $spacing-sm;
+    color: var(--text-primary); // Visible in both modes
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 }
 
+/* =========================================
+   3. PROJECT CARD (Adaptive)
+   ========================================= */
+.c-project-card {
+  // ADAPTIVE SURFACE COLOR
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  margin-bottom: 5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover { 
+    transform: translateY(-5px); 
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+  }
+}
+
+// BROWSER WINDOW DECORATION
+.c-project-browser-header {
+  padding: 12px 16px;
+  // Neutral tint works on both Light (Grey) and Dark (Charcoal) backgrounds
+  background-color: rgba(125, 125, 125, 0.1); 
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+
+  .browser-dots {
+    display: flex;
+    gap: 8px;
+    span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      // Default grey dots
+      background-color: var(--border-color); 
+      transition: background 0.3s ease;
+    }
+  }
+}
+
+// Colors appear on hover
+.c-project-card:hover .browser-dots {
+  span:nth-child(1) { background: #ff5f56; }
+  span:nth-child(2) { background: #ffbd2e; }
+  span:nth-child(3) { background: #27c93f; }
+}
+
 .c-project-card__image {
+  width: 100%;
+  position: relative;
+  
   img { 
     width: 100%; 
     height: auto; 
     display: block; 
+    // Remove fade mask to ensure visibility in light mode
+    border-bottom: 1px solid var(--border-color);
   }
 }
 
@@ -43,10 +117,10 @@
   flex-wrap: wrap;
   padding: $spacing-xl;
   gap: $spacing-xl;
-
+  
   @media (max-width: 900px) {
+    flex-direction: column;
     padding: $spacing-lg;
-    gap: $spacing-lg;
   }
 }
 
@@ -56,42 +130,66 @@
 }
 
 .c-project-card__client { 
+  font-family: 'Roboto Mono', monospace;
   color: var(--primary-gold); 
   font-weight: 600; 
   margin-bottom: $spacing-sm; 
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
 }
 
 .c-project-card__title { 
-  font-size: 1.8rem; 
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem; 
   color: var(--text-primary); 
   margin-bottom: $spacing-md; 
+  line-height: 1.2;
 }
 
 .c-project-card__description { 
   color: var(--text-secondary); 
   margin: 0 0 $spacing-lg 0; 
   line-height: 1.7;
+  font-size: 1.05rem;
 }
 
 .cta-button {
-  @include cta-button;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  
+  // Button Inversion Logic
+  background-color: var(--text-primary);
+  color: var(--background-color);
+  
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--primary-gold);
+    color: #000;
+    transform: translateY(-2px);
+  }
 }
 
+// METADATA SIDEBAR
 .c-project-card__details {
   flex: 1;
   min-width: 220px;
   padding-left: $spacing-xl;
   border-left: 1px solid var(--border-color);
 
-  @media (max-width: 768px) {
-    flex-basis: 100%;
+  @media (max-width: 900px) {
     padding-left: 0;
-    margin-top: $spacing-lg;
-    padding-top: $spacing-lg;
     border-left: none;
     border-top: 1px solid var(--border-color);
+    padding-top: $spacing-lg;
+    display: flex;
+    gap: $spacing-xl;
+    flex-wrap: wrap;
   }
 }
 
@@ -101,17 +199,19 @@
 }
 
 .c-project-card__meta-heading {
+  font-family: 'Roboto Mono', monospace;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: $spacing-sm;
+  margin-bottom: 8px;
 }
 
 .c-project-card__meta-content {
   font-size: 1rem;
   color: var(--text-primary);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
+  margin-bottom: 4px;
 }

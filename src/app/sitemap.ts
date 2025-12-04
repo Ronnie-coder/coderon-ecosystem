@@ -1,12 +1,11 @@
-// src/app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { services } from '@/data/servicesData'; // Import your services data
+import { services } from '@/data/servicesData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.coderon.co.za';
-  const staticContentDate = '2025-10-28'; // Update to a recent date
+  const staticContentDate = '2025-12-03'; // Updated to Current Mission Date
 
-  // Map over your services to create dynamic URLs
+  // Map dynamic Service URLs
   const serviceUrls = services.map(service => ({
     url: `${baseUrl}/services/${service.slug}`,
     lastModified: staticContentDate,
@@ -16,10 +15,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/`, lastModified: staticContentDate },
     { url: `${baseUrl}/about`, lastModified: staticContentDate },
     { url: `${baseUrl}/services`, lastModified: staticContentDate },
-    ...serviceUrls, // Add the dynamic service URLs
+    // --- DYNAMIC SERVICES ---
+    ...serviceUrls,
+    
+    // --- KEY SECTIONS ---
     { url: `${baseUrl}/impact`, lastModified: staticContentDate },
-    { url: `${baseUrl}/contact`, lastModified: staticContentDate },
     { url: `${baseUrl}/playroom`, lastModified: staticContentDate },
+    { url: `${baseUrl}/journal`, lastModified: staticContentDate }, // ADDED: Critical for SEO
+    { url: `${baseUrl}/contact`, lastModified: staticContentDate },
+    
+    // --- LEGAL ---
     { url: `${baseUrl}/privacy-policy`, lastModified: staticContentDate },
     { url: `${baseUrl}/terms-of-service`, lastModified: staticContentDate },
   ]

@@ -1,16 +1,97 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// ... (c-contact__wrapper, __info, __details, __whatsapp-btn styles remain the same) ...
-.c-contact__wrapper { max-width: $container-max-width; margin: $spacing-xl auto 0; display: grid; grid-template-columns: 1fr 1.25fr; gap: $spacing-xl * 1.5; @media (max-width: 900px) { grid-template-columns: 1fr; gap: $spacing-xl; } }
-.c-contact__info { h2 { font-size: 2rem; font-weight: 600; color: var(--text-primary); margin-bottom: $spacing-md; } p { color: var(--text-secondary); margin-bottom: $spacing-lg; line-height: 1.7; } }
-.c-contact__details { list-style: none; padding: 0; margin-bottom: $spacing-lg; li { color: var(--text-secondary); margin-bottom: $spacing-md; display: flex; align-items: center; gap: $spacing-sm; span { color: var(--primary-gold); font-size: 1.2rem; flex-shrink: 0; } } }
-.c-contact__whatsapp-btn { display: inline-flex; align-items: center; gap: $spacing-sm; background-color: #25D366; color: #fff !important; padding: $spacing-md $spacing-lg; border-radius: $border-radius-md; font-weight: bold; transition: background-color 0.3s ease, transform 0.3s ease; text-decoration: none; svg { width: 24px; height: 24px; } &:hover { background-color: #1DAE54; transform: translateY(-3px); } }
+.c-contact {
+  padding: $spacing-xxl 0;
+  background-color: var(--surface-color); // Ensure contrast against page bg
+}
+
+.c-contact__wrapper {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: $spacing-xl * 2; // Increased gap for breathability
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+  }
+}
+
+.c-contact__info {
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    line-height: 1.7;
+    font-size: 1.1rem;
+  }
+}
+
+.c-contact__details {
+  list-style: none;
+  padding: 0;
+  margin-bottom: $spacing-xl;
+
+  li {
+    color: var(--text-primary); // Higher contrast for info
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-weight: 500;
+
+    .icon {
+      color: var(--primary-gold);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.c-contact__whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  background-color: #25D366; // WhatsApp Brand Green
+  color: #fff !important;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2);
+
+  &:hover {
+    background-color: #1DAE54;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 211, 102, 0.3);
+  }
+}
+
+// --- FORM STYLES ---
 
 .c-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
+  gap: $spacing-lg;
+  background: var(--surface-color);
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: var(--shadow-md); // Subtle lift for the form container
+  border: 1px solid var(--border-color);
 }
 
 .c-form__group {
@@ -19,13 +100,15 @@
 }
 
 .c-form__label {
-  color: var(--text-secondary);
-  margin-bottom: $spacing-sm;
-  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: $spacing-xs;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
-.c-form__input, .c-form__textarea {
-  background-color: var(--surface-color);
+.c-form__input, 
+.c-form__textarea {
+  background-color: var(--background-color); // Slightly different from surface for input depth
   border: 1px solid var(--border-color);
   border-radius: $border-radius-md;
   padding: $spacing-md;
@@ -33,28 +116,39 @@
   font-size: 1rem;
   font-family: $font-primary;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  -webkit-appearance: none; // Removes default OS styling
-  -moz-appearance: none;
-  appearance: none;
+  width: 100%;
+
+  // Placeholder styling
+  &::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
 
   &:focus {
     outline: none;
     border-color: var(--primary-gold);
-    box-shadow: 0 0 0 3px rgba(var(--primary-gold-rgb), 0.2);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15); // Gold focus ring
   }
 }
 
-// NEW: Wrapper for custom select arrow
+// Wrapper for custom select arrow
 .c-form__select-wrapper {
   position: relative;
+  
   &::after {
-    content: '▼';
+    content: '▼'; // Simple arrow, or use an SVG background in real production
+    font-size: 0.8rem;
     position: absolute;
     top: 50%;
     right: $spacing-md;
     transform: translateY(-50%);
-    color: var(--text-secondary);
+    color: var(--primary-gold);
     pointer-events: none;
+  }
+
+  select {
+    appearance: none; // Hide default arrow
+    cursor: pointer;
   }
 }
 
@@ -64,48 +158,62 @@
 }
 
 .c-form__button {
-  @include cta-button; 
-  border: none;
-  cursor: pointer;
-  align-self: flex-start;
+  // IRON PROTOCOL: Gold/Black Standard
+  @include cta-button;
+  background-color: var(--primary-gold);
+  color: #000000;
+  border: 1px solid var(--primary-gold);
   
+  width: 100%; // Full width on mobile looks better for forms
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  font-weight: 700;
+  margin-top: $spacing-sm;
+  
+  &:hover {
+    background-color: var(--primary-gold);
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+  }
+
   &:disabled {
     background-color: var(--border-color);
     color: var(--text-secondary);
+    border-color: var(--border-color);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
   }
+  
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
 }
 
-// NEW: Styles for your dynamic form messages
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .c-form__message {
   padding: $spacing-md;
   border-radius: $border-radius-md;
   margin-top: $spacing-sm;
   font-weight: 500;
+  text-align: center;
+  font-size: 0.95rem;
   
   &--success {
-    background-color: rgba(var(--primary-gold-rgb), 0.1);
-    color: var(--primary-gold);
-    border: 1px solid var(--primary-gold);
+    background-color: rgba(39, 174, 96, 0.1); // Green tint
+    color: #27ae60;
+    border: 1px solid #27ae60;
   }
   
   &--error {
-    background-color: rgba(var(--negative-color-rgb), 0.1);
-    color: var(--negative-color);
-    border: 1px solid var(--negative-color);
+    background-color: rgba(231, 76, 60, 0.1); // Red tint
+    color: #c0392b;
+    border: 1px solid #c0392b;
   }
-}
-
-// NEW: Replaces the old success message style for better reusability
-.c-form__success-message {
-  background-color: var(--surface-color);
-  border-left: 4px solid var(--primary-gold);
-  border-radius: $border-radius-md;
-  padding: $spacing-lg;
-  text-align: center;
-  svg { color: var(--primary-gold); font-size: 2.5rem; margin-bottom: $spacing-md; }
-  h3 { color: var(--text-primary); font-size: 1.5rem; margin-bottom: $spacing-sm; }
-  p { color: var(--text-secondary); line-height: 1.6; }
 }

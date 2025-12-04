@@ -1,130 +1,127 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+// --- CONTAINER ---
 .c-testimonials {
-  padding: $spacing-xl * 1.5 $spacing-lg;
-  background-color: var(--surface-color);
-  text-align: center;
+  padding: $spacing-xxl 0;
+  background-color: var(--background-color); // Follows theme
+  color: var(--text-primary);
 }
 
+// --- HEADER ---
 .c-testimonials__header {
+  text-align: center;
   margin-bottom: $spacing-xl;
-  max-width: 700px;
+  padding: 0 $spacing-md;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .c-testimonials__heading {
   font-size: 2.5rem;
-  color: var(--text-primary);
+  font-weight: 700;
   margin-bottom: $spacing-sm;
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
+  color: var(--text-primary); // Fixes visibility
 }
 
 .c-testimonials__subheading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
+// --- GRID ---
 .c-testimonials__grid {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 $spacing-md;
   display: grid;
-  // REFINEMENT: Responsive grid that handles 2 or 3 items gracefully
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: $spacing-xl;
+  gap: $spacing-lg;
 }
 
+// --- CARD ---
 .c-testimonial-card {
-  background-color: var(--background-color);
+  // Use surface color (White in light mode, Dark Grey in dark mode)
+  background-color: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: $border-radius-md;
+  border-radius: $border-radius-lg;
   padding: $spacing-xl;
   display: flex;
   flex-direction: column;
-  text-align: left;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
   }
 
+  // LOGO AREA
   &__logo-wrapper {
-    height: 60px;
+    height: 50px;
     margin-bottom: $spacing-lg;
     display: flex;
     align-items: center;
-  }
-
-  &__logo {
-    object-fit: contain;
-    // REFINEMENT: Adds theme awareness to logos for consistency
-    [data-theme="dark"] & {
-      filter: brightness(0) invert(1);
-      opacity: 0.8;
+    
+    // Optional: Only invert if you have a specific class for dark mode on body
+    // Otherwise, assume logos are designed to work on both or are neutral
+    img {
+      max-height: 100%;
+      width: auto;
     }
   }
-  
+
+  // QUOTE
   &__quote {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: var(--text-secondary);
+    // Ensure text contrasts with the card background
+    color: var(--text-primary); 
     margin: 0 0 $spacing-lg 0;
     flex-grow: 1;
     font-style: italic;
-    
-    &::before {
-      content: '“';
-      font-size: 3.5rem;
-      color: var(--primary-gold);
-      font-weight: bold;
-      display: block;
-      line-height: 1;
-      margin-left: -10px;
-    }
   }
 
-  // --- NEW: STYLES FOR AUTHOR ATTRIBUTION ---
+  // AUTHOR INFO
   &__author-info {
-    margin-bottom: $spacing-lg;
+    margin-top: auto;
     padding-top: $spacing-md;
     border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__author-details {
+    display: flex;
+    flex-direction: column;
   }
 
   &__author-name {
     color: var(--text-primary);
     font-weight: 600;
+    font-size: 1rem;
     margin: 0;
   }
 
   &__author-role {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin: 0;
   }
-  // --- END NEW STYLES ---
 
   &__link {
     color: var(--primary-gold);
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-    align-self: flex-start; // Ensures link stays at the bottom left
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
     
     &:hover {
-      opacity: 0.8;
+      transform: translateX(3px);
     }
-  }
-}
-
-// Retained for backward compatibility, but auto-fit is now primary
-@media (max-width: 900px) {
-  .c-testimonials__grid {
-    gap: $spacing-lg;
   }
 }

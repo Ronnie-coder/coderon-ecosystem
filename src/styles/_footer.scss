@@ -1,4 +1,3 @@
-// src/styles/_footer.scss
 @use 'variables' as *;
 @use 'mixins' as *;
 
@@ -18,7 +17,6 @@
   
   &__grid {
     display: grid;
-    // --- ADJUSTED: Slightly reduced min-width to better fit 4 columns on some screens ---
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: $spacing-xl;
     padding-bottom: $spacing-xl;
@@ -61,6 +59,39 @@
     max-width: 320px;
     margin-bottom: $spacing-lg;
   }
+  
+  // New helper text for the contact column
+  &__text {
+    margin-bottom: $spacing-md;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  // --- NEW: Gold "Get Proposal" CTA ---
+  &__cta {
+    @include cta-button;
+    
+    // IRON PROTOCOL: Gold/Black
+    background-color: var(--primary-gold);
+    color: #000000;
+    border: 1px solid var(--primary-gold);
+    
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: $spacing-lg; // Space before standard contact links
+    text-decoration: none;
+    
+    &:hover {
+      background-color: var(--primary-gold);
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      text-decoration: none; // Prevent underline from generic link styles
+    }
+  }
 
   &__social {
     display: flex;
@@ -92,6 +123,15 @@
       &:hover {
         color: var(--text-primary);
         text-decoration: underline;
+      }
+    }
+    
+    &--contact {
+      // Add a top border or margin to separate from the button if needed,
+      // currently just flows naturally.
+      a {
+        font-family: var(--font-roboto-mono), monospace; // Tech feel for emails/numbers
+        font-size: 0.85rem;
       }
     }
   }
@@ -142,6 +182,7 @@
 
   @media (max-width: 768px) {
     padding-top: $spacing-lg;
+    // Padding bottom accomodates floating FABs if necessary
     padding-bottom: calc(60px + #{$spacing-lg});
 
     &__grid {

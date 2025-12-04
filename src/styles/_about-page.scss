@@ -1,29 +1,76 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 
-// --- NEW: Founder Section Styles ---
+// --- PAGE CONTAINER ---
+.about-page {
+  width: 100%;
+  min-height: 100vh;
+  // Relies on global theme variables for background/text
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.c-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+}
+
+// --- HEADER ---
+.c-page-header {
+  text-align: center;
+  margin-bottom: $spacing-xxl;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: $spacing-sm;
+    color: var(--text-primary);
+    
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+}
+
+// --- FOUNDER SECTION ---
 .c-founder-section {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: $spacing-xl;
   align-items: center;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-xxl;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    gap: $spacing-lg;
+    text-align: center;
   }
 }
 
-.c-founder-section__image {
+.c-founder-image-wrapper {
+  position: relative;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: var(--shadow-strong);
+  
   img {
     width: 100%;
     height: auto;
-    border-radius: $border-radius-md;
-    box-shadow: var(--shadow-strong);
+    display: block;
+    border-radius: $border-radius-lg;
   }
 }
 
-.c-founder-section__content {
+.c-founder-content {
   h2 {
     font-size: 2rem;
     color: var(--text-primary);
@@ -31,48 +78,51 @@
   }
   
   blockquote {
-    border-left: 3px solid var(--primary-gold);
-    padding-left: $spacing-md;
+    border-left: 4px solid var(--primary-gold);
+    padding-left: $spacing-lg;
     margin: 0 0 $spacing-lg 0;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--text-primary);
+    text-align: left; // Keep quote left-aligned even on mobile for readability
+    
+    p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-primary); 
+      margin-bottom: $spacing-sm;
+      line-height: 1.6;
+    }
 
     footer {
-      font-style: normal;
       font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-top: $spacing-sm;
+      color: var(--primary-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
     }
   }
 
-  p {
-    font-size: 1.1rem;
+  .founder-text {
+    font-size: 1.05rem;
     line-height: 1.8;
     color: var(--text-secondary);
-    margin-bottom: $spacing-lg;
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-bottom: $spacing-md;
+    text-align: left; // Improves readability for long text
   }
 }
 
-// --- REFINED: Values Section Styles ---
+// --- VALUES SECTION ---
 .c-values-section {
-  margin-top: $spacing-xl * 1.5;
-  padding-top: $spacing-xl;
-  border-top: 1px solid var(--border-color);
+  margin-bottom: $spacing-xxl;
   
   h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--text-primary);
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-xl;
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: $spacing-lg;
   }
 }
@@ -81,31 +131,41 @@
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
   border-radius: $border-radius-md;
-  padding: $spacing-lg;
+  padding: $spacing-xl;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+    
+    .c-value-card__icon {
+      background-color: var(--primary-gold);
+      color: #000;
+    }
   }
 
-  // NEW: Styled icon
   &__icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(var(--primary-gold-rgb), 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    // Icon background: light in light mode, dark in dark mode
+    background-color: var(--background-color); 
     color: var(--primary-gold);
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-radius: 50%;
     margin-bottom: $spacing-md;
+    transition: all 0.3s ease;
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     color: var(--text-primary);
     margin-bottom: $spacing-sm;
   }
@@ -113,7 +173,51 @@
   p {
     font-size: 1rem;
     line-height: 1.6;
-    margin-bottom: 0;
     color: var(--text-secondary);
+  }
+}
+
+// --- CTA SECTION ---
+.c-page-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface-color);
+  border-radius: $border-radius-lg;
+  border: 1px solid var(--border-color);
+
+  h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // FIXED: BUTTON STYLING (GOLD STANDARD)
+  .cta-button {
+    display: inline-block;
+    padding: 14px 35px;
+    
+    // Always Gold Background, Always Black Text
+    background-color: var(--primary-gold); 
+    color: #000000;      
+    
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      opacity: 0.95;
+    }
   }
 }

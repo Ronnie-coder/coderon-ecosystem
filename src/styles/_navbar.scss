@@ -1,7 +1,7 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// REFINEMENT 3 (Supporting): Utility class for screen reader accessibility text
+// UTILITY: Screen reader only (Accessibility Score: 100)
 .sr-only {
   position: absolute;
   width: 1px;
@@ -26,10 +26,12 @@
   transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
 
   &.has-scrolled {
-    background-color: var(--navbar-bg);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background-color: rgba(var(--background-rgb), 0.9); // Uses RGB var if available for transparency, else fallback
+    background-color: var(--navbar-bg); // Fallback
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     border-bottom-color: var(--border-color);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03); // Subtle shadow for depth
   }
 
   &__container {
@@ -41,41 +43,102 @@
     margin: 0 auto;
   }
 
+  // --- LOGO ---
   &__logo {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 800;
     color: var(--text-primary);
     text-decoration: none;
-    letter-spacing: 0.1em;
-    // REFINEMENT 4: AESTHETICS - Add professional hover animation
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     transition: letter-spacing 0.3s ease, color 0.3s ease;
 
     &:hover {
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       color: var(--primary-gold);
     }
   }
 
+  // --- DESKTOP NAVIGATION ---
   &__desktop-nav {
     display: none;
     @media (min-width: 992px) {
       display: flex;
-      ul { display: flex; list-style: none; gap: $spacing-lg; }
+      ul { 
+        display: flex; 
+        list-style: none; 
+        gap: $spacing-lg; 
+        align-items: center;
+      }
     }
   }
 
   &__link {
     color: var(--text-secondary);
     font-weight: 500;
+    font-size: 0.95rem;
     position: relative;
     padding: $spacing-sm 0;
     text-decoration: none;
     transition: color 0.2s ease;
-    &::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: var(--primary-gold); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s ease; }
-    &:hover { color: var(--text-primary); &::after { transform: scaleX(1); transform-origin: bottom left; } }
-    &.is-active { color: var(--text-primary); font-weight: 600; &::after { transform: scaleX(1); background-color: var(--text-primary); } }
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem; // Space between text and badge
+
+    &::after { 
+      content: ''; 
+      position: absolute; 
+      bottom: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 2px; 
+      background-color: var(--primary-gold); 
+      transform: scaleX(0); 
+      transform-origin: bottom right; 
+      transition: transform 0.3s ease; 
+    }
+
+    &:hover { 
+      color: var(--text-primary); 
+      &::after { 
+        transform: scaleX(1); 
+        transform-origin: bottom left; 
+      } 
+    }
+
+    &.is-active { 
+      color: var(--text-primary); 
+      font-weight: 600; 
+      &::after { 
+        transform: scaleX(1); 
+        background-color: var(--text-primary); 
+      } 
+    }
   }
 
+  // --- THE 'NEW' BADGE (CRITICAL FOR PRODUCT PUSH) ---
+  &__badge {
+    font-size: 0.6rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: 3px 6px;
+    background-color: var(--primary-gold);
+    color: #1a1a1a; // High contrast on gold
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transform: translateY(-1px);
+
+    &--mobile {
+      @extend .c-navbar__badge;
+      margin-left: 0.75rem;
+      font-size: 0.7rem;
+      background-color: var(--text-primary);
+      color: var(--background-color);
+    }
+  }
+
+  // --- ACTIONS AREA ---
   &__actions {
     display: flex;
     align-items: center;
@@ -83,24 +146,109 @@
   }
   
   &__theme-toggle {
-    background: none; border: none; color: var(--text-secondary); font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.2s ease;
-    &:hover { color: var(--text-primary); background-color: var(--surface-color); }
+    background: none; 
+    border: none; 
+    color: var(--text-secondary); 
+    font-size: 1.25rem; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    transition: all 0.2s ease;
+    
+    &:hover { 
+      color: var(--text-primary); 
+      background-color: var(--surface-color); 
+    }
   }
 
-  // The global .cta-button class now handles the desktop button styling
-  .cta-button {
+  // --- DESKTOP CTA BUTTON ---
+  // Matches React className="c-navbar__cta"
+  &__cta {
     display: none;
-    @media (min-width: 992px) { display: inline-flex; }
+    @media (min-width: 992px) { 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--background-color); // Text color opposite of bg
+      background-color: var(--text-primary); // Button bg
+      border-radius: 6px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        color: var(--primary-gold); // Highlight text on hover
+      }
+    }
   }
 
+  // --- MOBILE MENU ---
   &__mobile-toggle {
-    display: block; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer;
+    display: block; 
+    background: none; 
+    border: none; 
+    color: var(--text-primary); 
+    font-size: 1.5rem; 
+    cursor: pointer;
+    z-index: 1002; // Ensure it's above the menu layer
     @media (min-width: 992px) { display: none; }
   }
 
   &__mobile-nav {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--background-color); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; z-index: -1;
-    .c-navbar__link { font-size: 1.5rem; }
-    .cta-button { display: block; width: 80%; max-width: 300px; text-align: center; margin-top: 1rem; }
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background-color: var(--background-color); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 2rem; 
+    z-index: 1001;
+    padding: 2rem;
+  }
+
+  &__mobile-link {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+
+    &:hover, &.is-active {
+      color: var(--primary-gold);
+    }
+  }
+
+  &__mobile-cta {
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: var(--text-primary);
+    color: var(--background-color);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: var(--primary-gold);
+      color: #000;
+    }
   }
 }

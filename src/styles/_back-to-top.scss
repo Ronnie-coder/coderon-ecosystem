@@ -1,4 +1,3 @@
-// src/styles/_back-to-top.scss (REPLACE ENTIRE FILE)
 @use 'variables' as *;
 @use 'mixins' as *;
 
@@ -6,34 +5,39 @@
   position: fixed;
   bottom: $spacing-lg;
   
-  // --- SPATIAL RELOCATION: Mission-critical change from right to left. ---
+  // --- SPATIAL RELOCATION: Left-aligned per directive ---
   left: $spacing-lg;
-  right: auto; // Unset the right property to prevent conflicts.
+  right: auto;
 
   z-index: 1000;
 
-  // --- REFACTORED: Use the consistent CTA button mixin for base styles ---
+  // --- IRON PROTOCOL: Visual Standard (Gold/Black) ---
+  // We include cta-button for structure, but enforce colors explicitly
   @include cta-button;
+  
+  background-color: var(--primary-gold);
+  color: #000000;
+  border: 1px solid var(--primary-gold); // Clean border match
 
-  // --- Overrides to style it as a circular FAB ---
+  // --- SHAPE & SIZE: Circular FAB ---
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: none;
-  padding: 0; // Override padding from the mixin
+  padding: 0; // Override mixin padding
   font-size: 1.5rem;
-  cursor: pointer;
+  
+  // Flex centering for the icon
   display: flex;
   align-items: center;
   justify-content: center;
   
-  // --- UPDATED: Use the theme-aware shadow variable ---
-  box-shadow: var(--shadow-fab);
+  // --- THEME AWARE SHADOW ---
+  box-shadow: var(--shadow-fab, 0 4px 12px rgba(0, 0, 0, 0.15));
 
   // Visibility state transitions
   opacity: 0;
   transform: translateY(100px);
-  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 
   &.is-visible {
     opacity: 1;
@@ -42,7 +46,13 @@
 
   // Refined hover effect
   &:hover {
-    // The background-color change is already handled by the mixin
+    background-color: var(--primary-gold); // Ensure it stays gold
+    filter: brightness(1.1); // Slight lift in brightness for feedback
     transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4); // Gold glow on hover
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.95);
   }
 }
