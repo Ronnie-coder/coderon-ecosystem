@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 import Lottie from 'lottie-react';
 // IMPORT THE ANIMATION
-import revenueAnimation from '../../public/animations/revenue.json';
+import revenueAnimation from '../../public/animations/Revenue.json';
 
 const QuotePilotCtaSection = () => {
   const ref = useRef(null);
