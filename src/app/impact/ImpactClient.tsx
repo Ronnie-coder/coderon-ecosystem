@@ -81,7 +81,8 @@ export default function ImpactClient() {
                       width={1200} 
                       height={800} 
                       quality={90}
-                      priority={project.id === 1} // Load first image fast
+                      // FIXED: Comparison now matches String type ('1')
+                      priority={project.id === '1'} 
                     />
                   </div>
                 </div>
