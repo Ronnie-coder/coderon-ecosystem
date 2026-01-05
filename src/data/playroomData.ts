@@ -59,26 +59,7 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We built a streamlined, mobile-first quoting engine. It uses Supabase for real-time data and Next.js for a snappy UI. We prioritized 'Time to Quote'—allowing users to generate a PDF in under 60 seconds.",
     narrative_results: ["Acquired 10 beta users in week 1", "Zero operating costs due to serverless architecture", "High user retention rate"]
   },
-  // 4. MD TRAVELS (Client - Svelte App)
-  {
-    id: 'md-travels',
-    title: 'MD Travels',
-    category: 'Booking Platform',
-    description: 'High-performance booking and information platform using Svelte, featuring multi-language support.',
-    tech: ['Svelte', 'Multi-lang', 'API'],
-    imageUrl: '/images/md-travels-showcase.png',
-    liveUrl: 'https://mdtravels.co.za/',
-    caseStudyUrl: '/playroom/md-travels',
-    client: 'MD Travels',
-    clientLogo: '/images/md-travels-logo.png',
-    year: '2024',
-    roles: ['Svelte Developer', 'System Integrator'],
-    servicesDelivered: ['App Development', 'Cloud Deployment'],
-    narrative_challenge: "The client needed a lightweight, extremely fast application to handle bookings in areas with poor internet connectivity.",
-    narrative_solution: "We chose Svelte for its small bundle size and lack of virtual DOM overhead. This ensured the site loads instantly even on 3G networks.",
-    narrative_results: ["Accessible on low-end devices", "Seamless multi-language switching", "Robust uptime"]
-  },
-  // 5. GHOST FASHION (MVP - Restored)
+  // 4. GHOST FASHION (MVP - Restored)
   {
     id: 'ghost-fashion',
     title: 'Ghost Fashion MVP',
@@ -96,7 +77,7 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We utilized Next.js Image optimization and a headless architecture to ensure product images load instantly without layout shifts.",
     narrative_results: ["99/100 Lighthouse Performance Score", "Instant page transitions", "Seamless Stripe Checkout"]
   },
-  // 6. FULLAS PHARMACY (MVP - Restored)
+  // 5. FULLAS PHARMACY (MVP - Restored)
   {
     id: 'fullas-pharmacy',
     title: 'Fullas Pharmacy',

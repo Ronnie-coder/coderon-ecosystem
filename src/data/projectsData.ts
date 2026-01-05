@@ -21,14 +21,12 @@ export const projects: Project[] = [
     imageUrl: '/images/palmsure-showcase.png',
     liveUrl: 'https://palmsure-coperate-hani.vercel.app/',
     year: 2025,
-    // REFINED ROLES based on SPEC:
     roles: [
       'Technical Lead',
       'Frontend Developer (Angular)',
       'UI/UX Designer',
       'DevOps & Deployment Engineer',
     ],
-    // REFINED SERVICES based on SPEC:
     servicesDelivered: [
       'System Migration & Legacy Modernization',
       'Web Application Development (Angular)',
@@ -46,14 +44,12 @@ export const projects: Project[] = [
     imageUrl: '/images/gifted-tours-showcase.png',
     liveUrl: 'https://giftedtours.co.za/',
     year: 2025,
-    // REFINED ROLES based on SPEC:
     roles: [
       'Frontend Developer (Next.js)',
       'UI/UX Designer',
       'Performance & SEO Engineer',
       'DevOps & Deployment Engineer',
     ],
-    // REFINED SERVICES based on SPEC:
     servicesDelivered: [
       'Complete Website Redesign',
       'Performance Optimization',
@@ -71,7 +67,6 @@ export const projects: Project[] = [
     imageUrl: '/images/quotepilot-showcase.png',
     liveUrl: 'https://quotepilot.coderon.co.za/',
     year: 2025,
-    // REFINED ROLES based on SPEC:
     roles: [
       'Technical Lead',
       'Full-Stack Developer',
@@ -79,7 +74,6 @@ export const projects: Project[] = [
       'System & Database Architect',
       'UI/UX Designer',
     ],
-    // REFINED SERVICES based on SPEC:
     servicesDelivered: [
       'SaaS Development',
       'System Architecture & Project Planning',
@@ -88,29 +82,4 @@ export const projects: Project[] = [
       'API Development & Integrations',
     ],
   },
-  {
-    id: 'md-travels',
-    client: 'MD Travels',
-    title: 'Connecting South Africa with Svelte',
-    tags: ['Svelte', 'Multi-language', 'Booking System'],
-    description: "Developed a high-performance booking and information platform using Svelte, featuring multi-language support to cater to a diverse clientele and seamless deployment for maximum uptime.",
-    imageUrl: '/images/md-travels-showcase.png',
-    liveUrl: 'https://mdtravels.co.za/',
-    year: 2025,
-    // REFINED ROLES based on SPEC:
-    roles: [
-      'Full-Stack Developer',
-      'Frontend Developer (Svelte)',
-      'Systems Integrator',
-      'Deployment Engineer',
-    ],
-    // REFINED SERVICES based on SPEC:
-    servicesDelivered: [
-      'Web Application Development (Svelte)',
-      'Multi-Language Support',
-      'API Integrations',
-      'Cloud Deployment',
-      'Continuous Support',
-    ],
-  }
 ];

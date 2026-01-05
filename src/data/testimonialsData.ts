@@ -33,15 +33,4 @@ export const testimonials: Testimonial[] = [
     authorRole: 'Insurance Brokers',
     siteUrl: 'https://www.palmsure.co.za/',
   },
-  {
-    id: 3,
-    logoUrl: '/images/md-travels-logo.png',
-    logoAlt: 'MD Travels Logo',
-    logoWidth: 140,
-    logoHeight: 45,
-    quote: "We needed more than just a website; we needed a reliable technical partner. Coderon's full-stack expertise delivered a fast, robust platform and continues to provide the critical support we need to grow.",
-    authorName: 'MD Travels',
-    authorRole: 'Corporate Transport',
-    siteUrl: 'https://mdtravels.co.za/',
-  },
 ];
