@@ -15,12 +15,21 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Create the provider component
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('dark'); // Coderon's default is dark
+  // Initialize with 'dark' to match server-side rendering
+  const [theme, setTheme] = useState<Theme>('dark');
 
+  // 1. On mount, read from localStorage to restore preference
   useEffect(() => {
-    // On theme change, update the data-theme attribute on the <html> tag
-    // This allows our CSS to react to the current theme.
+    const savedTheme = localStorage.getItem('coderon-theme') as Theme | null;
+    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // 2. On theme change, update DOM and save to localStorage
+  useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('coderon-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

@@ -86,7 +86,6 @@ const Footer = () => {
         <div className="c-footer__bottom-bar">
           <div className="c-footer__legal-info">
             <span>&copy; {currentYear} Coderon (Pty) Ltd.</span>
-            <span>Reg: 2025/482790/07</span>
             <Link href="/privacy-policy">Privacy Policy</Link>
             <Link href="/terms-of-service">Terms of Service</Link>
           </div>

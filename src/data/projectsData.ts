@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: 'Honoring a Legacy with Digital Transformation',
     tags: ['Web Platform', 'Angular', 'Legacy System Modernization'],
     description: 'Coderon led the complete digital transformation for Palmsure, migrating decades of paper-based processes to a robust, modern web platform built on Angular. It was more than code; it was about purpose.',
-    imageUrl: '/images/palmsure-showcase.png',
+    imageUrl: '/images/palmsure-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://palmsure-coperate-hani.vercel.app/',
     year: 2025,
     roles: [
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     title: 'From Outdated to Outstanding',
     tags: ['Web Redesign', 'Next.js', 'SEO Optimization'],
     description: 'Gifted Tours needed a digital refresh. We delivered a complete redesign and rebuild, resulting in a lightning-fast, modern, and SEO-optimized platform that truly represents their brand.',
-    imageUrl: '/images/gifted-tours-showcase.png',
+    imageUrl: '/images/gifted-tours-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://giftedtours.co.za/',
     year: 2025,
     roles: [
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     title: 'A Free Quote System for African SMEs',
     tags: ['SaaS', 'Next.js', 'Supabase', 'PostgreSQL'],
     description: 'To empower African entrepreneurs, we built QuotePilot: a smart, simple, and free quote generator. This production-ready tool showcases our ability to build, ship, and maintain our own software products.',
-    imageUrl: '/images/quotepilot-showcase.png',
+    imageUrl: '/images/quotepilot-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://quotepilot.coderon.co.za/',
     year: 2025,
     roles: [

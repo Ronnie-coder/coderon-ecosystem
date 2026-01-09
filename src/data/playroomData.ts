@@ -2,18 +2,18 @@ import type { PlayroomProject, PlayroomDemo } from '@/types/global';
 
 // --- MAIN PORTFOLIO (Real Client Work, Products & MVPs) ---
 export const liveProjects: PlayroomProject[] = [
-  // 1. PALMSURE (Client - Digital Transformation)
+  // 1. PALMSURE
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
     category: 'Digital Transformation',
     description: 'Coderon led the complete digital transformation for Palmsure, migrating decades of paper-based processes to a robust, modern web platform built on Angular.',
     tech: ['Angular', 'TypeScript', 'Legacy Migration'],
-    imageUrl: '/images/palmsure-showcase.png', 
+    imageUrl: '/images/palmsure-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://www.palmsure.co.za/',
     caseStudyUrl: '/playroom/palmsure',
     client: 'Palmsure Insurance',
-    clientLogo: '/images/palmsure-logo.png',
+    clientLogo: '/images/palmsure-logo.png', // Logo stays PNG (usually small)
     year: '2025',
     roles: ['Technical Lead', 'Frontend Arch.', 'UI/UX'],
     servicesDelivered: ['System Migration', 'Angular Development', 'API Integration'],
@@ -21,14 +21,14 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We engineered a complete digital ecosystem. Using Angular for a robust frontend, we built a centralized platform that digitized their entire workflow. We focused on strict typing and modular architecture to ensure the system could handle complex insurance logic securely.",
     narrative_results: ["100% digitization of paper records", "Reduced claim processing time by 40%", "Real-time reporting dashboard for executives"]
   },
-  // 2. GIFTED TOURS (Client - Redesign)
+  // 2. GIFTED TOURS
   {
     id: 'gifted-tours',
     title: 'Gifted Tours',
     category: 'Web Redesign',
     description: 'A lightning-fast, modern, and SEO-optimized platform that truly represents the premium brand of Gifted Tours.',
     tech: ['Next.js', 'SEO', 'Tailwind'],
-    imageUrl: '/images/gifted-tours-showcase.png',
+    imageUrl: '/images/gifted-tours-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://giftedtours.co.za/',
     caseStudyUrl: '/playroom/gifted-tours',
     client: 'Gifted Tours',
@@ -40,14 +40,14 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We rebuilt the site using Next.js for static site generation (SSG), ensuring instant page loads. We implemented a mobile-first design philosophy and structured data for rich SEO snippets in search results.",
     narrative_results: ["PageSpeed score increased from 45 to 98", "First page Google ranking for key local keywords", "2x increase in mobile inquiries"]
   },
-  // 3. QUOTEPILOT (Internal Product)
+  // 3. QUOTEPILOT
   {
     id: 'quotepilot',
     title: 'QuotePilot SaaS',
     category: 'SaaS Product',
     description: 'A production-ready invoice & quote generator for African SMEs. Built to solve the chaos of manual admin.',
     tech: ['Next.js', 'Supabase', 'SaaS'],
-    imageUrl: '/images/quotepilot-showcase.png',
+    imageUrl: '/images/quotepilot-showcase.webp', // CHANGED to .webp
     liveUrl: 'https://quotepilot.coderon.co.za/',
     caseStudyUrl: '/playroom/quotepilot',
     client: 'Coderon (Internal)',
@@ -59,14 +59,14 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We built a streamlined, mobile-first quoting engine. It uses Supabase for real-time data and Next.js for a snappy UI. We prioritized 'Time to Quote'—allowing users to generate a PDF in under 60 seconds.",
     narrative_results: ["Acquired 10 beta users in week 1", "Zero operating costs due to serverless architecture", "High user retention rate"]
   },
-  // 4. GHOST FASHION (MVP - Restored)
+  // 4. GHOST FASHION
   {
     id: 'ghost-fashion',
     title: 'Ghost Fashion MVP',
     category: 'E-Commerce MVP',
     description: 'A minimalist, high-performance streetwear store built to demonstrate Next.js commerce capabilities and Stripe integration.',
     tech: ['Next.js', 'Stripe', 'Tailwind'],
-    imageUrl: '/images/playroom/broomghost-sa.png',
+    imageUrl: '/images/playroom/broomghost-sa.webp', // CHANGED to .webp
     liveUrl: 'https://ghost-ebon-three.vercel.app/',
     caseStudyUrl: '/playroom/ghost-fashion',
     client: 'Ghost Fashion (Concept)',
@@ -77,14 +77,14 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution: "We utilized Next.js Image optimization and a headless architecture to ensure product images load instantly without layout shifts.",
     narrative_results: ["99/100 Lighthouse Performance Score", "Instant page transitions", "Seamless Stripe Checkout"]
   },
-  // 5. FULLAS PHARMACY (MVP - Restored)
+  // 5. FULLAS PHARMACY
   {
     id: 'fullas-pharmacy',
     title: 'Fullas Pharmacy',
     category: 'Healthcare MVP',
     description: 'A modern approach to online medication ordering, focusing on trust, accessibility, and clean UX design.',
     tech: ['Next.js', 'UX Research', 'Framer'],
-    imageUrl: '/images/playroom/fullas-pharmacy.png',
+    imageUrl: '/images/playroom/fullas-pharmacy.webp', // CHANGED to .webp
     liveUrl: 'https://fullas-pharmacy-demo-v-2.vercel.app/',
     caseStudyUrl: '/playroom/fullas-pharmacy',
     client: 'Fullas Pharmacy (Concept)',
