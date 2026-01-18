@@ -22,6 +22,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 const siteUrl = "https://www.coderon.co.za";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | Coderon",
@@ -34,6 +35,15 @@ export const metadata: Metadata = {
   authors: [{ name: 'Coderon', url: siteUrl }],
   creator: 'Coderon',
   publisher: 'Coderon',
+  
+  // 👇 FACEBOOK VERIFICATION ADDED HERE 👇
+  verification: {
+    other: {
+      "facebook-domain-verification": "4opv8gyh8xr02w9n7sxq9psglc2bcl",
+    },
+  },
+  // 👆 -------------------------------- 👆
+
   openGraph: {
     title: "Coderon - Building Africa's Future with Code & Purpose",
     description: "Transforming Africa's digital landscape with innovative software solutions.",
