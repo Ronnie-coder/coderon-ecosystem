@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Roboto_Mono } from 'next/font/google';
 import { Suspense } from 'react';
+import Script from 'next/script'; // Import Script for better performance
 import Footer from "@/components/Footer";
 import "@/styles/main.scss";
 import { ClientLayoutComponents } from '@/components/layout/ClientLayoutComponents';
@@ -36,20 +37,20 @@ export const metadata: Metadata = {
   creator: 'Coderon',
   publisher: 'Coderon',
   
-  // 👇 FACEBOOK VERIFICATION ADDED HERE 👇
+  // Facebook Verification
   verification: {
     other: {
       "facebook-domain-verification": "4opv8gyh8xr02w9n7sxq9psglc2bcl",
     },
   },
-  // 👆 -------------------------------- 👆
 
   openGraph: {
     title: "Coderon - Building Africa's Future with Code & Purpose",
     description: "Transforming Africa's digital landscape with innovative software solutions.",
     url: siteUrl,
     siteName: 'Coderon',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'The Coderon logo against a background representing African innovation.' }],
+    // This points to public/og-image.png
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Coderon Preview' }],
     locale: 'en_ZA',
     type: 'website',
   },
@@ -58,9 +59,11 @@ export const metadata: Metadata = {
     title: "Coderon - Building Africa's Future with Code & Purpose",
     description: "Transforming Africa's digital landscape with innovative software solutions.",
     creator: '@CoderonZA', 
+    // This points to public/og-image.png
     images: ['/og-image.png'],
   },
   icons: {
+    // These point to the public folder
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
@@ -85,9 +88,15 @@ export default function RootLayout({
         </ThemeProvider>
         <Analytics />
 
-        {/* --- KOJO INTEGRATION SCRIPT --- */}
-        <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js" defer></script>
-        <script src="https://files.bpcontent.cloud/2025/04/29/07/20250429074103-1NATVXCY.js" defer></script>
+        {/* --- KOJO INTEGRATION (Optimized for Next.js) --- */}
+        <Script 
+          src="https://cdn.botpress.cloud/webchat/v3.3/inject.js" 
+          strategy="lazyOnload" 
+        />
+        <Script 
+          src="https://files.bpcontent.cloud/2025/04/29/07/20250429074103-1NATVXCY.js" 
+          strategy="lazyOnload" 
+        />
         
       </body>
     </html>

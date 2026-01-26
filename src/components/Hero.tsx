@@ -13,12 +13,11 @@ const Hero = () => {
   };
 
   const textItemVariants: Variants = {
-    hidden: { y: 30, opacity: 0, skewY: 3 },
+    hidden: { y: 20, opacity: 0 }, // Reduced movement for calmer feel
     visible: {
       y: 0,
       opacity: 1,
-      skewY: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -30,22 +29,23 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          {/* HEADLINE: Precise Brand Statement */}
+          {/* HEADLINE: Precise, Technical Authority */}
           <motion.h1 className="c-hero__title" variants={textItemVariants}>
-            Driving Africa&apos;s <span>Digital Future</span>
+            Engineering Africa&apos;s <span>Digital Infrastructure</span>
           </motion.h1>
 
-          {/* SUBTITLE: The "How" */}
+          {/* SUBTITLE: Statement of Fact, not a sales pitch */}
           <motion.p className="c-hero__subtitle" variants={textItemVariants}>
-            With world-class, robust technology solutions. We specialize in <strong>Web Development</strong>, <strong>AI Integration</strong>, and <strong>Custom Software</strong> built for scale.
+            Scalable systems. Intelligent automation.
+            <br className="hidden md:block" />
           </motion.p>
 
           <motion.div className="c-hero__cta-group" variants={textItemVariants}>
-            <Link href="/contact" className="cta-button">
-              Free Consultation
+            <Link href="/contact" className="cta-button" aria-label="Book a technical consultation">
+              Consultation
             </Link>
-            <Link href="/services" className="cta-button-secondary">
-              Explore Services
+            <Link href="/services" className="cta-button-secondary" aria-label="View our engineering services">
+              Our Capabilities
             </Link>
           </motion.div>
         </motion.div>

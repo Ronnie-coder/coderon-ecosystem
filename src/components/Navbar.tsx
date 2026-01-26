@@ -8,14 +8,12 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
-// NAVIGATION DATA
-// Strategy: "Journal" for Content SEO, "QuotePilot" for Product Promotion.
 const navLinks = [
-  { href: '/services', label: 'Services', title: 'AI & Web Services' },
-  { href: '/playroom', label: 'Case Studies', title: 'Our Work' },
-  { href: '/journal', label: 'Journal', title: 'Insights & Blog' },
+  { href: '/services', label: 'Services', title: 'Capabilities' },
+  { href: '/playroom', label: 'Work', title: 'Case Studies' },
+  { href: '/journal', label: 'Journal', title: 'Insights' },
   { href: 'https://quotepilot.coderon.co.za', label: 'QuotePilot', isExternal: true, isNew: true, title: 'Invoicing Tool' },
-  { href: '/about', label: 'About', title: 'About Coderon' },
+  { href: '/about', label: 'About', title: 'Company' },
 ];
 
 const mobileMenuVariants = {
@@ -29,7 +27,6 @@ const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
-  // PERFORMANCE: Debounced scroll listener to reduce main thread work
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
@@ -45,16 +42,13 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // UX: Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // UX: Close menu automatically on route change
   useEffect(() => {
     if (isMenuOpen) setIsMenuOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -63,34 +57,30 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      // AEO: Schema.org markup
       itemScope 
       itemType="http://schema.org/WPHeader"
     >
       <div className="c-navbar__container">
-        {/* LOGO: Using text instead of H1 to preserve heading hierarchy for SEO */}
         <Link 
           href="/" 
           className="c-navbar__logo" 
-          aria-label="Coderon Home - AI Agency"
+          aria-label="Coderon Home"
           onClick={() => setIsMenuOpen(false)}
         >
           CODERON
         </Link>
 
-        {/* DESKTOP NAV: Semantic markup for crawlers */}
-        <nav className="c-navbar__desktop-nav" role="navigation" itemScope itemType="http://schema.org/SiteNavigationElement">
+        <nav className="c-navbar__desktop-nav" role="navigation">
           <ul>
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <li key={link.label} itemProp="name">
+                <li key={link.label}>
                   <Link 
                     href={link.href} 
                     className={`c-navbar__link ${isActive ? 'is-active' : ''}`}
                     aria-current={isActive ? 'page' : undefined}
                     title={link.title}
-                    itemProp="url"
                     target={link.isExternal ? "_blank" : "_self"}
                   >
                     {link.label}
@@ -102,7 +92,6 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        {/* ACTIONS: Theme Toggle & CTA */}
         <div className="c-navbar__actions">
           <button 
             onClick={toggleTheme} 
@@ -113,10 +102,9 @@ const Navbar = () => {
           </button>
           
           <Link href="/contact" className="c-navbar__cta">
-            Get Proposal
+            Proposal
           </Link>
           
-          {/* MOBILE TOGGLE: Accessible Button */}
           <button 
             className="c-navbar__mobile-toggle" 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
@@ -129,7 +117,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* MOBILE NAV: AnimatePresence for smooth entry/exit */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.nav 
@@ -139,7 +126,6 @@ const Navbar = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            role="navigation"
           >
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -157,7 +143,7 @@ const Navbar = () => {
               );
             })}
             <Link href="/contact" className="c-navbar__mobile-cta" onClick={() => setIsMenuOpen(false)}>
-              Get a Proposal
+              Start Project
             </Link>
           </motion.nav>
         )}

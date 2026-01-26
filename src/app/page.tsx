@@ -1,4 +1,3 @@
-// src/app/page.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -7,15 +6,18 @@ import ServicesShowcase from '@/components/ServicesShowcase';
 import ImpactSection from '@/components/ImpactSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import TheDrumSection from '@/components/TheDrumSection';
-import QuotePilotCtaSection from '@/components/QuotePilotCtaSection'; // --- IMPORT ADDED ---
+import QuotePilotCtaSection from '@/components/QuotePilotCtaSection';
 import { projects, Project } from '@/data/projectsData';
 
 export default function HomePage() {
   const [featuredProject, setFeaturedProject] = useState<Project | null>(null);
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * projects.length);
-    setFeaturedProject(projects[randomIndex]);
+    // Ensure data exists before trying to access it
+    if (projects && projects.length > 0) {
+      const randomIndex = Math.floor(Math.random() * projects.length);
+      setFeaturedProject(projects[randomIndex]);
+    }
   }, []);
 
   return (
@@ -23,7 +25,7 @@ export default function HomePage() {
       <Hero />
       <ServicesShowcase />
       {featuredProject && <ImpactSection project={featuredProject} />}
-      <QuotePilotCtaSection /> {/* --- COMPONENT ADDED --- */}
+      <QuotePilotCtaSection />
       <TestimonialsSection />
       <TheDrumSection />
     </>
