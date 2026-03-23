@@ -1,0 +1,333 @@
+// src/styles/_contact.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================
+// CONTACT SECTION WRAPPER
+// ============================================
+
+.c-contact {
+  padding: $spacing-xxl 0;
+  background-color: var(--surface-color);
+
+  @media (max-width: 768px) {
+    padding: $spacing-xl 0;
+  }
+}
+
+.c-contact__wrapper {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: $spacing-xl * 2;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+    padding: 0 $spacing-md;
+  }
+}
+
+// ============================================
+// LEFT SIDE — INFO
+// ============================================
+
+.c-contact__info {
+  h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin-bottom: $spacing-lg;
+    line-height: 1.75;
+    font-size: 1.05rem;
+  }
+}
+
+.c-contact__details {
+  list-style: none;
+  padding: 0;
+  margin-bottom: $spacing-xl;
+
+  li {
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-weight: 500;
+    font-size: 0.95rem;
+
+    .icon {
+      color: var(--primary-gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.c-contact__whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  background-color: #25D366;
+  color: #ffffff;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-md;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.20);
+
+  &:hover {
+    background-color: #1DAE54;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.30);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.45);
+  }
+}
+
+// ============================================
+// FORM
+// ============================================
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  background: var(--surface-color);
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  border: 1px solid var(--border-color);
+
+  // Use existing token — --shadow-md doesn't exist in our system
+  box-shadow: var(--shadow-card-hover);
+
+  @media (max-width: 480px) {
+    padding: $spacing-lg $spacing-md;
+  }
+}
+
+.c-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.c-form__label {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+// Gold asterisk for required fields
+.c-form__required {
+  color: var(--primary-gold);
+  font-weight: 700;
+}
+
+// --- Inputs + Textarea ---
+.c-form__input,
+.c-form__textarea {
+  background-color: var(--background-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: 0.75rem $spacing-md;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: $font-primary;
+  width: 100%;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+
+  &::placeholder {
+    // --text-muted doesn't exist — use --text-secondary
+    color: var(--text-secondary);
+    opacity: 0.6;
+  }
+
+  // Focus — uses our design system token
+  &:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    box-shadow: var(--focus-ring);
+  }
+
+  // Disabled — visual feedback during submission
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background-color: var(--surface-color);
+  }
+}
+
+// --- Select wrapper (custom arrow) ---
+.c-form__select-wrapper {
+  position: relative;
+
+  &::after {
+    content: '▼';
+    font-size: 0.65rem;
+    position: absolute;
+    top: 50%;
+    right: $spacing-md;
+    transform: translateY(-50%);
+    color: var(--primary-gold);
+    pointer-events: none;
+  }
+
+  select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2.5rem; // Space for custom arrow
+  }
+}
+
+// --- Textarea ---
+.c-form__textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+// --- Hint text below textarea ---
+.c-form__hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-top: $spacing-xs;
+}
+
+// --- Submit button ---
+// Global .cta-button mixin handles all visual styles
+// We only add form-specific layout here
+.c-form__button {
+  @include cta-button;
+  width: 100%;
+  margin-top: $spacing-sm;
+  font-size: 1rem;
+  padding: 0.9rem $spacing-lg;
+  gap: $spacing-sm;
+}
+
+// --- Spinner inside button ---
+.c-form__spinner {
+  animation: c-form-spin 0.9s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes c-form-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+// --- Error message ---
+.c-form__message {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+
+  &--error {
+    // Uses our design system tokens
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    border: 1px solid var(--error-border);
+  }
+}
+
+.c-form__message-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 1rem;
+}
+
+// --- Footnote ---
+.c-form__footnote {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// ============================================
+// SUCCESS STATE
+// ============================================
+
+.c-form__success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: $spacing-xl $spacing-lg;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: $border-radius-lg;
+  gap: $spacing-md;
+
+  // Animate in
+  animation: c-form-success-in 0.4s ease forwards;
+}
+
+@keyframes c-form-success-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.c-form__success-icon {
+  font-size: 2.5rem;
+  color: var(--success-color);
+  flex-shrink: 0;
+}
+
+.c-form__success-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--success-color);
+  margin: 0;
+}
+
+.c-form__success-body {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 40ch;
+  line-height: 1.6;
+  margin: 0;
+}

@@ -1,0 +1,117 @@
+// src/styles/_mixins.scss
+@use 'variables' as *;
+
+@mixin cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  // --- Tokens ---
+  background-color: var(--cta-bg);
+  color: var(--cta-text);
+  border: 2px solid var(--cta-bg);
+
+  padding: 0.8rem 1.75rem;
+  border-radius: $border-radius-md;
+  font-family: $font-primary;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+
+  // --- Hover ---
+  &:hover:not(:disabled) {
+    background-color: var(--cta-bg-hover);
+    border-color: var(--cta-bg-hover);
+    color: var(--cta-text);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--cta-shadow);
+  }
+
+  // --- Active (press effect) ---
+  &:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: none;
+  }
+
+  // --- Focus (keyboard / screen reader accessible) ---
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  // --- Disabled ---
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@mixin cta-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+
+  // --- Tokens ---
+  background-color: var(--cta-secondary-bg);
+  color: var(--cta-secondary-text);
+  border: 2px solid var(--cta-secondary-border);
+
+  padding: 0.8rem 1.75rem;
+  border-radius: $border-radius-md;
+  font-family: $font-primary;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+
+  // --- Hover ---
+  &:hover:not(:disabled) {
+    background-color: var(--cta-secondary-bg-hover);
+    border-color: var(--cta-secondary-border-hover);
+    color: var(--cta-secondary-text-hover);
+    transform: translateY(-2px);
+  }
+
+  // --- Active ---
+  &:active:not(:disabled) {
+    transform: translateY(0px);
+  }
+
+  // --- Focus ---
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  // --- Disabled ---
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+  }
+}

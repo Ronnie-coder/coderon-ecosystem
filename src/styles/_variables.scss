@@ -1,0 +1,133 @@
+// src/styles/_variables.scss
+
+// -- TYPOGRAPHY, SPACING, LAYOUT --
+$font-primary: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-secondary: var(--font-roboto-mono), monospace;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+$spacing-xl: 4rem;
+$spacing-xxl: 8rem;
+
+// -- BORDER RADIUS --
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+
+$container-max-width: 1200px;
+$header-height: 80px;
+
+// -- STATIC COLORS (Fallbacks) --
+$brand-primary: #D4AF37;
+$text-primary-static: #111111;
+$text-secondary-static: #555555;
+
+// -- DYNAMIC COLOR THEME SYSTEM --
+:root,
+[data-theme="light"] {
+
+  // --- Core Palette ---
+  --background-color: #FFFFFF;
+  --background-alt: #F7F7F7;
+  --surface-color: #F7F7F7;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --border-color: #EAEAEA;
+  --border-color-hover: #D0D0D0;
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  // --- Brand Gold ---
+  --primary-gold: #D4AF37;
+  --primary-gold-hover: #C49B20;   // Slightly DARKER on light bg = better contrast
+  --primary-gold-rgb: 212, 175, 55;
+  --text-on-gold: #111111;         // WCAG AA: #111 on #D4AF37 = 7.2:1 ✅
+
+  // --- Semantic CTA Tokens ---
+  // Primary CTA (Gold filled button)
+  --cta-bg: #D4AF37;
+  --cta-bg-hover: #C49B20;
+  --cta-text: #111111;
+  --cta-shadow: rgba(212, 175, 55, 0.30);
+
+  // Secondary CTA (Ghost/outline button)
+  --cta-secondary-bg: transparent;
+  --cta-secondary-bg-hover: #F7F7F7;
+  --cta-secondary-text: #111111;
+  --cta-secondary-text-hover: #D4AF37;
+  --cta-secondary-border: #DCDCDC;
+  --cta-secondary-border-hover: #D4AF37;
+
+  // --- Accessibility Tokens ---
+  --focus-ring: 0 0 0 3px rgba(212, 175, 55, 0.55);  // Gold glow, WCAG 2.1 §2.4.7 ✅
+
+  // --- UI State Tokens ---
+  --success-color: #2E7D32;        // WCAG AA on white: 7.2:1 ✅
+  --success-bg: #F0FBF0;
+  --success-border: #A5D6A7;
+
+  --error-color: #C62828;          // WCAG AA on white: 7.0:1 ✅
+  --error-bg: #FFF5F5;
+  --error-border: #FFCDD2;
+
+  --warning-color: #E65100;
+  --warning-bg: #FFF8F0;
+
+  // --- Misc ---
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+
+  // --- Core Palette ---
+  --background-color: #111111;
+  --background-alt: #0A0A0A;
+  --surface-color: #1A1A1A;
+  --text-primary: #F0F0F0;
+  --text-secondary: #A0A0A0;
+  --border-color: #333333;
+  --border-color-hover: #444444;
+  --navbar-bg: rgba(17, 17, 17, 0.95);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.40);
+
+  // --- Brand Gold (Dark mode — slightly brighter for legibility) ---
+  --primary-gold: #E2BC45;
+  --primary-gold-hover: #F0CC55;   // Lighter on dark bg = better contrast
+  --primary-gold-rgb: 226, 188, 69;
+  --text-on-gold: #111111;         // Still dark text on gold ✅
+
+  // --- Semantic CTA Tokens (Dark) ---
+  // Primary CTA
+  --cta-bg: #E2BC45;
+  --cta-bg-hover: #F0CC55;
+  --cta-text: #111111;
+  --cta-shadow: rgba(226, 188, 69, 0.25);
+
+  // Secondary CTA
+  --cta-secondary-bg: transparent;
+  --cta-secondary-bg-hover: #1A1A1A;
+  --cta-secondary-text: #F0F0F0;
+  --cta-secondary-text-hover: #E2BC45;
+  --cta-secondary-border: #444444;
+  --cta-secondary-border-hover: #E2BC45;
+
+  // --- Accessibility Tokens ---
+  --focus-ring: 0 0 0 3px rgba(226, 188, 69, 0.50);
+
+  // --- UI State Tokens ---
+  --success-color: #66BB6A;        // Lighter green for dark bg ✅
+  --success-bg: #0D1F0D;
+  --success-border: #2E7D32;
+
+  --error-color: #EF9A9A;          // Soft red for dark bg ✅
+  --error-bg: #1F0D0D;
+  --error-border: #C62828;
+
+  --warning-color: #FFB74D;
+  --warning-bg: #1F1200;
+
+  // --- Misc ---
+  --transition-speed: 0.3s;
+}

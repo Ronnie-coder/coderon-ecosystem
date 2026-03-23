@@ -1,0 +1,235 @@
+// src/styles/_footer.scss
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-footer {
+  padding: $spacing-xl $spacing-lg $spacing-md;
+  background-color: var(--surface-color);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  position: relative;
+  border-top: 1px solid var(--border-color);
+
+  &__container {
+    width: 100%;
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $spacing-xl;
+    padding-bottom: $spacing-xl;
+    margin-bottom: $spacing-lg;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  // --- Column headings ---
+  &__col-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  // --- Brand column ---
+  &__col--brand {
+    .c-footer__logo-link {
+      display: inline-block;
+      margin-bottom: $spacing-md;
+      text-decoration: none;
+    }
+  }
+
+  &__logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--primary-gold);
+    }
+  }
+
+  &__tagline {
+    line-height: 1.7;
+    max-width: 280px;
+    margin-bottom: $spacing-lg;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  &__text {
+    margin-bottom: $spacing-md;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  // --- Social icons ---
+  // Spacing handled here — no utility class needed
+  &__social {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+
+    a {
+      color: var(--text-secondary);
+      font-size: 1.35rem;
+      display: flex;
+      align-items: center;
+      transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+      &:hover {
+        color: var(--primary-gold);
+        transform: translateY(-2px);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-radius: $border-radius-sm;
+      }
+    }
+  }
+
+  // --- CTA button ---
+  // Direct token usage — no @include override pattern
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background-color: var(--cta-bg);
+    color: var(--cta-text);
+    border: 2px solid var(--cta-bg);
+    padding: 0.65rem 1.25rem;
+    border-radius: $border-radius-md;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: $spacing-lg;
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.2s ease,
+      box-shadow 0.25s ease;
+
+    &:hover {
+      background-color: var(--cta-bg-hover);
+      border-color: var(--cta-bg-hover);
+      color: var(--cta-text);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--cta-shadow);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+  }
+
+  // --- Link lists ---
+  &__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--text-primary);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+        border-radius: $border-radius-sm;
+      }
+    }
+
+    // Contact details — monospace for tech feel
+    &--contact a {
+      font-family: $font-secondary;
+      font-size: 0.82rem;
+    }
+  }
+
+  // --- Bottom bar ---
+  &__bottom-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  &__legal-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+
+    a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  &__meta-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__clock {
+    font-family: $font-secondary;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background-color: var(--background-color);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-md;
+    border: 1px solid var(--border-color);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  // --- Responsive ---
+  @media (max-width: 768px) {
+    padding-top: $spacing-lg;
+    padding-bottom: calc(60px + #{$spacing-lg});
+
+    &__bottom-bar {
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+    }
+
+    &__legal-info {
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,124 @@
+@use 'variables' as *;
+
+.c-dashboard {
+  &__header {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    // --- UPDATED: Uses CSS variables ---
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__title {
+    font-size: 2rem;
+    // --- UPDATED: Uses CSS variables ---
+    color: var(--text-primary);
+  }
+
+  &__subtitle {
+    // --- UPDATED: Uses CSS variables ---
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: $spacing-sm;
+  }
+
+  &__grid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  &__stats {
+    grid-column: span 12;
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  &__main-chart {
+    grid-column: span 12;
+    @media (min-width: 992px) {
+      grid-column: span 8;
+    }
+  }
+
+  &__secondary-chart {
+    grid-column: span 12;
+    @media (min-width: 992px) {
+      grid-column: span 4;
+    }
+  }
+}
+
+.c-stat-card {
+  // --- UPDATED: Uses CSS variables ---
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  &__icon-wrapper {
+    // --- UPDATED: Uses new RGBA-compatible variable ---
+    background-color: rgba(var(--primary-gold-rgb), 0.1);
+    color: var(--primary-gold);
+    font-size: 1.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    flex-grow: 1;
+  }
+
+  &__title {
+    // --- UPDATED: Uses CSS variables ---
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__value {
+    // --- UPDATED: Uses CSS variables ---
+    color: var(--text-primary);
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+}
+
+.c-chart-container {
+  // --- UPDATED: Uses CSS variables ---
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-bottom: $spacing-lg;
+    flex-shrink: 0;
+  }
+}
+
+.c-dashboard-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  // --- UPDATED: Uses CSS variables ---
+  color: var(--text-secondary);
+  margin-bottom: $spacing-xl;
+  &:hover {
+    color: var(--primary-gold);
+  }
+}

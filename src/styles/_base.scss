@@ -1,0 +1,183 @@
+// src/styles/_base.scss
+@use 'variables' as *;
+
+// =============================================
+// CODERON — BASE STYLES
+// Single source of truth for resets + globals
+// =============================================
+
+// --- CSS RESET ---
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// --- HTML ---
+html {
+  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+// --- BODY ---
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  font-family: $font-primary;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: $header-height;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
+}
+
+// --- LINKS ---
+// Scoped to content areas only — NOT nav, cards, or buttons
+// Global gold on ALL anchors was too broad and caused conflicts
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-speed) ease;
+}
+
+// --- HEADINGS ---
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+}
+
+// --- PARAGRAPHS ---
+p {
+  margin-bottom: $spacing-md;
+  color: var(--text-secondary);
+}
+
+// --- IMAGES ---
+img {
+  max-width: 100%;
+  display: block;
+}
+
+// --- LISTS ---
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// =============================================
+// UTILITY CLASSES
+// =============================================
+
+// Layout container — used everywhere
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 $spacing-lg;
+
+  @media (max-width: 768px) {
+    padding: 0 $spacing-md;
+  }
+}
+
+// Screen reader only — accessibility utility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// =============================================
+// SHARED PAGE LAYOUT
+// Single definition — replaces duplicates in:
+// _about-page.scss, _services-page.scss, _impact-page.scss
+// =============================================
+
+// Page wrapper — all inner pages use this
+.c-page-container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+
+  @media (max-width: 768px) {
+    padding: $spacing-lg $spacing-md;
+  }
+}
+
+// Page header — hero area at top of each inner page
+.c-page-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto $spacing-xxl auto;
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-width: 58ch;
+    margin: 0 auto;
+  }
+
+  // Modifier: adds border below — used on services page
+  &--bordered {
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: $spacing-xl;
+  }
+}
+
+// Page-level CTA block — bottom of services + about pages
+.c-page-cta {
+  text-align: center;
+  padding: $spacing-xl $spacing-lg;
+  background-color: var(--surface-color);
+  border-radius: $border-radius-lg;
+  border: 1px solid var(--border-color);
+  margin-top: $spacing-xxl;
+
+  h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin: 0 auto $spacing-lg auto;
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+
+  // Button layout — .cta-button global class handles all visual styles
+  .cta-button {
+    display: inline-flex;
+  }
+}

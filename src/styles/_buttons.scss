@@ -1,0 +1,10 @@
+// src/styles/_buttons.scss
+@use 'mixins' as *;
+
+.cta-button {
+  @include cta-button;
+}
+
+.cta-button-secondary {
+  @include cta-button-secondary;
+}

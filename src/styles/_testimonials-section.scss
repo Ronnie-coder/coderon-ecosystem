@@ -1,0 +1,145 @@
+// src/styles/_testimonials-section.scss
+@use 'variables' as *;
+
+.c-testimonials {
+  padding: $spacing-xxl 0;
+  background-color: var(--background-color);
+
+  @media (max-width: 768px) {
+    padding: $spacing-xl 0;
+  }
+}
+
+.c-testimonials__header {
+  text-align: center;
+  margin: 0 auto $spacing-xl auto;
+  padding: 0 $spacing-md;
+  max-width: 680px;
+}
+
+// Eyebrow — added to match updated TSX
+.c-testimonials__eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary-gold);
+  margin-bottom: $spacing-sm;
+  opacity: 0.9;
+}
+
+.c-testimonials__heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: $spacing-sm;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.c-testimonials__subheading {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.c-testimonials__grid {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-lg;
+
+  @media (max-width: 768px) {
+    padding: 0 $spacing-md;
+  }
+}
+
+.c-testimonial-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+  }
+
+  &__logo-wrapper {
+    height: 44px;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+
+    img {
+      max-height: 100%;
+      width: auto;
+    }
+  }
+
+  &__quote {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-primary);
+    margin: 0 0 $spacing-lg 0;
+    flex-grow: 1;
+    font-style: italic;
+  }
+
+  &__author-info {
+    margin-top: auto;
+    padding-top: $spacing-md;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__author-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__author-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  &__author-role {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    margin: 0;
+  }
+
+  &__link {
+    color: var(--primary-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateX(3px);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+      border-radius: $border-radius-sm;
+    }
+  }
+}

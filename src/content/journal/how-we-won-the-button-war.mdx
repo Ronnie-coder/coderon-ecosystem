@@ -1,0 +1,25 @@
+---
+title: 'How a Single CSS Bug Taught Me Everything About Specificity'
+slug: 'how-we-won-the-button-war'
+date: '2025-10-24'
+author: 'Ronnie Nyamhute'
+description: "The battle was arduous. A persistent bug was crippling our new website, but the fight to fix it revealed a fundamental lesson in web development that will shape Coderon forever."
+---
+
+### The Calm Before the Storm
+
+It started, as most critical errors do, with something that seemed simple. Our call-to-action buttons, the most important links on the page, were rendering without text. Not always, just sometimes. In the most complex components, they would appear as blank, colored rectangles.
+
+My first assumption was a simple CSS conflict. A quick override should have fixed it. It didn't.
+
+### The War Room
+
+Here is where I'll detail the back-and-forth. I'll talk about the different strategies we tried: brute-force styling, changing class names, and the initial (incorrect) analysis from my AI assistant, v4.0. This part is about the struggle and the process of elimination. It shows the human side of debugging.
+
+You can even include code blocks to show what *didn't* work.
+
+```scss
+// This was our first attempt. It failed because component-level styles were more specific.
+.cta-button {
+  // ... styles
+}

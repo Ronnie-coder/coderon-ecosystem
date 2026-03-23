@@ -1,0 +1,58 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.c-back-to-top {
+  position: fixed;
+  bottom: $spacing-lg;
+  
+  // --- SPATIAL RELOCATION: Left-aligned per directive ---
+  left: $spacing-lg;
+  right: auto;
+
+  z-index: 1000;
+
+  // --- IRON PROTOCOL: Visual Standard (Gold/Black) ---
+  // We include cta-button for structure, but enforce colors explicitly
+  @include cta-button;
+  
+  background-color: var(--primary-gold);
+  color: #000000;
+  border: 1px solid var(--primary-gold); // Clean border match
+
+  // --- SHAPE & SIZE: Circular FAB ---
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 0; // Override mixin padding
+  font-size: 1.5rem;
+  
+  // Flex centering for the icon
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // --- THEME AWARE SHADOW ---
+  box-shadow: var(--shadow-fab, 0 4px 12px rgba(0, 0, 0, 0.15));
+
+  // Visibility state transitions
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  // Refined hover effect
+  &:hover {
+    background-color: var(--primary-gold); // Ensure it stays gold
+    filter: brightness(1.1); // Slight lift in brightness for feedback
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4); // Gold glow on hover
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.95);
+  }
+}

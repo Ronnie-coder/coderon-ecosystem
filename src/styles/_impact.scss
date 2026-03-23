@@ -1,0 +1,108 @@
+// src/styles/_impact.scss
+@use 'variables' as *;
+
+.c-impact {
+  padding: $spacing-xxl 0;
+  background-color: var(--background-color);
+
+  @media (max-width: 768px) {
+    padding: $spacing-xl 0;
+  }
+}
+
+.c-impact-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: $spacing-xl;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+    padding: 0 $spacing-md;
+  }
+
+  // --- Image ---
+  &__image-wrapper {
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    // Replaced --shadow-strong (doesn't exist) with real token
+    box-shadow: var(--shadow-card-hover);
+    line-height: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  // --- Content ---
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 900px) {
+      margin-top: $spacing-lg;
+    }
+  }
+
+  // Eyebrow label — "Client Work"
+  &__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary-gold);
+    margin-bottom: $spacing-xs;
+    opacity: 0.9;
+  }
+
+  // Client name
+  &__client {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: $spacing-sm;
+  }
+
+  // Project title
+  &__title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: $spacing-md;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  // Project description
+  &__description {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-width: 52ch;
+    margin-bottom: $spacing-lg;
+    font-size: 1rem;
+  }
+
+  // CTA group — two buttons side by side
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    align-items: center;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  // .cta-button and .cta-button-secondary visual styles
+  // are handled by global _buttons.scss — no override needed here
+}

@@ -1,0 +1,166 @@
+// src/styles/_impact-page.scss
+@use 'variables' as *;
+
+// NOTE: .c-page-container, .c-page-header
+// now defined in _base.scss — removed from here
+
+.impact-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+// ============================================
+// PROJECT CARD
+// ============================================
+
+.c-project-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  margin-bottom: $spacing-xxl;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--primary-gold);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Browser window decoration
+.c-project-browser-header {
+  padding: 10px $spacing-md;
+  background-color: rgba(125, 125, 125, 0.08);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+
+  .browser-dots {
+    display: flex;
+    gap: 6px;
+
+    span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background-color: var(--border-color);
+      transition: background-color 0.3s ease;
+    }
+  }
+}
+
+// Dots colorize on card hover
+.c-project-card:hover .browser-dots {
+  span:nth-child(1) { background: #ff5f56; }
+  span:nth-child(2) { background: #ffbd2e; }
+  span:nth-child(3) { background: #27c93f; }
+}
+
+.c-project-card__image {
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+  }
+}
+
+.c-project-card__body {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $spacing-xl;
+  gap: $spacing-xl;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: $spacing-lg;
+  }
+}
+
+.c-project-card__content {
+  flex: 2;
+  min-width: 280px;
+}
+
+.c-project-card__client {
+  font-family: $font-secondary;     // Was: 'Roboto Mono', monospace
+  color: var(--primary-gold);
+  font-weight: 600;
+  margin-bottom: $spacing-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+}
+
+.c-project-card__title {
+  font-family: $font-primary;       // Was: 'Poppins', sans-serif
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--text-primary);
+  margin-bottom: $spacing-md;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.c-project-card__description {
+  color: var(--text-secondary);
+  margin: 0 0 $spacing-lg 0;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+// .cta-button — REMOVED from here
+// Global _buttons.scss handles all visual styles
+
+.c-project-card__details {
+  flex: 1;
+  min-width: 200px;
+  padding-left: $spacing-xl;
+  border-left: 1px solid var(--border-color);
+
+  @media (max-width: 900px) {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    padding-top: $spacing-lg;
+    display: flex;
+    gap: $spacing-xl;
+    flex-wrap: wrap;
+  }
+}
+
+.c-project-card__meta-item {
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.c-project-card__meta-heading {
+  font-family: $font-secondary;     // Was: 'Roboto Mono', monospace
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: $spacing-xs;
+}
+
+.c-project-card__meta-content {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin: 0 0 $spacing-xs 0;
+  line-height: 1.4;
+}

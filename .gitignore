@@ -1,0 +1,43 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+/node_modules
+/.pnpm
+.pnpm-store
+
+# Next.js build output
+/.next/
+/out/
+
+# Other build files
+/build
+
+# Test results
+/coverage
+
+# Local environment variables
+.env*.local
+.env
+
+# Production environment variables
+# This is a safety measure. You should never commit your production .env file.
+.env.production
+
+# IDE and editor directories
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
