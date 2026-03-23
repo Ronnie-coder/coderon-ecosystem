@@ -1,64 +1,38 @@
 // src/components/Hero.tsx
 "use client";
 
-import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 
+// ✅ Hero has ZERO animation delay now
+// ✅ CSS handles the fade-in — no JS needed for LCP element
+// ✅ Framer Motion removed from above-the-fold entirely
+
 const Hero = () => {
-  const textContainerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
-    },
-  };
-
-  const textItemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
   return (
     <section
       className="c-hero"
       aria-label="Coderon — Custom Software and Automation for Growing Businesses"
     >
       <div className="c-hero__container">
-        <motion.div
-          variants={textContainerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* EYEBROW: Context setter */}
-          <motion.p className="c-hero__eyebrow" variants={textItemVariants}>
-            Built for African businesses. Designed to scale.
-          </motion.p>
+        <div className="c-hero__content">
 
-          {/* HEADLINE: What you do + who you help */}
-          <motion.h1 className="c-hero__title" variants={textItemVariants}>
+          {/* ✅ Pure CSS animation — no JS delay */}
+          <p className="c-hero__eyebrow c-hero__animate-1">
+            Built for African businesses. Designed to scale.
+          </p>
+
+          <h1 className="c-hero__title c-hero__animate-2">
             We Build the Systems That{' '}
             <span>Run Your Business</span>
-          </motion.h1>
+          </h1>
 
-          {/* SUBTITLE: Outcomes, not features */}
-          <motion.p
-            className="c-hero__subtitle"
-            variants={textItemVariants}
-          >
+          <p className="c-hero__subtitle c-hero__animate-3">
             Custom software, automation tools, and AI integrations — so your
             team spends less time on manual work and more time on what
             actually grows the business.
-          </motion.p>
+          </p>
 
-          {/* CTAs */}
-          <motion.div
-            className="c-hero__cta-group"
-            variants={textItemVariants}
-          >
+          <div className="c-hero__cta-group c-hero__animate-4">
             <Link
               href="/contact"
               className="cta-button"
@@ -73,8 +47,9 @@ const Hero = () => {
             >
               See What We Build
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

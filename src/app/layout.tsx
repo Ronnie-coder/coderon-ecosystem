@@ -12,16 +12,19 @@ import { Analytics } from "@vercel/analytics/react";
 
 const poppins = Poppins({
   subsets: ['latin'],
-  // Removed '900' — not used. Added '600' — used in buttons/headings.
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-poppins',
+  // ✅ Preload the most-used weight for LCP text
+  preload: true,
 });
 
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-roboto-mono',
+  // ✅ Don't preload mono — only used in code blocks
+  preload: false,
 });
 
 const siteUrl = "https://www.coderon.co.za";
@@ -29,10 +32,8 @@ const siteUrl = "https://www.coderon.co.za";
 export const metadata: Metadata = {
   title: {
     template: "%s | Coderon",
-    // Clear, specific — answers "what do you do" immediately
     default: "Coderon — Custom Software, Automation & AI for African Businesses",
   },
-  // Specific outcomes — no vague "transforming landscapes"
   description:
     "Coderon builds custom software, automation tools, and AI integrations for African businesses. We replace manual processes with systems that save time, reduce costs, and scale with you.",
   metadataBase: new URL(siteUrl),
@@ -97,6 +98,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
+          {/* ✅ GA only in ONE place now */}
           <AnalyticsWrapper />
           <Suspense fallback={null}>
             <ClientLayoutComponents />
@@ -104,9 +106,11 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </ThemeProvider>
+
+        {/* ✅ Vercel analytics deferred */}
         <Analytics />
 
-        {/* Botpress chatbot — lazy loaded, no impact on Core Web Vitals */}
+        {/* ✅ Botpress — lazyOnload, no CWV impact */}
         <Script
           src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"
           strategy="lazyOnload"
