@@ -1,3 +1,4 @@
+// src/app/services/[slug]/page.tsx
 import { services } from '@/data/servicesData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -11,8 +12,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = services.find(s => s.slug === slug);
 
   if (!service) return { title: 'Service Not Found' };
+  
+  // ✅ Let the layout template handle suffix formatting perfectly to prevent tab clutters
   return {
-    title: `${service.title} | Coderon Agency`,
+    title: service.title,
     description: service.description,
   };
 }

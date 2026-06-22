@@ -52,9 +52,9 @@ export default function AboutClient() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Built in South Africa.
+            Built for Growth.
             <br />
-            Built for Africa.
+            Built to Last.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -62,7 +62,7 @@ export default function AboutClient() {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Coderon is a software company that builds custom systems,
-            automation tools, and AI integrations for African businesses
+            automation tools, and AI integrations for businesses
             that are serious about growth.
           </motion.p>
         </header>
@@ -101,7 +101,7 @@ export default function AboutClient() {
               <h2>The Story Behind the Code</h2>
               <blockquote cite="https://www.coderon.co.za/about">
                 <p>
-                  &ldquo;I believe African businesses deserve software
+                  &ldquo;I believe growing businesses deserve software
                   that actually fits how they work — not watered-down
                   versions of tools built for someone else&apos;s
                   market.&rdquo;
@@ -109,7 +109,7 @@ export default function AboutClient() {
                 <footer>— Ronnie Nyamhute, Founder of Coderon</footer>
               </blockquote>
               <p className="founder-text">
-                Coderon started from a simple observation: African
+                Coderon started from a simple observation: growing
                 businesses were being underserved by off-the-shelf
                 software that didn&apos;t account for local payment
                 systems, local languages, or local ways of working.
@@ -117,8 +117,8 @@ export default function AboutClient() {
               <p className="founder-text">
                 So we started building. Custom software for insurance
                 brokers. Redesigned web platforms for tour operators.
-                An invoicing tool built specifically for African
-                freelancers. Every project teaches us something new
+                An invoicing tool built specifically for freelancers. 
+                Every project teaches us something new
                 about what businesses here actually need — and we build
                 that knowledge into everything we do.
               </p>

@@ -48,7 +48,7 @@ const Footer = () => {
             </Link>
 
             <p className="c-footer__tagline">
-              We build the software that helps African businesses
+              We build the software that helps businesses
               run faster, smarter, and at scale.
             </p>
 
@@ -96,27 +96,6 @@ const Footer = () => {
               <li><Link href="/playroom">Our Work</Link></li>
               <li><Link href="/about">About Us</Link></li>
               <li><Link href="/journal">Journal</Link></li>
-            </ul>
-          </div>
-
-          {/* ECOSYSTEM COLUMN */}
-          <div className="c-footer__col c-footer__col--links">
-            <h4 className="c-footer__col-heading">Ecosystem</h4>
-            <ul className="c-footer__link-list" role="list">
-              <li>
-                <a
-                  href="https://quotepilot.coderon.co.za/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="QuotePilot — invoicing platform, opens in new tab"
-                >
-                  QuotePilot
-                </a>
-              </li>
-              <li>
-                <Link href="/playroom">
-                </Link>
-              </li>
             </ul>
           </div>
 

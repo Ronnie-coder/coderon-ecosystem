@@ -10,7 +10,7 @@ import {
 import { ConsultationForm } from '@/components/ConsultationForm';
 
 export const metadata: Metadata = {
-  title: 'Book a Free Consultation',
+  title: 'Contact',
   description:
     'Book a free 30-minute strategy call with Coderon. Tell us what you need — we\'ll tell you what\'s possible and give you a clear plan. No obligation.',
   alternates: { canonical: '/contact' },

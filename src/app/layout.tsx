@@ -32,18 +32,19 @@ const siteUrl = "https://www.coderon.co.za";
 export const metadata: Metadata = {
   title: {
     template: "%s | Coderon",
-    default: "Coderon — Custom Software, Automation & AI for African Businesses",
+    // ✅ Super short to prevent browser tab cutoff
+    default: "Coderon | Software & AI",
   },
   description:
-    "Coderon builds custom software, automation tools, and AI integrations for African businesses. We replace manual processes with systems that save time, reduce costs, and scale with you.",
+    "Coderon builds custom software, automation tools, and AI integrations for growing businesses. We replace manual processes with systems that save time, reduce costs, and scale with you.",
   metadataBase: new URL(siteUrl),
   alternates: { canonical: '/' },
   keywords: [
-    "custom software South Africa",
-    "business automation South Africa",
-    "AI integration Africa",
-    "Next.js development South Africa",
-    "digital transformation Africa",
+    "custom software development",
+    "business automation",
+    "AI integration",
+    "Next.js development",
+    "digital transformation",
     "internal tools development",
     "Coderon",
   ],
@@ -58,15 +59,15 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title:       "Coderon — Custom Software, Automation & AI for African Businesses",
-    description: "We build the systems that help African businesses run faster, cut costs, and scale. Custom software, automation, and AI — without the complexity.",
+    title:       "Coderon | Software & AI",
+    description: "We build the systems that help businesses run faster, cut costs, and scale. Custom software, automation, and AI — without the complexity.",
     url:         siteUrl,
     siteName:    'Coderon',
     images: [{
       url:    '/og-image.png',
       width:  1200,
       height: 630,
-      alt:    'Coderon — Custom Software for African Businesses',
+      alt:    'Coderon — Custom Software for Growing Businesses',
     }],
     locale: 'en_ZA',
     type:   'website',
@@ -74,8 +75,8 @@ export const metadata: Metadata = {
 
   twitter: {
     card:        'summary_large_image',
-    title:       "Coderon — Custom Software, Automation & AI for African Businesses",
-    description: "We build the systems that help African businesses run faster, cut costs, and scale.",
+    title:       "Coderon | Software & AI",
+    description: "We build the systems that help businesses run faster, cut costs, and scale.",
     creator:     '@Coderon28',
     images:      ['/og-image.png'],
   },
@@ -109,16 +110,6 @@ export default function RootLayout({
 
         {/* ✅ Vercel analytics deferred */}
         <Analytics />
-
-        {/* ✅ Botpress — lazyOnload, no CWV impact */}
-        <Script
-          src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"
-          strategy="lazyOnload"
-        />
-        <Script
-          src="https://files.bpcontent.cloud/2025/04/29/07/20250429074103-1NATVXCY.js"
-          strategy="lazyOnload"
-        />
       </body>
     </html>
   );

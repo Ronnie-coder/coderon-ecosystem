@@ -4,7 +4,7 @@ import { getJournalEntries } from '@/lib/journal';
 import JournalGrid from './JournalGrid';
 
 export const metadata: Metadata = {
-  title: 'Journal — Insights on Software, AI & Business',
+  title: 'Journal',
   description:
     'Practical insights, engineering lessons, and business strategies from the Coderon team — written for founders and operators, not just developers.',
   alternates: { canonical: '/journal' },
@@ -25,7 +25,7 @@ export default function JournalPage() {
           <h1>Insights & Engineering Notes</h1>
           <p>
             Practical lessons on software, automation, and building
-            a tech company in Africa — written by the team doing the work.
+            a tech company — written by the team doing the work.
           </p>
         </div>
       </section>

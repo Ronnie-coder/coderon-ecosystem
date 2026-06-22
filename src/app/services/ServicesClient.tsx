@@ -43,7 +43,7 @@ export default function ServicesClient() {
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           From custom software to AI integrations — we build the
-          systems that help African businesses run faster, cut
+          systems that help businesses run faster, cut
           manual work, and grow without the friction.
         </motion.p>
       </header>

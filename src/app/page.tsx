@@ -16,10 +16,7 @@ const ImpactSection = dynamic(
   { ssr: false }
 );
 
-const QuotePilotCtaSection = dynamic(
-  () => import('@/components/QuotePilotCtaSection'),
-  { ssr: false }
-);
+// QuotePilot import removed to keep homepage clean
 
 const TestimonialsSection = dynamic(
   () => import('@/components/TestimonialsSection'),
@@ -47,7 +44,9 @@ export default function HomePage() {
       {featuredProject && (
         <ImpactSection project={featuredProject} />
       )}
-      <QuotePilotCtaSection />
+      
+      {/* QuotePilot CTA removed from here */}
+      
       <TestimonialsSection />
       <TheDrumSection />
       <ContactSection />

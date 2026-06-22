@@ -18,7 +18,7 @@ const Hero = () => {
 
           {/* ✅ Pure CSS animation — no JS delay */}
           <p className="c-hero__eyebrow c-hero__animate-1">
-            Built for African businesses. Designed to scale.
+            Built for  businesses. Designed to scale.
           </p>
 
           <h1 className="c-hero__title c-hero__animate-2">
