@@ -3,7 +3,43 @@ import type { PlayroomProject, PlayroomDemo } from '@/types/global';
 
 // --- MAIN PORTFOLIO ---
 export const liveProjects: PlayroomProject[] = [
-  // 1. PALMSURE
+  // 1. EDDIE'S CUT (NEW HERO PROJECT)
+  {
+    id: 'eddies-cut',
+    title: "Eddie's Cut",
+    category: 'Web Redesign & Performance',
+    description:
+      'A complete digital overhaul for a premium Hellerup hair salon. We migrated them off an outdated site builder to a custom Next.js architecture, hitting perfect 100/100 Lighthouse scores.',
+    tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
+    imageUrl: '/images/eddiescut-after.webp',
+    beforeImage: '/images/eddiescut-before.webp', // Feeds the scanner
+    afterImage: '/images/eddiescut-after.webp',   // Feeds the scanner
+    lighthouseBefore: '/images/eddiescut-lighthouse-before.webp',
+    lighthouseAfter: '/images/eddiescut-lighthouse-after.webp',
+    featureImages: ['/images/eddiescut-feature-pricing.webp'], 
+    liveUrl: 'https://eddiescut.dk',
+    caseStudyUrl: '/playroom/eddies-cut',
+    client: "Eddie's Cut",
+    clientLogo: '/images/razor.svg', // ✅ Fixed logo path included
+    year: '2026',
+    roles: ['Lead Developer', 'Performance Engineer', 'UI/UX'],
+    servicesDelivered: [
+      'Custom Web Development',
+      'SEO & Performance Optimisation',
+      'Zero-Downtime DNS Migration',
+    ],
+    narrative_challenge:
+      'The salon’s existing website was sluggish, outdated, and penalized by Google for poor performance. They needed a premium digital presence that matched their 25 years of bespoke hairdressing experience, and a safe server migration without breaking their established business emails.',
+    narrative_solution:
+      'We engineered a lightning-fast Next.js application featuring an ultra-smooth Framer Motion scroll-tracking navigation system. We also executed a flawless, zero-downtime DNS migration on One.com, ensuring their emails remained completely untouched.',
+    narrative_results: [
+      'Perfect 100/100 Google Lighthouse Performance Score',
+      'Flawless Zero-Downtime DNS Migration',
+      'Dynamic Browser Tab & Scroll-Tracking Navigation',
+    ],
+  },
+
+  // 2. PALMSURE
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
@@ -34,7 +70,7 @@ export const liveProjects: PlayroomProject[] = [
     ],
   },
 
-  // 2. GIFTED TOURS
+  // 3. GIFTED TOURS
   {
     id: 'gifted-tours',
     title: 'Gifted Tours',
@@ -65,12 +101,11 @@ export const liveProjects: PlayroomProject[] = [
     ],
   },
 
-  // 3. QUOTEPILOT
+  // 4. QUOTEPILOT
   {
     id: 'quotepilot',
     title: 'QuotePilot SaaS',
     category: 'SaaS Product',
-    // FIXED: accurate description — invoicing, not quote generation
     description:
       'A professional invoicing platform built for African freelancers and SMEs. Create branded invoices, connect your payment gateway, and get paid faster.',
     tech: ['Next.js', 'Supabase', 'PostgreSQL'],
@@ -88,74 +123,18 @@ export const liveProjects: PlayroomProject[] = [
     ],
     narrative_challenge:
       'African freelancers and small businesses were sending invoices on WhatsApp as Word docs or screenshots. Existing tools were either expensive subscriptions or complex accounting systems they did not need.',
-    // FIXED: "Time to Quote" → "Time to Invoice"
     narrative_solution:
       'We built a streamlined invoicing platform using Supabase and Next.js. Users set up their business profile once — logo, signature, bank details, and payment gateway links — then create and send professional invoices in minutes. Every invoice is cryptographically verified to prevent fraud.',
-    // FIXED: more accurate results
     narrative_results: [
       'Professional branded invoices with auto-VAT',
       'Clients pay via Paystack, Yoco, PayPal, or bank transfer',
       'Cryptographic verification on every invoice',
       'Free for early users — no credit card required',
     ],
-  },
-
-  // 4. GHOST FASHION
-  {
-    id: 'ghost-fashion',
-    title: 'Ghost Fashion MVP',
-    category: 'E-Commerce MVP',
-    description:
-      'A minimalist, high-performance streetwear store demonstrating Next.js commerce capabilities and Stripe checkout integration.',
-    tech: ['Next.js', 'Stripe', 'Vercel'],
-    imageUrl: '/images/playroom/broomghost-sa.webp',
-    liveUrl: 'https://ghost-ebon-three.vercel.app/',
-    caseStudyUrl: '/playroom/ghost-fashion',
-    client: 'Ghost Fashion (Concept)',
-    year: '2025',
-    roles: ['UX Design', 'Frontend Dev'],
-    servicesDelivered: ['E-commerce Development', 'Payment Integration'],
-    narrative_challenge:
-      'Fashion brands need speed and visual impact. The challenge was to build a store that feels premium but loads instantly on mobile.',
-    narrative_solution:
-      'Next.js Image optimisation and a headless architecture ensure product images load without layout shifts. Stripe Checkout handles payments with zero friction.',
-    narrative_results: [
-      '99/100 Lighthouse Performance Score',
-      'Instant page transitions',
-      'Seamless Stripe Checkout integration',
-    ],
-  },
-
-  // 5. FULLAS PHARMACY
-  {
-    id: 'fullas-pharmacy',
-    title: 'Fullas Pharmacy',
-    category: 'Healthcare MVP',
-    description:
-      'A modern approach to online medication ordering — focused on trust, accessibility, and clean UX for all age groups.',
-    tech: ['Next.js', 'UX Research', 'Framer'],
-    imageUrl: '/images/playroom/fullas-pharmacy.webp',
-    liveUrl: 'https://fullas-pharmacy-demo-v-2.vercel.app/',
-    caseStudyUrl: '/playroom/fullas-pharmacy',
-    client: 'Fullas Pharmacy (Concept)',
-    year: '2025',
-    roles: ['Prototyping', 'UI Design'],
-    servicesDelivered: ['UX/UI Design', 'Frontend Prototyping'],
-    narrative_challenge:
-      'Online pharmacies often feel clinical and confusing. The goal was a user experience that felt safe, warm, and easy to navigate — especially for older users.',
-    narrative_solution:
-      'Large typography, high-contrast action buttons, and a simplified checkout flow. Every design decision was tested against accessibility standards.',
-    narrative_results: [
-      'High accessibility score across all pages',
-      'Clear and tested user journey',
-      'Modern, trustworthy brand identity',
-    ],
-  },
+  }
 ];
 
 // --- THE LAB (Interactive Demos) ---
-// REMOVED: sentiment-analyzer and sales-dashboard
-// KEPT: business-chatbot only
 export const interactiveDemos: PlayroomDemo[] = [
   {
     id: 'business-chatbot',

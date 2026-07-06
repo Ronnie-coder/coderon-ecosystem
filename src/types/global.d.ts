@@ -1,4 +1,4 @@
-// DEFINITIVE FIX: src/types/global.d.ts
+// src/types/global.d.ts
 
 export interface PlayroomProject {
   id: string;
@@ -9,7 +9,6 @@ export interface PlayroomProject {
   tech: string[];
   liveUrl: string;
   caseStudyUrl?: string;
-  // --- ADDED MISSING FIELD BELOW ---
   clientLogo?: string; 
   client?: string;
   year?: string;
@@ -18,6 +17,13 @@ export interface PlayroomProject {
   narrative_challenge?: string;
   narrative_solution?: string;
   narrative_results?: string[];
+  // --- ADDED FOR THE BEFORE/AFTER SLIDER ---
+  beforeImage?: string;
+  afterImage?: string;
+  lighthouseBefore?: string;
+  lighthouseAfter?: string;
+  // ✅ ADDED THIS SO NEXT.JS RECOGNIZES THE ARRAY
+  featureImages?: string[]; 
 }
 
 export interface PlayroomDemo {

@@ -96,6 +96,7 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${roboto_mono.variable}`}
       suppressHydrationWarning
+      data-scroll-behavior="smooth" // ✅ Added to fix smooth scroll warning
     >
       <body>
         <ThemeProvider>

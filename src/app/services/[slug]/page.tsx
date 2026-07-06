@@ -5,10 +5,14 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
-type PageProps = { params: { slug: string } };
+// ✅ FIX: params must be typed as a Promise in newer Next.js versions
+type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params;
+  // ✅ FIX: Await the params before destructuring
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+  
   const service = services.find(s => s.slug === slug);
 
   if (!service) return { title: 'Service Not Found' };
@@ -24,8 +28,12 @@ export async function generateStaticParams() {
   return services.map(service => ({ slug: service.slug }));
 }
 
-export default function ServiceDetailPage({ params }: PageProps) {
-  const { slug } = params;
+// ✅ FIX: Component must be async to await params
+export default async function ServiceDetailPage({ params }: PageProps) {
+  // ✅ FIX: Await the params before destructuring
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+  
   const service = services.find(s => s.slug === slug);
 
   if (!service) { notFound(); }

@@ -14,6 +14,27 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'eddies-cut',
+    client: "Eddie's Cut",
+    title: 'From Sluggish to Lightning Fast',
+    tags: ['Web Redesign', 'Next.js', 'SEO Optimization'],
+    description:
+      'A complete digital overhaul for a premium Hellerup hair salon. We migrated them off an outdated site builder to a custom Next.js architecture, hitting perfect 100/100 Lighthouse scores.',
+    imageUrl: '/images/eddiescut-after.webp',
+    liveUrl: 'https://eddiescut.dk',
+    year: 2026,
+    roles: [
+      'Lead Developer',
+      'Performance Engineer',
+      'UI/UX Designer'
+    ],
+    servicesDelivered: [
+      'Custom Web Development',
+      'SEO & Performance Optimisation',
+      'Zero-Downtime DNS Migration'
+    ],
+  },
+  {
     id: 'palmsure',
     client: 'Palmsure Insurance',
     title: 'Honouring a Legacy with Digital Transformation',
@@ -64,10 +85,8 @@ export const projects: Project[] = [
   {
     id: 'quotepilot',
     client: 'Coderon — Internal Product',
-    // Corrected: it's invoicing, not quoting
     title: 'Professional Invoicing Built for African Freelancers',
     tags: ['SaaS', 'Next.js', 'Supabase', 'PostgreSQL'],
-    // Corrected: accurate product description
     description:
       'We built QuotePilot to solve a problem we saw firsthand — African freelancers and SMEs sending invoices on WhatsApp or via messy Word docs. QuotePilot lets you create branded invoices, embed your payment gateway, and get paid faster. Built, shipped, and maintained by Coderon.',
     imageUrl: '/images/quotepilot-showcase.webp',
