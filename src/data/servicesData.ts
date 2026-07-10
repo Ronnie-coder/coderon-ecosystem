@@ -77,7 +77,7 @@ export const services: Service[] = [
     description:
       'Still running your business on spreadsheets, WhatsApp threads, and outdated software? We replace that friction with systems that actually work — and show you the difference in your bottom line.',
     detailedDescription:
-      'Outdated systems don\'t just slow you down — they cost you money every single day. We audit your current operations, identify where time and money are being lost, and replace the weak points with modern software that your team will actually use. The result: faster operations, fewer errors, and a business that\'s ready to scale.',
+      'Outdated systems don\'t just slow your team down — they drain the capital you need to scale. We audit your current operations, identify where time and money are being lost, and replace the weak points with modern software that your team will actually use. The result: faster operations, fewer errors, and a business that\'s ready to scale.',
     benefits: [
       { text: 'Replaces slow legacy systems with modern tools', icon: FaSyncAlt },
       { text: 'Reduces operating costs month over month', icon: FaFileInvoiceDollar },

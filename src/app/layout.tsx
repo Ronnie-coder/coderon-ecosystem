@@ -33,10 +33,10 @@ export const metadata: Metadata = {
   title: {
     template: "%s | Coderon",
     // ✅ Super short to prevent browser tab cutoff
-    default: "Coderon | Software & AI",
+    default: "Coderon | Technical Partner for Founders",
   },
   description:
-    "Coderon builds custom software, automation tools, and AI integrations for growing businesses. We replace manual processes with systems that save time, reduce costs, and scale with you.",
+    "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
   metadataBase: new URL(siteUrl),
   alternates: { canonical: '/' },
   keywords: [
@@ -47,6 +47,8 @@ export const metadata: Metadata = {
     "digital transformation",
     "internal tools development",
     "Coderon",
+    "technical partner for founders",
+    "startup development agency"
   ],
   authors:   [{ name: 'Coderon', url: siteUrl }],
   creator:   'Coderon',
@@ -59,15 +61,15 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title:       "Coderon | Software & AI",
-    description: "We build the systems that help businesses run faster, cut costs, and scale. Custom software, automation, and AI — without the complexity.",
+    title:       "Coderon | Technical Partner for Founders",
+    description: "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
     url:         siteUrl,
     siteName:    'Coderon',
     images: [{
       url:    '/og-image.png',
       width:  1200,
       height: 630,
-      alt:    'Coderon — Custom Software for Growing Businesses',
+      alt:    'Coderon — Technical Partner for Founders',
     }],
     locale: 'en_ZA',
     type:   'website',
@@ -75,8 +77,8 @@ export const metadata: Metadata = {
 
   twitter: {
     card:        'summary_large_image',
-    title:       "Coderon | Software & AI",
-    description: "We build the systems that help businesses run faster, cut costs, and scale.",
+    title:       "Coderon | Technical Partner for Founders",
+    description: "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
     creator:     '@Coderon28',
     images:      ['/og-image.png'],
   },
@@ -98,6 +100,25 @@ export default function RootLayout({
       suppressHydrationWarning
       data-scroll-behavior="smooth" // ✅ Added to fix smooth scroll warning
     >
+      <head>
+        {/* ✅ Google Analytics 4 Script - Injected safely for Next.js App Router */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-TQQX3FHT1B`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-TQQX3FHT1B');
+            `,
+          }}
+        />
+      </head>
       <body>
         <ThemeProvider>
           {/* ✅ GA only in ONE place now */}

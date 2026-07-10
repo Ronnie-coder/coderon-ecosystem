@@ -48,7 +48,7 @@ const Footer = () => {
             </Link>
 
             <p className="c-footer__tagline">
-              We build the software that helps businesses
+              We build the software that helps founders and growing businesses
               run faster, smarter, and at scale.
             </p>
 

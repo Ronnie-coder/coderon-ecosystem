@@ -11,25 +11,23 @@ const Hero = () => {
   return (
     <section
       className="c-hero"
-      aria-label="Coderon — Custom Software and Automation for Growing Businesses"
+      aria-label="Coderon — Technical Partner for Founders"
     >
       <div className="c-hero__container">
         <div className="c-hero__content">
 
           {/* ✅ Pure CSS animation — no JS delay */}
           <p className="c-hero__eyebrow c-hero__animate-1">
-            Built for  businesses. Designed to scale.
+            CODERON FOR FOUNDERS
           </p>
 
           <h1 className="c-hero__title c-hero__animate-2">
-            We Build the Systems That{' '}
-            <span>Run Your Business</span>
+            The Technical Partner For{' '}
+            <span>Non-Technical Founders.</span>
           </h1>
 
           <p className="c-hero__subtitle c-hero__animate-3">
-            Custom software, automation tools, and AI integrations — so your
-            team spends less time on manual work and more time on what
-            actually grows the business.
+            You bring the business vision, we handle the software, AI, and automation. We translate your ideas into scalable systems so you can launch with absolute confidence.
           </p>
 
           <div className="c-hero__cta-group c-hero__animate-4">

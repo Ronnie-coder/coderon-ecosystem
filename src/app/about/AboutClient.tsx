@@ -62,8 +62,8 @@ export default function AboutClient() {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             Coderon is a software company that builds custom systems,
-            automation tools, and AI integrations for businesses
-            that are serious about growth.
+            automation tools, and AI integrations for founders and teams
+            who are serious about growth.
           </motion.p>
         </header>
 
