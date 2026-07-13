@@ -1,10 +1,59 @@
-// next.config.js
 const createMDX = require('@next/mdx');
+
+const securityHeaders = [
+  // 1. Forces secure HTTPS connections
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=63072000; includeSubDomains; preload'
+  },
+  // 2. Prevents Clickjacking
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN'
+  },
+  // 3. Prevents MIME Sniffing
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff'
+  },
+  // 4. Protects user privacy tracking
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin-when-cross-origin'
+  },
+  // 5. Hardware Lock
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
+  },
+  // 6. Optimizes DNS resolution
+  {
+    key: 'X-DNS-Prefetch-Control',
+    value: 'on'
+  },
+  // 7. Content Security Policy for the A+ grade
+  {
+    key: 'Content-Security-Policy',
+    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:;"
+  }
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   trailingSlash: true,
+  
+  // --- SECURITY HEADERS ---
+  async headers() {
+    return [
+      {
+        // Apply these headers to ALL routes in the application
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
+  },
+
   images: {
     // ✅ REMOVED: unoptimized: true  ← this was killing LCP
     formats: ['image/avif', 'image/webp'],
