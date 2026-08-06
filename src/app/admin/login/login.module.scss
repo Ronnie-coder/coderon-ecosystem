@@ -1,0 +1,162 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #020617; /* Deep base color */
+  font-family: system-ui, -apple-system, sans-serif;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  overflow: hidden; /* Prevents scrollbars from breaking the full screen */
+  
+  /* Custom Soft Blue Dot Cursor */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="%233b82f6" opacity="0.9" style="filter: drop-shadow(0 0 4px %233b82f6)"/></svg>') 10 10, auto;
+}
+
+/* 🚀 FULL SCREEN IFRAME TARGETING */
+.lottieBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  pointer-events: none; /* Lets clicks pass through to the card */
+  z-index: 0;
+}
+
+.glowOrb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Glassmorphism Card (Animation handled by Framer Motion) */
+.card {
+  position: relative;
+  z-index: 10;
+  background: rgba(13, 17, 23, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 3.5rem 3rem;
+  width: 100vw;
+  max-width: 440px;
+  box-shadow: 
+    0 30px 60px -10px rgba(0, 0, 0, 0.8), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  transform: translateZ(40px); /* Pushes text out in 3D */
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  text-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transform: translateZ(30px);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+  text-align: center;
+  letter-spacing: 2px;
+  backdrop-filter: blur(8px);
+  
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="%2360a5fa" opacity="0.8"/><circle cx="12" cy="12" r="2" fill="%23ffffff"/></svg>') 12 12, pointer;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  background: rgba(2, 6, 23, 0.8);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.input::placeholder {
+  color: #475569;
+  letter-spacing: 1px;
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.875rem;
+  text-align: center;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+  
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="%2360a5fa" opacity="0.8"/><circle cx="12" cy="12" r="2" fill="%23ffffff"/></svg>') 12 12, pointer;
+}
+
+.submitBtn:hover:not(:disabled) {
+  box-shadow: 0 15px 25px -5px rgba(37, 99, 235, 0.6);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.submitBtn:disabled {
+  background: #1e293b;
+  color: #64748b;
+  box-shadow: none;
+}

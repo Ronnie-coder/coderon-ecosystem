@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -9,7 +8,6 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
-// QuotePilot removed from nav — it lives in the dedicated CTA section
 const navLinks = [
   { href: '/services',  label: 'Services', title: 'What We Build'   },
   { href: '/playroom',  label: 'Work',     title: 'Case Studies'    },
@@ -25,8 +23,14 @@ const mobileMenuVariants = {
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen]   = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [mounted, setMounted]         = useState(false);
   const { theme, toggleTheme }        = useTheme();
   const pathname                      = usePathname();
+
+  // Prevent hydration mismatch for theme toggle
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Scroll detection — throttled via rAF
   useEffect(() => {
@@ -103,20 +107,20 @@ const Navbar = () => {
         {/* Actions */}
         <div className="c-navbar__actions">
 
-          {/* Theme toggle */}
+          {/* Theme toggle - Hydration mismatch fixed */}
           <button
             onClick={toggleTheme}
             className="c-navbar__theme-toggle"
             aria-label={
-              theme === 'dark'
+              mounted && theme === 'dark'
                 ? 'Switch to light mode'
                 : 'Switch to dark mode'
             }
           >
-            {theme === 'dark' ? (
-              <FiSun aria-hidden="true" />
+            {mounted ? (
+              theme === 'dark' ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />
             ) : (
-              <FiMoon aria-hidden="true" />
+              <FiSun aria-hidden="true" className="opacity-0" />
             )}
           </button>
 
@@ -174,7 +178,7 @@ const Navbar = () => {
               );
             })}
 
-            {/* Mobile CTA — consistent with desktop */}
+            {/* Mobile CTA */}
             <Link
               href="/contact"
               className="c-navbar__mobile-cta"

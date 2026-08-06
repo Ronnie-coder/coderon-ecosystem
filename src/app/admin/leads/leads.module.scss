@@ -1,0 +1,287 @@
+.dashboard {
+  min-height: 100vh;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  /* 🚀 THIS REMOVES THE BLACK GAP */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  z-index: 10;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #21262d;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.lottieIcon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 🚀 PURE CSS TYPEWRITER EFFECT */
+.typewriterWrapper {
+  display: inline-block;
+}
+
+.typewriterTitle {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: 2px;
+  overflow: hidden; 
+  white-space: nowrap; 
+  border-right: 0.15em solid #3b82f6; 
+  /* 7 steps = 7 letters in CODERON */
+  animation: 
+    typing 1s steps(7, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #3b82f6; }
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #8b949e;
+  margin: 4px 0 0 0;
+  font-weight: 500;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.searchInput {
+  background: #161b22;
+  border: 1px solid #21262d;
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  width: 280px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: #3b82f6;
+}
+
+.syncBtn {
+  background: #2563eb;
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.syncBtn:hover {
+  background: #1d4ed8;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.cardLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #8b949e;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.cardValue {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 0.5rem;
+}
+
+.valGreen { color: #34d399; }
+.valIndigo { color: #818cf8; }
+.valPurple { color: #c084fc; }
+
+.tableContainer {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.tableContainer::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+  background: #0d1117;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 8px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+  background: #8b949e;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.table th {
+  background: #0d1117;
+  padding: 1rem 1.5rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  border-bottom: 1px solid #21262d;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #21262d;
+  color: #c9d1d9;
+}
+
+.table tr:hover {
+  background: #1c2128;
+}
+
+.companyName {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 4px;
+}
+
+.link:hover { text-decoration: underline; }
+
+.emailBadge {
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+}
+
+.sourceText {
+  color: #8b949e;
+  font-size: 0.75rem;
+}
+
+.na {
+  color: #8b949e;
+  font-family: monospace;
+  font-size: 0.75rem;
+}
+
+.scoreGreen { color: #34d399; background: rgba(52, 211, 153, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; font-family: monospace;}
+.scoreAmber { color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; font-family: monospace;}
+
+.statusNew { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(59, 130, 246, 0.2); }
+.statusAudited { background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(52, 211, 153, 0.2); }
+.statusPitched { background: rgba(129, 140, 248, 0.1); color: #818cf8; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(129, 140, 248, 0.2); }
+.statusOpened { background: rgba(192, 132, 252, 0.1); color: #c084fc; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(192, 132, 252, 0.2); }
+
+.notes { font-size: 0.75rem; color: #8b949e; }
+.warning { color: #fbbf24; font-weight: 600; }
+
+.actionCell {
+  text-align: right;
+  vertical-align: middle;
+}
+
+.pitchBtn {
+  background-color: #3b82f6; 
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap; 
+  display: inline-block;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+}
+
+.pitchBtn:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.pitchBtn:disabled {
+  background-color: #1c2128;
+  color: #8b949e;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}

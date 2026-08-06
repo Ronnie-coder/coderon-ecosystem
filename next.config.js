@@ -31,10 +31,10 @@ const securityHeaders = [
     key: 'X-DNS-Prefetch-Control',
     value: 'on'
   },
-  // 7. Content Security Policy for the A+ grade
+  // 7. Content Security Policy for the A+ grade - UPDATED FOR EXTERNAL SCRIPTS & IFRAMES
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:;"
+    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com https://js.stripe.com https://www.paypal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self' https://lottie.host https://js.stripe.com https://www.paypal.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://va.vercel-scripts.com https://vitals.vercel-insights.com;"
   }
 ];
 

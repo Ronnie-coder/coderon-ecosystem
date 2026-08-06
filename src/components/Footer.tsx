@@ -1,8 +1,8 @@
-// src/components/Footer.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   FaGithub,
   FaLinkedin,
@@ -14,6 +14,7 @@ import { BackToTopButton } from '@/components/BackToTopButton';
 
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState('');
+  const pathname = usePathname();
 
   useEffect(() => {
     const updateTime = () => {
@@ -31,6 +32,11 @@ const Footer = () => {
   }, []);
 
   const currentYear = new Date().getFullYear();
+
+  // Hide Footer completely on private admin pages
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <footer className="c-footer" aria-label="Site footer">
@@ -103,7 +109,6 @@ const Footer = () => {
           <div className="c-footer__col c-footer__col--contact">
             <h4 className="c-footer__col-heading">Work With Us</h4>
 
-            {/* ✅ FIXED: "Let's" → "Let&apos;s" | "what's" → "what&apos;s" */}
             <p className="c-footer__text">
               Ready to build something? Let&apos;s talk about your
               project and what&apos;s possible.
