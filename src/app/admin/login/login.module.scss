@@ -17,18 +17,6 @@
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="%233b82f6" opacity="0.9" style="filter: drop-shadow(0 0 4px %233b82f6)"/></svg>') 10 10, auto;
 }
 
-/* 🚀 FULL SCREEN IFRAME TARGETING */
-.lottieBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  border: none;
-  pointer-events: none; /* Lets clicks pass through to the card */
-  z-index: 0;
-}
-
 .glowOrb {
   position: absolute;
   width: 500px;

@@ -6,13 +6,16 @@
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
-  /* 🚀 THIS REMOVES THE BLACK GAP */
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   margin: 0;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .container {
@@ -28,6 +31,12 @@
   border-bottom: 1px solid #21262d;
   padding-bottom: 1.5rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
 }
 
 .titleArea {
@@ -45,7 +54,6 @@
   overflow: hidden;
 }
 
-/* 🚀 PURE CSS TYPEWRITER EFFECT */
 .typewriterWrapper {
   display: inline-block;
 }
@@ -59,7 +67,6 @@
   overflow: hidden; 
   white-space: nowrap; 
   border-right: 0.15em solid #3b82f6; 
-  /* 7 steps = 7 letters in CODERON */
   animation: 
     typing 1s steps(7, end),
     blink-caret 0.75s step-end infinite;
@@ -85,6 +92,11 @@
 .controls {
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .searchInput {
@@ -97,6 +109,11 @@
   width: 280px;
   outline: none;
   transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .searchInput:focus {
@@ -113,6 +130,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .syncBtn:hover {
@@ -124,6 +146,10 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .card {
@@ -181,6 +207,7 @@
 
 .table {
   width: 100%;
+  min-width: 1000px; /* 🚀 THIS FORCES THE HORIZONTAL SCROLL ON MOBILE */
   border-collapse: collapse;
   text-align: left;
   font-size: 0.875rem;

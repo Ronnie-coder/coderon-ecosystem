@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// 🚀 VERCEL CONFIGURATION: FORCE 60 SECOND MAX DURATION
+export const maxDuration = 60;
+
 // Initialize Supabase Client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// 🚀 VERCEL CRONS REQUIRE GET REQUESTS
 export async function GET() {
   try {
     const apiKey = process.env.SERPER_API_KEY;

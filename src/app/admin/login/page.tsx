@@ -54,17 +54,8 @@ export default function LoginPage() {
 
   return (
     <div className={styles.wrapper}>
-      {/* 🚀 FULL SCREEN LOTTIE BACKGROUND */}
-      <iframe 
-        src="https://lottie.host/embed/61a8cc2a-b2ed-46e8-aab6-5e9c42b4daf3/fBF7zgDk63.lottie" 
-        className={styles.lottieBackground}
-        title="Atmosphere Animation"
-      ></iframe>
-
-      {/* Subtle background glow behind the card */}
       <div className={styles.glowOrb}></div>
 
-      {/* Smooth Entrance & 3D Tilt Container */}
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -79,15 +70,15 @@ export default function LoginPage() {
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
           <div className={styles.header}>
-            <h1 className={styles.title}>WELCOME<br/>RONNIE</h1>
-            <p className={styles.subtitle}>Please sign in to access the grind.</p>
+            <h1 className={styles.title}>CODERON</h1>
+            <p className={styles.subtitle}>Encrypted Executive Access</p>
           </div>
 
           <form onSubmit={handleLogin} className={styles.form}>
             <div className={styles.inputGroup}>
               <input
                 type="password"
-                placeholder="Enter Admin Password"
+                placeholder="Enter Passkey"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={styles.input}
