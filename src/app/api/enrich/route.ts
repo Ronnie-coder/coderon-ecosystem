@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// 🚀 VERCEL CONFIGURATION: FORCE 60 SECOND MAX DURATION
 export const maxDuration = 60;
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -20,7 +19,6 @@ const extractDomain = (url: string) => {
 
 export async function GET() {
   try {
-    // ⚙️ BATCH REDUCTION: Process 5 at a time to ensure we beat the 60s timeout
     const { data: leads, error: fetchError } = await supabase
       .from('leads')
       .select('*')
@@ -47,13 +45,8 @@ export async function GET() {
       let penalty = 0;
       const domain = extractDomain(targetUrl);
 
-      // 1. SSL CHECK
-      if (targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-        auditNotes.push('⚠️ No SSL');
-        penalty += 10;
-        criticalFlawsFound++;
-      }
-
+      // 1. TIMED FETCH & REDIRECT-AWARE SSL CHECK
+      const t0 = Date.now();
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 6000); 
@@ -62,6 +55,17 @@ export async function GET() {
           headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
         });
         clearTimeout(timeoutId);
+
+        const loadSeconds = ((Date.now() - t0) / 1000).toFixed(1);
+        auditNotes.push(`⏱ Load: ${loadSeconds}s`);
+
+        // Check if final redirected URL uses HTTP (no SSL)
+        if (res.url.startsWith('http://')) {
+          auditNotes.push('⚠️ No SSL');
+          penalty += 10;
+          criticalFlawsFound++;
+        }
+
         const html = await res.text();
         
         // 2. BASIC SEO
@@ -74,21 +78,45 @@ export async function GET() {
         if (html.includes('fbevents.js') || html.includes('connect.facebook.net')) auditNotes.push('⚡ Meta Pixel Active');
         if (html.includes('googletagmanager.com/gtag') || html.includes('gtm.js')) auditNotes.push('⚡ Google Ads Active');
 
-        // 4. WEBSITE EMAIL SCRAPE
+        // 4. WEBSITE EMAIL SCRAPE (HOMEPAGE)
         const foundEmails = html.match(EMAIL_REGEX) || [];
-        const cleanEmails = Array.from(new Set(foundEmails)).filter(
+        let cleanEmails = Array.from(new Set(foundEmails)).filter(
           (email) => !email.endsWith('.png') && !email.endsWith('.jpg') && !email.endsWith('.webp')
         );
+
+        // 5. SUBPAGE SCRAPE FALLBACK (/contact, /about) IF HOMEPAGE YIELDS NO EMAIL
+        if (cleanEmails.length === 0) {
+          const subpaths = ['/contact', '/about', '/contact-us'];
+          for (const path of subpaths) {
+            try {
+              const subUrl = new URL(path, res.url).href;
+              const subRes = await fetch(subUrl, {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+              });
+              const subHtml = await subRes.text();
+              const subFound = subHtml.match(EMAIL_REGEX) || [];
+              const subClean = Array.from(new Set(subFound)).filter(
+                (e) => !e.endsWith('.png') && !e.endsWith('.jpg') && !e.endsWith('.webp')
+              );
+              if (subClean.length > 0) {
+                cleanEmails = subClean;
+                auditNotes.push('🔍 Subpage Scrape Hit');
+                break;
+              }
+            } catch (e) {
+              // Ignore subpage fetch timeouts
+            }
+          }
+        }
+
         if (cleanEmails.length > 0) extractedEmails = cleanEmails;
 
       } catch (err: any) {
         auditNotes.push('⚠️ Fetch Blocked/Timeout');
       }
 
-      // 5. HUNTER.IO API INTEGRATIONS
+      // 6. HUNTER.IO API INTEGRATION
       if (domain && process.env.HUNTER_API_KEY) {
-        
-        // A. COMPANY ENRICHMENT
         try {
           const companyRes = await fetch(`https://api.hunter.io/v2/companies/find?domain=${domain}&api_key=${process.env.HUNTER_API_KEY}`);
           const companyData = await companyRes.json();
@@ -101,7 +129,6 @@ export async function GET() {
           }
         } catch (e) { console.log('Company Enrichment failed'); }
 
-        // B. DOMAIN SEARCH
         if (extractedEmails.length === 0) {
           try {
             const hunterRes = await fetch(`https://api.hunter.io/v2/domain-search?domain=${domain}&api_key=${process.env.HUNTER_API_KEY}`);
@@ -113,13 +140,12 @@ export async function GET() {
           } catch (e) { console.log('Domain Search failed'); }
         }
 
-        // C. EMAIL VERIFIER
         if (extractedEmails.length > 0) {
           try {
             const verifyRes = await fetch(`https://api.hunter.io/v2/email-verifier?email=${extractedEmails[0]}&api_key=${process.env.HUNTER_API_KEY}`);
             const verifyData = await verifyRes.json();
             if (verifyData.data?.status === 'invalid') {
-              extractedEmails = []; // Destroy the email if it's dead
+              extractedEmails = [];
               auditNotes.push('🗑️ Dead Email Blocked');
             } else {
               auditNotes.push('✅ Email Verified');
@@ -132,7 +158,7 @@ export async function GET() {
       const updatedNotes = `${lead.notes || ''} | Audit: ${auditNotes.join(', ')}`;
       const finalScore = Math.max(0, lead.lead_score - penalty); 
 
-      // 6. UPDATE SUPABASE VAULT
+      // 7. UPDATE SUPABASE VAULT
       const { error: updateError } = await supabase
         .from('leads')
         .update({
@@ -150,7 +176,7 @@ export async function GET() {
       }
     }
 
-    // 7. BLUE ICE CEO REPORT (Resend Integration)
+    // 8. TELEMETRY REPORT VIA RESEND
     if (enrichedCount > 0 && process.env.RESEND_API_KEY) {
       await fetch('https://api.resend.com/emails', {
         method: 'POST',

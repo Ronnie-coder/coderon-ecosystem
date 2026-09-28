@@ -1,8 +1,16 @@
 {
   "crons": [
     {
-      "path": "/api/enrich",
+      "path": "/api/hunter",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/enrich",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/followup",
+      "schedule": "0 6 * * *"
     }
   ]
 }
