@@ -45,11 +45,14 @@ export async function GET() {
       for (const lead of leadsForFU1) {
         const pitch = buildPitch({ companyName: lead.company_name, notes: lead.notes || '' });
         if (pitch) {
+          const emailContent = renderEmail(pitch.followUp1, lead.first_name);
+
           await resend.emails.send({
             from: 'Ronnie <ronnie@coderon.co.za>',
             to: [lead.email],
             subject: `Re: ${pitch.subject}`,
-            text: renderEmail(pitch.followUp1, lead.first_name),
+            text: emailContent.text,
+            html: emailContent.html,
           });
 
           await supabase
@@ -67,11 +70,14 @@ export async function GET() {
       for (const lead of leadsForFU2) {
         const pitch = buildPitch({ companyName: lead.company_name, notes: lead.notes || '' });
         if (pitch) {
+          const emailContent = renderEmail(pitch.followUp2, lead.first_name);
+
           await resend.emails.send({
             from: 'Ronnie <ronnie@coderon.co.za>',
             to: [lead.email],
             subject: `Re: ${pitch.subject}`,
-            text: renderEmail(pitch.followUp2, lead.first_name),
+            text: emailContent.text,
+            html: emailContent.html,
           });
 
           await supabase
