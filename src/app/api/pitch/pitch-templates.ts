@@ -8,7 +8,7 @@ export type Pitch = {
 
 export const FOLLOW_UP_DAYS = [3, 7];
 
-// Update with your registered business address for email compliance
+// Registered business address for email compliance
 const ADDRESS = 'Coderon (Pty) Ltd, Cape Town, South Africa';
 
 export function buildPitch(args: { companyName: string; notes: string }): Pitch | null {
@@ -71,14 +71,31 @@ export function buildPitch(args: { companyName: string; notes: string }): Pitch 
   return null;
 }
 
-export function renderEmail(body: string, firstName?: string): string {
-  const greeting = firstName ? `Hey ${firstName},\n\n` : '';
-  return `${greeting}${body}
+/**
+  * Renders both Plain Text and HTML versions.
+  * HTML is strictly required for Resend open pixel and click tracking wrappers to function.
+  */
+export function renderEmail(body: string, firstName?: string): { text: string; html: string } {
+  const greetingText = firstName ? `Hey ${firstName},\n\n` : '';
+  const greetingHtml = firstName ? `Hey ${firstName},<br><br>` : '';
 
-Ronnie
-Coderon | coderon.co.za
+  const text = `${greetingText}${body}\n\nRonnie\nCoderon | coderon.co.za\n\n--\nNot relevant? Just reply "no" and I won't email again.\n${ADDRESS}`;
 
---
-Not relevant? Just reply "no" and I won't email again.
-${ADDRESS}`;
+  const html = `
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; color: #1e293b; line-height: 1.6; max-width: 600px;">
+      ${greetingHtml}
+      ${body.replace(/\n/g, '<br>')}
+      <br><br>
+      Ronnie<br>
+      <strong>Coderon</strong> | <a href="https://coderon.co.za" style="color: #0284c7; text-decoration: none;">coderon.co.za</a>
+      <br><br>
+      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+      <span style="font-size: 12px; color: #64748b;">
+        Not relevant? Just reply "no" and I won't email again.<br>
+        ${ADDRESS}
+      </span>
+    </div>
+  `;
+
+  return { text, html };
 }

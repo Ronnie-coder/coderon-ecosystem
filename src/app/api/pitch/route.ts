@@ -24,15 +24,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: `Skipped ${companyName}: No verified critical flaw detected.` });
     }
 
-    // Render plain text email
-    const textBody = renderEmail(pitch.body, firstName);
+    // Render plain text AND HTML version for open/click webhook tracking
+    const emailContent = renderEmail(pitch.body, firstName);
 
-    // Send email via Resend
+    // Send email via Resend with tracking enabled
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: 'Ronnie <ronnie@coderon.co.za>',
       to: [email],
       subject: pitch.subject,
-      text: textBody,
+      text: emailContent.text,
+      html: emailContent.html,
     });
 
     if (emailError) {

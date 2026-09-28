@@ -8,32 +8,42 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export async function POST(req: Request) {
   try {
     const payload = await req.json();
+    const eventType = payload.type; // 'email.opened', 'email.clicked', 'email.bounced'
+    
+    // Extract target email from Resend payload array
+    const recipient = payload.data?.to?.[0];
 
-    // 1. Check if the event is specifically an "email.opened" event
-    if (payload.type === 'email.opened') {
-      const openedEmail = payload.data.to[0]; // The exact email address that opened it
-
-      if (openedEmail) {
-        // 2. Find the lead with this email and update their status
-        const { error } = await supabase
-          .from('leads')
-          .update({ status: 'opened' })
-          .eq('email', openedEmail);
-
-        if (error) {
-          console.error('Webhook DB Update Error:', error);
-          return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
-        }
-
-        console.log(`✅ FIRE! Lead with email ${openedEmail} just opened your pitch!`);
-      }
+    if (!recipient) {
+      return NextResponse.json({ message: 'No recipient email found in payload' }, { status: 200 });
     }
 
-    // Always return a 200 OK so Resend knows the webhook was received successfully
-    return NextResponse.json({ message: 'Webhook received & processed' }, { status: 200 });
+    if (eventType === 'email.opened') {
+      await supabase
+        .from('leads')
+        .update({ 
+          status: 'opened',
+          notes: `[Opened at ${new Date().toLocaleTimeString('en-ZA')}]`
+        })
+        .eq('email', recipient);
+    } else if (eventType === 'email.clicked') {
+      await supabase
+        .from('leads')
+        .update({ 
+          status: 'clicked'
+        })
+        .eq('email', recipient);
+    } else if (eventType === 'email.bounced') {
+      await supabase
+        .from('leads')
+        .update({ 
+          status: 'bounced'
+        })
+        .eq('email', recipient);
+    }
 
+    return NextResponse.json({ message: `Webhook processed event: ${eventType}` }, { status: 200 });
   } catch (error: any) {
-    console.error('Webhook Error:', error);
-    return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 });
+    console.error('Resend Webhook Error:', error);
+    return NextResponse.json({ error: 'Webhook execution failed', details: error.message }, { status: 500 });
   }
 }
