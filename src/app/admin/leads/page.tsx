@@ -78,7 +78,6 @@ export default function LeadsDashboard() {
         <div className={styles.header}>
           <div className={styles.titleArea}>
             <div className={styles.lottieIcon}>
-              {/* 🚀 BULLETPROOF IFRAME EMBED */}
               <iframe 
                 src="https://lottie.host/embed/eff89e5a-22dc-4b2e-98e5-afee165a30ee/Rmd1E60hr6.lottie" 
                 style={{ width: '100%', height: '100%', border: 'none', pointerEvents: 'none', background: 'transparent' }}
@@ -126,9 +125,10 @@ export default function LeadsDashboard() {
             </div>
           </div>
           <div className={styles.card}>
-            <span className={styles.cardLabel}>Opened</span>
+            {/* THIS IS THE FIX: Count opened, clicked, and replied */}
+            <span className={styles.cardLabel}>Opened / Engaged</span>
             <div className={`${styles.cardValue} ${styles.valPurple}`}>
-              {leads.filter((l) => l.status === 'opened').length}
+              {leads.filter((l) => ['opened', 'clicked', 'replied'].includes(l.status)).length}
             </div>
           </div>
         </div>
@@ -174,9 +174,10 @@ export default function LeadsDashboard() {
                     </span>
                   </td>
                   <td>
+                    {/* THIS IS THE FIX: Style opened, clicked, and replied correctly */}
                     <span
                       className={
-                        lead.status === 'opened'
+                        ['opened', 'clicked', 'replied'].includes(lead.status)
                           ? styles.statusOpened
                           : lead.status === 'pitched'
                           ? styles.statusPitched
@@ -185,7 +186,7 @@ export default function LeadsDashboard() {
                           : styles.statusNew
                       }
                     >
-                      {lead.status}
+                      {lead.status.toUpperCase()}
                     </span>
                   </td>
                   <td className={styles.notes}>
