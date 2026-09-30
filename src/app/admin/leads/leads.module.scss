@@ -143,13 +143,10 @@
 
 .metrics {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* Auto-fits 5 columns on large screens, wraps elegantly on small */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem;
   margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .card {
@@ -157,6 +154,8 @@
   border: 1px solid #21262d;
   border-radius: 12px;
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardLabel {
@@ -168,15 +167,34 @@
 }
 
 .cardValue {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 800;
   color: #ffffff;
   margin-top: 0.5rem;
+  line-height: 1;
+}
+
+.statSubtext {
+  font-size: 0.75rem;
+  color: #8b949e;
+  margin-top: 0.75rem;
+  border-top: 1px solid #21262d;
+  padding-top: 0.5rem;
+}
+
+.statSubtextHighlight {
+  font-size: 0.75rem;
+  color: #c084fc;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  border-top: 1px solid #21262d;
+  padding-top: 0.5rem;
 }
 
 .valGreen { color: #34d399; }
 .valIndigo { color: #818cf8; }
 .valPurple { color: #c084fc; }
+.valCyan { color: #22d3ee; }
 
 .tableContainer {
   background: #161b22;
@@ -207,7 +225,7 @@
 
 .table {
   width: 100%;
-  min-width: 1000px; /* 🚀 THIS FORCES THE HORIZONTAL SCROLL ON MOBILE */
+  min-width: 1100px; 
   border-collapse: collapse;
   text-align: left;
   font-size: 0.875rem;
@@ -215,7 +233,7 @@
 
 .table th {
   background: #0d1117;
-  padding: 1rem 1.5rem;
+  padding: 0.875rem 1.25rem;
   color: #8b949e;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -224,9 +242,10 @@
 }
 
 .table td {
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid #21262d;
   color: #c9d1d9;
+  vertical-align: middle;
 }
 
 .table tr:hover {
@@ -236,6 +255,7 @@
 .companyName {
   font-weight: 600;
   color: #ffffff;
+  margin-bottom: 2px;
 }
 
 .link {
@@ -243,7 +263,6 @@
   text-decoration: none;
   font-size: 0.75rem;
   display: block;
-  margin-top: 4px;
 }
 
 .link:hover { text-decoration: underline; }
@@ -269,15 +288,23 @@
   font-size: 0.75rem;
 }
 
-.scoreGreen { color: #34d399; background: rgba(52, 211, 153, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; font-family: monospace;}
-.scoreAmber { color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; font-family: monospace;}
+.scoreGreen { color: #34d399; font-weight: bold; font-family: monospace; }
+.scoreAmber { color: #fbbf24; font-weight: bold; font-family: monospace; }
 
-.statusNew { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(59, 130, 246, 0.2); }
-.statusAudited { background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(52, 211, 153, 0.2); }
-.statusPitched { background: rgba(129, 140, 248, 0.1); color: #818cf8; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(129, 140, 248, 0.2); }
-.statusOpened { background: rgba(192, 132, 252, 0.1); color: #c084fc; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: uppercase; border: 1px solid rgba(192, 132, 252, 0.2); }
+.statusNew { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.2); display: inline-flex; align-items: center; gap: 4px;}
+.statusAudited { background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.2); display: inline-flex; align-items: center; gap: 4px;}
+.statusPitched { background: rgba(129, 140, 248, 0.1); color: #818cf8; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(129, 140, 248, 0.2); display: inline-flex; align-items: center; gap: 4px;}
+.statusOpened { background: rgba(192, 132, 252, 0.1); color: #c084fc; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(192, 132, 252, 0.2); display: inline-flex; align-items: center; gap: 4px;}
+.statusReplied { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.4); display: inline-flex; align-items: center; gap: 4px;}
 
-.notes { font-size: 0.75rem; color: #8b949e; }
+.followUpBadge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+}
+
+.notes { font-size: 0.75rem; color: #8b949e; line-height: 1.4; }
 .warning { color: #fbbf24; font-weight: 600; }
 
 .actionCell {
@@ -289,7 +316,7 @@
   background-color: #3b82f6; 
   color: #ffffff;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -297,18 +324,41 @@
   transition: all 0.2s ease-in-out;
   white-space: nowrap; 
   display: inline-block;
-  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }
 
 .pitchBtn:hover {
   background-color: #2563eb;
-  transform: translateY(-1px);
 }
 
 .pitchBtn:disabled {
   background-color: #1c2128;
   color: #8b949e;
   cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
+}
+
+/* --- PIPELINE CHART STYLES --- */
+
+.chartContainer {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.chartTitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #8b949e;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.chartWrapper {
+  width: 100%;
+  height: 260px;
 }

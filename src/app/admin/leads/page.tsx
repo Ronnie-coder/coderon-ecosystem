@@ -1,6 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
 import styles from './leads.module.scss';
 
 interface Lead {
@@ -12,6 +22,7 @@ interface Lead {
   lead_score: number;
   status: string;
   notes: string | null;
+  followup_stage: number;
 }
 
 export default function LeadsDashboard() {
@@ -28,6 +39,7 @@ export default function LeadsDashboard() {
       if (data.leads) setLeads(data.leads);
     } catch (err) {
       console.error('Failed to fetch leads:', err);
+      toast.error('Failed to load database.');
     } finally {
       setLoading(false);
     }
@@ -39,6 +51,8 @@ export default function LeadsDashboard() {
 
   const handlePitch = async (lead: Lead) => {
     setPitchingId(lead.id);
+    const toastId = toast.loading(`Drafting & sending pitch to ${lead.company_name}...`);
+    
     try {
       const res = await fetch('/api/pitch', {
         method: 'POST',
@@ -52,14 +66,15 @@ export default function LeadsDashboard() {
       });
 
       if (res.ok) {
+        toast.success(`Pitch successfully sent to ${lead.company_name}!`, { id: toastId });
         fetchLeads();
       } else {
         const errorData = await res.json();
-        alert(`Failed to pitch: ${errorData.error}`);
+        toast.error(`Pitch failed: ${errorData.error}`, { id: toastId });
       }
     } catch (err) {
       console.error('Pitch error:', err);
-      alert('An error occurred while sending the pitch.');
+      toast.error('A critical error occurred while sending the pitch.', { id: toastId });
     } finally {
       setPitchingId(null);
     }
@@ -71,8 +86,39 @@ export default function LeadsDashboard() {
       (lead.email && lead.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
+  // Analytics Calculations
+  const totalLeads = leads.length;
+  const totalAudited = leads.filter((l) => l.status !== 'new').length;
+  const totalPitched = leads.filter((l) => l.status !== 'new' && l.status !== 'audited').length;
+  const totalFollowUps = leads.filter((l) => l.followup_stage > 0).length;
+  const totalEngaged = leads.filter((l) => ['opened', 'clicked', 'replied'].includes(l.status)).length;
+
+  const pitchRate = totalAudited > 0 ? Math.round((totalPitched / totalAudited) * 100) : 0;
+  const engagementRate = totalPitched > 0 ? Math.round((totalEngaged / totalPitched) * 100) : 0;
+
+  // Recharts Pipeline Data
+  const pipelineData = [
+    { name: 'Audited', count: totalAudited, fill: '#34d399' },
+    { name: 'Pitched', count: totalPitched, fill: '#818cf8' },
+    { name: 'Follow-ups', count: totalFollowUps, fill: '#22d3ee' },
+    { name: 'Engaged', count: totalEngaged, fill: '#c084fc' },
+  ];
+
   return (
     <div className={styles.dashboard}>
+      <Toaster 
+        position="bottom-right" 
+        toastOptions={{
+          style: {
+            background: '#161b22',
+            color: '#fff',
+            border: '1px solid #21262d',
+            fontSize: '14px',
+          },
+          success: { iconTheme: { primary: '#34d399', secondary: '#161b22' } },
+          error: { iconTheme: { primary: '#ef4444', secondary: '#161b22' } },
+        }} 
+      />
       <div className={styles.container}>
         {/* HEADER */}
         <div className={styles.header}>
@@ -106,30 +152,60 @@ export default function LeadsDashboard() {
           </div>
         </div>
 
-        {/* METRICS */}
+        {/* METRICS ROW */}
         <div className={styles.metrics}>
           <div className={styles.card}>
             <span className={styles.cardLabel}>Total Leads</span>
-            <div className={styles.cardValue}>{leads.length}</div>
+            <div className={styles.cardValue}>{totalLeads}</div>
+            <div className={styles.statSubtext}>Raw database volume</div>
           </div>
+          
           <div className={styles.card}>
-            <span className={styles.cardLabel}>Audited & Scraped</span>
-            <div className={`${styles.cardValue} ${styles.valGreen}`}>
-              {leads.filter((l) => l.status === 'audited').length}
-            </div>
+            <span className={styles.cardLabel}>Audited & Ready</span>
+            <div className={`${styles.cardValue} ${styles.valGreen}`}>{totalAudited}</div>
+            <div className={styles.statSubtext}>Scraper completed</div>
           </div>
+          
           <div className={styles.card}>
             <span className={styles.cardLabel}>Pitched</span>
-            <div className={`${styles.cardValue} ${styles.valIndigo}`}>
-              {leads.filter((l) => l.status === 'pitched').length}
+            <div className={`${styles.cardValue} ${styles.valIndigo}`}>{totalPitched}</div>
+            <div className={styles.statSubtext}>
+              {pitchRate > 0 ? `${pitchRate}% of audited` : 'Outbound volume'}
             </div>
           </div>
+
           <div className={styles.card}>
-            {/* THIS IS THE FIX: Count opened, clicked, and replied */}
+            <span className={styles.cardLabel}>Follow-ups Sent</span>
+            <div className={`${styles.cardValue} ${styles.valCyan}`}>{totalFollowUps}</div>
+            <div className={styles.statSubtext}>Automated bumps</div>
+          </div>
+
+          <div className={styles.card}>
             <span className={styles.cardLabel}>Opened / Engaged</span>
-            <div className={`${styles.cardValue} ${styles.valPurple}`}>
-              {leads.filter((l) => ['opened', 'clicked', 'replied'].includes(l.status)).length}
+            <div className={`${styles.cardValue} ${styles.valPurple}`}>{totalEngaged}</div>
+            <div className={styles.statSubtextHighlight}>
+              {engagementRate > 0 ? `${engagementRate}% conversion rate` : 'Awaiting data'}
             </div>
+          </div>
+        </div>
+
+        {/* PIPELINE CHART */}
+        <div className={styles.chartContainer}>
+          <h2 className={styles.chartTitle}>Pipeline Conversion</h2>
+          <div className={styles.chartWrapper}>
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={pipelineData} layout="vertical" margin={{ top: 0, right: 30, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#21262d" horizontal={false} />
+                <XAxis type="number" stroke="#8b949e" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis dataKey="name" type="category" stroke="#c9d1d9" fontSize={13} width={100} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  cursor={{ fill: '#1c2128' }}
+                  contentStyle={{ backgroundColor: '#161b22', border: '1px solid #21262d', borderRadius: '8px', color: '#fff' }}
+                  itemStyle={{ fontWeight: 'bold' }}
+                />
+                <Bar dataKey="count" radius={[0, 6, 6, 0]} barSize={28} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -154,7 +230,7 @@ export default function LeadsDashboard() {
                     <div className={styles.companyName}>{lead.company_name}</div>
                     {lead.website ? (
                       <a href={lead.website} target="_blank" rel="noreferrer" className={styles.link}>
-                        {lead.website}
+                        {lead.website.replace(/^https?:\/\/(www\.)?/, '')}
                       </a>
                     ) : (
                       <span className={styles.na}>No Website</span>
@@ -170,15 +246,16 @@ export default function LeadsDashboard() {
                   <td className={styles.sourceText}>{lead.source}</td>
                   <td>
                     <span className={lead.lead_score >= 90 ? styles.scoreGreen : styles.scoreAmber}>
-                      {lead.lead_score}/100
+                      {lead.lead_score}
                     </span>
                   </td>
                   <td>
-                    {/* THIS IS THE FIX: Style opened, clicked, and replied correctly */}
                     <span
                       className={
-                        ['opened', 'clicked', 'replied'].includes(lead.status)
+                        ['opened', 'clicked'].includes(lead.status)
                           ? styles.statusOpened
+                          : lead.status === 'replied'
+                          ? styles.statusReplied
                           : lead.status === 'pitched'
                           ? styles.statusPitched
                           : lead.status === 'audited'
@@ -187,6 +264,9 @@ export default function LeadsDashboard() {
                       }
                     >
                       {lead.status.toUpperCase()}
+                      {lead.followup_stage > 0 && (
+                        <span className={styles.followUpBadge}> +{lead.followup_stage}</span>
+                      )}
                     </span>
                   </td>
                   <td className={styles.notes}>
