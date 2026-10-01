@@ -62,7 +62,7 @@ export async function GET() {
         // Check if final redirected URL uses HTTP (no SSL)
         if (res.url.startsWith('http://')) {
           auditNotes.push('⚠️ No SSL');
-          penalty += 10;
+          penalty += 15; // Increased penalty for critical trust issue
           criticalFlawsFound++;
         }
 
@@ -73,10 +73,31 @@ export async function GET() {
         if (!html.match(/<meta[^>]*name=["']description["'][^>]*>/i)) { auditNotes.push('❌ No Meta Desc'); penalty += 5; }
         if (!html.match(/<h1[^>]*>([^<]+)<\/h1>/i)) { auditNotes.push('❌ No H1'); penalty += 5; }
         
-        // 3. DEEP VALUE TELEMETRY
-        if (!html.includes('application/ld+json')) { auditNotes.push('❌ No Local Schema'); penalty += 10; }
-        if (html.includes('fbevents.js') || html.includes('connect.facebook.net')) auditNotes.push('⚡ Meta Pixel Active');
-        if (html.includes('googletagmanager.com/gtag') || html.includes('gtm.js')) auditNotes.push('⚡ Google Ads Active');
+        // 3. DEEP VALUE TELEMETRY (UPDATED FOR NEW TEMPLATES)
+        if (!html.includes('application/ld+json')) { 
+          auditNotes.push('❌ No Local Schema'); 
+          penalty += 5; 
+        }
+
+        // Meta Pixel Check
+        const hasPixel = html.includes('fbevents.js') || html.includes('connect.facebook.net');
+        if (hasPixel) {
+          auditNotes.push('⚡ Meta Pixel Active');
+        } else {
+          auditNotes.push('❌ No Meta Pixel');
+          penalty += 10;
+          criticalFlawsFound++;
+        }
+
+        // Google Analytics / Google Ads Check
+        const hasGA = html.includes('googletagmanager.com/gtag') || html.includes('gtm.js') || html.includes('google-analytics.com');
+        if (hasGA) {
+          auditNotes.push('⚡ Google Ads Active');
+        } else {
+          auditNotes.push('❌ No Google Analytics');
+          penalty += 10;
+          criticalFlawsFound++;
+        }
 
         // 4. WEBSITE EMAIL SCRAPE (HOMEPAGE)
         const foundEmails = html.match(EMAIL_REGEX) || [];
@@ -186,7 +207,7 @@ export async function GET() {
         },
         body: JSON.stringify({
           from: 'CodeRun System <onboarding@resend.dev>',
-          to: 'ronnie@coderon.co.za',
+          to: 'ronnie@coderon.co.za', // Update this if needed
           subject: `🟢 CodeRun Operations: ${enrichedCount} Leads Audited`,
           html: `
             <div style="font-family: system-ui, -apple-system, sans-serif; padding: 30px; background-color: #020617; color: #e2e8f0; max-width: 600px; margin: 0 auto; border-radius: 12px; border: 1px solid #1e293b;">

@@ -30,6 +30,9 @@ export default function LeadsDashboard() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [pitchingId, setPitchingId] = useState<string | null>(null);
+  
+  // NEW: State for Back to Top Button
+  const [showTopBtn, setShowTopBtn] = useState(false);
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -48,6 +51,24 @@ export default function LeadsDashboard() {
   useEffect(() => {
     fetchLeads();
   }, []);
+
+  // NEW: Scroll Listener for the Back to Top Button
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // NEW: Scroll Action
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handlePitch = async (lead: Lead) => {
     setPitchingId(lead.id);
@@ -294,6 +315,18 @@ export default function LeadsDashboard() {
             </tbody>
           </table>
         </div>
+
+        {/* NEW: Back to Top Button */}
+        {showTopBtn && (
+          <button 
+            className={styles.scrollTopBtn} 
+            onClick={scrollToTop} 
+            aria-label="Back to top"
+          >
+            ↑
+          </button>
+        )}
+
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 export type Pitch = {
-  trigger: 'ads' | 'ssl' | 'schema' | 'seo';
+  trigger: 'ssl' | 'speed' | 'ads' | 'pixel' | 'analytics' | 'schema' | 'seo';
   subject: string;
   body: string;
   followUp1: string;
@@ -14,25 +14,13 @@ const ADDRESS = 'Coderon (Pty) Ltd, Cape Town, South Africa';
 export function buildPitch(args: { companyName: string; notes: string }): Pitch | null {
   const { companyName, notes } = args;
 
-  // Extract load time measured by enrich/route.ts
+  // Extract load time measured by the scraper
   const loadMatch = notes.match(/Load: ([\d.]+)s/);
   const loadSeconds = loadMatch ? Math.floor(parseFloat(loadMatch[1])) : 0;
-
   const hasAdTracking = notes.includes('Google Ads Active') || notes.includes('Meta Pixel Active');
 
-  // 1. ADS + Verified Slow Load Speed (Fires only if load time is 3s+)
-  if (hasAdTracking && loadSeconds >= 3) {
-    return {
-      trigger: 'ads',
-      subject: `${companyName} site speed`,
-      body: `${companyName} has ad tracking on its site, so I'm guessing you pay for clicks. I timed the site: about ${loadSeconds} seconds before anything showed up, and plenty of people leave before that. So some of that ad money is walking away. Want me to record a 60-second Loom showing it?`,
-      followUp1: `Bumping this in case it got buried. I can record the Loom showing the slow part in a couple of minutes. Want it?`,
-      followUp2: `Guessing the timing's off, so I'll stop bugging you. If ad clicks ever start feeling expensive, just reply and I'll record the video.`,
-    };
-  }
-
-  // 2. NO SSL CERTIFICATE
-  if (notes.includes('No SSL')) {
+  // 1. NO SSL CERTIFICATE (Highest Priority - Trust Killer)
+  if (notes.includes('No SSL') || notes.includes('not secure')) {
     return {
       trigger: 'ssl',
       subject: `${companyName} website says "not secure"`,
@@ -42,7 +30,51 @@ export function buildPitch(args: { companyName: string; notes: string }): Pitch 
     };
   }
 
-  // 3. NO LOCAL SCHEMA (Factual local search matching)
+  // 2. EXTREMELY SLOW LOAD TIME (>5 seconds)
+  if (loadSeconds >= 5) {
+    return {
+      trigger: 'speed',
+      subject: `${companyName}'s site speed`,
+      body: `Timed ${companyName}'s site on mobile and it took over ${loadSeconds} seconds to load. Most people won't wait that long — they hit back and call the next business on the list instead. That's a customer gone before they ever saw what you do. Want me to send a quick video showing exactly where it's slowing down?`,
+      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
+      followUp2: `Last email from me. If you ever want to speed up the site and stop losing impatient mobile visitors, let me know.`
+    };
+  }
+
+  // 3. ADS + MODERATELY SLOW SPEED (Wasting paid clicks)
+  if (hasAdTracking && loadSeconds >= 3 && loadSeconds < 5) {
+    return {
+      trigger: 'ads',
+      subject: `${companyName} site speed`,
+      body: `${companyName} has ad tracking on its site, so I'm guessing you pay for clicks. I timed the site: about ${loadSeconds} seconds before anything showed up, and plenty of people leave before that. So some of that ad money is walking away. Want me to record a 60-second Loom showing it?`,
+      followUp1: `Bumping this in case it got buried. I can record the Loom showing the slow part in a couple of minutes. Want it?`,
+      followUp2: `Guessing the timing's off, so I'll stop bugging you. If ad clicks ever start feeling expensive, just reply and I'll record the video.`,
+    };
+  }
+
+  // 4. MISSING META PIXEL (Wasting retargeting money)
+  if (notes.includes('No Meta Pixel') || notes.includes('Missing Pixel')) {
+    return {
+      trigger: 'pixel',
+      subject: `${companyName} and retargeting`,
+      body: `Noticed ${companyName}'s site doesn't have a Meta Pixel installed. That means anyone who visits and doesn't call or fill out a form right away — which is most people — is gone for good, with no way to show them a follow-up ad. You're paying for traffic once and only getting one shot at it. Want me to send a quick video showing what's missing and why it matters?`,
+      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
+      followUp2: `Wrapping up my outreach. Reach out if you ever want to plug that retargeting leak!`
+    };
+  }
+
+  // 5. MISSING GOOGLE ANALYTICS (Flying blind)
+  if (notes.includes('No Google Analytics') || notes.includes('No GA')) {
+    return {
+      trigger: 'analytics',
+      subject: `${companyName}'s traffic numbers`,
+      body: `Checked ${companyName}'s site and there's no Google Analytics running, so there's no way to see where visitors actually come from — Google, Facebook, referrals, or direct. That makes it hard to know what's working and what's a waste of money. Want me to send a quick video showing what you're missing and how fast it is to fix?`,
+      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
+      followUp2: `I won't keep clogging your inbox. If you ever want to get tracking set up so you know exactly what marketing is working, I'm here.`
+    };
+  }
+
+  // 6. NO LOCAL SCHEMA (Losing local search edge)
   if (notes.includes('No Local Schema')) {
     return {
       trigger: 'schema',
@@ -53,7 +85,7 @@ export function buildPitch(args: { companyName: string; notes: string }): Pitch 
     };
   }
 
-  // 4. FALLBACK: MISSING TITLE OR META DESCRIPTION
+  // 7. FALLBACK: MISSING TITLE OR META DESCRIPTION
   const noTitle = notes.includes('No Title');
   const noDesc = notes.includes('No Meta Desc');
   if (noTitle || noDesc) {
@@ -72,9 +104,9 @@ export function buildPitch(args: { companyName: string; notes: string }): Pitch 
 }
 
 /**
-  * Renders both Plain Text and HTML versions.
-  * HTML is strictly required for Resend open pixel and click tracking wrappers to function.
-  */
+ * Renders both Plain Text and HTML versions.
+ * HTML is strictly required for Resend open pixel and click tracking wrappers to function.
+ */
 export function renderEmail(body: string, firstName?: string): { text: string; html: string } {
   const greetingText = firstName ? `Hey ${firstName},\n\n` : '';
   const greetingHtml = firstName ? `Hey ${firstName},<br><br>` : '';
