@@ -1,133 +1,143 @@
+import type { Audit, Issue } from '@/lib/outreach/audit';
+import { BUSINESS_ADDRESS } from '@/lib/outreach/config';
+import { cleanCompanyName, domainOf } from '@/lib/outreach/names';
+
+// Every sentence below must stay TRUE for any lead that reaches it:
+// claims come only from verified audit evidence (see src/lib/outreach/audit.ts),
+// and each pitch points the owner at something they can check themselves.
+
 export type Pitch = {
-  trigger: 'ssl' | 'speed' | 'ads' | 'pixel' | 'analytics' | 'schema' | 'seo';
+  trigger: string;
   subject: string;
   body: string;
-  followUp1: string;
-  followUp2: string;
+  evidence: string[];
 };
 
-export const FOLLOW_UP_DAYS = [3, 7];
+type PitchInput = {
+  company_name: string;
+  website: string | null;
+  first_name?: string | null;
+  audit: Audit | null;
+};
 
-// Registered business address for email compliance
-const ADDRESS = 'Coderon (Pty) Ltd, Cape Town, South Africa';
+const LOOM_ASK = 'Want me to record a free 60-second Loom showing exactly what I mean and how it gets fixed?';
 
-export function buildPitch(args: { companyName: string; notes: string }): Pitch | null {
-  const { companyName, notes } = args;
-
-  // Extract load time measured by the scraper
-  const loadMatch = notes.match(/Load: ([\d.]+)s/);
-  const loadSeconds = loadMatch ? Math.floor(parseFloat(loadMatch[1])) : 0;
-  const hasAdTracking = notes.includes('Google Ads Active') || notes.includes('Meta Pixel Active');
-
-  // 1. NO SSL CERTIFICATE (Highest Priority - Trust Killer)
-  if (notes.includes('No SSL') || notes.includes('not secure')) {
-    return {
-      trigger: 'ssl',
-      subject: `${companyName} website says "not secure"`,
-      body: `${companyName}'s site shows "Not secure" in Chrome's address bar, before anyone reads a word. Plenty of people won't type their details into that, so some quote requests quietly never happen. Want me to record a 60-second Loom showing what visitors see?`,
-      followUp1: `Quick nudge on this. It's usually a fast fix once you can see it. Want me to record that Loom?`,
-      followUp2: `Guessing you're slammed, so I'll leave it here. If quote requests ever seem lower than they should be, reply and I'll show you the warning.`,
-    };
+function secondIssueLine(issues: Issue[]): string {
+  const second = issues[1];
+  if (!second) return '';
+  switch (second.key) {
+    case 'speed':
+      return ` While I was at it, Google's PageSpeed test also scored the mobile site ${second.label.replace('PageSpeed ', '')}.`;
+    case 'mobile':
+      return ' It also doesn\'t resize for phones, so mobile visitors get a shrunk-down desktop page.';
+    case 'snippet':
+      return ' The homepage is also missing the short description Google shows under your name in search.';
+    case 'ssl':
+      return ' The secure (https) version of the site also doesn\'t load.';
   }
+}
 
-  // 2. EXTREMELY SLOW LOAD TIME (>5 seconds)
-  if (loadSeconds >= 5) {
-    return {
-      trigger: 'speed',
-      subject: `${companyName}'s site speed`,
-      body: `Timed ${companyName}'s site on mobile and it took over ${loadSeconds} seconds to load. Most people won't wait that long — they hit back and call the next business on the list instead. That's a customer gone before they ever saw what you do. Want me to send a quick video showing exactly where it's slowing down?`,
-      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
-      followUp2: `Last email from me. If you ever want to speed up the site and stop losing impatient mobile visitors, let me know.`
-    };
+export function buildPitch(lead: PitchInput): Pitch | null {
+  const audit = lead.audit;
+  if (!audit || audit.version !== 2 || !audit.trigger || audit.issues.length === 0) return null;
+
+  const name = cleanCompanyName(lead.company_name);
+  const domain = domainOf(audit.final_url || lead.website) || 'your site';
+  const [top] = audit.issues;
+  const extra = secondIssueLine(audit.issues);
+  const evidence = audit.issues.map((i) => i.evidence);
+
+  switch (top.key) {
+    case 'ssl':
+      return {
+        trigger: 'ssl',
+        subject: `${name}'s site shows "not secure"`,
+        body: `I opened ${domain} and Chrome shows "Not secure" next to the address. The secure (https) version of the site doesn't load, so every visitor sees that warning before they read a word, and plenty of people won't send a quote request through a page that says it.${extra}\n\n${LOOM_ASK}`,
+        evidence,
+      };
+    case 'speed': {
+      const score = audit.psi_mobile;
+      const lcp = audit.psi_lcp_s ? ` and the main content takes about ${audit.psi_lcp_s}s to appear` : '';
+      return {
+        trigger: 'speed',
+        subject: `${name} on mobile`,
+        body: `I ran ${domain} through Google's own PageSpeed test (pagespeed.web.dev, you can try it yourself). It scored ${score}/100 on mobile${lcp}. On a phone, a lot of people back out before a page that slow finishes loading and call the next business instead.${extra}\n\n${LOOM_ASK}`,
+        evidence,
+      };
+    }
+    case 'mobile':
+      return {
+        trigger: 'mobile',
+        subject: `${name}'s site on phones`,
+        body: `I checked ${domain} and it isn't set up for mobile: there's no mobile viewport tag, so phones load it as a shrunk-down desktop page and visitors have to pinch and zoom to read anything or tap the call button. A lot of people find local businesses on their phone, so that's often the first impression.${extra}\n\n${LOOM_ASK}`,
+        evidence,
+      };
+    case 'snippet': {
+      const noTitle = !audit.title;
+      return {
+        trigger: 'snippet',
+        subject: `${name} in Google search`,
+        body: noTitle
+          ? `I looked at ${domain} and the homepage has no page title, which is the headline Google shows for you in search results. Without it Google has to guess, and that's the first thing people see when comparing you with the next business.${extra}\n\n${LOOM_ASK}`
+          : `I looked at ${domain} and the homepage is missing its meta description, which is the short summary Google shows under your name in search results. Without one, Google grabs random text from the page instead, and that's the first thing people read when comparing you with the next business.${extra}\n\n${LOOM_ASK}`,
+        evidence,
+      };
+    }
   }
-
-  // 3. ADS + MODERATELY SLOW SPEED (Wasting paid clicks)
-  if (hasAdTracking && loadSeconds >= 3 && loadSeconds < 5) {
-    return {
-      trigger: 'ads',
-      subject: `${companyName} site speed`,
-      body: `${companyName} has ad tracking on its site, so I'm guessing you pay for clicks. I timed the site: about ${loadSeconds} seconds before anything showed up, and plenty of people leave before that. So some of that ad money is walking away. Want me to record a 60-second Loom showing it?`,
-      followUp1: `Bumping this in case it got buried. I can record the Loom showing the slow part in a couple of minutes. Want it?`,
-      followUp2: `Guessing the timing's off, so I'll stop bugging you. If ad clicks ever start feeling expensive, just reply and I'll record the video.`,
-    };
-  }
-
-  // 4. MISSING META PIXEL (Wasting retargeting money)
-  if (notes.includes('No Meta Pixel') || notes.includes('Missing Pixel')) {
-    return {
-      trigger: 'pixel',
-      subject: `${companyName} and retargeting`,
-      body: `Noticed ${companyName}'s site doesn't have a Meta Pixel installed. That means anyone who visits and doesn't call or fill out a form right away — which is most people — is gone for good, with no way to show them a follow-up ad. You're paying for traffic once and only getting one shot at it. Want me to send a quick video showing what's missing and why it matters?`,
-      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
-      followUp2: `Wrapping up my outreach. Reach out if you ever want to plug that retargeting leak!`
-    };
-  }
-
-  // 5. MISSING GOOGLE ANALYTICS (Flying blind)
-  if (notes.includes('No Google Analytics') || notes.includes('No GA')) {
-    return {
-      trigger: 'analytics',
-      subject: `${companyName}'s traffic numbers`,
-      body: `Checked ${companyName}'s site and there's no Google Analytics running, so there's no way to see where visitors actually come from — Google, Facebook, referrals, or direct. That makes it hard to know what's working and what's a waste of money. Want me to send a quick video showing what you're missing and how fast it is to fix?`,
-      followUp1: `Quick bump in case this got buried — happy to send that video over if you're curious, no pressure either way.`,
-      followUp2: `I won't keep clogging your inbox. If you ever want to get tracking set up so you know exactly what marketing is working, I'm here.`
-    };
-  }
-
-  // 6. NO LOCAL SCHEMA (Losing local search edge)
-  if (notes.includes('No Local Schema')) {
-    return {
-      trigger: 'schema',
-      subject: `${companyName} and local searches`,
-      body: `${companyName}'s site is missing the behind-the-scenes info Google uses to match businesses to local searches. Competitors that have it get the edge when someone nearby searches for what you do. Want me to record a 60-second Loom showing what's missing?`,
-      followUp1: `Bumping this in case it got buried. Showing you what's missing takes me a couple of minutes. Want the Loom?`,
-      followUp2: `Sounds like the timing's off, so I'll stop here. If you ever want to see what Google can't find on your site, reply and I'll send the video.`,
-    };
-  }
-
-  // 7. FALLBACK: MISSING TITLE OR META DESCRIPTION
-  const noTitle = notes.includes('No Title');
-  const noDesc = notes.includes('No Meta Desc');
-  if (noTitle || noDesc) {
-    const what = noTitle && noDesc ? 'headline and short blurb' : noTitle ? 'headline' : 'short blurb';
-    return {
-      trigger: 'seo',
-      subject: `${companyName} in Google search`,
-      body: `${companyName}'s site is missing the ${what} Google shows under your name in search results, so it has to guess what to show. People comparing you to the next business see that first. Want me to record a 60-second Loom showing what it looks like?`,
-      followUp1: `Bumping this in case it got buried. It's a quick thing to show. Want me to record the Loom?`,
-      followUp2: `Guessing it's not a priority right now, so I'll stop here. If you ever want to see how you look in Google search, reply and I'll send it over.`,
-    };
-  }
-
-  // Skip lead if no verified flaw exists
   return null;
 }
 
-/**
- * Renders both Plain Text and HTML versions.
- * HTML is strictly required for Resend open pixel and click tracking wrappers to function.
- */
-export function renderEmail(body: string, firstName?: string): { text: string; html: string } {
-  const greetingText = firstName ? `Hey ${firstName},\n\n` : '';
-  const greetingHtml = firstName ? `Hey ${firstName},<br><br>` : '';
+// Follow-ups are keyed by the trigger stored at send time, so they never depend on
+// re-parsing notes. Legacy triggers from the v1 engine are kept for already-sent pitches.
+const FOLLOW_UPS: Record<string, [string, string]> = {
+  ssl: [
+    'Quick nudge on the "not secure" warning. It\'s usually a quick fix once you can see it. Want me to send that Loom?',
+    'I\'ll leave it here. If quote requests ever feel lower than they should be, reply and I\'ll show you the warning visitors see.',
+  ],
+  speed: [
+    'Bumping this in case it got buried. I can record the Loom showing what\'s slowing the mobile site down in a couple of minutes. Want it?',
+    'Last note from me. If you ever want the site loading fast on phones, just reply and I\'ll send the video.',
+  ],
+  mobile: [
+    'Quick follow-up on the site not resizing for phones. Happy to record the 60-second Loom so you can see it. Want it?',
+    'I\'ll stop here. If you ever want the site working properly on phones, reply and I\'ll send the video over.',
+  ],
+  snippet: [
+    'Bumping this in case it got buried. It\'s a quick thing to show. Want me to record the Loom?',
+    'Guessing it\'s not a priority right now, so I\'ll stop here. If you ever want to see how you look in Google search, reply and I\'ll send it.',
+  ],
+  default: [
+    'Bumping this in case it got buried. Happy to record that 60-second Loom if it\'s useful. Want it?',
+    'I\'ll leave it here. If it ever becomes useful, just reply and I\'ll send the video over.',
+  ],
+};
 
-  const text = `${greetingText}${body}\n\nRonnie\nCoderon | coderon.co.za\n\n--\nNot relevant? Just reply "no" and I won't email again.\n${ADDRESS}`;
+export function followUpBody(trigger: string | null | undefined, stage: 1 | 2): string {
+  const set = FOLLOW_UPS[trigger || ''] || FOLLOW_UPS.default;
+  return set[stage - 1];
+}
 
-  const html = `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; color: #1e293b; line-height: 1.6; max-width: 600px;">
-      ${greetingHtml}
-      ${body.replace(/\n/g, '<br>')}
-      <br><br>
-      Ronnie<br>
-      <strong>Coderon</strong> | <a href="https://coderon.co.za" style="color: #0284c7; text-decoration: none;">coderon.co.za</a>
-      <br><br>
-      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-      <span style="font-size: 12px; color: #64748b;">
-        Not relevant? Just reply "no" and I won't email again.<br>
-        ${ADDRESS}
-      </span>
-    </div>
-  `;
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** Plain-text-first email; the light HTML version enables Resend open/click tracking. */
+export function renderEmail(body: string, firstName?: string | null): { text: string; html: string } {
+  const greeting = firstName ? `Hi ${firstName},` : 'Hi there,';
+  const footer = `Not relevant? Just reply "no" and I won't email again.\n${BUSINESS_ADDRESS}`;
+
+  const text = `${greeting}\n\n${body}\n\nRonnie Nyamhute\nCoderon · websites & SEO for service businesses\ncoderon.co.za\n\n--\n${footer}`;
+
+  const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6;max-width:600px;">
+${escapeHtml(greeting)}<br><br>
+${escapeHtml(body).replace(/\n/g, '<br>')}
+<br><br>
+Ronnie Nyamhute<br>
+Coderon · websites &amp; SEO for service businesses<br>
+<a href="https://coderon.co.za" style="color:#0284c7;text-decoration:none;">coderon.co.za</a>
+<hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">
+<span style="font-size:12px;color:#64748b;">${escapeHtml(footer).replace(/\n/g, '<br>')}</span>
+</div>`;
 
   return { text, html };
 }

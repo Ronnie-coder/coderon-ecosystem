@@ -8,20 +8,35 @@ const supabase = createClient(
 );
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// 1. GET: Fetch leads from Supabase for your dashboard
-export async function GET() {
+// 1. GET: paginated, searchable lead list for the "All leads" tab (never the whole table:
+// Supabase caps a plain select at 1,000 rows, which is what hid pitches on the old dashboard).
+export async function GET(req: NextRequest) {
   try {
-    const { data: leads, error } = await supabase
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const url = new URL(req.url);
+    const page = Math.max(0, Number(url.searchParams.get('page') || 0));
+    const size = Math.min(100, Number(url.searchParams.get('size') || 50));
+    const q = (url.searchParams.get('q') || '').trim().replace(/[,()%]/g, ' ');
+    const filter = url.searchParams.get('filter') || 'all';
 
+    let query = supabase
+      .from('leads')
+      .select('id, company_name, website, email, email_ok, niche, city, country, status, pitch_trigger, opportunity_score, lead_score, notes, pitched_at, opened_at, replied_at, skipped_at, skip_reason, audit_version, created_at', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(page * size, page * size + size - 1);
+
+    if (q) query = query.or(`company_name.ilike.%${q}%,email.ilike.%${q}%,website.ilike.%${q}%`);
+    if (filter === 'ready') query = query.eq('status', 'audited').not('pitch_trigger', 'is', null).eq('email_ok', true).is('pitched_at', null).is('skipped_at', null);
+    if (filter === 'pitched') query = query.not('pitched_at', 'is', null);
+    if (filter === 'skipped') query = query.not('skipped_at', 'is', null);
+    if (filter === 'no_issue') query = query.eq('audit_version', 2).is('pitch_trigger', null);
+    if (filter === 'unverified') query = query.or('audit_version.is.null,audit_version.lt.2');
+
+    const { data: leads, error, count } = await query;
     if (error) {
       console.error('Supabase DB Error:', error);
       return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });
     }
-
-    return NextResponse.json({ leads }, { status: 200 });
+    return NextResponse.json({ leads, count, page, size }, { status: 200 });
   } catch (error) {
     console.error('API Route Error:', error);
     return NextResponse.json({ error: 'An internal server error occurred.' }, { status: 500 });
