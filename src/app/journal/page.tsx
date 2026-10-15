@@ -14,7 +14,7 @@ export default function JournalPage() {
   const posts = getJournalEntries();
 
   return (
-    <main className="journal-page">
+    <div className="journal-page">
 
       {/* Hero */}
       <section
@@ -40,6 +40,6 @@ export default function JournalPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }

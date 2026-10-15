@@ -48,7 +48,7 @@ export default function ImpactClient() {
           </motion.p>
         </header>
 
-        <main>
+        <div>
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -160,7 +160,7 @@ export default function ImpactClient() {
               </motion.article>
             ))}
           </motion.div>
-        </main>
+        </div>
 
       </div>
     </div>

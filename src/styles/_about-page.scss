@@ -68,7 +68,7 @@
 
     footer {
       font-size: 0.85rem;
-      color: var(--primary-gold);
+      color: var(--text-accent);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-weight: 600;
@@ -138,7 +138,7 @@
 
     .c-value-card__icon {
       background-color: rgba(var(--primary-gold-rgb), 0.15);
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
   }
 
@@ -150,7 +150,7 @@
     height: 48px;
     border-radius: $border-radius-md;
     background-color: var(--background-color);
-    color: var(--primary-gold);
+    color: var(--text-accent);
     margin-bottom: $spacing-md;
     transition:
       background-color 0.3s ease,

@@ -68,7 +68,7 @@
     font-size: 0.95rem;
 
     .icon {
-      color: var(--primary-gold);
+      color: var(--text-accent);
       font-size: 1.2rem;
       flex-shrink: 0;
       display: flex;
@@ -143,7 +143,7 @@
 
 // Gold asterisk for required fields
 .c-form__required {
-  color: var(--primary-gold);
+  color: var(--text-accent);
   font-weight: 700;
 }
 
@@ -195,7 +195,7 @@
     top: 50%;
     right: $spacing-md;
     transform: translateY(-50%);
-    color: var(--primary-gold);
+    color: var(--text-accent);
     pointer-events: none;
   }
 

@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
   const lastUpdated = "November 19, 2025";
 
   return (
-    <main className="l-legal-page">
+    <div className="l-legal-page">
       <div className="l-legal-page__container">
         <h1>Terms of Service</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
@@ -34,6 +34,6 @@ export default function TermsOfServicePage() {
           <li><strong>Phone:</strong> <a href="tel:+27678184898">+27 67 818 4898</a></li>
         </ul>
       </div>
-    </main>
+    </div>
   );
 }

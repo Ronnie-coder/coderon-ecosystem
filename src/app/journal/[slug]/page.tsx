@@ -64,9 +64,9 @@ export default async function JournalArticlePage({ params }: PageProps) {
           </p>
         </header>
 
-        <main className="c-article-content">
+        <div className="c-article-content">
           <Content />
-        </main>
+        </div>
 
         <footer className="c-article-footer">
           <Link href="/journal/">← Back to All Articles</Link>

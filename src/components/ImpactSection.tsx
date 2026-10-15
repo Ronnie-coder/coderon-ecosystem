@@ -79,7 +79,6 @@ const ImpactSection = ({ project }: ImpactSectionProps) => {
             <Link
               href="/playroom"
               className="cta-button-secondary"
-              aria-label="See all our work and case studies"
             >
               See All Our Work
             </Link>

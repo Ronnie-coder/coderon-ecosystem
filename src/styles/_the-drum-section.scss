@@ -85,7 +85,7 @@
 
   &__icon {
     font-size: 1.35rem;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     flex-shrink: 0;
   }
 
@@ -131,7 +131,7 @@
         transition: color 0.2s ease;
 
         &:hover {
-          color: var(--primary-gold);
+          color: var(--text-accent);
         }
 
         &:focus-visible {
@@ -151,7 +151,7 @@
   &__link-arrow {
     display: inline-flex;
     align-items: center;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     font-weight: 600;
     font-size: 0.875rem;
     text-decoration: none;

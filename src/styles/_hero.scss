@@ -39,7 +39,7 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     margin-bottom: $spacing-md;
     opacity: 0.9;
   }
@@ -54,7 +54,7 @@
     letter-spacing: -0.025em;
 
     span {
-      color: var(--primary-gold);
+      color: var(--text-accent);
       display: inline-block;
     }
   }

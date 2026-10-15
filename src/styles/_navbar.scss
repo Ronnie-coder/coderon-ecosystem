@@ -61,7 +61,7 @@
 
     &:hover {
       letter-spacing: 0.1em;
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
 
     &:focus-visible {
@@ -268,7 +268,7 @@
 
     &:hover,
     &.is-active {
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
 
     &:focus-visible {

@@ -979,12 +979,12 @@ export default function PitchHQ() {
         ))}
       </nav>
 
-      <main className={styles.main}>
+      <div className={styles.main}>
         {tab === 'queue' && <QueueView stats={stats} onSent={onSent} refreshStats={refreshStats} />}
         {tab === 'sent' && <SentView refreshStats={refreshStats} />}
         {tab === 'insights' && <InsightsView stats={stats} />}
         {tab === 'leads' && <LeadsView />}
-      </main>
+      </div>
     </div>
   );
 }

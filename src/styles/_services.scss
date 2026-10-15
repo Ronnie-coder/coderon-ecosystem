@@ -17,7 +17,7 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     margin-bottom: $spacing-md;
     opacity: 0.9;
   }
@@ -33,7 +33,7 @@
     letter-spacing: -0.02em;
 
     span {
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
   }
 
@@ -107,7 +107,7 @@
   &__icon {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     background-color: rgba(var(--primary-gold-rgb), 0.10);
     height: 56px;
     width: 56px;
@@ -144,7 +144,7 @@
     align-items: center;
     gap: $spacing-xs;
     margin-top: $spacing-md;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     font-size: 0.9rem;
     font-weight: 600;
     opacity: 0;

@@ -52,7 +52,7 @@
   // --- Product badge ---
   &__badge {
     display: inline-block;
-    color: var(--primary-gold);
+    color: var(--text-accent);
     background-color: rgba(var(--primary-gold-rgb), 0.12);
     border: 1px solid rgba(var(--primary-gold-rgb), 0.25);
     font-size: 0.75rem;
@@ -79,7 +79,7 @@
     letter-spacing: -0.02em;
 
     &--gold {
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
   }
 
@@ -120,7 +120,7 @@
   }
 
   &__benefit-icon {
-    color: var(--primary-gold);
+    color: var(--text-accent);
     font-size: 0.75rem;
     flex-shrink: 0;
     margin-top: 1px;

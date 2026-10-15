@@ -101,7 +101,6 @@ const TheDrumSection = () => {
             <Link
               href="/journal"
               className="c-drum-section__link-arrow"
-              aria-label="Read all journal articles"
             >
               Read the Journal &rarr;
             </Link>

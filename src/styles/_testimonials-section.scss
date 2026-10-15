@@ -24,7 +24,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--primary-gold);
+  color: var(--text-accent);
   margin-bottom: $spacing-sm;
   opacity: 0.9;
 }
@@ -125,7 +125,7 @@
   }
 
   &__link {
-    color: var(--primary-gold);
+    color: var(--text-accent);
     display: flex;
     align-items: center;
     justify-content: center;
