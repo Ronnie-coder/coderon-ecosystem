@@ -7,6 +7,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Logo } from '@/components/Logo';
 
 const navLinks = [
   { href: '/services/', label: 'Services' },
@@ -78,7 +79,7 @@ const Navbar = () => {
           aria-label="Coderon home"
           onClick={() => setIsMenuOpen(false)}
         >
-          CODERON
+          <Logo height={30} />
         </Link>
 
         {/* Desktop Nav */}

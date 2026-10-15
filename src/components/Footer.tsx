@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fa';
 import { FiTwitter } from 'react-icons/fi';
 import { BackToTopButton } from '@/components/BackToTopButton';
+import { Logo } from '@/components/Logo';
 
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState('');
@@ -50,7 +51,7 @@ const Footer = () => {
               className="c-footer__logo-link"
               aria-label="Coderon home"
             >
-              <span className="c-footer__logo-text">CODERON</span>
+              <Logo height={34} className="c-footer__logo-svg" />
             </Link>
 
             <p className="c-footer__tagline">

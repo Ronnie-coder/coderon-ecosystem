@@ -44,6 +44,13 @@
     }
   }
 
+  &__logo-svg {
+    display: block;
+    color: var(--text-primary);
+    height: 34px;
+    width: auto;
+  }
+
   &__logo-text {
     font-size: 1.5rem;
     font-weight: 800;

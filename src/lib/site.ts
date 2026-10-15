@@ -31,7 +31,7 @@ export const organizationJsonLd = {
   name: SITE_NAME,
   legalName: BUSINESS.legalName,
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/apple-touch-icon.png`,
+  logo: `${SITE_URL}/icon-512.png`,
   image: `${SITE_URL}/og-image.jpg`,
   email: BUSINESS.email,
   telephone: BUSINESS.phone,

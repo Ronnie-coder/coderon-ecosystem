@@ -113,7 +113,7 @@ export const liveProjects: PlayroomProject[] = [
     liveUrl: 'https://quotepilot.coderon.co.za/',
     caseStudyUrl: '/playroom/quotepilot',
     client: 'Coderon (Internal)',
-    clientLogo: '/images/logo.png',
+    clientLogo: '/icon-512.png',
     year: '2025',
     roles: ['Product Owner', 'Full-Stack Dev'],
     servicesDelivered: [
