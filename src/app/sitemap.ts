@@ -1,31 +1,33 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 import { services } from '@/data/servicesData';
+import { liveProjects, interactiveDemos } from '@/data/playroomData';
+import { getJournalEntries } from '@/lib/journal';
+import { SITE_URL, canonical } from '@/lib/site';
+
+// Bump when page copy changes so Google re-crawls.
+const SITE_UPDATED = '2026-10-15';
+
+const url = (path: string) => `${SITE_URL}${canonical(path)}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.coderon.co.za';
-  const staticContentDate = '2025-12-03'; // Updated to Current Mission Date
-
-  // Map dynamic Service URLs
-  const serviceUrls = services.map(service => ({
-    url: `${baseUrl}/services/${service.slug}`,
-    lastModified: staticContentDate,
-  }));
-
-  return [
-    { url: `${baseUrl}/`, lastModified: staticContentDate },
-    { url: `${baseUrl}/about`, lastModified: staticContentDate },
-    { url: `${baseUrl}/services`, lastModified: staticContentDate },
-    // --- DYNAMIC SERVICES ---
-    ...serviceUrls,
-    
-    // --- KEY SECTIONS ---
-    { url: `${baseUrl}/impact`, lastModified: staticContentDate },
-    { url: `${baseUrl}/playroom`, lastModified: staticContentDate },
-    { url: `${baseUrl}/journal`, lastModified: staticContentDate }, // ADDED: Critical for SEO
-    { url: `${baseUrl}/contact`, lastModified: staticContentDate },
-    
-    // --- LEGAL ---
-    { url: `${baseUrl}/privacy-policy`, lastModified: staticContentDate },
-    { url: `${baseUrl}/terms-of-service`, lastModified: staticContentDate },
-  ]
+  const core: MetadataRoute.Sitemap = [
+    { url: url(''), lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 1 },
+    { url: url('services'), lastModified: SITE_UPDATED, priority: 0.9 },
+    ...services.map((s) => ({ url: url(`services/${s.slug}`), lastModified: SITE_UPDATED, priority: 0.9 })),
+    { url: url('playroom'), lastModified: SITE_UPDATED, priority: 0.8 },
+    ...liveProjects.map((p) => ({ url: url(`playroom/${p.id}`), lastModified: SITE_UPDATED, priority: 0.7 })),
+    ...interactiveDemos.map((d) => ({ url: url(`playroom/${d.id}`), lastModified: SITE_UPDATED, priority: 0.4 })),
+    { url: url('about'), lastModified: SITE_UPDATED, priority: 0.6 },
+    { url: url('contact'), lastModified: SITE_UPDATED, priority: 0.7 },
+    { url: url('impact'), lastModified: SITE_UPDATED, priority: 0.5 },
+    { url: url('journal'), lastModified: SITE_UPDATED, priority: 0.6 },
+    ...getJournalEntries().map((post) => ({
+      url: url(`journal/${post.slug}`),
+      lastModified: post.date,
+      priority: 0.6,
+    })),
+    { url: url('privacy-policy'), lastModified: SITE_UPDATED, priority: 0.2 },
+    { url: url('terms-of-service'), lastModified: SITE_UPDATED, priority: 0.2 },
+  ];
+  return core;
 }

@@ -1,7 +1,12 @@
 // src/app/page.tsx
 import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
+import type { Metadata } from 'next';
 import { projects } from '@/data/projectsData';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 // ✅ Only Hero loads eagerly — it's the LCP element
 // ✅ Everything below fold is lazy loaded via standard dynamic imports

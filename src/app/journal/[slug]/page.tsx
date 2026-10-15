@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { canonical } from '@/lib/site';
 import React from 'react';
 
 // ✅ FIX: The 'params' prop MUST be a Promise in Next.js 16+
@@ -24,6 +25,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: postMeta.title,
     description: postMeta.description,
+    alternates: { canonical: canonical(`journal/${slug}`) },
+    openGraph: {
+      type: 'article',
+      url: canonical(`journal/${slug}`),
+      title: postMeta.title,
+      description: postMeta.description,
+      publishedTime: postMeta.date,
+      authors: [postMeta.author || 'Ronnie Nyamhute'],
+    },
   };
 }
 

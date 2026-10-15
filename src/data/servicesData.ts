@@ -28,6 +28,7 @@ export interface Service {
   icon: string;
   title: string;
   slug: string;
+  seoTitle?: string;
   description: string;
   detailedDescription: string;
   benefits: ServiceBenefit[];

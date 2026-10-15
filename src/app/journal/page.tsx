@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Journal',
   description:
     'Practical insights, engineering lessons, and business strategies from the Coderon team — written for founders and operators, not just developers.',
-  alternates: { canonical: '/journal' },
+  alternates: { canonical: '/journal/' },
 };
 
 export default function JournalPage() {

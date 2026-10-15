@@ -1,9 +1,23 @@
 // src/app/playroom/[slug]/page.tsx
 import { liveProjects } from '@/data/playroomData';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import { canonical } from '@/lib/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowLeft, FaExternalLinkAlt, FaCheckCircle, FaCalendarAlt, FaLayerGroup, FaTools } from 'react-icons/fa';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = liveProjects.find((p) => p.id === slug);
+  if (!project) return { title: 'Case study not found' };
+  return {
+    title: `${project.title} case study`,
+    description: project.description,
+    alternates: { canonical: canonical(`playroom/${slug}`) },
+    openGraph: { url: canonical(`playroom/${slug}`) },
+  };
+}
 
 export async function generateStaticParams() {
   return liveProjects.map(p => ({ slug: p.id }));

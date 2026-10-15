@@ -9,6 +9,7 @@ import { ClientLayoutComponents } from '@/components/layout/ClientLayoutComponen
 import { AnalyticsWrapper } from '@/components/AnalyticsWrapper';
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
+import { SITE_URL, organizationJsonLd } from "@/lib/site";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -27,30 +28,20 @@ const roboto_mono = Roboto_Mono({
   preload: false,
 });
 
-const siteUrl = "https://www.coderon.co.za";
+const DEFAULT_TITLE = 'Website Design & Custom Software for Growing Businesses | Coderon';
+const DEFAULT_DESCRIPTION =
+  'Coderon builds fast, mobile-friendly websites that Google can understand, and custom software that saves your team time. Based in Cape Town, working worldwide.';
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Coderon",
-    // ✅ Super short to prevent browser tab cutoff
-    default: "Coderon | Technical Partner for Founders",
+    template: '%s | Coderon',
+    default: DEFAULT_TITLE,
   },
-  description:
-    "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
-  metadataBase: new URL(siteUrl),
-  alternates: { canonical: '/' },
-  keywords: [
-    "custom software development",
-    "business automation",
-    "AI integration",
-    "Next.js development",
-    "digital transformation",
-    "internal tools development",
-    "Coderon",
-    "technical partner for founders",
-    "startup development agency"
-  ],
-  authors:   [{ name: 'Coderon', url: siteUrl }],
+  description: DEFAULT_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  // No site-wide canonical: each page declares its own. (A canonical of "/" here was
+  // inherited by every page without one, telling Google they were copies of the homepage.)
+  authors:   [{ name: 'Ronnie Nyamhute', url: SITE_URL }],
   creator:   'Coderon',
   publisher: 'Coderon',
 
@@ -61,15 +52,15 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title:       "Coderon | Technical Partner for Founders",
-    description: "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
-    url:         siteUrl,
+    title:       DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url:         `${SITE_URL}/`,
     siteName:    'Coderon',
     images: [{
-      url:    '/og-image.png',
+      url:    '/og-image.jpg',
       width:  1200,
       height: 630,
-      alt:    'Coderon — Technical Partner for Founders',
+      alt:    'Coderon: websites and custom software',
     }],
     locale: 'en_ZA',
     type:   'website',
@@ -77,10 +68,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card:        'summary_large_image',
-    title:       "Coderon | Technical Partner for Founders",
-    description: "Coderon is the technical partner for non-technical founders. We translate your business vision into custom software, scalable systems, and AI automation.",
+    title:       DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     creator:     '@Coderon28',
-    images:      ['/og-image.png'],
+    images:      ['/og-image.jpg'],
   },
 
   icons: {
@@ -120,6 +111,10 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ThemeProvider>
           {/* ✅ GA only in ONE place now */}
           <AnalyticsWrapper />

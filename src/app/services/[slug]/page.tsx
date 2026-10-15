@@ -2,6 +2,7 @@
 import { services } from '@/data/servicesData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { canonical, SITE_URL } from '@/lib/site';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -19,8 +20,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   // ✅ Let the layout template handle suffix formatting perfectly to prevent tab clutters
   return {
-    title: service.title,
+    title: service.seoTitle || service.title,
     description: service.description,
+    alternates: { canonical: canonical(`services/${service.slug}`) },
+    openGraph: { url: canonical(`services/${service.slug}`) },
   };
 }
 
@@ -46,12 +49,9 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     '@type': 'Service',
     name: title,
     description: description,
-    provider: {
-      '@type': 'Organization',
-      name: 'Coderon',
-      url: 'https://coderon.co.za'
-    },
-    areaServed: 'Global', 
+    provider: { '@id': `${SITE_URL}/#organization` },
+    url: `${SITE_URL}${canonical(`services/${slug}`)}`,
+    areaServed: 'Worldwide',
     serviceType: title
   };
 

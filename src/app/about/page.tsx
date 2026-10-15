@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'About',
   description: "Learn about Coderon's mission, born from founder Ronnie Nyamhute's dedication to building the digital future and putting innovation on the global map.",
   alternates: {
-    canonical: '/about',
+    canonical: '/about/',
   },
 };
 
