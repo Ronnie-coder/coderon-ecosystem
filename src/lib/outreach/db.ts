@@ -1,9 +1,25 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+// Created on first use, not at import: `next build` imports every route to collect page
+// data, and builds without the env vars (e.g. Vercel previews) would crash otherwise.
+let client: SupabaseClient | null = null;
+function getClient(): SupabaseClient {
+  if (!client) {
+    client = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+    );
+  }
+  return client;
+}
+
+export const supabase = new Proxy({} as SupabaseClient, {
+  get: (_target, prop) => {
+    const c = getClient();
+    const value = Reflect.get(c, prop, c);
+    return typeof value === 'function' ? value.bind(c) : value;
+  },
+});
 
 export type Lead = {
   id: string;

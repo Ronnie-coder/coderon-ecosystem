@@ -3,7 +3,8 @@ import { Resend } from 'resend';
 import ContactEmail from '@/components/emails/ContactEmail';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Created inside the handler so `next build` works without RESEND_API_KEY.
+const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
     
     const emailComponent = await ContactEmail({ name, email, service, message });
 
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend().emails.send({
       from: 'Coderon Website <onboarding@resend.dev>',
       to: ['ronnie@coderon.co.za'],
       subject: `New Inquiry: ${service} for ${name}`,

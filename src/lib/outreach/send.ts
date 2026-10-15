@@ -1,7 +1,10 @@
 import { Resend } from 'resend';
 import { REPLY_TO, SENDER } from './config';
 
-const resend = new Resend(process.env.RESEND_OUTREACH_API_KEY);
+// Created per send, not at import, so builds without RESEND_OUTREACH_API_KEY still succeed.
+function getResend(): Resend {
+  return new Resend(process.env.RESEND_OUTREACH_API_KEY);
+}
 
 export function newMessageId(): string {
   return `<coderon-${crypto.randomUUID()}@coderon.co.za>`;
@@ -23,7 +26,7 @@ export async function sendOutreachEmail(args: {
     headers['In-Reply-To'] = args.inReplyTo;
     headers['References'] = args.inReplyTo;
   }
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: SENDER,
     to: [args.to],
     reply_to: REPLY_TO,
