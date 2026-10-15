@@ -33,20 +33,18 @@ const ServicesShowcase = () => {
       ref={ref}
       className="c-services"
       id="services"
-      aria-label="Coderon services — what we build for your business"
+      aria-labelledby="services-heading"
     >
       <div className="container">
 
         {/* Section Header */}
-        <p className="c-services__eyebrow">What We Do</p>
-        <h2 className="c-services__heading">
-          Stop Running Your Business{' '}
-          <span>on Workarounds</span>
+        <p className="c-services__eyebrow">What we do</p>
+        <h2 id="services-heading" className="c-services__heading">
+          Four ways we can <span>help</span>
         </h2>
         <p className="c-services__subheading">
-          We build the software, automation, and AI tools that replace the
-          spreadsheets, manual processes, and duct-tape systems holding your
-          business back.
+          Fix the website you have, get a new one, let us look after it every
+          month, or build custom software for the work your team does by hand.
         </p>
 
         {/* Services Grid */}
@@ -61,7 +59,6 @@ const ServicesShowcase = () => {
               <Link
                 href={`/services/${service.slug}`}
                 className="c-service-card"
-                aria-label={`Learn more about our ${service.title} service`}
               >
                 {/* Icon */}
                 <div
@@ -82,12 +79,9 @@ const ServicesShowcase = () => {
                 </p>
 
                 {/* Card CTA */}
-                <div
-                  className="c-service-card__learn-more"
-                  aria-hidden="true"
-                >
-                  <span>See How It Works</span>
-                  <FiArrowUpRight />
+                <div className="c-service-card__learn-more">
+                  <span>See details</span>
+                  <FiArrowUpRight aria-hidden="true" />
                 </div>
               </Link>
             </motion.div>

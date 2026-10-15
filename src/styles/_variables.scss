@@ -44,6 +44,9 @@ $text-secondary-static: #555555;
   --primary-gold-hover: #C49B20;   // Slightly DARKER on light bg = better contrast
   --primary-gold-rgb: 212, 175, 55;
   --text-on-gold: #111111;         // WCAG AA: #111 on #D4AF37 = 7.2:1 ✅
+  // Gold used as TEXT on light backgrounds: #D4AF37 is only 2.1:1 on white (fails AA),
+  // so text uses a deeper gold (6.1:1 on white, 5.7:1 on #F7F7F7).
+  --text-accent: #7A5F00;
 
   // --- Semantic CTA Tokens ---
   // Primary CTA (Gold filled button)
@@ -97,6 +100,7 @@ $text-secondary-static: #555555;
   --primary-gold-hover: #F0CC55;   // Lighter on dark bg = better contrast
   --primary-gold-rgb: 226, 188, 69;
   --text-on-gold: #111111;         // Still dark text on gold ✅
+  --text-accent: #E2BC45;          // 9:1 on #111 ✅
 
   // --- Semantic CTA Tokens (Dark) ---
   // Primary CTA

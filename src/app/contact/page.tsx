@@ -10,9 +10,9 @@ import {
 import { ConsultationForm } from '@/components/ConsultationForm';
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact: Free Website Check',
   description:
-    'Book a free 30-minute strategy call with Coderon. Tell us what you need — we\'ll tell you what\'s possible and give you a clear plan. No obligation.',
+    'Send us your website for a free check, or tell us about the software you need. We reply within one business day. No obligation.',
   alternates: { canonical: '/contact/' },
 };
 
@@ -22,15 +22,15 @@ export default function ContactPage() {
 
       {/* Page Header */}
       <header className="c-page-header">
-        <h1>Let&apos;s Talk About Your Business</h1>
+        <h1>Get a free website check</h1>
         <p>
-          Book a free 30-minute call and tell us what&apos;s slowing
-          you down. We&apos;ll give you a straight answer on what&apos;s
-          possible and what it takes. No sales pitch, no obligation.
+          Send us your website address and we&apos;ll check its speed, security and
+          mobile layout for free. Need custom software instead? Tell us about it
+          below. No sales pitch, no obligation.
         </p>
       </header>
 
-      <main className="c-contact__wrapper">
+      <div className="c-contact__wrapper">
 
         {/* Left: Contact info */}
         <div className="c-contact__info">
@@ -92,7 +92,7 @@ export default function ContactPage() {
         {/* Right: Form */}
         <ConsultationForm />
 
-      </main>
+      </div>
     </div>
   );
 }

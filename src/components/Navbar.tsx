@@ -9,11 +9,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const navLinks = [
-  { href: '/services',  label: 'Services', title: 'What We Build'   },
-  { href: '/playroom',  label: 'Work',     title: 'Case Studies'    },
-  { href: '/journal',   label: 'Journal',  title: 'Insights'        },
-  { href: '/about',     label: 'About',    title: 'Our Story'       },
+  { href: '/services/', label: 'Services' },
+  { href: '/playroom/', label: 'Work'     },
+  { href: '/pricing/',  label: 'Pricing'  },
+  { href: '/about/',    label: 'About'    },
+  { href: '/journal/',  label: 'Journal'  },
 ];
+
+const CTA_HREF = '/contact/?topic=website';
+const CTA_LABEL = 'Free website check';
+
+// Pathnames end in "/" (trailingSlash: true); a section stays active on its sub-pages.
+const isActivePath = (pathname: string | null, href: string) =>
+  !!pathname && (pathname === href || pathname.startsWith(href));
 
 const mobileMenuVariants = {
   hidden:  { opacity: 0, height: 0 },
@@ -60,21 +68,14 @@ const Navbar = () => {
   }, [pathname]);
 
   return (
-    <motion.header
-      className={`c-navbar${hasScrolled ? ' has-scrolled' : ''}`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      itemScope
-      itemType="http://schema.org/WPHeader"
-    >
+    <header className={`c-navbar${hasScrolled ? ' has-scrolled' : ''}`}>
       <div className="c-navbar__container">
 
         {/* Logo */}
         <Link
           href="/"
           className="c-navbar__logo"
-          aria-label="Coderon — go to homepage"
+          aria-label="Coderon home"
           onClick={() => setIsMenuOpen(false)}
         >
           CODERON
@@ -87,14 +88,13 @@ const Navbar = () => {
         >
           <ul role="list">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = isActivePath(pathname, link.href);
               return (
                 <li key={link.label}>
                   <Link
                     href={link.href}
                     className={`c-navbar__link${isActive ? ' is-active' : ''}`}
                     aria-current={isActive ? 'page' : undefined}
-                    title={link.title}
                   >
                     {link.label}
                   </Link>
@@ -125,12 +125,8 @@ const Navbar = () => {
           </button>
 
           {/* Desktop CTA */}
-          <Link
-            href="/contact"
-            className="c-navbar__cta"
-            aria-label="Get a project proposal from Coderon"
-          >
-            Get a Proposal
+          <Link href={CTA_HREF} className="c-navbar__cta">
+            {CTA_LABEL}
           </Link>
 
           {/* Mobile toggle */}
@@ -164,7 +160,7 @@ const Navbar = () => {
             exit="hidden"
           >
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = isActivePath(pathname, link.href);
               return (
                 <Link
                   key={link.label}
@@ -180,17 +176,16 @@ const Navbar = () => {
 
             {/* Mobile CTA */}
             <Link
-              href="/contact"
+              href={CTA_HREF}
               className="c-navbar__mobile-cta"
-              aria-label="Get a project proposal from Coderon"
               onClick={() => setIsMenuOpen(false)}
             >
-              Get a Proposal
+              {CTA_LABEL}
             </Link>
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 };
 

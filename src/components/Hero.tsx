@@ -1,52 +1,32 @@
 // src/components/Hero.tsx
-"use client";
-
 import Link from 'next/link';
 
-// ✅ Hero has ZERO animation delay now
-// ✅ CSS handles the fade-in — no JS needed for LCP element
-// ✅ Framer Motion removed from above-the-fold entirely
-
+// Server component: the hero is the LCP element, so no client JS here.
+// CSS handles the fade-in.
 const Hero = () => {
   return (
-    <section
-      className="c-hero"
-      aria-label="Coderon — Technical Partner for Founders"
-    >
+    <section className="c-hero" aria-labelledby="hero-title">
       <div className="c-hero__container">
         <div className="c-hero__content">
+          <p className="c-hero__eyebrow c-hero__animate-1">Websites &amp; custom software</p>
 
-          {/* ✅ Pure CSS animation — no JS delay */}
-          <p className="c-hero__eyebrow c-hero__animate-1">
-            CODERON FOR FOUNDERS
-          </p>
-
-          <h1 className="c-hero__title c-hero__animate-2">
-            The Technical Partner For{' '}
-            <span>Non-Technical Founders.</span>
+          <h1 id="hero-title" className="c-hero__title c-hero__animate-2">
+            Websites and software that help your <span>business grow.</span>
           </h1>
 
           <p className="c-hero__subtitle c-hero__animate-3">
-            You bring the business vision, we handle the software, AI, and automation. We translate your ideas into scalable systems so you can launch with absolute confidence.
+            We build fast websites that work on every phone and are set up properly for Google.
+            When a website is not enough, we build custom tools that save your team hours every week.
           </p>
 
           <div className="c-hero__cta-group c-hero__animate-4">
-            <Link
-              href="/contact"
-              className="cta-button"
-              aria-label="Book a free consultation with Coderon"
-            >
-              Book a Free Consultation
+            <Link href="/contact/?topic=website" className="cta-button">
+              Get a free website check
             </Link>
-            <Link
-              href="/services"
-              className="cta-button-secondary"
-              aria-label="See the services and tools we build"
-            >
-              See What We Build
+            <Link href="/contact/?topic=software" className="cta-button-secondary">
+              Talk about custom software
             </Link>
           </div>
-
         </div>
       </div>
     </section>

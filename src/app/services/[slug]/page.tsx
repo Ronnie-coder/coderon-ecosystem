@@ -1,24 +1,19 @@
 // src/app/services/[slug]/page.tsx
 import { services } from '@/data/servicesData';
+import { priceFor } from '@/data/pricingData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { canonical, SITE_URL } from '@/lib/site';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck } from 'react-icons/fa';
+import { canonical, SITE_URL } from '@/lib/site';
 
-// ✅ FIX: params must be typed as a Promise in newer Next.js versions
 type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // ✅ FIX: Await the params before destructuring
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  
-  const service = services.find(s => s.slug === slug);
-
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
   if (!service) return { title: 'Service Not Found' };
-  
-  // ✅ Let the layout template handle suffix formatting perfectly to prevent tab clutters
+
   return {
     title: service.seoTitle || service.title,
     description: service.description,
@@ -28,83 +23,144 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  return services.map(service => ({ slug: service.slug }));
+  return services.map((service) => ({ slug: service.slug }));
 }
 
-// ✅ FIX: Component must be async to await params
 export default async function ServiceDetailPage({ params }: PageProps) {
-  // ✅ FIX: Await the params before destructuring
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  
-  const service = services.find(s => s.slug === slug);
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
+  if (!service) notFound();
 
-  if (!service) { notFound(); }
+  const { title, description, detailedDescription, forWho, benefits, steps, faqs, kind } = service;
+  const price = priceFor(service.priceKey);
+  const ctaLabel = kind === 'website' ? 'Get a free website check' : 'Talk about custom software';
+  const ctaHref = kind === 'website' ? '/contact/?topic=website' : '/contact/?topic=software';
 
-  const { title, description, detailedDescription, benefits } = service;
-
-  // JSON-LD for SEO (Service Schema)
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: title,
-    description: description,
-    provider: { '@id': `${SITE_URL}/#organization` },
-    url: `${SITE_URL}${canonical(`services/${slug}`)}`,
-    areaServed: 'Worldwide',
-    serviceType: title
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: title,
+      description,
+      serviceType: title,
+      provider: { '@id': `${SITE_URL}/#organization` },
+      url: `${SITE_URL}${canonical(`services/${slug}`)}`,
+      areaServed: 'Worldwide',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ];
 
   return (
-    <main className="service-detail-page">
-      {/* Inject SEO Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <div className="service-detail-page">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <section className="service-hero">
         <div className="container">
-          <Link href="/services" className="back-link"><FaArrowLeft /> Back to Services</Link>
-          <h1 className="animate-fade-up">{title}</h1>
-          <p className="subtitle animate-fade-up delay-100">{description}</p>
+          <Link href="/services/" className="back-link">
+            <FaArrowLeft aria-hidden="true" /> All services
+          </Link>
+          <h1>{title}</h1>
+          <p className="subtitle">{description}</p>
+          <div className="service-hero__actions">
+            <Link href={ctaHref} className="cta-button">
+              {ctaLabel}
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="service-content">
         <div className="container service-grid">
-          
-          {/* Left Column: Prose */}
-          <div className="service-description-prose animate-fade-in delay-200">
-            <h2>Our Approach</h2>
-            <div className="prose-content">
-              {detailedDescription.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+          <div className="service-description-prose">
+            <h2>How we help</h2>
+            {detailedDescription.split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+
+            <h2>Is this for you?</h2>
+            <ul className="service-checklist">
+              {forWho.map((item) => (
+                <li key={item}>
+                  <FaCheck aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h2>How it works</h2>
+            <ol className="service-steps">
+              {steps.map((step, i) => (
+                <li key={step.title}>
+                  <span className="service-steps__number" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <h2>Questions</h2>
+            <div className="service-faq">
+              {faqs.map((f) => (
+                <details key={f.q}>
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
               ))}
             </div>
           </div>
 
-          {/* Right Column: Benefits Card */}
-          <div className="service-benefits-panel animate-slide-left delay-300">
-            <h3>Why Choose Coderon?</h3>
+          <aside className="service-benefits-panel" aria-labelledby="included-heading">
+            <h2 id="included-heading" className="service-benefits-panel__heading">
+              What you get
+            </h2>
             <ul className="benefits-list">
-              {benefits.map((benefit, index) => (
-                <li key={index} className="benefit-item">
-                  <div className="icon-box">
+              {benefits.map((benefit) => (
+                <li key={benefit.text} className="benefit-item">
+                  <span className="icon-box" aria-hidden="true">
                     <benefit.icon />
-                  </div>
+                  </span>
                   <span className="benefit-text">{benefit.text}</span>
                 </li>
               ))}
             </ul>
-            <div className="cta-wrapper">
-              <Link href="/contact" className="btn btn-full-width">
-                Request a Quote
+
+            <div className="service-price">
+              {price.usd ? (
+                <>
+                  <span className="service-price__label">From</span>
+                  <span className="service-price__amount">{price.usd}</span>
+                  <span className="service-price__meta">
+                    {price.zar} · {price.period}
+                  </span>
+                </>
+              ) : (
+                <span className="service-price__amount service-price__amount--small">Quoted per project</span>
+              )}
+              <Link href="/pricing/" className="service-price__link">
+                See all prices
               </Link>
             </div>
-          </div>
+
+            <div className="cta-wrapper">
+              <Link href={ctaHref} className="cta-button">
+                {ctaLabel}
+              </Link>
+            </div>
+          </aside>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

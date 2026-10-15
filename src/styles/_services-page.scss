@@ -46,7 +46,7 @@
     border-color: var(--primary-gold);
 
     .c-service-card__icon-wrapper {
-      color: var(--primary-gold);
+      color: var(--text-accent);
       background: rgba(var(--primary-gold-rgb), 0.10);
     }
 
@@ -119,7 +119,7 @@
         content: '→';
         position: absolute;
         left: 0;
-        color: var(--primary-gold);
+        color: var(--text-accent);
         font-size: 0.8rem;
       }
     }
@@ -142,7 +142,7 @@
     transition: color 0.2s ease;
 
     &:hover {
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
 
     &:focus-visible {
@@ -179,7 +179,7 @@
     transition: color 0.2s ease;
 
     &:hover {
-      color: var(--primary-gold);
+      color: var(--text-accent);
     }
 
     &:focus-visible {
@@ -250,7 +250,7 @@
     line-height: 1.5;
 
     .icon-box {
-      color: var(--primary-gold);
+      color: var(--text-accent);
       flex-shrink: 0;
       margin-top: 2px;
     }
@@ -265,5 +265,171 @@
       width: 100%;
       justify-content: center;
     }
+  }
+}
+// ============================================
+// SERVICE DETAIL PAGE: richer layout (v2)
+// ============================================
+
+.service-hero__actions {
+  margin-top: $spacing-lg;
+  display: flex;
+  justify-content: center;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: $spacing-xl;
+  align-items: start;
+  padding-bottom: $spacing-xl;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+.service-description-prose {
+  h2:first-child {
+    margin-top: 0;
+  }
+  p {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.service-checklist {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: $spacing-sm;
+
+  li {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: flex-start;
+    color: var(--text-primary);
+  }
+
+  svg {
+    color: var(--text-accent);
+    flex-shrink: 0;
+    margin-top: 0.35em;
+  }
+}
+
+.service-steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: $spacing-md;
+
+  li {
+    display: flex;
+    gap: $spacing-md;
+    align-items: flex-start;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+  }
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &__number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--cta-bg);
+    color: var(--cta-text);
+    font-weight: 700;
+  }
+}
+
+.service-faq {
+  display: grid;
+  gap: $spacing-sm;
+
+  details {
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    background: var(--surface-color);
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-primary);
+
+    &:focus-visible {
+      outline: 2px solid var(--text-accent);
+      outline-offset: 4px;
+    }
+  }
+
+  details p {
+    margin: $spacing-sm 0 0;
+  }
+}
+
+.service-benefits-panel__heading {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  margin: 0 0 $spacing-lg;
+  padding-bottom: $spacing-sm;
+}
+
+.service-benefits-panel .benefit-item .icon-box {
+  color: var(--text-accent);
+}
+
+.service-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: $spacing-md 0;
+  border-top: 1px solid var(--border-color);
+
+  &__label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  &__amount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+
+    &--small {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  &__link {
+    margin-top: $spacing-sm;
+    font-size: 0.9rem;
+    color: var(--text-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 }

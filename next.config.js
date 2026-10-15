@@ -43,6 +43,16 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   trailingSlash: true,
   
+  // --- RETIRED SERVICE PAGES ---
+  // The 5 old services were merged into 4 clearer offers; keep old links working.
+  async redirects() {
+    return ['ai-solutions', 'digital-transformation', 'business-automation'].map((slug) => ({
+      source: `/services/${slug}`,
+      destination: '/services/custom-software/',
+      permanent: true,
+    }));
+  },
+
   // --- SECURITY HEADERS ---
   async headers() {
     return [

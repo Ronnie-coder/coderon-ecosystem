@@ -180,4 +180,11 @@ ul, ol {
   .cta-button {
     display: inline-flex;
   }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

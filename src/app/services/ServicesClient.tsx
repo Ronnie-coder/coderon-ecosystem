@@ -35,21 +35,21 @@ export default function ServicesClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          What We Build
+          Websites and Software, Explained Simply
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          From custom software to AI integrations — we build the
-          systems that help businesses run faster, cut
-          manual work, and grow without the friction.
+          We fix and build websites that load fast, work on every phone
+          and are set up properly for Google. When a website is not
+          enough, we build custom software that saves your team time.
         </motion.p>
       </header>
 
       {/* Services Grid */}
-      <motion.main
+      <motion.div
         className="c-services-grid"
         aria-label="List of Coderon services"
         variants={containerVariants}
@@ -95,9 +95,8 @@ export default function ServicesClient() {
                 <Link
                   href={`/services/${service.slug}`}
                   className="c-service-card__link"
-                  aria-label={`Learn more about our ${service.title} service`}
                 >
-                  See How It Works
+                  {service.title}: see details
                   <FaArrowRight
                     className="c-service-card__arrow"
                     aria-hidden="true"
@@ -107,7 +106,7 @@ export default function ServicesClient() {
             </motion.article>
           );
         })}
-      </motion.main>
+      </motion.div>
 
       {/* Bottom CTA */}
       <motion.section
@@ -118,18 +117,22 @@ export default function ServicesClient() {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <h2>Not Sure Where to Start?</h2>
+        <h2>Not sure which one you need?</h2>
 
-        {/* ✅ FIXED: "what's" → "what&apos;s" | "We'll" → "We&apos;ll" */}
         <p>
-          Tell us what&apos;s slowing your business down. We&apos;ll work out
-          which service fits best — and give you a clear plan in a
-          free 30-minute call.
+          Send us your website address. We&apos;ll check it for free and
+          tell you honestly what it needs, even if the answer is
+          &quot;nothing&quot;.
         </p>
 
-        <Link href="/contact" className="cta-button">
-          Book a Free Call
-        </Link>
+        <div className="c-page-cta__actions">
+          <Link href="/contact/?topic=website" className="cta-button">
+            Get a free website check
+          </Link>
+          <Link href="/pricing/" className="cta-button-secondary">
+            See prices
+          </Link>
+        </div>
       </motion.section>
 
     </div>

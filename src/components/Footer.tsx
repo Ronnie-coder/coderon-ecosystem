@@ -48,14 +48,14 @@ const Footer = () => {
             <Link
               href="/"
               className="c-footer__logo-link"
-              aria-label="Coderon — go to homepage"
+              aria-label="Coderon home"
             >
               <span className="c-footer__logo-text">CODERON</span>
             </Link>
 
             <p className="c-footer__tagline">
-              We build the software that helps founders and growing businesses
-              run faster, smarter, and at scale.
+              Fast websites set up properly for Google, and custom software
+              that saves your team time. Based in Cape Town, working worldwide.
             </p>
 
             <div className="c-footer__social">
@@ -96,30 +96,27 @@ const Footer = () => {
 
           {/* COMPANY COLUMN */}
           <div className="c-footer__col c-footer__col--links">
-            <h4 className="c-footer__col-heading">Company</h4>
+            <h2 className="c-footer__col-heading">Company</h2>
             <ul className="c-footer__link-list" role="list">
-              <li><Link href="/services">Services</Link></li>
-              <li><Link href="/playroom">Our Work</Link></li>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/journal">Journal</Link></li>
+              <li><Link href="/services/">Services</Link></li>
+              <li><Link href="/playroom/">Our work</Link></li>
+              <li><Link href="/pricing/">Pricing</Link></li>
+              <li><Link href="/about/">About</Link></li>
+              <li><Link href="/journal/">Journal</Link></li>
             </ul>
           </div>
 
           {/* WORK WITH US COLUMN */}
           <div className="c-footer__col c-footer__col--contact">
-            <h4 className="c-footer__col-heading">Work With Us</h4>
+            <h2 className="c-footer__col-heading">Work with us</h2>
 
             <p className="c-footer__text">
-              Ready to build something? Let&apos;s talk about your
-              project and what&apos;s possible.
+              Not sure what your website needs? Send it to us and we&apos;ll
+              check it for free.
             </p>
 
-            <Link
-              href="/contact"
-              className="c-footer__cta"
-              aria-label="Request a project proposal from Coderon"
-            >
-              Request a Proposal
+            <Link href="/contact/?topic=website" className="c-footer__cta">
+              Get a free website check
               <FaArrowRight aria-hidden="true" />
             </Link>
 
@@ -149,8 +146,8 @@ const Footer = () => {
             <span>
               &copy; {currentYear} Coderon (Pty) Ltd.
             </span>
-            <Link href="/privacy-policy">Privacy Policy</Link>
-            <Link href="/terms-of-service">Terms of Service</Link>
+            <Link href="/privacy-policy/">Privacy Policy</Link>
+            <Link href="/terms-of-service/">Terms of Service</Link>
           </div>
 
           <div className="c-footer__meta-info">

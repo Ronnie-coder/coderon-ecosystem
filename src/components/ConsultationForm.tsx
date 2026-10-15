@@ -1,16 +1,24 @@
 // src/components/ConsultationForm.tsx
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
 
 export const ConsultationForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    service: 'Web Engineering',
+    service: 'Free website check',
+    website: '',
     message: '',
   });
+
+  // Pre-select the topic from links like /contact/?topic=software
+  useEffect(() => {
+    const topic = new URLSearchParams(window.location.search).get('topic');
+    if (topic === 'software') setFormData((prev) => ({ ...prev, service: 'Custom software' }));
+  }, []);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState('');
   const [isError, setIsError] = useState(false);
@@ -34,7 +42,12 @@ export const ConsultationForm = () => {
       const response = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          message: formData.website ? `${formData.message}\n\nWebsite: ${formData.website}` : formData.message,
+        }),
       });
       const data = await response.json();
 
@@ -46,7 +59,8 @@ export const ConsultationForm = () => {
         setFormData({
           name: '',
           email: '',
-          service: 'Web Engineering',
+          service: 'Free website check',
+          website: '',
           message: '',
         });
       } else {
@@ -86,7 +100,7 @@ export const ConsultationForm = () => {
     <form
       className="c-form"
       onSubmit={handleSubmit}
-      aria-label="Book a free consultation with Coderon"
+      aria-label="Contact Coderon"
       aria-busy={isSubmitting}
       noValidate
     >
@@ -153,20 +167,39 @@ export const ConsultationForm = () => {
             aria-required="true"
             aria-disabled={isSubmitting}
           >
-            <option value="Web Engineering">Web Engineering</option>
-            <option value="AI Integration">AI Integration</option>
-            <option value="Digital Transformation">Digital Transformation</option>
-            <option value="Custom Software">Custom Software</option>
-            <option value="Business Automation">Business Automation</option>
-            <option value="Not sure yet">Not sure yet — let&apos;s talk</option>
+            <option value="Free website check">Free website check</option>
+            <option value="Website fix">Fix my current website</option>
+            <option value="New website">A new website</option>
+            <option value="Website care plan">Monthly website care</option>
+            <option value="Custom software">Custom software or automation</option>
+            <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
+      </div>
+
+      {/* Website (optional) */}
+      <div className="c-form__group">
+        <label htmlFor="website" className="c-form__label">
+          Your website (if you have one)
+        </label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          inputMode="url"
+          autoComplete="url"
+          className="c-form__input"
+          placeholder="e.g. yourbusiness.com"
+          value={formData.website}
+          onChange={handleChange}
+          disabled={isSubmitting}
+        />
       </div>
 
       {/* Message */}
       <div className="c-form__group">
         <label htmlFor="message" className="c-form__label">
-          Tell us about your business and what you want to fix
+          Tell us a bit about your business
           <span className="c-form__required" aria-hidden="true"> *</span>
         </label>
         <textarea
@@ -174,7 +207,7 @@ export const ConsultationForm = () => {
           name="message"
           className="c-form__textarea"
           required
-          placeholder="e.g. We're a logistics company manually tracking deliveries in spreadsheets. We need something better..."
+          placeholder="e.g. We're a roofing company in Dallas. Our website is slow and we get very few enquiries from it."
           value={formData.message}
           onChange={handleChange}
           disabled={isSubmitting}
@@ -186,7 +219,7 @@ export const ConsultationForm = () => {
           id="message-hint"
           className="c-form__hint"
         >
-          The more detail you give us, the more useful our first call will be.
+          A few sentences is enough. We reply within one business day.
         </span>
       </div>
 
@@ -196,11 +229,6 @@ export const ConsultationForm = () => {
         className="c-form__button"
         disabled={isSubmitting}
         aria-disabled={isSubmitting}
-        aria-label={
-          isSubmitting
-            ? 'Sending your request, please wait'
-            : 'Book my free consultation'
-        }
       >
         {isSubmitting ? (
           <>
@@ -211,7 +239,7 @@ export const ConsultationForm = () => {
             Sending...
           </>
         ) : (
-          'Book My Free Session'
+          'Send my request'
         )}
       </button>
 

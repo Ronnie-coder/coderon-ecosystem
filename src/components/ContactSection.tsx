@@ -25,13 +25,13 @@ const ContactSection = () => {
               Work With Us
             </p>
             <h2 className="c-contact-cta__heading">
-              Got a Project in Mind?{' '}
-              <span>Let&apos;s Talk.</span>
+              Want to know what your website needs?{' '}
+              <span>Ask us.</span>
             </h2>
             <p className="c-contact-cta__body">
-              Tell us what&apos;s slowing your business down. We&apos;ll
-              give you a straight answer on what&apos;s possible and
-              a clear plan — no fluff, no obligation.
+              Send us your website and we&apos;ll check it for free. Need
+              custom software instead? Tell us what your team does by hand
+              and we&apos;ll tell you honestly if we can help.
             </p>
 
             <div className="c-contact-cta__meta">
@@ -50,12 +50,8 @@ const ContactSection = () => {
 
           {/* Right: CTAs */}
           <div className="c-contact-cta__actions">
-            <Link
-              href="/contact"
-              className="cta-button"
-              aria-label="Book a free consultation with Coderon"
-            >
-              Book a Free Call
+            <Link href="/contact/?topic=website" className="cta-button">
+              Get a free website check
               <FaArrowRight aria-hidden="true" />
             </Link>
 
@@ -64,10 +60,9 @@ const ContactSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="c-contact-cta__whatsapp"
-              aria-label="Chat with Coderon on WhatsApp — opens in new tab"
             >
               <FaWhatsapp aria-hidden="true" />
-              WhatsApp Us
+              WhatsApp us<span className="sr-only"> (opens in a new tab)</span>
             </Link>
           </div>
 

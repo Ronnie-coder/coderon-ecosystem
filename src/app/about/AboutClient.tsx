@@ -61,13 +61,13 @@ export default function AboutClient() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Coderon is a software company that builds custom systems,
-            automation tools, and AI integrations for founders and teams
-            who are serious about growth.
+            Coderon builds fast websites and custom software for growing
+            businesses. We started in Cape Town and now work with clients in
+            South Africa and Europe.
           </motion.p>
         </header>
 
-        <main>
+        <div>
 
           {/* Founder Section */}
           <section
@@ -209,22 +209,17 @@ export default function AboutClient() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2>Ready to Build Something That Works?</h2>
+            <h2>Want an honest opinion on your website?</h2>
             <p>
-              Tell us what your business needs. We&apos;ll tell you
-              what&apos;s possible and give you a straight plan —
-              no jargon, no obligation.
+              Send it to us and we&apos;ll check it for free. No jargon,
+              no obligation.
             </p>
-            <Link
-              href="/contact"
-              className="cta-button"
-              aria-label="Book a free consultation with Coderon"
-            >
-              Book a Free Call
+            <Link href="/contact/?topic=website" className="cta-button">
+              Get a free website check
             </Link>
           </motion.section>
 
-        </main>
+        </div>
       </div>
     </div>
   );
