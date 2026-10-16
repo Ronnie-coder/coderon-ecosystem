@@ -1,68 +1,72 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-import { createClient } from '@supabase/supabase-js';
+import { supabase, logEvent, type Lead } from '@/lib/outreach/db';
+import { getBudget } from '@/lib/outreach/budget';
+import { newMessageId, sendOutreachEmail } from '@/lib/outreach/send';
+import { notionCreatePitch } from '@/lib/outreach/notion';
 import { buildPitch, renderEmail } from './pitch-templates';
 
-const resend = new Resend(process.env.RESEND_OUTREACH_API_KEY);
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
+// Sends the pitch for one lead. Everything is loaded server-side from the lead's verified
+// audit; the client only sends the lead id.
 export async function POST(req: Request) {
   try {
-    const { leadId, companyName, email, notes, firstName } = await req.json();
+    const { leadId } = await req.json();
+    if (!leadId) return NextResponse.json({ error: 'leadId required' }, { status: 400 });
 
-    if (!email || email === 'N/A') {
-      return NextResponse.json({ error: 'No valid email to send to.' }, { status: 400 });
+    const { data: lead, error } = await supabase.from('leads').select('*').eq('id', leadId).single<Lead>();
+    if (error || !lead) return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+
+    if (lead.pitched_at) return NextResponse.json({ skipped: true, reason: 'Already pitched' }, { status: 409 });
+    if (!lead.email || lead.email_ok === false) return NextResponse.json({ skipped: true, reason: 'No verified email' }, { status: 422 });
+    if (lead.unsubscribed || lead.bounced_at) return NextResponse.json({ skipped: true, reason: 'Unsubscribed or bounced' }, { status: 422 });
+
+    // Never email the same address twice from two different lead rows.
+    const { count: dupes } = await supabase
+      .from('leads')
+      .select('id', { count: 'exact', head: true })
+      .eq('email', lead.email)
+      .not('pitched_at', 'is', null);
+    if (dupes) return NextResponse.json({ skipped: true, reason: 'This email was already pitched' }, { status: 409 });
+
+    const pitch = buildPitch(lead);
+    if (!pitch) return NextResponse.json({ skipped: true, reason: 'No verified issue to pitch' }, { status: 422 });
+
+    const budget = await getBudget();
+    if (budget.emailsLeftToday <= 0) {
+      return NextResponse.json({ skipped: true, reason: `Free-tier email budget used up for today (${budget.dailyCap}/day)` }, { status: 429 });
     }
 
-    // Build pitch based on audit notes
-    const pitch = buildPitch({ companyName, notes: notes || '' });
+    const content = renderEmail(pitch.body, lead.first_name);
+    const messageId = newMessageId();
+    const sent = await sendOutreachEmail({ to: lead.email, subject: pitch.subject, text: content.text, html: content.html, messageId });
+    if (sent.error) return NextResponse.json({ error: `Resend: ${sent.error}` }, { status: 502 });
 
-    if (!pitch) {
-      return NextResponse.json({ message: `Skipped ${companyName}: No verified critical flaw detected.` });
-    }
+    const now = new Date().toISOString();
+    const notionPageId = await notionCreatePitch(lead, pitch.subject);
 
-    // Render plain text AND HTML version for open/click webhook tracking
-    const emailContent = renderEmail(pitch.body, firstName);
-
-    // Send email via Resend with tracking enabled
-    const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'Ronnie <ronnie@coderon.co.za>',
-      to: [email],
-      subject: pitch.subject,
-      text: emailContent.text,
-      html: emailContent.html,
-    });
-
-    if (emailError) {
-      console.error('Resend Error:', emailError);
-      return NextResponse.json({ error: 'Failed to send email. Check Resend dashboard.' }, { status: 500 });
-    }
-
-    // Update Supabase with initial pitch state and timestamp
     const { error: dbError } = await supabase
       .from('leads')
-      .update({ 
+      .update({
         status: 'pitched',
-        pitched_at: new Date().toISOString(),
+        pitched_at: now,
         followup_stage: 0,
         replied: false,
         initial_trigger: pitch.trigger,
-        initial_subject: pitch.subject
+        initial_subject: pitch.subject,
+        resend_email_id: sent.id,
+        message_id: messageId,
+        notion_page_id: notionPageId,
       })
-      .eq('id', leadId);
+      .eq('id', lead.id);
+    await logEvent('sent_pitch', lead.id, sent.id, { subject: pitch.subject, trigger: pitch.trigger });
 
     if (dbError) {
-      console.error('Supabase Update Error:', dbError);
-      return NextResponse.json({ error: 'Email sent, but database update failed.' }, { status: 500 });
+      console.error('Pitch DB update failed:', dbError);
+      return NextResponse.json({ error: `Email sent, but saving failed: ${dbError.message}` }, { status: 500 });
     }
 
-    return NextResponse.json({ message: `Successfully pitched ${companyName} via ${pitch.trigger} trigger!` });
-
-  } catch (error: any) {
-    console.error('Pitch Error:', error);
-    return NextResponse.json({ error: 'Fatal error during pitching', details: error.message }, { status: 500 });
+    return NextResponse.json({ sent: true, trigger: pitch.trigger, subject: pitch.subject, pitchesToday: budget.pitchesToday + 1 });
+  } catch (err) {
+    console.error('Pitch Error:', err);
+    return NextResponse.json({ error: 'Fatal error during pitching', details: (err as Error).message }, { status: 500 });
   }
 }

@@ -1,246 +1,185 @@
 // src/app/playroom/[slug]/page.tsx
-import { liveProjects } from '@/data/playroomData';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowLeft, FaExternalLinkAlt, FaCheckCircle, FaCalendarAlt, FaLayerGroup, FaTools } from 'react-icons/fa';
+import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiCheck } from 'react-icons/fi';
+import { liveProjects } from '@/data/playroomData';
+import { canonical } from '@/lib/site';
+import BrowserFrame from '@/components/ui/BrowserFrame';
+import CountUp from '@/components/ui/CountUp';
 
-export async function generateStaticParams() {
-  return liveProjects.map(p => ({ slug: p.id }));
+type PageProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = liveProjects.find((p) => p.id === slug);
+  if (!project) return { title: 'Case study not found' };
+  return {
+    title: `${project.title}: case study`,
+    description: project.description,
+    alternates: { canonical: canonical(`playroom/${slug}`) },
+    openGraph: { url: canonical(`playroom/${slug}`), images: [{ url: project.imageUrl }] },
+  };
 }
 
-export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+export async function generateStaticParams() {
+  return liveProjects.map((p) => ({ slug: p.id }));
+}
 
-  const project = liveProjects.find(p => p.id === slug);
+export default async function CaseStudyPage({ params }: PageProps) {
+  const { slug } = await params;
+  const index = liveProjects.findIndex((p) => p.id === slug);
+  if (index === -1) notFound();
+  const project = liveProjects[index];
+  const next = liveProjects[(index + 1) % liveProjects.length];
+  const host = project.liveUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
-  if (!project) {
-    notFound();
-  }
-
-  const client = project.client || 'Client Project';
-  const year = project.year || new Date().getFullYear().toString();
-  const roles = project.roles || ['Development'];
-  const servicesDelivered = project.servicesDelivered || ['Software Engineering'];
-  const liveUrl = project.liveUrl || '#';
+  const facts = [
+    { label: 'Client', value: project.client },
+    { label: 'Business', value: `${project.sector ?? ''}${project.location ? `, ${project.location}` : ''}` },
+    { label: 'Year', value: project.year },
+    { label: 'What we did', value: (project.servicesDelivered ?? []).join(' · ') },
+  ].filter((f) => f.value);
 
   return (
-    <div className="c-case-study">
-      <div className="c-page-container">
-        
-        {/* TOP NAVIGATION */}
-        <div className="c-case-study__nav">
-            <Link href="/playroom" className="back-link">
-                <FaArrowLeft /> Back to Showroom
-            </Link>
-        </div>
-
-        {/* HERO SECTION: SPLIT GRID */}
-        <header className="c-case-study__hero">
-          
-          {/* LEFT FLANK: INTEL */}
-          <div className="c-case-study__hero-content">
-            <div className="c-case-study__brand">
-              {project.clientLogo ? (
-                <div className="logo-wrapper animate-fade-in">
-                  <Image 
-                    src={project.clientLogo} 
-                    alt={`${client} Logo`} 
-                    width={48} 
-                    height={48} 
-                    className="client-logo-svg"
-                    style={{ objectFit: 'contain' }}
-                  />
-                </div>
-              ) : (
-                 <span className="client-text">{client}</span>
+    <>
+      <header className="container pb-12 pt-12 md:pt-16">
+        <Link href="/playroom/" className="inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
+          <FiArrowLeft aria-hidden="true" /> All work
+        </Link>
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center">
+          <div>
+            <div className="flex items-center gap-4">
+              {project.clientLogo && (
+                <span className="grid h-14 w-14 place-items-center rounded-xl border-2 border-line bg-white p-2">
+                  <Image src={project.clientLogo} alt="" width={44} height={44} className="h-auto max-h-10 w-auto" />
+                </span>
               )}
+              <p className="eyebrow">{project.category}</p>
             </div>
-            
-            <h1 className="project-title">{project.title}</h1>
-            
-            <div className="project-brief">
-              <h2>The Brief</h2>
-              <p>{project.description}</p>
+            <h1 className="h-display mt-5">{project.title}</h1>
+            <p className="mt-5 text-lg text-ink/75 md:text-xl">{project.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                Visit {host} <FiArrowUpRight aria-hidden="true" />
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
             </div>
+          </div>
+          <BrowserFrame src={project.imageUrl} alt={`Homepage of the ${project.title} website`} url={host} priority className="shadow-hard-lg" />
+        </div>
+      </header>
 
-            <Link href={liveUrl} className="btn-visit" target="_blank" rel="noopener noreferrer">
-              View Live Project <FaExternalLinkAlt />
-            </Link>
-          </div>
+      <section aria-label="Project facts" className="border-y-2 border-line bg-card">
+        <dl className="container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt className="eyebrow">{f.label}</dt>
+              <dd className="mt-2 font-semibold">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
-          {/* RIGHT FLANK: VISUAL EVIDENCE (Browser Window) */}
-          <div className="c-case-study__hero-visual">
-            <div className="browser-frame">
-              <div className="browser-header">
-                <div className="dots">
-                  <span className="dot dot-red"></span>
-                  <span className="dot dot-yellow"></span>
-                  <span className="dot dot-green"></span>
-                </div>
-                <div className="browser-address-bar">
-                  {liveUrl.replace('https://', '').replace(/\/$/, '')}
-                </div>
-              </div>
-              <div className="browser-content">
-                <Image 
-                  src={project.imageUrl} 
-                  alt={`Showcase of ${project.title}`} 
-                  width={1200} 
-                  height={800} 
-                  style={{ width: '100%', height: 'auto', display: 'block' }}
-                  quality={95}
-                  priority
-                />
-              </div>
+      {project.stat && (
+        <section aria-label="Result" className="container pt-16">
+          <div className="card flex flex-col gap-6 border-ink bg-gold p-8 text-[#16130E] shadow-hard-lg dark:border-gold md:flex-row md:items-center md:justify-between md:p-10" data-reveal>
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.18em]">{project.stat.label}</p>
+              <p className="mt-2 font-serif text-2xl italic">Google Lighthouse, mobile test, before and after</p>
             </div>
+            <p className="flex items-baseline gap-4 text-6xl font-extrabold tracking-tight md:text-8xl">
+              <span className="opacity-50 line-through decoration-4">{project.stat.before}</span>
+              <span aria-hidden="true">→</span>
+              <CountUp from={project.stat.before} to={project.stat.after} />
+            </p>
           </div>
-        </header>
+        </section>
+      )}
 
-        {/* STATS STRIP */}
-        <section className="c-case-study__stats">
-          <div className="stat-item">
-            <div className="stat-icon-box"><FaCalendarAlt /></div>
-            <div className="stat-info">
-              <span className="label">Year</span>
-              <span className="value">{year}</span>
+      <section className="section">
+        <div className="container grid gap-10 lg:grid-cols-3">
+          {project.narrative_challenge && (
+            <div data-reveal>
+              <p className="font-mono text-sm font-semibold text-ink/50">01</p>
+              <h2 className="mt-2 text-2xl font-extrabold">The problem</h2>
+              <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_challenge}</p>
             </div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-icon-box"><FaLayerGroup /></div>
-            <div className="stat-info">
-              <span className="label">Role</span>
-              <span className="value">{roles.join(', ')}</span>
+          )}
+          {project.narrative_solution && (
+            <div data-reveal>
+              <p className="font-mono text-sm font-semibold text-ink/50">02</p>
+              <h2 className="mt-2 text-2xl font-extrabold">What we did</h2>
+              <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_solution}</p>
             </div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-icon-box"><FaTools /></div>
-            <div className="stat-info">
-              <span className="label">Services</span>
-              <span className="value">{servicesDelivered.join(', ')}</span>
+          )}
+          {project.narrative_results && project.narrative_results.length > 0 && (
+            <div className="card-pop h-fit p-7" data-reveal>
+              <p className="font-mono text-sm font-semibold text-ink/50">03</p>
+              <h2 className="mt-2 text-2xl font-extrabold">The result</h2>
+              <ul className="mt-4 space-y-3">
+                {project.narrative_results.map((r) => (
+                  <li key={r} className="flex gap-3">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-sm text-[#16130E]" aria-hidden="true">
+                      <FiCheck />
+                    </span>
+                    <span className="font-medium">{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {project.lighthouseBefore && project.lighthouseAfter && (
+        <section aria-labelledby="proof" className="section border-t-2 border-line/15">
+          <div className="container">
+            <div className="max-w-2xl" data-reveal>
+              <p className="eyebrow">The proof</p>
+              <h2 id="proof" className="h-section mt-3">Same test, <span className="accent">before and after.</span></h2>
+              <p className="mt-4 text-lg text-ink/75">Screenshots of Google Lighthouse running the mobile test on the old site and on the new one.</p>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {[
+                { src: project.lighthouseBefore, label: 'Before', cls: 'bg-bad text-paper' },
+                { src: project.lighthouseAfter, label: 'After', cls: 'bg-good text-paper' },
+              ].map((s) => (
+                <figure key={s.label} className="card overflow-hidden" data-reveal>
+                  <figcaption className="flex items-center justify-between border-b-2 border-line px-5 py-3 font-bold">
+                    {s.label}
+                    <span className={`rounded-full px-3 py-0.5 text-xs ${s.cls}`}>{s.label === 'Before' ? 'Old site' : 'New site'}</span>
+                  </figcaption>
+                  <Image src={s.src} alt={`Lighthouse scores ${s.label.toLowerCase()} the rebuild`} width={1900} height={725} className="h-auto w-full" />
+                </figure>
+              ))}
             </div>
           </div>
         </section>
-        
-        {/* NARRATIVE GRID */}
-        {(project.narrative_challenge || project.narrative_solution || project.narrative_results) && (
-          <div className="c-case-study__narrative">
-            <div className="narrative-grid">
-              
-              {project.narrative_challenge && (
-                <section className="narrative-card">
-                  <h2>The Challenge</h2>
-                  <p>{project.narrative_challenge}</p>
-                </section>
-              )}
-              
-              {project.narrative_solution && (
-                <section className="narrative-card">
-                  <h2>Our Solution</h2>
-                  <p>{project.narrative_solution}</p>
-                </section>
-              )}
-              
-              {project.narrative_results && project.narrative_results.length > 0 && (
-                <section className="narrative-card results-card">
-                  <h2>The Results</h2>
-                  <ul className="results-list">
-                    {project.narrative_results.map((result: string, index: number) => (
-                      <li key={index} className="results-item">
-                        <div className="check-icon-wrapper">
-                          <FaCheckCircle />
-                        </div>
-                        <span className="results-text">{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
-            </div>
+      )}
+
+      {project.featureImages && project.featureImages.length > 0 && (
+        <section aria-label="More screens" className="container pb-16">
+          <div className="grid gap-6">
+            {project.featureImages.map((img, i) => (
+              <BrowserFrame key={img} src={img} alt={`${project.title} website, screen ${i + 2}`} url={host} />
+            ))}
           </div>
-        )}
+        </section>
+      )}
 
-        {/* EXTRA FEATURE IMAGES GALLERY */}
-        {((project as any).featureImages && (project as any).featureImages.length > 0) && (
-          <section className="c-showcase-gallery">
-            <h2 className="gallery-title">Deep Dive Evidence</h2>
-            <div className="gallery-grid">
-              {(project as any).featureImages.map((img: string, idx: number) => (
-                <div key={idx} className="gallery-card">
-                  <div className="browser-frame">
-                    <div className="browser-header">
-                      <div className="dots">
-                        <span className="dot dot-red"></span>
-                        <span className="dot dot-yellow"></span>
-                        <span className="dot dot-green"></span>
-                      </div>
-                    </div>
-                    <div className="browser-content">
-                       <Image 
-                         src={img} 
-                         alt={`Feature view ${idx + 1}`} 
-                         width={1200} 
-                         height={800} 
-                         style={{ width: '100%', height: 'auto', display: 'block' }} 
-                         quality={95} 
-                       />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* THE PERFORMANCE PROOF */}
-        {(project.lighthouseBefore && project.lighthouseAfter) && (
-          <section className="c-performance-proof">
-            <div className="c-performance-proof__header">
-              <span className="eyebrow">Hard Evidence</span>
-              <h2>The Performance Upgrade</h2>
-              <p>We don&apos;t just build pretty layouts. We engineer mathematically perfect websites that dominate Google search rankings.</p>
-            </div>
-            
-            <div className="c-performance-proof__grid">
-               {/* Before Image */}
-               <div className="c-performance-proof__card">
-                 <div className="card-header">
-                    <span className="red">Before: Outdated & Slow</span>
-                 </div>
-                 <div className="card-body">
-                    {/* ✅ FIX: Removed 'fill' prop, using standard width/height safely */}
-                    <Image 
-                      src={project.lighthouseBefore} 
-                      alt="Lighthouse Before Score" 
-                      width={800} 
-                      height={600} 
-                      style={{ width: '100%', height: 'auto', display: 'block' }} 
-                    />
-                 </div>
-               </div>
-               
-               {/* After Image */}
-               <div className="c-performance-proof__card">
-                 <div className="card-header">
-                    <span className="green">After: Next.js Optimised</span>
-                 </div>
-                 <div className="card-body gold-glow">
-                    {/* ✅ FIX: Removed 'fill' prop, using standard width/height safely */}
-                    <Image 
-                      src={project.lighthouseAfter} 
-                      alt="Lighthouse After Score" 
-                      width={800} 
-                      height={600} 
-                      style={{ width: '100%', height: 'auto', display: 'block' }} 
-                    />
-                 </div>
-               </div>
-            </div>
-          </section>
-        )}
-
-      </div>
-    </div>
+      <nav aria-label="Next project" className="border-t-2 border-line">
+        <Link href={next.caseStudyUrl || `/playroom/${next.id}/`} className="group container flex items-center justify-between gap-6 py-12">
+          <span>
+            <span className="eyebrow">Next project</span>
+            <span className="mt-2 block text-3xl font-extrabold tracking-tight transition-colors group-hover:text-gold-text md:text-5xl">{next.title}</span>
+          </span>
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border-2 border-ink text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
+            <FiArrowRight aria-hidden="true" />
+          </span>
+        </Link>
+      </nav>
+    </>
   );
 }

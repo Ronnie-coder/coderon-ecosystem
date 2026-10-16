@@ -1,37 +1,33 @@
-// src/app/page.tsx
-import dynamic from 'next/dynamic';
-import Hero from '@/components/Hero';
-import { projects } from '@/data/projectsData';
+import type { Metadata } from 'next';
+import Hero from '@/components/home/Hero';
+import Marquee from '@/components/home/Marquee';
+import WorkShowcase from '@/components/home/WorkShowcase';
+import Offers from '@/components/home/Offers';
+import CheckBand from '@/components/home/CheckBand';
+import Steps from '@/components/home/Steps';
+import Testimonials from '@/components/home/Testimonials';
+import LatestJournal from '@/components/home/LatestJournal';
+import { getAllPosts } from '@/lib/journal';
 
-// ✅ Only Hero loads eagerly — it's the LCP element
-// ✅ Everything below fold is lazy loaded via standard dynamic imports
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
-const ServicesShowcase = dynamic(() => import('@/components/ServicesShowcase'));
-const ImpactSection = dynamic(() => import('@/components/ImpactSection'));
+// Picks up new journal posts (Notion) without a deploy.
+export const revalidate = 3600;
 
-// QuotePilot import removed to keep homepage clean
-
-const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
-const TheDrumSection = dynamic(() => import('@/components/TheDrumSection'));
-const ContactSection = dynamic(() => import('@/components/ContactSection'));
-
-const featuredProject = projects?.[0] ?? null;
-
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await getAllPosts();
   return (
     <>
-      {/* ✅ Hero is eager — must paint fast for LCP */}
       <Hero />
-      <ServicesShowcase />
-      {featuredProject && (
-        <ImpactSection project={featuredProject} />
-      )}
-      
-      {/* QuotePilot CTA removed from here */}
-      
-      <TestimonialsSection />
-      <TheDrumSection />
-      <ContactSection />
+      <Marquee />
+      <WorkShowcase />
+      <Offers />
+      <CheckBand />
+      <Steps />
+      <Testimonials />
+      <LatestJournal posts={posts} />
     </>
   );
 }

@@ -1,39 +1,25 @@
-// src/components/layout/CookieBanner.tsx
-"use client"; // <-- This is the most important line!
+"use client";
 
-import React from 'react';
-import CookieConsent from "react-cookie-consent";
+import CookieConsent from 'react-cookie-consent';
 import Link from 'next/link';
 
-const CookieBanner = () => {
-  return (
-    <CookieConsent
-      location="bottom"
-      buttonText="I understand"
-      cookieName="coderonCookieConsent"
-      style={{
-        background: "#181818", // A dark, but not pure black background
-        color: "#E0E0E0",
-        borderTop: "1px solid #333",
-        zIndex: "1000" // Ensure it's on top of other elements
-      }}
-      buttonStyle={{
-        color: "#121212",
-        backgroundColor: "#D4AF37", // Your gold/ochre accent
-        fontSize: "14px",
-        fontWeight: "bold",
-        borderRadius: "4px",
-        padding: "10px 15px"
-      }}
-      expires={150}
-    >
-      This website uses cookies to enhance the user experience. See our{" "}
-      <Link href="/privacy-policy" style={{ color: "#D4AF37", textDecoration: 'underline' }}>
-        Privacy Policy
-      </Link>
-      {" "}for more details.
-    </CookieConsent>
-  );
-};
+const CookieBanner = () => (
+  <CookieConsent
+    location="bottom"
+    buttonText="Okay"
+    cookieName="coderonCookieConsent"
+    disableStyles
+    containerClasses="fixed inset-x-3 bottom-3 z-50 flex flex-col items-start gap-3 rounded-2xl border-2 border-ink bg-card p-4 text-sm text-ink shadow-hard sm:inset-x-auto sm:left-3 sm:max-w-md sm:flex-row sm:items-center"
+    contentClasses="flex-1"
+    buttonClasses="btn-primary !py-2 text-sm"
+    expires={150}
+  >
+    We use cookies to see which pages help people most. Read our{' '}
+    <Link href="/privacy-policy/" className="link-underline font-semibold">
+      privacy policy
+    </Link>
+    .
+  </CookieConsent>
+);
 
 export default CookieBanner;

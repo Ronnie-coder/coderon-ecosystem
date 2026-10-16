@@ -1,53 +1,76 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+// Visitor preferences: colour theme and motion.
+// Both are applied as attributes on <html> (data-theme, data-motion) so CSS can react
+// before React hydrates; the inline script in layout.tsx sets them on first paint.
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { MotionConfig } from 'framer-motion';
 
-// Define the shape of our context
 type Theme = 'dark' | 'light';
+type Motion = 'full' | 'reduce';
 
-interface ThemeContextType {
+export const THEME_KEY = 'coderon-theme-v2';
+export const MOTION_KEY = 'coderon-motion';
+
+interface PrefsContextType {
   theme: Theme;
   toggleTheme: () => void;
+  motion: Motion;
+  toggleMotion: () => void;
 }
 
-// Create the context with a default undefined value
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const PrefsContext = createContext<PrefsContextType | undefined>(undefined);
 
-// Create the provider component
+const readAttr = <T extends string>(name: string, fallback: T): T => {
+  if (typeof document === 'undefined') return fallback;
+  return (document.documentElement.getAttribute(name) as T) || fallback;
+};
+
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  // Initialize with 'dark' to match server-side rendering
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
+  const [motion, setMotion] = useState<Motion>('full');
 
-  // 1. On mount, read from localStorage to restore preference
+  // Sync state with what the inline script already applied.
   useEffect(() => {
-    const savedTheme = localStorage.getItem('coderon-theme') as Theme | null;
-    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
-      setTheme(savedTheme);
-    }
+    setTheme(readAttr<Theme>('data-theme', 'light'));
+    setMotion(readAttr<Motion>('data-motion', 'full'));
   }, []);
 
-  // 2. On theme change, update DOM and save to localStorage
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('coderon-theme', theme);
-  }, [theme]);
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem(THEME_KEY, next); } catch {}
+      return next;
+    });
+  }, []);
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
-  };
+  const toggleMotion = useCallback(() => {
+    setMotion((prev) => {
+      const next = prev === 'reduce' ? 'full' : 'reduce';
+      document.documentElement.setAttribute('data-motion', next);
+      try { localStorage.setItem(MOTION_KEY, next); } catch {}
+      window.dispatchEvent(new CustomEvent('coderon:motion', { detail: next }));
+      return next;
+    });
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <PrefsContext.Provider value={{ theme, toggleTheme, motion, toggleMotion }}>
+      <MotionConfig reducedMotion={motion === 'reduce' ? 'always' : 'user'}>{children}</MotionConfig>
+    </PrefsContext.Provider>
   );
 };
 
-// Create a custom hook for easy access to the context
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
+  const context = useContext(PrefsContext);
+  if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider');
   return context;
 };
+
+/** True when animations should be skipped. data-motion starts from the OS setting and the switch overrides it. */
+export const prefersReducedMotion = () =>
+  typeof document === 'undefined' || document.documentElement.getAttribute('data-motion') === 'reduce';
+
+/** Runs before paint (inlined in <head>) so there is no flash of the wrong theme. */
+export const prefsBootScript = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('${THEME_KEY}');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.setAttribute('data-theme',t);var m=localStorage.getItem('${MOTION_KEY}');if(m!=='full'&&m!=='reduce'){m=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'reduce':'full'}d.setAttribute('data-motion',m)}catch(e){}})();`;

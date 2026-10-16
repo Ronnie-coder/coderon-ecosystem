@@ -1,393 +1,1219 @@
+// Coderon Pitch HQ — dark, focused, one-lead-at-a-time sending.
+$bg: #070b14;
+$surface: #0f1524;
+$surface-2: #151d31;
+$surface-3: #1b2540;
+$border: #22304b;
+$text: #e6edf7;
+$text-2: #b4c0d6;
+$muted: #7d8aa5;
+$accent: #3b82f6;
+$accent-2: #60a5fa;
+$good: #34d399;
+$warn: #fbbf24;
+$bad: #f87171;
+$violet: #a78bfa;
+$radius: 14px;
+
 .dashboard {
-  min-height: 100vh;
-  background-color: #0d1117;
-  color: #c9d1d9;
-  font-family: system-ui, -apple-system, sans-serif;
-  padding: 2rem;
-  width: 100%;
-  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(59, 130, 246, 0.12), transparent 60%),
+    radial-gradient(700px 400px at -10% 10%, rgba(167, 139, 250, 0.08), transparent 60%),
+    $bg;
+  background-attachment: fixed;
+  color: $text;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  padding: 24px 32px 64px;
+  box-sizing: border-box;
   z-index: 10;
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 16px 16px 48px;
   }
 }
 
-.container {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
+// ---------- Top bar ------------------------------------------------------------------------
+
+.topBar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 28px;
+  align-items: center;
+  padding-bottom: 20px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
-.header {
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #fff, $accent-2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brandSub {
+  font-size: 12px;
+  color: $muted;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.hello {
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: $text;
+  }
+  p {
+    margin: 4px 0 0;
+    color: $muted;
+    font-size: 14px;
+  }
+}
+
+.topStats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.goalRing {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.ringTrack {
+  fill: none;
+  stroke: $surface-3;
+  stroke-width: 7;
+}
+
+.ringFill {
+  fill: none;
+  stroke: $accent;
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s;
+}
+
+.goalHit .ringFill {
+  stroke: $good;
+}
+
+.goalHit {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.ringLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  padding-top: 28px;
+  gap: 2px;
+
+  strong {
+    font-size: 22px;
+    font-weight: 800;
+  }
+  span {
+    font-size: 12px;
+    color: $muted;
+  }
+}
+
+.miniStats {
+  display: flex;
+  gap: 10px;
+
+  > div {
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: 12px;
+    padding: 10px 14px;
+    min-width: 96px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  span {
+    font-size: 11px;
+    color: $muted;
+    white-space: nowrap;
+  }
+  strong {
+    font-size: 18px;
+  }
+  small {
+    color: $muted;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+}
+
+.goalBanner {
+  margin: 4px 0 16px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(52, 211, 153, 0.18), rgba(59, 130, 246, 0.14));
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  font-weight: 600;
+  cursor: pointer;
+  animation: slideDown 0.4s ease-out;
+}
+
+// ---------- Tabs ---------------------------------------------------------------------------
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid $border;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.tab,
+.tabActive {
+  background: none;
+  border: none;
+  color: $muted;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+
+  &:hover {
+    color: $text;
+  }
+}
+
+.tabActive {
+  color: $text;
+  border-bottom-color: $accent;
+}
+
+.tabCount {
+  background: $surface-3;
+  color: $text-2;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.main {
+  animation: fadeIn 0.25s ease-out;
+}
+
+// ---------- Queue --------------------------------------------------------------------------
+
+.queueLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 20px;
+  align-items: stretch;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pitchCard,
+.emailCard,
+.panel {
+  background: linear-gradient(180deg, $surface, rgba(15, 21, 36, 0.85));
+  border: 1px solid $border;
+  border-radius: $radius;
+  padding: 24px;
+}
+
+.pitchCard {
+  animation: cardIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.26s ease-in, opacity 0.26s ease-in;
+}
+
+.flyUp {
+  transform: translateY(-40px) scale(0.97);
+  opacity: 0;
+}
+
+.flyLeft {
+  transform: translateX(-60px) rotate(-2deg);
+  opacity: 0;
+}
+
+.fadeOut {
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.cardTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #21262d;
-  padding-bottom: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 14px;
+}
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+.position {
+  font-size: 12px;
+  color: $muted;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.scorePill {
+  background: rgba(251, 191, 36, 0.12);
+  color: $warn;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.leadName {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0;
+  font-weight: 800;
+}
+
+.rawName {
+  color: $muted;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 22px;
+}
+
+.siteLink {
+  color: $accent-2;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 0;
+  margin-right: 6px;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
-.titleArea {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
+.tag {
+  background: $surface-2;
+  border: 1px solid $border;
+  color: $text-2;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 
-.lottieIcon {
-  width: 56px;
-  height: 56px;
+.sectionLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: $muted;
+  margin: 0 0 10px;
+}
+
+.issueList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    background: $surface-2;
+    border: 1px solid $border;
+    border-left: 3px solid $muted;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.issuePrimary {
+  border-left-color: $accent !important;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), $surface-2) !important;
+}
+
+.issueLabel {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.issueEvidence {
+  color: $text-2;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.verifyLink {
+  color: $accent-2;
+  font-size: 12px;
+  text-decoration: none;
+  align-self: flex-start;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.loomNotes {
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: $text-2;
+
+  summary {
+    cursor: pointer;
+    color: $muted;
+  }
+  ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+}
+
+.contactNotes {
+  font-size: 12px;
+  color: $muted;
+  border-top: 1px dashed $border;
+  padding-top: 12px;
+}
+
+.emailCard {
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.emailHeader {
+  padding: 16px 22px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+.emailKey {
+  color: #64748b;
+  font-size: 12px;
+  width: 54px;
+}
+
+.emailTo {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+.emailBadge {
+  background: #dcfce7;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.emailSubject {
+  font-weight: 700;
+}
+
+.emailBody {
+  flex: 1;
+  margin: 0;
+  padding: 22px;
+  white-space: pre-wrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #1e293b;
+  min-height: 260px;
+}
+
+.actionBar {
+  display: flex;
+  gap: 10px;
+  padding: 16px 22px;
+  background: $surface;
+  border-top: 1px solid $border;
+  flex-wrap: wrap;
+}
+
+.secondaryBtn,
+.sendBtn,
+.ghostBtn {
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.12s, background 0.15s, box-shadow 0.2s;
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.secondaryBtn {
+  background: $surface-2;
+  color: $text-2;
+  border: 1px solid $border;
+  padding: 11px 14px;
+
+  &:hover:not(:disabled) {
+    background: $surface-3;
+    color: $text;
+  }
+}
+
+.sendBtn {
+  margin-left: auto;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  font-size: 15px;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 10px 32px rgba(37, 99, 235, 0.65);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+}
+
+.ghostBtn {
+  background: transparent;
+  color: $text-2;
+  border: 1px solid $border;
+  padding: 8px 14px;
+  margin-left: 8px;
+
+  &:hover:not(:disabled) {
+    color: $text;
+    border-color: $accent;
+  }
+}
+
+.kbd {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-weight: 600;
+}
+
+.upNext {
+  margin-top: 26px;
+}
+
+.upNextRow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.upNextCard {
+  text-align: left;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: $text;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.15s, transform 0.15s;
+
+  strong {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  span {
+    font-size: 12px;
+    color: $text-2;
+  }
+  &:hover {
+    border-color: $accent;
+    transform: translateY(-2px);
+  }
+}
+
+.upNextMeta {
+  color: $muted !important;
+}
+
+.hint {
+  color: $muted;
+  font-size: 12px;
+  margin-top: 14px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  background: $surface;
+  border: 1px dashed $border;
+  border-radius: $radius;
+
+  h3 {
+    margin: 10px 0 6px;
+    font-size: 20px;
+  }
+  p {
+    color: $muted;
+    margin: 0 auto 18px;
+    max-width: 440px;
+  }
+}
+
+.emptyEmoji {
+  font-size: 42px;
+}
+
+.skeleton {
+  min-height: 380px;
+  background: linear-gradient(90deg, $surface 0%, $surface-2 50%, $surface 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+
+// ---------- Sent ---------------------------------------------------------------------------
+
+.sentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sentRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.3fr) auto;
+  gap: 20px;
+  align-items: center;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 16px 20px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.sentTitle {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+
+  strong {
+    font-size: 16px;
+  }
+}
+
+.sentSubject {
+  color: $text-2;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sentMeta {
+  color: $muted;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.outcome {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.outcome_won {
+  color: $good;
+  border-color: rgba(52, 211, 153, 0.4);
+}
+.outcome_call {
+  color: $accent-2;
+  border-color: rgba(96, 165, 250, 0.4);
+}
+.outcome_lost,
+.outcome_bounced {
+  color: $bad;
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  font-size: 11px;
+  color: $muted;
+  position: relative;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 50%;
+    width: 100%;
+    height: 2px;
+    background: $surface-3;
+  }
+  &:first-child::before {
+    display: none;
+  }
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $surface-3;
+  border: 2px solid $surface;
+  position: relative;
+  z-index: 1;
+}
+
+.stepDone {
+  color: $text;
+
+  .dot {
+    background: $accent;
+  }
+  &::before {
+    background: $accent;
+  }
+}
+
+.sentActions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  button {
+    background: $surface-2;
+    border: 1px solid $border;
+    color: $text-2;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: $text;
+      border-color: $accent;
+    }
+  }
+}
+
+// ---------- Insights -----------------------------------------------------------------------
+
+.insights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.kpi {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  span {
+    color: $muted;
+    font-size: 12px;
+  }
+  strong {
+    font-size: 26px;
+    font-weight: 800;
+  }
+  small {
+    font-size: 13px;
+    color: $muted;
+    font-weight: 500;
+  }
+}
+
+.insightGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.insightGrid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panelTitle {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.funnelRow {
+  display: grid;
+  grid-template-columns: 96px 1fr 72px;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.funnelLabel {
+  color: $text-2;
+}
+
+.funnelTrack {
+  height: 14px;
+  background: $surface-2;
+  border-radius: 4px;
   overflow: hidden;
 }
 
-.typewriterWrapper {
-  display: inline-block;
+.funnelBar {
+  height: 100%;
+  background: $accent;
+  border-radius: 0 4px 4px 0;
+  min-width: 2px;
+  transition: width 0.6s ease-out;
 }
 
-.typewriterTitle {
-  font-size: 2.25rem;
-  font-weight: 800;
-  margin: 0;
-  color: #ffffff;
-  letter-spacing: 2px;
-  overflow: hidden; 
-  white-space: nowrap; 
-  border-right: 0.15em solid #3b82f6; 
-  animation: 
-    typing 1s steps(7, end),
-    blink-caret 0.75s step-end infinite;
-}
+.funnelValue {
+  text-align: right;
+  font-weight: 700;
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: #3b82f6; }
-}
-
-.subtitle {
-  font-size: 0.875rem;
-  color: #8b949e;
-  margin: 4px 0 0 0;
-  font-weight: 500;
-}
-
-.controls {
-  display: flex;
-  gap: 1rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
+  small {
+    color: $muted;
+    font-weight: 500;
+    margin-left: 4px;
   }
+}
+
+.activity {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 170px;
+  margin-bottom: 14px;
+}
+
+.activityCol {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+
+  &:hover .activityBar {
+    background: $accent-2;
+  }
+}
+
+.activityBar {
+  width: 100%;
+  max-width: 28px;
+  background: $accent;
+  border-radius: 4px 4px 0 0;
+  min-height: 2px;
+  transition: height 0.6s ease-out;
+}
+
+.activityValue {
+  font-size: 11px;
+  color: $text-2;
+  min-height: 14px;
+}
+
+.activityDay {
+  font-size: 10px;
+  color: $muted;
+}
+
+.rateTable,
+.leadsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th {
+    text-align: left;
+    color: $muted;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 8px 10px;
+    border-bottom: 1px solid $border;
+  }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(34, 48, 75, 0.6);
+    vertical-align: top;
+  }
+  tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+  }
+}
+
+.goodText {
+  color: $good;
+  font-weight: 700;
+}
+
+.muted {
+  color: $muted;
+  font-size: 12px;
+}
+
+// ---------- All leads ----------------------------------------------------------------------
+
+.leadsToolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .searchInput {
-  background: #161b22;
-  border: 1px solid #21262d;
-  color: #ffffff;
-  padding: 0.65rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  width: 280px;
+  flex: 1;
+  min-width: 220px;
+  background: $surface-2;
+  border: 1px solid $border;
+  color: $text;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  &:focus {
+    border-color: $accent;
   }
 }
 
-.searchInput:focus {
-  border-color: #3b82f6;
+.filterChips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-.syncBtn {
-  background: #2563eb;
-  color: #ffffff;
-  padding: 0.65rem 1.25rem;
-  border-radius: 8px;
-  border: none;
-  font-size: 0.875rem;
+.chip,
+.chipActive {
+  background: $surface-2;
+  border: 1px solid $border;
+  color: $text-2;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
 }
 
-.syncBtn:hover {
-  background: #1d4ed8;
+.chipActive {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: $accent;
+  color: $text;
 }
 
-.metrics {
-  display: grid;
-  /* Auto-fits 5 columns on large screens, wraps elegantly on small */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 2rem;
-}
-
-.card {
-  background: #161b22;
-  border: 1px solid #21262d;
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.cardLabel {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: #8b949e;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.cardValue {
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin-top: 0.5rem;
-  line-height: 1;
-}
-
-.statSubtext {
-  font-size: 0.75rem;
-  color: #8b949e;
-  margin-top: 0.75rem;
-  border-top: 1px solid #21262d;
-  padding-top: 0.5rem;
-}
-
-.statSubtextHighlight {
-  font-size: 0.75rem;
-  color: #c084fc;
-  font-weight: 600;
-  margin-top: 0.75rem;
-  border-top: 1px solid #21262d;
-  padding-top: 0.5rem;
-}
-
-.valGreen { color: #34d399; }
-.valIndigo { color: #818cf8; }
-.valPurple { color: #c084fc; }
-.valCyan { color: #22d3ee; }
-
-.tableContainer {
-  background: #161b22;
-  border: 1px solid #21262d;
-  border-radius: 12px;
+.tableWrap {
   overflow-x: auto;
-  width: 100%;
 }
 
-.tableContainer::-webkit-scrollbar {
-  height: 8px;
+.dim {
+  opacity: 0.5;
 }
 
-.tableContainer::-webkit-scrollbar-track {
-  background: #0d1117;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-.tableContainer::-webkit-scrollbar-thumb {
-  background: #30363d;
-  border-radius: 8px;
-}
-
-.tableContainer::-webkit-scrollbar-thumb:hover {
-  background: #8b949e;
-}
-
-.table {
-  width: 100%;
-  min-width: 1100px; 
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.875rem;
-}
-
-.table th {
-  background: #0d1117;
-  padding: 0.875rem 1.25rem;
-  color: #8b949e;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  border-bottom: 1px solid #21262d;
-  letter-spacing: 0.5px;
-}
-
-.table td {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #21262d;
-  color: #c9d1d9;
-  vertical-align: middle;
-}
-
-.table tr:hover {
-  background: #1c2128;
-}
-
-.companyName {
+.cellStrong {
   font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 2px;
 }
 
-.link {
-  color: #60a5fa;
+.cellLink {
+  color: $accent-2;
+  font-size: 12px;
   text-decoration: none;
-  font-size: 0.75rem;
-  display: block;
 }
 
-.link:hover { text-decoration: underline; }
-
-.emailBadge {
-  background: rgba(52, 211, 153, 0.1);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, 0.2);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.75rem;
+.cellMono {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  word-break: break-all;
 }
 
-.sourceText {
-  color: #8b949e;
-  font-size: 0.75rem;
+.stateBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid $border;
+  white-space: nowrap;
 }
 
-.na {
-  color: #8b949e;
-  font-family: monospace;
-  font-size: 0.75rem;
+.st_ready {
+  color: $good;
+  border-color: rgba(52, 211, 153, 0.4);
+}
+.st_pitched {
+  color: $accent-2;
+  border-color: rgba(96, 165, 250, 0.4);
+}
+.st_opened {
+  color: $violet;
+  border-color: rgba(167, 139, 250, 0.4);
+}
+.st_replied {
+  color: $warn;
+  border-color: rgba(251, 191, 36, 0.4);
+}
+.st_muted {
+  color: $muted;
 }
 
-.scoreGreen { color: #34d399; font-weight: bold; font-family: monospace; }
-.scoreAmber { color: #fbbf24; font-weight: bold; font-family: monospace; }
-
-.statusNew { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.2); display: inline-flex; align-items: center; gap: 4px;}
-.statusAudited { background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.2); display: inline-flex; align-items: center; gap: 4px;}
-.statusPitched { background: rgba(129, 140, 248, 0.1); color: #818cf8; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(129, 140, 248, 0.2); display: inline-flex; align-items: center; gap: 4px;}
-.statusOpened { background: rgba(192, 132, 252, 0.1); color: #c084fc; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(192, 132, 252, 0.2); display: inline-flex; align-items: center; gap: 4px;}
-.statusReplied { background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.4); display: inline-flex; align-items: center; gap: 4px;}
-
-.followUpBadge {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1px 4px;
-  border-radius: 4px;
-  font-size: 0.6rem;
-}
-
-.notes { font-size: 0.75rem; color: #8b949e; line-height: 1.4; }
-.warning { color: #fbbf24; font-weight: 600; }
-
-.actionCell {
-  text-align: right;
-  vertical-align: middle;
-}
-
-.pitchBtn {
-  background-color: #3b82f6; 
-  color: #ffffff;
+.linkBtn {
+  background: none;
   border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  color: $accent-2;
+  font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  white-space: nowrap; 
-  display: inline-block;
+  margin-left: 6px;
 }
 
-.pitchBtn:hover {
-  background-color: #2563eb;
-}
-
-.pitchBtn:disabled {
-  background-color: #1c2128;
-  color: #8b949e;
-  cursor: not-allowed;
-}
-
-/* --- PIPELINE CHART STYLES --- */
-
-.chartContainer {
-  background: #161b22;
-  border: 1px solid #21262d;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+.pager {
   display: flex;
-  flex-direction: column;
-}
-
-.chartTitle {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: #8b949e;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-}
-
-.chartWrapper {
-  width: 100%;
-  height: 260px;
-}
-
-/* --- BACK TO TOP BUTTON --- */
-
-.scrollTopBtn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: #3b82f6;
-  color: #ffffff;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  font-size: 1.25rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  z-index: 50;
+  margin-top: 14px;
 }
 
-.scrollTopBtn:hover {
-  background-color: #2563eb;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+// ---------- Confetti & motion --------------------------------------------------------------
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    top: -12px;
+    width: 8px;
+    height: 14px;
+    border-radius: 2px;
+    animation-name: fall;
+    animation-timing-function: cubic-bezier(0.3, 0.6, 0.5, 1);
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes cardIn {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(52, 211, 153, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.6));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+  .pitchCard,
+  .main,
+  .goalHit {
+    animation: none;
+  }
 }

@@ -34,7 +34,7 @@ const securityHeaders = [
   // 7. Content Security Policy for the A+ grade - UPDATED FOR EXTERNAL SCRIPTS & IFRAMES
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com https://js.stripe.com https://www.paypal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self' https://lottie.host https://js.stripe.com https://www.paypal.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://va.vercel-scripts.com https://vitals.vercel-insights.com;"
+    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com https://js.stripe.com https://www.paypal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self' https://cdn.botpress.cloud https://lottie.host https://js.stripe.com https://www.paypal.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://va.vercel-scripts.com https://vitals.vercel-insights.com;"
   }
 ];
 
@@ -43,6 +43,20 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   trailingSlash: true,
   
+  // --- RETIRED SERVICE PAGES ---
+  // The 5 old services were merged into 4 clearer offers; keep old links working.
+  async redirects() {
+    return [
+      ...['ai-solutions', 'digital-transformation', 'business-automation'].map((slug) => ({
+        source: `/services/${slug}`,
+        destination: '/services/custom-software/',
+        permanent: true,
+      })),
+      // /impact duplicated the Work page.
+      { source: '/impact', destination: '/playroom/', permanent: true },
+    ];
+  },
+
   // --- SECURITY HEADERS ---
   async headers() {
     return [
@@ -74,6 +88,18 @@ const nextConfig = {
   },
 };
 
-const withMDX = createMDX({});
+// MDX here has no frontmatter support, so a post's "--- title: ... ---" block was parsed as a
+// divider plus a heading and shown at the top of every article. This drops it (gray-matter
+// still reads it in src/lib/journal.ts).
+function remarkStripFrontmatter() {
+  return (tree) => {
+    const [first, second] = tree.children;
+    if (first && first.type === 'thematicBreak' && second && second.type === 'heading') {
+      tree.children.splice(0, 2);
+    }
+  };
+}
+
+const withMDX = createMDX({ options: { remarkPlugins: [remarkStripFrontmatter] } });
 
 module.exports = withMDX(nextConfig);

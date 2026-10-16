@@ -62,10 +62,10 @@ const SentimentAnalyzerPage = () => {
   };
 
   return (
-    <div className="c-page-container">
-      <Link href="/playroom" className="c-dashboard-back-link">
+    <div className="demo-scope container pb-20 pt-12 md:pt-16">
+      <Link href="/playroom/" className="mb-8 inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
         <FaArrowLeft />
-        Back to Playroom
+        Back to our work
       </Link>
       
       <div className="c-analyzer">

@@ -1,16 +1,31 @@
 // src/components/ConsultationForm.tsx
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
 
 export const ConsultationForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    service: 'Web Engineering',
+    service: 'Free website check',
+    website: '',
     message: '',
   });
+
+  // Pre-select the topic from links like /contact/?topic=software
+  useEffect(() => {
+    const topic = new URLSearchParams(window.location.search).get('topic');
+    const map: Record<string, string> = {
+      software: 'Custom software',
+      care: 'Website care plan',
+      fix: 'Website fix',
+      website: 'Free website check',
+      new: 'New website',
+    };
+    if (topic && map[topic]) setFormData((prev) => ({ ...prev, service: map[topic] }));
+  }, []);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState('');
   const [isError, setIsError] = useState(false);
@@ -34,7 +49,12 @@ export const ConsultationForm = () => {
       const response = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          message: formData.website ? `${formData.message}\n\nWebsite: ${formData.website}` : formData.message,
+        }),
       });
       const data = await response.json();
 
@@ -46,7 +66,8 @@ export const ConsultationForm = () => {
         setFormData({
           name: '',
           email: '',
-          service: 'Web Engineering',
+          service: 'Free website check',
+          website: '',
           message: '',
         });
       } else {
@@ -67,44 +88,44 @@ export const ConsultationForm = () => {
   if (formMessage && !isError) {
     return (
       <div
-        className="c-form__success-state"
+        className="card flex flex-col items-start gap-3 border-ink bg-gold p-8 text-[#16130E] dark:border-gold"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
       >
         <FiCheckCircle
-          className="c-form__success-icon"
+          className="text-4xl"
           aria-hidden="true"
         />
-        <h3 className="c-form__success-title">Request Sent!</h3>
-        <p className="c-form__success-body">{formMessage}</p>
+        <h3 className="text-2xl font-extrabold">Request Sent!</h3>
+        <p className="">{formMessage}</p>
       </div>
     );
   }
 
   return (
     <form
-      className="c-form"
+      className="card-pop space-y-5 p-6 md:p-8"
       onSubmit={handleSubmit}
-      aria-label="Book a free consultation with Coderon"
+      aria-label="Contact Coderon"
       aria-busy={isSubmitting}
       noValidate
     >
 
       {/* Name */}
-      <div className="c-form__group">
-        <label htmlFor="name" className="c-form__label">
-          Full Name
-          <span className="c-form__required" aria-hidden="true"> *</span>
+      <div className="space-y-1.5">
+        <label htmlFor="name" className="block text-sm font-bold">
+          Your name
+          <span className="text-bad" aria-hidden="true"> *</span>
         </label>
         <input
           type="text"
           id="name"
           name="name"
-          className="c-form__input"
+          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
           required
           autoComplete="name"
-          placeholder="e.g. Ronnie Nyamhute"
+          placeholder="e.g. Thandi Mokoena"
           value={formData.name}
           onChange={handleChange}
           disabled={isSubmitting}
@@ -114,16 +135,16 @@ export const ConsultationForm = () => {
       </div>
 
       {/* Email */}
-      <div className="c-form__group">
-        <label htmlFor="email" className="c-form__label">
-          Email Address
-          <span className="c-form__required" aria-hidden="true"> *</span>
+      <div className="space-y-1.5">
+        <label htmlFor="email" className="block text-sm font-bold">
+          Email
+          <span className="text-bad" aria-hidden="true"> *</span>
         </label>
         <input
           type="email"
           id="email"
           name="email"
-          className="c-form__input"
+          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
           required
           autoComplete="email"
           placeholder="e.g. you@company.com"
@@ -136,16 +157,16 @@ export const ConsultationForm = () => {
       </div>
 
       {/* Service — updated to match rewritten servicesData.ts */}
-      <div className="c-form__group">
-        <label htmlFor="service" className="c-form__label">
+      <div className="space-y-1.5">
+        <label htmlFor="service" className="block text-sm font-bold">
           What do you need help with?
-          <span className="c-form__required" aria-hidden="true"> *</span>
+          <span className="text-bad" aria-hidden="true"> *</span>
         </label>
-        <div className="c-form__select-wrapper">
+        <div className="relative">
           <select
             id="service"
             name="service"
-            className="c-form__input"
+            className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
             required
             value={formData.service}
             onChange={handleChange}
@@ -153,28 +174,47 @@ export const ConsultationForm = () => {
             aria-required="true"
             aria-disabled={isSubmitting}
           >
-            <option value="Web Engineering">Web Engineering</option>
-            <option value="AI Integration">AI Integration</option>
-            <option value="Digital Transformation">Digital Transformation</option>
-            <option value="Custom Software">Custom Software</option>
-            <option value="Business Automation">Business Automation</option>
-            <option value="Not sure yet">Not sure yet — let&apos;s talk</option>
+            <option value="Free website check">Free website check</option>
+            <option value="Website fix">Fix my current website</option>
+            <option value="New website">A new website</option>
+            <option value="Website care plan">Monthly website care</option>
+            <option value="Custom software">Custom software or automation</option>
+            <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
       </div>
 
+      {/* Website (optional) */}
+      <div className="space-y-1.5">
+        <label htmlFor="website" className="block text-sm font-bold">
+          Your website (if you have one)
+        </label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          inputMode="url"
+          autoComplete="url"
+          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
+          placeholder="e.g. yourbusiness.com"
+          value={formData.website}
+          onChange={handleChange}
+          disabled={isSubmitting}
+        />
+      </div>
+
       {/* Message */}
-      <div className="c-form__group">
-        <label htmlFor="message" className="c-form__label">
-          Tell us about your business and what you want to fix
-          <span className="c-form__required" aria-hidden="true"> *</span>
+      <div className="space-y-1.5">
+        <label htmlFor="message" className="block text-sm font-bold">
+          Tell us a bit about your business
+          <span className="text-bad" aria-hidden="true"> *</span>
         </label>
         <textarea
           id="message"
           name="message"
-          className="c-form__textarea"
+          className="min-h-[140px] w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
           required
-          placeholder="e.g. We're a logistics company manually tracking deliveries in spreadsheets. We need something better..."
+          placeholder="e.g. We're a roofing company in Dallas. Our website is slow and we get very few enquiries from it."
           value={formData.message}
           onChange={handleChange}
           disabled={isSubmitting}
@@ -184,47 +224,42 @@ export const ConsultationForm = () => {
         />
         <span
           id="message-hint"
-          className="c-form__hint"
+          className="block text-sm text-ink/60"
         >
-          The more detail you give us, the more useful our first call will be.
+          A few sentences is enough. We reply within one business day.
         </span>
       </div>
 
       {/* Submit */}
       <button
         type="submit"
-        className="c-form__button"
+        className="btn-primary w-full text-lg disabled:opacity-70"
         disabled={isSubmitting}
         aria-disabled={isSubmitting}
-        aria-label={
-          isSubmitting
-            ? 'Sending your request, please wait'
-            : 'Book my free consultation'
-        }
       >
         {isSubmitting ? (
           <>
             <FiLoader
-              className="c-form__spinner"
+              className="animate-spin"
               aria-hidden="true"
             />
             Sending...
           </>
         ) : (
-          'Book My Free Session'
+          'Send my request'
         )}
       </button>
 
       {/* Error message — aria-live so screen readers announce it */}
       {formMessage && isError && (
         <div
-          className="c-form__message c-form__message--error"
+          className="flex items-start gap-2 rounded-xl border-2 border-bad p-4 font-semibold text-bad"
           role="alert"
           aria-live="polite"
           aria-atomic="true"
         >
           <FiAlertCircle
-            className="c-form__message-icon"
+            className="mt-0.5 shrink-0"
             aria-hidden="true"
           />
           <span>{formMessage}</span>
@@ -232,7 +267,7 @@ export const ConsultationForm = () => {
       )}
 
       {/* Required fields note */}
-      <p className="c-form__footnote">
+      <p className="text-sm text-ink/60">
         <span aria-hidden="true">*</span> Required fields.
         We respond within one business day.
       </p>
