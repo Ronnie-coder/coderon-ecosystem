@@ -24,6 +24,7 @@ export const liveProjects: PlayroomProject[] = [
     caseStudyUrl: '/playroom/eddies-cut/',
     client: "Eddie's Cut",
     clientLogo: '/images/razor.svg',
+    logo: '/images/logos/eddies-cut.svg',
     year: '2026',
     stat: { label: 'Mobile PageSpeed', before: 47, after: 92 },
     roles: ['Design', 'Development', 'Hosting move'],
@@ -47,13 +48,14 @@ export const liveProjects: PlayroomProject[] = [
     sector: 'Insurance brokers',
     location: 'South Africa',
     description:
-      'Coderon led the complete digital transformation for Palmsure, migrating decades of paper-based processes to a robust, modern web platform built on Angular.',
+      'An independent insurance broker (Authorised FSP 47156) that ran on paper. We moved their work onto a modern web platform, and gave them a clear website with a client portal where policyholders can log in.',
     tech: ['Angular', 'TypeScript', 'Legacy Migration'],
-    imageUrl: '/images/palmsure-showcase.webp',
+    imageUrl: '/images/palmsure-showcase-2026.webp',
     liveUrl: 'https://www.palmsure.co.za/',
     caseStudyUrl: '/playroom/palmsure/',
     client: 'Palmsure Insurance',
-    clientLogo: '/images/palmsure-logo.png',
+    clientLogo: '/images/logos/palmsure.webp',
+    logo: '/images/logos/palmsure.webp',
     year: '2025',
     roles: ['Technical Lead', 'Frontend Arch.', 'UI/UX'],
     servicesDelivered: [
@@ -66,6 +68,8 @@ export const liveProjects: PlayroomProject[] = [
     narrative_solution:
       'We engineered a complete digital platform using Angular. The system centralised their entire workflow with strict TypeScript typing and a modular architecture built to handle complex insurance logic securely and reliably.',
     narrative_results: [
+      'Client portal, so policyholders can log in online',
+      'Clear website that explains their cover and the underwriters they work with',
       '100% digitisation of paper records',
       'Significantly reduced claim processing time',
       'Real-time reporting dashboard for management',
@@ -81,22 +85,25 @@ export const liveProjects: PlayroomProject[] = [
     sector: 'Tours and shuttles',
     location: 'Cape Town, South Africa',
     description:
-      'A great tour company with a website that did not show it. We redesigned and rebuilt it so it is fast, works on every phone and is set up properly for Google.',
+      'A great tour company with a website that did not show it. We rebuilt it so it is fast, works on every phone, is set up properly for Google, and speaks to visitors in their own language.',
     tech: ['Next.js', 'SEO set-up', 'Vercel'],
     imageUrl: '/images/gifted-tours-showcase.webp',
     liveUrl: 'https://giftedtours.co.za/',
     caseStudyUrl: '/playroom/gifted-tours/',
     client: 'Gifted Tours',
-    clientLogo: '/images/gifted-tours-logo.png',
+    clientLogo: '/images/logos/gifted-tours.webp',
+    logo: '/images/logos/gifted-tours.webp',
     year: '2025',
     roles: ['Design', 'Development', 'SEO set-up'],
     servicesDelivered: ['Website redesign', 'Speed and SEO set-up', 'Hosting and domain set-up'],
     narrative_challenge:
       'The old website was slow, hard to use on a phone and did not explain the tours clearly. Their email was also not working properly, so enquiries were getting lost.',
     narrative_solution:
-      'We rebuilt the site in Next.js with a mobile-first design, clear tour pages and booking buttons. We added structured data so Google understands the business, and set up their email and domain properly.',
+      'We rebuilt the site in Next.js with a mobile-first design, clear tour pages and booking buttons. To welcome visitors from abroad, we added a language switcher with nine languages. We also added structured data so Google understands the business, and set up their email and domain properly.',
     narrative_results: [
       'Fast, mobile-first website that matches the quality of their tours',
+      'Available in English, Afrikaans, German, French, Dutch, Spanish, Italian, Portuguese and Chinese',
+      'Dark mode, fleet and gallery pages, and a Book a Tour button on every page',
       'Structured data and sitemap so Google understands the business',
       'Business email working again',
     ],
@@ -116,7 +123,8 @@ export const liveProjects: PlayroomProject[] = [
     liveUrl: 'https://quotepilot.coderon.co.za/',
     caseStudyUrl: '/playroom/quotepilot/',
     client: 'Coderon (Internal)',
-    clientLogo: '/icon-512.png',
+    clientLogo: '/images/logos/quotepilot.svg',
+    logo: '/images/logos/quotepilot.svg',
     year: '2025',
     roles: ['Product Owner', 'Full-Stack Dev'],
     servicesDelivered: [

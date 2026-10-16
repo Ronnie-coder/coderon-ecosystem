@@ -14,7 +14,7 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    logoUrl: '/images/gifted-tours-logo.png',
+    logoUrl: '/images/logos/gifted-tours.webp',
     logoAlt: 'Gifted Tours Logo',
     logoWidth: 160,
     logoHeight: 50,
@@ -27,7 +27,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    logoUrl: '/images/palmsure-logo.png',
+    logoUrl: '/images/logos/palmsure.webp',
     logoAlt: 'Palmsure Insurance Brokers Logo',
     logoWidth: 150,
     logoHeight: 50,

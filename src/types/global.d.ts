@@ -25,6 +25,8 @@ export interface PlayroomProject {
   // ✅ ADDED THIS SO NEXT.JS RECOGNIZES THE ARRAY
   featureImages?: string[];
   sector?: string;
+  /** Small logo for the client ribbon on the homepage. */
+  logo?: string;
   location?: string;
   /** A before/after number we can prove (e.g. a Lighthouse screenshot). */
   stat?: { label: string; before: number; after: number };
