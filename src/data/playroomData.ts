@@ -3,39 +3,39 @@ import type { PlayroomProject, PlayroomDemo } from '@/types/global';
 
 // --- MAIN PORTFOLIO ---
 export const liveProjects: PlayroomProject[] = [
-  // 1. EDDIE'S CUT (NEW HERO PROJECT)
+  // 1. EDDIE'S CUT
+  // Numbers below match the Lighthouse screenshots in /public/images (mobile run).
   {
     id: 'eddies-cut',
     title: "Eddie's Cut",
-    category: 'Web Redesign & Performance',
+    category: 'New website',
+    sector: 'Hair salon',
+    location: 'Hellerup, Denmark',
     description:
-      'A complete digital overhaul for a premium Hellerup hair salon. We migrated them off an outdated site builder to a custom Next.js architecture, hitting perfect 100/100 Lighthouse scores.',
+      'A hair salon with 25 years of experience, stuck on a slow site builder. We rebuilt the website from scratch and moved it to new hosting without touching their email.',
     tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     imageUrl: '/images/eddiescut-after.webp',
-    beforeImage: '/images/eddiescut-before.webp', // Feeds the scanner
-    afterImage: '/images/eddiescut-after.webp',   // Feeds the scanner
+    beforeImage: '/images/eddiescut-before.webp',
+    afterImage: '/images/eddiescut-after.webp',
     lighthouseBefore: '/images/eddiescut-lighthouse-before.webp',
     lighthouseAfter: '/images/eddiescut-lighthouse-after.webp',
-    featureImages: ['/images/eddiescut-feature-pricing.webp'], 
+    featureImages: ['/images/eddiescut-feature-pricing.webp'],
     liveUrl: 'https://eddiescut.dk',
-    caseStudyUrl: '/playroom/eddies-cut',
+    caseStudyUrl: '/playroom/eddies-cut/',
     client: "Eddie's Cut",
-    clientLogo: '/images/razor.svg', // ✅ Fixed logo path included
+    clientLogo: '/images/razor.svg',
     year: '2026',
-    roles: ['Lead Developer', 'Performance Engineer', 'UI/UX'],
-    servicesDelivered: [
-      'Custom Web Development',
-      'SEO & Performance Optimisation',
-      'Zero-Downtime DNS Migration',
-    ],
+    stat: { label: 'Mobile PageSpeed', before: 47, after: 92 },
+    roles: ['Design', 'Development', 'Hosting move'],
+    servicesDelivered: ['New website', 'Speed and SEO set-up', 'Domain and hosting move'],
     narrative_challenge:
-      'The salon’s existing website was sluggish, outdated, and penalized by Google for poor performance. They needed a premium digital presence that matched their 25 years of bespoke hairdressing experience, and a safe server migration without breaking their established business emails.',
+      'The old site builder made the website slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. The salon wanted a site that felt as premium as their service, and they could not risk losing their business email during a move.',
     narrative_solution:
-      'We engineered a lightning-fast Next.js application featuring an ultra-smooth Framer Motion scroll-tracking navigation system. We also executed a flawless, zero-downtime DNS migration on One.com, ensuring their emails remained completely untouched.',
+      'We designed and built a new website in Next.js, with clear prices, easy booking buttons and a smooth scrolling menu. Then we moved the domain to new hosting step by step, so the site never went down and their email kept working.',
     narrative_results: [
-      'Perfect 100/100 Google Lighthouse Performance Score',
-      'Flawless Zero-Downtime DNS Migration',
-      'Dynamic Browser Tab & Scroll-Tracking Navigation',
+      'Mobile PageSpeed performance from 47 to 92',
+      '100 out of 100 for accessibility, best practices and SEO in Lighthouse',
+      'Moved to new hosting with no downtime, email untouched',
     ],
   },
 
@@ -43,13 +43,15 @@ export const liveProjects: PlayroomProject[] = [
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
-    category: 'Digital Transformation',
+    category: 'Custom software',
+    sector: 'Insurance brokers',
+    location: 'South Africa',
     description:
       'Coderon led the complete digital transformation for Palmsure, migrating decades of paper-based processes to a robust, modern web platform built on Angular.',
     tech: ['Angular', 'TypeScript', 'Legacy Migration'],
     imageUrl: '/images/palmsure-showcase.webp',
     liveUrl: 'https://www.palmsure.co.za/',
-    caseStudyUrl: '/playroom/palmsure',
+    caseStudyUrl: '/playroom/palmsure/',
     client: 'Palmsure Insurance',
     clientLogo: '/images/palmsure-logo.png',
     year: '2025',
@@ -71,47 +73,48 @@ export const liveProjects: PlayroomProject[] = [
   },
 
   // 3. GIFTED TOURS
+  // Results kept to what we can show. Ronnie: add PageSpeed/enquiry numbers back when there is proof.
   {
     id: 'gifted-tours',
     title: 'Gifted Tours',
-    category: 'Web Redesign',
+    category: 'Website redesign',
+    sector: 'Tours and shuttles',
+    location: 'Cape Town, South Africa',
     description:
-      'A lightning-fast, modern, and SEO-optimised platform that finally gives Gifted Tours the digital presence their service deserves.',
-    tech: ['Next.js', 'SEO', 'Vercel'],
+      'A great tour company with a website that did not show it. We redesigned and rebuilt it so it is fast, works on every phone and is set up properly for Google.',
+    tech: ['Next.js', 'SEO set-up', 'Vercel'],
     imageUrl: '/images/gifted-tours-showcase.webp',
     liveUrl: 'https://giftedtours.co.za/',
-    caseStudyUrl: '/playroom/gifted-tours',
+    caseStudyUrl: '/playroom/gifted-tours/',
     client: 'Gifted Tours',
     clientLogo: '/images/gifted-tours-logo.png',
     year: '2025',
-    roles: ['Frontend Dev', 'SEO Engineer'],
-    servicesDelivered: [
-      'Website Redesign',
-      'Performance Optimisation',
-      'Vercel Deployment',
-    ],
+    roles: ['Design', 'Development', 'SEO set-up'],
+    servicesDelivered: ['Website redesign', 'Speed and SEO set-up', 'Hosting and domain set-up'],
     narrative_challenge:
-      'The previous website was slow, not mobile-responsive, and invisible to Google. Gifted Tours was losing potential clients because their digital presence did not reflect their service quality.',
+      'The old website was slow, hard to use on a phone and did not explain the tours clearly. Their email was also not working properly, so enquiries were getting lost.',
     narrative_solution:
-      'We rebuilt the site using Next.js static site generation for instant page loads. Mobile-first design and structured data for Google rich snippets were built in from day one.',
+      'We rebuilt the site in Next.js with a mobile-first design, clear tour pages and booking buttons. We added structured data so Google understands the business, and set up their email and domain properly.',
     narrative_results: [
-      'PageSpeed score increased from 45 to 98',
-      'First page Google ranking for key local terms',
-      '2× increase in mobile enquiries',
+      'Fast, mobile-first website that matches the quality of their tours',
+      'Structured data and sitemap so Google understands the business',
+      'Business email working again',
     ],
   },
 
   // 4. QUOTEPILOT
   {
     id: 'quotepilot',
-    title: 'QuotePilot SaaS',
-    category: 'SaaS Product',
+    title: 'QuotePilot',
+    category: 'Our own product',
+    sector: 'Invoicing software',
+    location: 'Built in Cape Town',
     description:
       'A professional invoicing platform built for African freelancers and SMEs. Create branded invoices, connect your payment gateway, and get paid faster.',
     tech: ['Next.js', 'Supabase', 'PostgreSQL'],
     imageUrl: '/images/quotepilot-showcase.webp',
     liveUrl: 'https://quotepilot.coderon.co.za/',
-    caseStudyUrl: '/playroom/quotepilot',
+    caseStudyUrl: '/playroom/quotepilot/',
     client: 'Coderon (Internal)',
     clientLogo: '/icon-512.png',
     year: '2025',

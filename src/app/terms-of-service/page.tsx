@@ -2,7 +2,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Coderon",
+  title: "Terms of Service",
+  alternates: { canonical: "/terms-of-service/" },
   description: "The terms and conditions for using the Coderon website and its services.",
 };
 
@@ -10,8 +11,8 @@ export default function TermsOfServicePage() {
   const lastUpdated = "November 19, 2025";
 
   return (
-    <div className="l-legal-page">
-      <div className="l-legal-page__container">
+    <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
+      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-extrabold [&>h1]:tracking-tight [&>h1]:text-ink">
         <h1>Terms of Service</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
         

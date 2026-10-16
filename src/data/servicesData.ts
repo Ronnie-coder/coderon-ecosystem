@@ -116,7 +116,7 @@ export const services: Service[] = [
       { q: 'Will you guarantee I rank first on Google?', a: 'No one can honestly promise that. We set your site up properly so Google can understand it, which is the foundation for ranking.' },
       { q: 'Can I update the website myself?', a: 'Yes. We can set it up so you can edit text and images, or we can do updates for you on a Care Plan.' },
     ],
-    priceKey: 'website',
+    priceKey: 'starter',
   },
   {
     id: 3,
@@ -149,7 +149,7 @@ export const services: Service[] = [
       { q: 'Is there a contract?', a: 'No long contract. You can cancel any month with 30 days notice.' },
       { q: 'Does it work with any website?', a: 'It works best with websites we built or fixed. For other sites we check first and tell you.' },
     ],
-    priceKey: 'care',
+    priceKey: 'careBasic',
   },
   {
     id: 4,

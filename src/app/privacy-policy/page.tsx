@@ -2,16 +2,17 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Coderon",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy-policy/" },
   description: "Coderon's Privacy Policy explains how we collect, use, and protect your data in compliance with South Africa's POPIA.",
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "November 19, 2025";
+  const lastUpdated = "October 16, 2026";
 
   return (
-    <div className="l-legal-page">
-      <div className="l-legal-page__container">
+    <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
+      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-extrabold [&>h1]:tracking-tight [&>h1]:text-ink">
         <h1>Privacy Policy</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
         <p>Coderon (Pty) Ltd (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you visit coderon.co.za (the &quot;Site&quot;), in compliance with South Africa&apos;s Protection of Personal Information Act (POPIA).</p>
@@ -26,6 +27,7 @@ export default function PrivacyPolicyPage() {
           <li>Analyze website usage to enhance user experience.</li>
           <li>Maintain the security and integrity of our Site.</li>
         </ul>
+        <p>When you use the free website check, the website address you enter is sent to Google PageSpeed Insights to run the test. If you ask for the full video, we use your name and email only to send it.</p>
 
         <h2>3. Data Sharing and Disclosure</h2>
         <p>We do not sell your personal information. We may share it with trusted third-party service providers (like our email service, Resend) only as necessary to deliver our services. These parties are contractually obligated to keep your information confidential.</p>

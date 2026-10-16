@@ -1,28 +1,31 @@
 ---
-title: 'Migrating a Premium European Salon to a 100/100 Next.js Architecture'
-description: 'How we rescued a high-end Danish salon from a sluggish legacy site builder and delivered a lightning-fast custom web platform.'
+title: "Moving a Danish Salon from a Slow Site Builder to Next.js"
+description: "How we rebuilt Eddie's Cut, a hair salon in Hellerup, Denmark: mobile PageSpeed from 47 to 92, and a hosting move that never touched their email."
 date: '2026-07-06'
+author: 'Ronnie Nyamhute'
 ---
 
-An agency's true test isn't just building something that looks good—it's engineering a platform that performs flawlessly in the real world. Recently, Coderon partnered with **Eddie's Cut**, a premium hair salon based in Hellerup, Denmark, with over 25 years of high-end hairdressing experience. 
+**Eddie's Cut** is a hair salon in Hellerup, Denmark, with more than 25 years of experience. Their reputation was excellent. Their website was not keeping up.
 
-They had the offline reputation, but their online presence was actively hurting their business. Here is how we transformed their digital footprint.
+### The problem: slow, dated and risky to move
 
-### The Challenge: Outdated, Sluggish, and Invisible
-Eddie's Cut was operating on a legacy site builder. The platform was incredibly slow, aesthetically dated, and—worst of all—penalized heavily by Google for poor performance metrics. 
+The salon's website ran on a site builder. On a phone it was slow: Google PageSpeed gave it **47 out of 100** for mobile performance. The design also looked older than the salon itself, and booking was clumsy.
 
-When a client wants to book a premium haircut, their first digital touchpoint needs to reflect that same level of quality. Instead, visitors were met with layout shifts, slow loading times, and a clunky booking integration. Furthermore, their business relied heavily on an established email ecosystem hosted on One.com, meaning any server migration came with the massive risk of dropping critical client communications.
+Moving away was risky too. Their business email ran through their existing host (One.com), so a careless move could cut off client emails.
 
-### Our Solution: A Custom Next.js Architecture
-We didn't just redesign their website; we ripped out the old foundation and built a mathematically perfect digital engine. 
+### What we did
 
-1. **Next.js & React Ecosystem:** We migrated them off the sluggish site builder onto a custom Next.js architecture, utilizing static site generation for instantaneous page loads.
-2. **Premium Micro-Interactions:** Using Framer Motion, we implemented an ultra-smooth, scroll-tracking navigation system that feels deeply satisfying to use, matching the bespoke nature of their services.
-3. **Zero-Downtime DNS Migration:** We orchestrated a flawless server and DNS migration. We routed their new high-performance frontend through modern hosting while safely pointing their MX records back to One.com, ensuring their business emails never went offline for a single second.
+1. **A new website in Next.js.** We designed and built the site from scratch, with pages generated ahead of time so they load fast on phones.
+2. **Small touches that feel premium.** A smooth menu that follows you as you scroll, clear prices, and booking buttons where people look for them.
+3. **A safe hosting move.** We pointed the website to its new host step by step and kept the email (MX) records pointing at One.com, so the site never went down and email kept working.
 
-### The Result: Pure Performance
-The transformation was night and day. 
+### The result
 
-By stripping away the bloated legacy code, we achieved **perfect 100/100 Lighthouse Performance Scores** across Performance, Accessibility, Best Practices, and SEO. 
+On the same Google Lighthouse mobile test, the new site scores:
 
-The client now has a lightning-fast, highly responsive platform that instantly validates their premium pricing the second a visitor lands on the page. Eddie and his team are thrilled with the outcome—not just because the site looks beautiful, but because it finally runs like the top-tier business they have spent 25 years building.
+- **Performance: 92** (was 47)
+- **Accessibility: 100** (was 88)
+- **Best Practices: 100**
+- **SEO: 100** (was 92)
+
+The salon now has a website that loads quickly on a phone and looks like the business they have spent 25 years building. You can see the before and after screenshots in the [Eddie's Cut case study](/playroom/eddies-cut/).

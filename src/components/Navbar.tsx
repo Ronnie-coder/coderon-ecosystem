@@ -3,101 +3,129 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import { FiSun, FiMoon } from 'react-icons/fi';
-import { AnimatePresence, motion } from 'framer-motion';
+import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Logo } from '@/components/Logo';
 
 const navLinks = [
   { href: '/services/', label: 'Services' },
-  { href: '/playroom/', label: 'Work'     },
-  { href: '/pricing/',  label: 'Pricing'  },
-  { href: '/about/',    label: 'About'    },
-  { href: '/journal/',  label: 'Journal'  },
+  { href: '/playroom/', label: 'Work' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/about/', label: 'About' },
+  { href: '/journal/', label: 'Journal' },
 ];
 
-const CTA_HREF = '/contact/?topic=website';
-const CTA_LABEL = 'Free website check';
+export const CHECK_HREF = '/website-check/';
 
 // Pathnames end in "/" (trailingSlash: true); a section stays active on its sub-pages.
 const isActivePath = (pathname: string | null, href: string) =>
   !!pathname && (pathname === href || pathname.startsWith(href));
 
-const mobileMenuVariants = {
-  hidden:  { opacity: 0, height: 0 },
-  visible: { opacity: 1, height: 'auto', transition: { duration: 0.3 } },
-};
+/** Small switch that turns site animations on or off. */
+export function MotionSwitch({ className = '' }: { className?: string }) {
+  const { motion, toggleMotion } = useTheme();
+  const on = motion !== 'reduce';
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      onClick={toggleMotion}
+      className={`group inline-flex items-center gap-2 text-sm font-semibold ${className}`}
+    >
+      <span
+        aria-hidden="true"
+        className={`relative h-6 w-10 rounded-full border-2 border-ink transition-colors ${on ? 'bg-gold' : 'bg-transparent'}`}
+      >
+        <span
+          className={`absolute top-0.5 h-4 w-4 rounded-full bg-ink transition-[left] duration-200 ${on ? 'left-[18px]' : 'left-0.5'}`}
+        />
+      </span>
+      Animations
+    </button>
+  );
+}
+
+export function ThemeButton({ className = '' }: { className?: string }) {
+  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const dark = mounted && theme === 'dark';
+  return (
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className={`grid h-10 w-10 place-items-center rounded-xl border-2 border-transparent text-lg transition hover:border-ink ${className}`}
+    >
+      {dark ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
+    </button>
+  );
+}
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen]   = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [mounted, setMounted]         = useState(false);
-  const { theme, toggleTheme }        = useTheme();
-  const pathname                      = usePathname();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
-  // Prevent hydration mismatch for theme toggle
   useEffect(() => {
-    setMounted(true);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll detection — throttled via rAF
   useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setHasScrolled(window.scrollY > 10);
-          ticking = false;
-        });
-        ticking = true;
-      }
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [open]);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isMenuOpen]);
+  useEffect(() => setOpen(false), [pathname]);
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
-    <header className={`c-navbar${hasScrolled ? ' has-scrolled' : ''}`}>
-      <div className="c-navbar__container">
-
-        {/* Logo */}
-        <Link
-          href="/"
-          className="c-navbar__logo"
-          aria-label="Coderon home"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <Logo height={30} />
+    <header
+      className={`sticky top-0 z-50 border-b-2 transition-colors duration-200 ${
+        scrolled || open ? 'border-line bg-paper/95 backdrop-blur' : 'border-transparent bg-paper'
+      }`}
+    >
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:font-bold focus:text-[#16130E]"
+      >
+        Skip to content
+      </a>
+      <div className="container flex h-[72px] items-center justify-between gap-6">
+        <Link href="/" aria-label="Coderon home" className="shrink-0 text-ink">
+          <Logo height={28} animated />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav
-          className="c-navbar__desktop-nav"
-          aria-label="Main navigation"
-        >
-          <ul role="list">
+        <nav aria-label="Main navigation" className="hidden lg:block">
+          <ul className="flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive = isActivePath(pathname, link.href);
+              const active = isActivePath(pathname, link.href);
               return (
-                <li key={link.label}>
+                <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`c-navbar__link${isActive ? ' is-active' : ''}`}
-                    aria-current={isActive ? 'page' : undefined}
+                    aria-current={active ? 'page' : undefined}
+                    className="group relative rounded-lg px-3 py-2 text-[15px] font-semibold"
                   >
                     {link.label}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute inset-x-3 -bottom-0.5 h-[3px] origin-left rounded-full bg-gold transition-transform duration-200 ${
+                        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      }`}
+                    />
                   </Link>
                 </li>
               );
@@ -105,87 +133,56 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        {/* Actions */}
-        <div className="c-navbar__actions">
-
-          {/* Theme toggle - Hydration mismatch fixed */}
-          <button
-            onClick={toggleTheme}
-            className="c-navbar__theme-toggle"
-            aria-label={
-              mounted && theme === 'dark'
-                ? 'Switch to light mode'
-                : 'Switch to dark mode'
-            }
-          >
-            {mounted ? (
-              theme === 'dark' ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />
-            ) : (
-              <FiSun aria-hidden="true" className="opacity-0" />
-            )}
-          </button>
-
-          {/* Desktop CTA */}
-          <Link href={CTA_HREF} className="c-navbar__cta">
-            {CTA_LABEL}
+        <div className="flex items-center gap-2">
+          <ThemeButton />
+          <Link href={CHECK_HREF} className="btn-dark hidden !py-2.5 text-[15px] sm:inline-flex">
+            Free website check
           </Link>
-
-          {/* Mobile toggle */}
           <button
-            className="c-navbar__mobile-toggle"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav-menu"
-            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            type="button"
+            className="grid h-10 w-10 place-items-center rounded-xl border-2 border-ink text-xl lg:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? 'Close menu' : 'Open menu'}
           >
-            {isMenuOpen ? (
-              <FaTimes aria-hidden="true" />
-            ) : (
-              <FaBars aria-hidden="true" />
-            )}
+            {open ? <FiX aria-hidden="true" /> : <FiMenu aria-hidden="true" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.nav
-            id="mobile-nav-menu"
-            className="c-navbar__mobile-nav"
-            role="navigation"
-            aria-label="Mobile navigation"
-            variants={mobileMenuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            {navLinks.map((link) => {
-              const isActive = isActivePath(pathname, link.href);
+      {open && (
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile navigation"
+          className="container h-[calc(100dvh-72px)] overflow-y-auto pb-10 pt-4 lg:hidden"
+        >
+          <ul className="divide-y-2 divide-line/15">
+            {navLinks.map((link, i) => {
+              const active = isActivePath(pathname, link.href);
               return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={`c-navbar__mobile-link${isActive ? ' is-active' : ''}`}
-                  aria-current={isActive ? 'page' : undefined}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
+                <li key={link.href} className="animate-fade-up" style={{ animationDelay: `${i * 50}ms` }}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className="flex items-center justify-between py-4 text-3xl font-extrabold tracking-tight"
+                  >
+                    {link.label}
+                    {active && <span aria-hidden="true" className="h-3 w-3 rounded-full bg-gold" />}
+                  </Link>
+                </li>
               );
             })}
-
-            {/* Mobile CTA */}
-            <Link
-              href={CTA_HREF}
-              className="c-navbar__mobile-cta"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {CTA_LABEL}
-            </Link>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+          </ul>
+          <Link href={CHECK_HREF} className="btn-primary mt-8 w-full text-lg">
+            Get a free website check
+          </Link>
+          <div className="mt-8 flex items-center justify-between">
+            <MotionSwitch />
+            <ThemeButton className="border-ink" />
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

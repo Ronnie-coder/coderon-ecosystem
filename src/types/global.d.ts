@@ -23,7 +23,11 @@ export interface PlayroomProject {
   lighthouseBefore?: string;
   lighthouseAfter?: string;
   // ✅ ADDED THIS SO NEXT.JS RECOGNIZES THE ARRAY
-  featureImages?: string[]; 
+  featureImages?: string[];
+  sector?: string;
+  location?: string;
+  /** A before/after number we can prove (e.g. a Lighthouse screenshot). */
+  stat?: { label: string; before: number; after: number };
 }
 
 export interface PlayroomDemo {

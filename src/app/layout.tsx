@@ -1,30 +1,36 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Poppins, Roboto_Mono } from 'next/font/google';
+import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import { Suspense } from 'react';
 import Script from 'next/script';
 import Footer from "@/components/Footer";
-import "@/styles/main.scss";
+import "@/styles/globals.css";
+import "@/styles/demos.scss";
 import { ClientLayoutComponents } from '@/components/layout/ClientLayoutComponents';
 import { AnalyticsWrapper } from '@/components/AnalyticsWrapper';
-import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ThemeProvider, prefsBootScript } from "@/contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE_URL, organizationJsonLd } from "@/lib/site";
 
-const poppins = Poppins({
+const sans = Bricolage_Grotesque({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-poppins',
-  // ✅ Preload the most-used weight for LCP text
-  preload: true,
+  variable: '--font-sans',
 });
 
-const roboto_mono = Roboto_Mono({
+const serif = Instrument_Serif({
   subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-roboto-mono',
-  // ✅ Don't preload mono — only used in code blocks
+  variable: '--font-serif',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  display: 'swap',
+  variable: '--font-mono',
   preload: false,
 });
 
@@ -91,11 +97,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${roboto_mono.variable}`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
       suppressHydrationWarning
       data-scroll-behavior="smooth" // ✅ Added to fix smooth scroll warning
     >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: prefsBootScript }} />
         {/* ✅ Google Analytics 4 Script - Injected safely for Next.js App Router */}
         <Script
           strategy="afterInteractive"
@@ -125,7 +132,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <ClientLayoutComponents />
           </Suspense>
-          <main>{children}</main>
+          <main id="main">{children}</main>
           <Footer />
         </ThemeProvider>
 

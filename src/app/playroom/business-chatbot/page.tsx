@@ -11,22 +11,22 @@ const BusinessChatbotPage = () => {
   const chatbotUrl = "https://cdn.botpress.cloud/webchat/v3.0/shareable.html?configUrl=https://files.bpcontent.cloud/2025/04/29/07/20250429074103-QV7JOANL.json";
 
   return (
-    <div className="c-page-container playroom-demo">
-      <div className="playroom-demo__header">
-        <h1>Demo: Business AI Chatbot</h1>
-        <p>
+    <div className="container pb-20 pt-12 md:pt-16">
+      <div className="max-w-2xl">
+        <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">Demo: business chatbot</h1>
+        <p className="mt-4 text-lg text-ink/75">
           This is a live example of an intelligent chatbot. It can be trained on your company&apos;s data to answer questions, book meetings, and improve customer engagement.
         </p>
-        <Link href="/playroom" className="playroom-demo__back-link">
-          &larr; Back to Playroom
+        <Link href="/playroom/" className="mt-4 inline-block font-semibold text-ink/70 hover:text-ink">
+          &larr; Back to our work
         </Link>
       </div>
 
-      <div className="playroom-demo__content-area">
+      <div className="card mt-10 overflow-hidden">
         <iframe
           title="Coderon Business AI Chatbot Demo"
           src={chatbotUrl}
-          className="playroom-demo__iframe"
+          className="block h-[640px] w-full"
         ></iframe>
       </div>
     </div>

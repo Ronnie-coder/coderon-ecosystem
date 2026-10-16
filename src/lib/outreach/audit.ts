@@ -45,7 +45,7 @@ export type Audit = {
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36';
 
-async function fetchText(url: string, timeoutMs: number): Promise<{ ok: boolean; status: number; url: string; html: string; ms: number } | null> {
+export async function fetchText(url: string, timeoutMs: number): Promise<{ ok: boolean; status: number; url: string; html: string; ms: number } | null> {
   const t0 = Date.now();
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -95,7 +95,7 @@ function visibleTextLength(html: string): number {
   ).length;
 }
 
-function parseHtml(html: string) {
+export function parseHtml(html: string) {
   const title = decode(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '') || null;
   const metaDescription = metaContent(html, 'description');
   const hasViewport = metaContent(html, 'viewport') !== null;
@@ -171,7 +171,7 @@ export async function hasMx(domain: string): Promise<boolean> {
 
 // ---------- Google PageSpeed Insights (free) ---------------------------------------------
 
-async function pageSpeed(url: string): Promise<{ score: number; lcp: number | null } | null> {
+export async function pageSpeed(url: string): Promise<{ score: number; lcp: number | null } | null> {
   const params = new URLSearchParams({ url, strategy: 'mobile', category: 'performance' });
   if (process.env.PAGESPEED_API_KEY) params.set('key', process.env.PAGESPEED_API_KEY);
   const controller = new AbortController();
