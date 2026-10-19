@@ -173,3 +173,7 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 }
 @keyframes marker { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Keyword links inside body copy: bold, underlined, gold on hover. They pass page
+   authority to service pages and tell readers (and Google) what each page is about. */
+.kw { @apply font-bold text-ink underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-gold-text; }

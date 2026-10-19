@@ -4,6 +4,7 @@ import CookieConsent from 'react-cookie-consent';
 import Link from 'next/link';
 
 const CookieBanner = () => (
+  <section aria-label="Cookie notice">
   <CookieConsent
     location="bottom"
     buttonText="Okay"
@@ -20,6 +21,7 @@ const CookieBanner = () => (
     </Link>
     .
   </CookieConsent>
+  </section>
 );
 
 export default CookieBanner;

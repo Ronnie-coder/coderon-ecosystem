@@ -39,7 +39,6 @@ export default async function CaseStudyPage({ params }: PageProps) {
     { label: 'Client', value: project.client },
     { label: 'Business', value: `${project.sector ?? ''}${project.location ? `, ${project.location}` : ''}` },
     { label: 'Year', value: project.year },
-    { label: 'What we did', value: (project.servicesDelivered ?? []).join(' · ') },
   ].filter((f) => f.value);
 
   return (
@@ -72,13 +71,25 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </header>
 
       <section aria-label="Project facts" className="border-y-2 border-line bg-card">
-        <dl className="container grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="container grid gap-6 py-8 sm:grid-cols-3 lg:grid-cols-[1fr_1fr_0.6fr_2fr]">
           {facts.map((f) => (
             <div key={f.label}>
               <dt className="eyebrow">{f.label}</dt>
               <dd className="mt-2 font-semibold">{f.value}</dd>
             </div>
           ))}
+          {project.servicesDelivered && project.servicesDelivered.length > 0 && (
+            <div className="sm:col-span-3 lg:col-span-1">
+              <dt className="eyebrow">What we did</dt>
+              <dd className="mt-2">
+                <ul className="flex flex-wrap gap-2">
+                  {project.servicesDelivered.map((s) => (
+                    <li key={s} className="chip whitespace-nowrap border-line/40 text-sm">{s}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          )}
         </dl>
       </section>
 
@@ -102,21 +113,21 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div className="container grid gap-10 lg:grid-cols-3">
           {project.narrative_challenge && (
             <div data-reveal>
-              <p className="font-mono text-sm font-semibold text-ink/50">01</p>
+              <p className="font-mono text-sm font-semibold text-ink/65">01</p>
               <h2 className="mt-2 text-2xl font-extrabold">The problem</h2>
               <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_challenge}</p>
             </div>
           )}
           {project.narrative_solution && (
             <div data-reveal>
-              <p className="font-mono text-sm font-semibold text-ink/50">02</p>
+              <p className="font-mono text-sm font-semibold text-ink/65">02</p>
               <h2 className="mt-2 text-2xl font-extrabold">What we did</h2>
               <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_solution}</p>
             </div>
           )}
           {project.narrative_results && project.narrative_results.length > 0 && (
             <div className="card-pop h-fit p-7" data-reveal>
-              <p className="font-mono text-sm font-semibold text-ink/50">03</p>
+              <p className="font-mono text-sm font-semibold text-ink/65">03</p>
               <h2 className="mt-2 text-2xl font-extrabold">The result</h2>
               <ul className="mt-4 space-y-3">
                 {project.narrative_results.map((r) => (

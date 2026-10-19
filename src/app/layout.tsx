@@ -134,6 +134,9 @@ export default function RootLayout({
           </Suspense>
           <main id="main">{children}</main>
           <Footer />
+          <Suspense fallback={null}>
+            <ClientLayoutComponents part="bottom" />
+          </Suspense>
         </ThemeProvider>
 
         {/* ✅ Vercel analytics deferred */}

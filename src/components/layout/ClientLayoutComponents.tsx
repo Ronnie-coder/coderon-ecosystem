@@ -7,20 +7,26 @@ import CookieBanner from "@/components/layout/CookieBanner";
 import Reveal from '@/components/motion/Reveal';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 
-export const ClientLayoutComponents = () => {
+// "top" renders before <main> (navbar); "bottom" renders after the footer so the floating
+// buttons and cookie notice come last in keyboard order. Hidden on admin routes.
+export const ClientLayoutComponents = ({ part = 'top' }: { part?: 'top' | 'bottom' }) => {
   const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) return null;
 
-  // Hide all public layout elements on admin routes
-  if (pathname?.startsWith('/admin')) {
-    return null;
+  if (part === 'top') {
+    return (
+      <>
+        <Navbar />
+        <Reveal />
+      </>
+    );
   }
-
   return (
     <>
-      <Navbar />
-      <Reveal />
-      <WhatsAppButton />
-      <BackToTopButton />
+      <aside aria-label="Quick actions">
+        <WhatsAppButton />
+        <BackToTopButton />
+      </aside>
       <CookieBanner />
     </>
   );

@@ -32,7 +32,7 @@ export default function ServicesPage() {
           return (
             <article key={s.slug} className="card-pop grid gap-8 p-7 md:grid-cols-[1.2fr_1fr] md:p-10" data-reveal>
               <div>
-                <p className="font-mono text-sm font-semibold text-ink/50">0{i + 1} · {s.kind === 'website' ? 'Websites' : 'Software'}</p>
+                <p className="font-mono text-sm font-semibold text-ink/65">0{i + 1} · {s.kind === 'website' ? 'Websites' : 'Software'}</p>
                 <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">{s.title}</h2>
                 <p className="mt-4 text-lg text-ink/75">{s.description}</p>
                 <div className="mt-8 flex flex-wrap items-center gap-4">

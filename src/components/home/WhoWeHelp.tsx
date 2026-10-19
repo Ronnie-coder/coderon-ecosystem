@@ -13,15 +13,16 @@ export default function WhoWeHelp() {
             Built for businesses <span className="accent">like yours.</span>
           </h2>
           <p className="mt-4 text-lg text-ink/75">
-            We focus on a few kinds of business, so we understand your customers before we write a line of code.
+            Most of our clients are in these three groups, so we already know their customers. Run a different kind of
+            business? We build for you too.
           </p>
         </div>
-        <ul className="mt-12 grid gap-6 md:grid-cols-3">
+        <ul className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {industries.map((i, n) => (
             <li key={i.slug} data-reveal>
               <Link href={`/industries/${i.slug}/`} className="card-pop group flex h-full flex-col p-7">
                 <div className="flex items-start justify-between gap-4">
-                  <span className="font-mono text-sm font-semibold text-ink/50">0{n + 1}</span>
+                  <span className="font-mono text-sm font-semibold text-ink/65">0{n + 1}</span>
                   <span className="grid h-11 w-11 place-items-center rounded-xl border-2 border-ink text-xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
                     <FiArrowUpRight aria-hidden="true" />
                   </span>
@@ -34,6 +35,21 @@ export default function WhoWeHelp() {
               </Link>
             </li>
           ))}
+          <li data-reveal>
+            <Link href="/contact/?topic=new" className="card-pop group flex h-full flex-col border-dashed p-7">
+              <div className="flex items-start justify-between gap-4">
+                <span className="font-mono text-sm font-semibold text-ink/65">04</span>
+                <span className="grid h-11 w-11 place-items-center rounded-xl border-2 border-ink text-xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
+                  <FiArrowUpRight aria-hidden="true" />
+                </span>
+              </div>
+              <p className="eyebrow mt-6">Any other business</p>
+              <h3 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight">
+                Something <span className="accent">else?</span>
+              </h3>
+              <p className="mt-3 text-ink/70">Shops, schools, churches, NGOs, consultants, start-ups. Tell us what you do and we&apos;ll show you how we&apos;d help.</p>
+            </Link>
+          </li>
         </ul>
       </div>
     </section>

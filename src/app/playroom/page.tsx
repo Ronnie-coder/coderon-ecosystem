@@ -45,7 +45,7 @@ export default function WorkPage() {
               <p className="mt-4 text-lg text-ink/75">{p.description}</p>
               {p.stat && (
                 <p className="mt-5 inline-flex items-baseline gap-2 rounded-xl border-2 border-ink bg-gold px-4 py-2 font-bold text-[#16130E] dark:border-gold">
-                  {p.stat.label}: <span className="line-through opacity-60">{p.stat.before}</span> → <span className="text-xl">{p.stat.after}</span>
+                  {p.stat.label}: <span className="line-through opacity-80">{p.stat.before}</span> → <span className="text-xl">{p.stat.after}</span>
                 </p>
               )}
               <div className="mt-7 flex flex-wrap gap-3">

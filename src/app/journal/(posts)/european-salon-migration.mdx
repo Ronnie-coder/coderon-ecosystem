@@ -1,25 +1,27 @@
 ---
-title: "Moving a Danish Salon from a Slow Site Builder to Next.js"
-description: "How we rebuilt Eddie's Cut, a hair salon in Hellerup, Denmark: mobile PageSpeed from 47 to 92, and a hosting move that never touched their email."
+title: "Redesigning a Danish Salon's Website: Faster, Bookable and Found Locally"
+description: "How we redesigned Eddie's Cut, a hair salon in Hellerup, Denmark: mobile PageSpeed from 47 to 92, booking inside the site, and pages for every treatment and nearby area."
 date: '2026-07-06'
 author: 'Ronnie Nyamhute'
 ---
 
 **Eddie's Cut** is a hair salon in Hellerup, Denmark, with more than 25 years of experience. Their reputation was excellent. Their website was not keeping up.
 
-### The problem: slow, dated and risky to move
+## The problem: slow, sending people away, and only found in one area
 
-The salon's website ran on a site builder. On a phone it was slow: Google PageSpeed gave it **47 out of 100** for mobile performance. The design also looked older than the salon itself, and booking was clumsy.
+- On a phone the site was slow: Google PageSpeed gave it **47 out of 100** for mobile performance.
+- The booking button opened a separate booking site, so people left the salon's website to book.
+- The salon wanted to reach clients from nearby areas like Gentofte and Charlottenlund, but the site only really talked about Hellerup.
 
-Moving away was risky too. Their business email ran through their existing host (One.com), so a careless move could cut off client emails.
+## What we did
 
-### What we did
+1. **A redesign in Next.js.** A calm, premium look, clear prices by category (cuts, colour, care, beard) and a smooth menu that follows you as you scroll.
+2. **Booking inside the website.** The booking system now opens within the site, so clients book without leaving.
+3. **A page for each treatment.** Every service has its own page with the questions people actually ask. The homepage links to them in the text, so both visitors and Google can find them.
+4. **Pages for nearby areas.** "Frisør Gentofte" and "Frisør Charlottenlund" pages speak to clients in the areas the salon wanted to grow in.
+5. **Local SEO basics.** Local business schema, Google Maps on the contact section, opening hours, and titles and descriptions on every page.
 
-1. **A new website in Next.js.** We designed and built the site from scratch, with pages generated ahead of time so they load fast on phones.
-2. **Small touches that feel premium.** A smooth menu that follows you as you scroll, clear prices, and booking buttons where people look for them.
-3. **A safe hosting move.** We pointed the website to its new host step by step and kept the email (MX) records pointing at One.com, so the site never went down and email kept working.
-
-### The result
+## The result
 
 On the same Google Lighthouse mobile test, the new site scores:
 
@@ -28,4 +30,4 @@ On the same Google Lighthouse mobile test, the new site scores:
 - **Best Practices: 100**
 - **SEO: 100** (was 92)
 
-The salon now has a website that loads quickly on a phone and looks like the business they have spent 25 years building. You can see the before and after screenshots in the [Eddie's Cut case study](/playroom/eddies-cut/).
+The salon now has a website that loads quickly on a phone, keeps people on the page when they book, and talks to clients across Hellerup, Gentofte and Charlottenlund. See the before and after screenshots in the [Eddie's Cut case study](/playroom/eddies-cut/).

@@ -31,7 +31,8 @@ export default function CountUp({ from, to, duration = 1.4, className }: { from:
   }, [from, to, duration]);
 
   return (
-    <span ref={ref} className={className} aria-label={String(to)}>
+    <span ref={ref} className={className}>
+      <span className="sr-only">{to}</span>
       <span aria-hidden="true">{value}</span>
     </span>
   );

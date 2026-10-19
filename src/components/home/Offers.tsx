@@ -14,9 +14,14 @@ export default function Offers() {
           <h2 id="offers-title" className="h-section mt-3">
             Four ways we can <span className="accent">help.</span>
           </h2>
-          <p className="mt-4 text-lg text-ink/75">
-            Fix the website you have, get a new one, let us look after it every month, or build software for the work your
-            team does by hand.
+          <p className="mt-4 text-lg leading-relaxed text-ink/75">
+            We do <Link href="/web-design-cape-town/" className="kw">web design in Cape Town</Link> and across South Africa:{' '}
+            <Link href="/services/web-development/" className="kw">new websites for small businesses</Link>,{' '}
+            <Link href="/services/website-fix/" className="kw">website fixes</Link> for slow or &ldquo;not secure&rdquo; sites,{' '}
+            <Link href="/services/website-care-plan/" className="kw">monthly website care</Link>, and{' '}
+            <Link href="/services/custom-software/" className="kw">custom software and automation</Link> for teams buried in
+            spreadsheets. Every website comes with an <Link href="/journal/website-not-showing-on-google/" className="kw">SEO set-up</Link>{' '}
+            so Google can understand it.
           </p>
         </div>
 
@@ -27,7 +32,7 @@ export default function Offers() {
               <li key={s.slug} data-reveal>
                 <Link href={`/services/${s.slug}/`} className="card-pop group flex h-full flex-col p-7 md:p-8">
                   <div className="flex items-start justify-between gap-4">
-                    <span className="font-mono text-sm font-semibold text-ink/50">0{i + 1}</span>
+                    <span className="font-mono text-sm font-semibold text-ink/65">0{i + 1}</span>
                     <span className="grid h-11 w-11 place-items-center rounded-xl border-2 border-ink text-xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
                       <FiArrowUpRight aria-hidden="true" />
                     </span>

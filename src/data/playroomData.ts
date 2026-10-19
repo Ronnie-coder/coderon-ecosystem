@@ -8,11 +8,11 @@ export const liveProjects: PlayroomProject[] = [
   {
     id: 'eddies-cut',
     title: "Eddie's Cut",
-    category: 'New website',
+    category: 'Website redesign',
     sector: 'Hair salon',
     location: 'Hellerup, Denmark',
     description:
-      'A hair salon with 25 years of experience, stuck on a slow site builder. We rebuilt the website from scratch and moved it to new hosting without touching their email.',
+      'A hair salon in Hellerup with 25 years of experience and a slow, dated website. We redesigned it, set it up for Google with local schema and area pages, and built booking right into the site.',
     tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     imageUrl: '/images/eddiescut-after.webp',
     beforeImage: '/images/eddiescut-before.webp',
@@ -27,16 +27,18 @@ export const liveProjects: PlayroomProject[] = [
     logo: '/images/logos/eddies-cut.svg',
     year: '2026',
     stat: { label: 'Mobile PageSpeed', before: 47, after: 92 },
-    roles: ['Design', 'Development', 'Hosting move'],
-    servicesDelivered: ['New website', 'Speed and SEO set-up', 'Domain and hosting move'],
+    roles: ['Design', 'Development', 'SEO set-up'],
+    servicesDelivered: ['Website redesign', 'SEO set-up', 'Booking on the site', 'Google Maps', 'Area pages'],
     narrative_challenge:
-      'The old site builder made the website slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. The salon wanted a site that felt as premium as their service, and they could not risk losing their business email during a move.',
+      'The old website was slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. The booking button sent people away to another site to book. And the salon only appeared for "Hellerup", not for nearby areas their clients come from.',
     narrative_solution:
-      'We designed and built a new website in Next.js, with clear prices, easy booking buttons and a smooth scrolling menu. Then we moved the domain to new hosting step by step, so the site never went down and their email kept working.',
+      'We redesigned the website in Next.js with clear prices and a smooth scrolling menu. Booking now opens inside the website, so clients book without leaving. We gave each treatment its own page with the questions people ask, added local business schema and Google Maps, and built pages for the nearby areas the salon wanted to reach, like Gentofte and Charlottenlund.',
     narrative_results: [
       'Mobile PageSpeed performance from 47 to 92',
       '100 out of 100 for accessibility, best practices and SEO in Lighthouse',
-      'Moved to new hosting with no downtime, email untouched',
+      'Clients book inside the website instead of being sent away',
+      'A page for each treatment, plus pages for Gentofte and Charlottenlund',
+      'Local business schema and Google Maps set up',
     ],
   },
 

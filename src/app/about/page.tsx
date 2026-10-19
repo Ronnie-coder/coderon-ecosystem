@@ -86,7 +86,7 @@ export default function AboutPage() {
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <li key={v.title} className="card p-6" data-reveal>
-                <span className="font-mono text-sm font-semibold text-ink/50">0{i + 1}</span>
+                <span className="font-mono text-sm font-semibold text-ink/65">0{i + 1}</span>
                 <h3 className="mt-4 text-xl font-extrabold">{v.title}</h3>
                 <p className="mt-2 text-ink/75">{v.text}</p>
               </li>
