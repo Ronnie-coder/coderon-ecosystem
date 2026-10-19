@@ -54,6 +54,8 @@ const nextConfig = {
       })),
       // /impact duplicated the Work page.
       { source: '/impact', destination: '/playroom/', permanent: true },
+      // The instant website check was retired; send old links to the quote form.
+      { source: '/website-check', destination: '/contact/', permanent: false },
     ];
   },
 

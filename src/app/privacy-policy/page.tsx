@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
           <li>Analyze website usage to enhance user experience.</li>
           <li>Maintain the security and integrity of our Site.</li>
         </ul>
-        <p>When you use the free website check, the website address you enter is sent to Google PageSpeed Insights to run the test. If you ask for the full video, we use your name and email only to send it.</p>
+
 
         <h2>3. Data Sharing and Disclosure</h2>
         <p>We do not sell your personal information. We may share it with trusted third-party service providers (like our email service, Resend) only as necessary to deliver our services. These parties are contractually obligated to keep your information confidential.</p>

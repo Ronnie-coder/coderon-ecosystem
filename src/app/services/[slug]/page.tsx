@@ -34,7 +34,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const { title, description, detailedDescription, forWho, benefits, steps, faqs, kind } = service;
   const plans = allPlans.filter((p) => p.slug === slug);
   const cta = kind === 'website'
-    ? { href: '/website-check/', label: 'Get a free website check' }
+    ? { href: `/contact/?topic=${slug === 'website-fix' ? 'fix' : slug === 'website-care-plan' ? 'care' : 'new'}`, label: 'Get a free quote' }
     : { href: '/contact/?topic=software', label: 'Talk about custom software' };
 
   const jsonLd = [
@@ -144,7 +144,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
           <div className={`mt-10 grid gap-6 ${plans.length >= 3 ? 'lg:grid-cols-3' : plans.length === 2 ? 'md:grid-cols-2' : 'max-w-xl'}`}>
             {plans.map((p) => (
-              <PlanCard key={p.key} plan={p} ctaHref={cta.href} ctaLabel={kind === 'website' ? 'Start with a free check' : 'Book a free call'} />
+              <PlanCard key={p.key} plan={p} ctaHref={cta.href} ctaLabel={kind === 'website' ? `Get a quote for ${p.name}` : 'Book a free call'} />
             ))}
           </div>
         </div>

@@ -87,7 +87,7 @@ export const liveProjects: PlayroomProject[] = [
     description:
       'A great tour company with a website that did not show it. We rebuilt it so it is fast, works on every phone, is set up properly for Google, and speaks to visitors in their own language.',
     tech: ['Next.js', 'SEO set-up', 'Vercel'],
-    imageUrl: '/images/gifted-tours-showcase.webp',
+    imageUrl: '/images/gifted-tours-showcase-2026.webp',
     liveUrl: 'https://giftedtours.co.za/',
     caseStudyUrl: '/playroom/gifted-tours/',
     client: 'Gifted Tours',

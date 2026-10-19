@@ -2,10 +2,11 @@ import { MetadataRoute } from 'next';
 import { services } from '@/data/servicesData';
 import { liveProjects, interactiveDemos } from '@/data/playroomData';
 import { getAllPosts } from '@/lib/journal';
+import { industries } from '@/data/industriesData';
 import { SITE_URL, canonical } from '@/lib/site';
 
 // Bump when page copy changes so Google re-crawls.
-const SITE_UPDATED = '2026-10-16';
+const SITE_UPDATED = '2026-10-19';
 
 export const revalidate = 3600;
 
@@ -23,7 +24,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: url('about'), lastModified: SITE_UPDATED, priority: 0.6 },
     { url: url('contact'), lastModified: SITE_UPDATED, priority: 0.7 },
     { url: url('pricing'), lastModified: SITE_UPDATED, priority: 0.8 },
-    { url: url('website-check'), lastModified: SITE_UPDATED, priority: 0.8 },
+    { url: url('web-design-cape-town'), lastModified: SITE_UPDATED, priority: 0.9 },
+    { url: url('industries'), lastModified: SITE_UPDATED, priority: 0.7 },
+    ...industries.map((i) => ({ url: url(`industries/${i.slug}`), lastModified: SITE_UPDATED, priority: 0.8 })),
     { url: url('journal'), lastModified: SITE_UPDATED, priority: 0.6 },
     ...posts.map((post) => ({
       url: url(`journal/${post.slug}`),

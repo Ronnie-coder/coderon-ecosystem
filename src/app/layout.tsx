@@ -34,7 +34,7 @@ const mono = JetBrains_Mono({
   preload: false,
 });
 
-const DEFAULT_TITLE = 'Website Design & Custom Software for Growing Businesses | Coderon';
+const DEFAULT_TITLE = 'Web Design Cape Town & Custom Software for Small Businesses | Coderon';
 const DEFAULT_DESCRIPTION =
   'Coderon builds fast, mobile-friendly websites that Google can understand, and custom software that saves your team time. Based in Cape Town, working worldwide.';
 

@@ -15,7 +15,8 @@ const navLinks = [
   { href: '/journal/', label: 'Journal' },
 ];
 
-export const CHECK_HREF = '/website-check/';
+export const QUOTE_HREF = '/contact/';
+export const WHATSAPP_HREF = 'https://wa.me/27678184898';
 
 // Pathnames end in "/" (trailingSlash: true); a section stays active on its sub-pages.
 const isActivePath = (pathname: string | null, href: string) =>
@@ -135,8 +136,8 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <ThemeButton />
-          <Link href={CHECK_HREF} className="btn-dark hidden !py-2.5 text-[15px] sm:inline-flex">
-            Free website check
+          <Link href={QUOTE_HREF} className="btn-dark hidden !py-2.5 text-[15px] sm:inline-flex">
+            Get a free quote
           </Link>
           <button
             type="button"
@@ -174,8 +175,8 @@ const Navbar = () => {
               );
             })}
           </ul>
-          <Link href={CHECK_HREF} className="btn-primary mt-8 w-full text-lg">
-            Get a free website check
+          <Link href={QUOTE_HREF} className="btn-primary mt-8 w-full text-lg">
+            Get a free quote
           </Link>
           <div className="mt-8 flex items-center justify-between">
             <MotionSwitch />

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Logo } from '@/components/Logo';
-import { MotionSwitch, ThemeButton, CHECK_HREF } from '@/components/Navbar';
+import { MotionSwitch, ThemeButton, QUOTE_HREF, WHATSAPP_HREF } from '@/components/Navbar';
 import { services } from '@/data/servicesData';
 
 const socials = [
@@ -17,6 +17,8 @@ const socials = [
 ];
 
 const company = [
+  { href: '/industries/', label: 'Who we help' },
+  { href: '/web-design-cape-town/', label: 'Web design Cape Town' },
   { href: '/playroom/', label: 'Our work' },
   { href: '/pricing/', label: 'Pricing' },
   { href: '/about/', label: 'About' },
@@ -53,11 +55,11 @@ export default function Footer() {
             Not sure what your website needs? <span className="font-serif font-normal italic text-[#F2C230]">Ask us.</span>
           </h2>
           <div className="flex flex-wrap gap-3">
-            <Link href={CHECK_HREF} className="btn border-[#F2C230] bg-[#F2C230] text-[#16130E] shadow-[5px_5px_0_#F2EBDD]">
-              Free website check
+            <Link href={QUOTE_HREF} className="btn border-[#F2C230] bg-[#F2C230] text-[#16130E] shadow-[5px_5px_0_#F2EBDD]">
+              Get a free quote
             </Link>
             <a
-              href="https://wa.me/27678184898"
+              href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
               className="btn border-[#F2EBDD] text-[#F2EBDD] hover:bg-white/10"

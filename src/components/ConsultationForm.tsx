@@ -1,277 +1,180 @@
 // src/components/ConsultationForm.tsx
 "use client";
 
+// The quote form: short, one screen, and it pre-selects what the visitor clicked on
+// (links like /contact/?topic=business). Sends to /api/send, which emails Ronnie.
 import { useEffect, useState } from 'react';
 import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
 
-export const ConsultationForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    service: 'Free website check',
-    website: '',
-    message: '',
-  });
+const NEEDS = [
+  { value: 'New website', label: 'A new website' },
+  { value: 'Website fix', label: 'Fix my website' },
+  { value: 'Website care plan', label: 'Monthly care' },
+  { value: 'Custom software', label: 'Custom software' },
+  { value: 'Not sure yet', label: 'Not sure yet' },
+];
 
-  // Pre-select the topic from links like /contact/?topic=software
+const TOPIC_TO_NEED: Record<string, { need: string; note?: string }> = {
+  new: { need: 'New website' },
+  website: { need: 'New website' },
+  starter: { need: 'New website', note: 'Starter package (1 page)' },
+  business: { need: 'New website', note: 'Business package (up to 5 pages)' },
+  growth: { need: 'New website', note: 'Growth package (up to 10 pages)' },
+  fix: { need: 'Website fix' },
+  care: { need: 'Website care plan' },
+  careBasic: { need: 'Website care plan', note: 'Care Basic' },
+  carePlus: { need: 'Website care plan', note: 'Care Plus' },
+  software: { need: 'Custom software' },
+};
+
+const EMPTY = { need: 'New website', name: '', email: '', phone: '', website: '', message: '' };
+const input =
+  'w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60';
+
+export const ConsultationForm = () => {
+  const [form, setForm] = useState(EMPTY);
+  const [packageNote, setPackageNote] = useState<string | undefined>();
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [error, setError] = useState('');
+
   useEffect(() => {
     const topic = new URLSearchParams(window.location.search).get('topic');
-    const map: Record<string, string> = {
-      software: 'Custom software',
-      care: 'Website care plan',
-      fix: 'Website fix',
-      website: 'Free website check',
-      new: 'New website',
-    };
-    if (topic && map[topic]) setFormData((prev) => ({ ...prev, service: map[topic] }));
+    const match = topic ? TOPIC_TO_NEED[topic] : undefined;
+    if (match) {
+      setForm((f) => ({ ...f, need: match.need }));
+      setPackageNote(match.note);
+    }
   }, []);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formMessage, setFormMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const set = (key: keyof typeof EMPTY) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setFormMessage('');
-    setIsError(false);
-
+    if (!form.name.trim() || !/^\S+@\S+\.\S+$/.test(form.email) || !form.message.trim()) {
+      setError('Please add your name, a valid email and a few words about what you need.');
+      setStatus('error');
+      return;
+    }
+    setStatus('sending');
+    setError('');
+    const lines = [
+      form.message.trim(),
+      '',
+      packageNote ? `Package: ${packageNote}` : null,
+      form.phone ? `Phone / WhatsApp: ${form.phone}` : null,
+      form.website ? `Website: ${form.website}` : null,
+    ].filter((l) => l !== null);
     try {
-      const response = await fetch('/api/send', {
+      const res = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          service: formData.service,
-          message: formData.website ? `${formData.message}\n\nWebsite: ${formData.website}` : formData.message,
-        }),
+        body: JSON.stringify({ name: form.name, email: form.email, service: form.need, message: lines.join('\n') }),
       });
-      const data = await response.json();
-
-      if (response.ok) {
-        setFormMessage(
-          "Thank you! Your request has been sent. We'll be in touch within one business day."
-        );
-        setIsError(false);
-        setFormData({
-          name: '',
-          email: '',
-          service: 'Free website check',
-          website: '',
-          message: '',
-        });
-      } else {
-        setFormMessage(data.error || 'Something went wrong. Please try again.');
-        setIsError(true);
-      }
-    } catch {
-      setFormMessage(
-        'An unexpected error occurred. Please check your connection and try again.'
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error);
+      setStatus('sent');
+    } catch (err) {
+      setStatus('error');
+      setError(
+        (err instanceof Error && err.message) ||
+          'That did not send. Please try again, or WhatsApp us on +27 67 818 4898.'
       );
-      setIsError(true);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
-  // --- Success State ---
-  if (formMessage && !isError) {
+  if (status === 'sent') {
     return (
-      <div
-        className="card flex flex-col items-start gap-3 border-ink bg-gold p-8 text-[#16130E] dark:border-gold"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <FiCheckCircle
-          className="text-4xl"
-          aria-hidden="true"
-        />
-        <h3 className="text-2xl font-extrabold">Request Sent!</h3>
-        <p className="">{formMessage}</p>
+      <div className="card flex h-fit flex-col items-start gap-3 border-ink bg-gold p-8 text-[#16130E] dark:border-gold" role="status">
+        <FiCheckCircle aria-hidden="true" className="text-4xl" />
+        <h2 className="text-2xl font-extrabold">Thanks, {form.name.split(' ')[0]}!</h2>
+        <p>
+          We&apos;ve got your request. Ronnie will reply within one working day with questions or a fixed quote. If it&apos;s
+          urgent, WhatsApp us on +27 67 818 4898.
+        </p>
       </div>
     );
   }
 
+  const busy = status === 'sending';
+
   return (
-    <form
-      className="card-pop space-y-5 p-6 md:p-8"
-      onSubmit={handleSubmit}
-      aria-label="Contact Coderon"
-      aria-busy={isSubmitting}
-      noValidate
-    >
+    <form onSubmit={submit} className="card-pop h-fit space-y-6 p-6 md:p-8" aria-label="Get a free quote" noValidate>
+      <fieldset>
+        <legend className="text-sm font-bold">What do you need?</legend>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {NEEDS.map((n) => (
+            <label key={n.value} className="cursor-pointer">
+              <input
+                type="radio"
+                name="need"
+                value={n.value}
+                checked={form.need === n.value}
+                onChange={() => {
+                  setForm((f) => ({ ...f, need: n.value }));
+                  setPackageNote(undefined);
+                }}
+                className="peer sr-only"
+                disabled={busy}
+              />
+              <span className="inline-block rounded-full border-2 border-line px-4 py-2 font-semibold transition peer-checked:border-ink peer-checked:bg-gold peer-checked:text-[#16130E] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 dark:peer-checked:border-gold">
+                {n.label}
+              </span>
+            </label>
+          ))}
+        </div>
+        {packageNote && <p className="mt-3 text-sm font-semibold text-gold-text">You picked: {packageNote}</p>}
+      </fieldset>
 
-      {/* Name */}
-      <div className="space-y-1.5">
-        <label htmlFor="name" className="block text-sm font-bold">
-          Your name
-          <span className="text-bad" aria-hidden="true"> *</span>
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
-          required
-          autoComplete="name"
-          placeholder="e.g. Thandi Mokoena"
-          value={formData.name}
-          onChange={handleChange}
-          disabled={isSubmitting}
-          aria-required="true"
-          aria-disabled={isSubmitting}
-        />
-      </div>
-
-      {/* Email */}
-      <div className="space-y-1.5">
-        <label htmlFor="email" className="block text-sm font-bold">
-          Email
-          <span className="text-bad" aria-hidden="true"> *</span>
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
-          required
-          autoComplete="email"
-          placeholder="e.g. you@company.com"
-          value={formData.email}
-          onChange={handleChange}
-          disabled={isSubmitting}
-          aria-required="true"
-          aria-disabled={isSubmitting}
-        />
-      </div>
-
-      {/* Service — updated to match rewritten servicesData.ts */}
-      <div className="space-y-1.5">
-        <label htmlFor="service" className="block text-sm font-bold">
-          What do you need help with?
-          <span className="text-bad" aria-hidden="true"> *</span>
-        </label>
-        <div className="relative">
-          <select
-            id="service"
-            name="service"
-            className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
-            required
-            value={formData.service}
-            onChange={handleChange}
-            disabled={isSubmitting}
-            aria-required="true"
-            aria-disabled={isSubmitting}
-          >
-            <option value="Free website check">Free website check</option>
-            <option value="Website fix">Fix my current website</option>
-            <option value="New website">A new website</option>
-            <option value="Website care plan">Monthly website care</option>
-            <option value="Custom software">Custom software or automation</option>
-            <option value="Not sure yet">Not sure yet</option>
-          </select>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <label htmlFor="q-name" className="block text-sm font-bold">Your name <span className="text-bad" aria-hidden="true">*</span></label>
+          <input id="q-name" autoComplete="name" required value={form.name} onChange={set('name')} disabled={busy} className={input} />
+        </div>
+        <div className="space-y-1.5">
+          <label htmlFor="q-email" className="block text-sm font-bold">Email <span className="text-bad" aria-hidden="true">*</span></label>
+          <input id="q-email" type="email" autoComplete="email" required value={form.email} onChange={set('email')} disabled={busy} className={input} />
+        </div>
+        <div className="space-y-1.5">
+          <label htmlFor="q-phone" className="block text-sm font-bold">WhatsApp or phone</label>
+          <input id="q-phone" type="tel" autoComplete="tel" value={form.phone} onChange={set('phone')} disabled={busy} className={input} placeholder="Optional" />
+        </div>
+        <div className="space-y-1.5">
+          <label htmlFor="q-site" className="block text-sm font-bold">Your website</label>
+          <input id="q-site" type="text" inputMode="url" autoComplete="url" value={form.website} onChange={set('website')} disabled={busy} className={input} placeholder="If you have one" />
         </div>
       </div>
 
-      {/* Website (optional) */}
       <div className="space-y-1.5">
-        <label htmlFor="website" className="block text-sm font-bold">
-          Your website (if you have one)
-        </label>
-        <input
-          id="website"
-          name="website"
-          type="text"
-          inputMode="url"
-          autoComplete="url"
-          className="w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
-          placeholder="e.g. yourbusiness.com"
-          value={formData.website}
-          onChange={handleChange}
-          disabled={isSubmitting}
-        />
-      </div>
-
-      {/* Message */}
-      <div className="space-y-1.5">
-        <label htmlFor="message" className="block text-sm font-bold">
-          Tell us a bit about your business
-          <span className="text-bad" aria-hidden="true"> *</span>
-        </label>
+        <label htmlFor="q-message" className="block text-sm font-bold">Tell us about your business <span className="text-bad" aria-hidden="true">*</span></label>
         <textarea
-          id="message"
-          name="message"
-          className="min-h-[140px] w-full rounded-xl border-2 border-line bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60"
+          id="q-message"
           required
-          placeholder="e.g. We're a roofing company in Dallas. Our website is slow and we get very few enquiries from it."
-          value={formData.message}
-          onChange={handleChange}
-          disabled={isSubmitting}
-          aria-required="true"
-          aria-describedby="message-hint"
-          aria-disabled={isSubmitting}
+          value={form.message}
+          onChange={set('message')}
+          disabled={busy}
+          aria-describedby="q-hint"
+          className={`${input} min-h-[130px]`}
+          placeholder="e.g. We're a plumbing company in Bellville. We need a website so people can find us on Google and call us."
         />
-        <span
-          id="message-hint"
-          className="block text-sm text-ink/60"
-        >
-          A few sentences is enough. We reply within one business day.
-        </span>
+        <p id="q-hint" className="text-sm text-ink/60">A few sentences is enough.</p>
       </div>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        className="btn-primary w-full text-lg disabled:opacity-70"
-        disabled={isSubmitting}
-        aria-disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <>
-            <FiLoader
-              className="animate-spin"
-              aria-hidden="true"
-            />
-            Sending...
-          </>
-        ) : (
-          'Send my request'
-        )}
-      </button>
-
-      {/* Error message — aria-live so screen readers announce it */}
-      {formMessage && isError && (
-        <div
-          className="flex items-start gap-2 rounded-xl border-2 border-bad p-4 font-semibold text-bad"
-          role="alert"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          <FiAlertCircle
-            className="mt-0.5 shrink-0"
-            aria-hidden="true"
-          />
-          <span>{formMessage}</span>
-        </div>
+      {status === 'error' && error && (
+        <p role="alert" className="flex items-start gap-2 rounded-xl border-2 border-bad p-4 font-semibold text-bad">
+          <FiAlertCircle aria-hidden="true" className="mt-0.5 shrink-0" /> {error}
+        </p>
       )}
 
-      {/* Required fields note */}
-      <p className="text-sm text-ink/60">
-        <span aria-hidden="true">*</span> Required fields.
-        We respond within one business day.
-      </p>
-
+      <button type="submit" disabled={busy} className="btn-primary w-full text-lg disabled:opacity-70">
+        {busy ? (
+          <>
+            <FiLoader aria-hidden="true" className="animate-spin" /> Sending…
+          </>
+        ) : (
+          'Get my free quote'
+        )}
+      </button>
+      <p className="text-center text-sm text-ink/60">Free and no obligation. We reply within one working day.</p>
     </form>
   );
 };

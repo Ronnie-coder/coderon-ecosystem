@@ -80,7 +80,7 @@ export default function PricingPage() {
           />
           <div className="mt-12 grid gap-8 lg:grid-cols-3">
             {websitePlans.map((p) => (
-              <PlanCard key={p.key} plan={p} ctaHref="/website-check/" ctaLabel={`Start with ${p.name}`} />
+              <PlanCard key={p.key} plan={p} ctaHref={`/contact/?topic=${p.key}`} ctaLabel={`Get a quote for ${p.name}`} />
             ))}
           </div>
           <p className="mt-6 text-sm text-ink/60">Need more than 10 pages or an online shop? We quote it after a free call.</p>
@@ -95,7 +95,7 @@ export default function PricingPage() {
             title={<>Fix it, don&apos;t <span className="accent">replace</span> it.</>}
             intro="If your site is slow, says 'not secure' or breaks on phones, we fix it on the website you already have. Most fixes are done in a week."
           />
-          <PlanCard plan={fixPlan} ctaHref="/website-check/" ctaLabel="Get a free website check" />
+          <PlanCard plan={fixPlan} ctaHref="/contact/?topic=fix" ctaLabel="Get a quote for a fix" />
         </div>
       </section>
 

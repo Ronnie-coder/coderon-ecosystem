@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { BackToTopButton } from '@/components/BackToTopButton';
 import CookieBanner from "@/components/layout/CookieBanner";
 import Reveal from '@/components/motion/Reveal';
+import WhatsAppButton from '@/components/layout/WhatsAppButton';
 
 export const ClientLayoutComponents = () => {
   const pathname = usePathname();
@@ -18,6 +19,7 @@ export const ClientLayoutComponents = () => {
     <>
       <Navbar />
       <Reveal />
+      <WhatsAppButton />
       <BackToTopButton />
       <CookieBanner />
     </>

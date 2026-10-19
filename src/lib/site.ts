@@ -36,7 +36,7 @@ export const organizationJsonLd = {
   email: BUSINESS.email,
   telephone: BUSINESS.phone,
   description:
-    'Coderon builds fast, mobile-friendly websites with local SEO set-up, and custom software that saves businesses time.',
+    'Coderon is a Cape Town web studio that builds fast, mobile-friendly websites with local SEO set-up for small businesses, and custom software that saves teams time.',
   founder: { '@type': 'Person', name: 'Ronnie Nyamhute' },
   address: {
     '@type': 'PostalAddress',
@@ -44,7 +44,8 @@ export const organizationJsonLd = {
     addressRegion: BUSINESS.region,
     addressCountry: BUSINESS.country,
   },
-  areaServed: ['South Africa', 'United Kingdom', 'United States', 'Australia', 'Europe'],
+  priceRange: 'R2,500 - R16,500',
+  areaServed: ['Cape Town', 'South Africa', 'United Kingdom', 'United States', 'Australia', 'Europe'],
   sameAs: BUSINESS.sameAs,
   knowsAbout: ['Website design', 'Website speed optimisation', 'Local SEO set-up', 'Custom software', 'Business automation'],
 };

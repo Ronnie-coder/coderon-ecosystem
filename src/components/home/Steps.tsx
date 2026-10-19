@@ -1,5 +1,5 @@
 const steps = [
-  { title: 'Free check', text: 'We look at your website, or listen to your problem, and tell you honestly what would help. No sales pitch.' },
+  { title: 'Free quote', text: 'Tell us what you need on WhatsApp or the form. We ask a few questions and tell you honestly what would help.' },
   { title: 'One fixed price', text: 'You get a clear scope and one price before any work starts. No surprise invoices.' },
   { title: 'Build and launch', text: 'You see progress every week and give feedback. We move your domain and email safely.' },
   { title: 'We stay around', text: 'Free fixes after launch, then a care plan if you want us to keep looking after it.' },

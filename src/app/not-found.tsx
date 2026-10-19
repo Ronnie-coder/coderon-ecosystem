@@ -14,7 +14,7 @@ export default function NotFound() {
           Home <FiArrowRight aria-hidden="true" />
         </Link>
         <Link href="/services/" className="btn-ghost">Services</Link>
-        <Link href="/website-check/" className="btn-ghost">Free website check</Link>
+        <Link href="/contact/" className="btn-ghost">Get a free quote</Link>
       </div>
     </section>
   );

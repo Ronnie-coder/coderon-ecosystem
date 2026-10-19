@@ -3,13 +3,17 @@ import Hero from '@/components/home/Hero';
 import Marquee from '@/components/home/Marquee';
 import WorkShowcase from '@/components/home/WorkShowcase';
 import Offers from '@/components/home/Offers';
-import CheckBand from '@/components/home/CheckBand';
+import WhoWeHelp from '@/components/home/WhoWeHelp';
+import WhyCoderon from '@/components/home/WhyCoderon';
 import Steps from '@/components/home/Steps';
 import Testimonials from '@/components/home/Testimonials';
 import LatestJournal from '@/components/home/LatestJournal';
 import { getAllPosts } from '@/lib/journal';
 
 export const metadata: Metadata = {
+  title: { absolute: 'Web Design Cape Town & Custom Software for Small Businesses | Coderon' },
+  description:
+    'Coderon is a Cape Town web studio: fast websites set up for Google with WhatsApp buttons, from R3,500 once-off, plus custom software for growing businesses.',
   alternates: { canonical: '/' },
 };
 
@@ -22,9 +26,10 @@ export default async function HomePage() {
     <>
       <Hero />
       <Marquee />
+      <WhoWeHelp />
       <WorkShowcase />
       <Offers />
-      <CheckBand />
+      <WhyCoderon />
       <Steps />
       <Testimonials />
       <LatestJournal posts={posts} />
