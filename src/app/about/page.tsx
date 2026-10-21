@@ -71,7 +71,7 @@ export default function AboutPage() {
             off-the-shelf software that did not fit local payments, local customers or local ways of working.
           </p>
           <p className="mt-5 text-lg leading-relaxed text-ink/80">
-            So we started building. Software for an insurance broker. New websites for a tour company and a hair salon in
+            So we started building. A corporate website for an insurance broker, which we still look after. New websites for a tour company and a hair salon in
             Denmark. An invoicing tool for freelancers. Every project teaches us what businesses really need, and that goes
             into the next one.
           </p>

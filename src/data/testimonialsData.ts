@@ -25,18 +25,5 @@ export const testimonials: Testimonial[] = [
     authorRole: 'Shuttle & Tour Services, Cape Town',
     siteUrl: 'https://www.giftedtours.co.za',
   },
-  {
-    id: 2,
-    logoUrl: '/images/logos/palmsure.webp',
-    logoAlt: 'Palmsure Insurance Brokers Logo',
-    logoWidth: 150,
-    logoHeight: 50,
-    // ⚠️ PLACEHOLDER — replace with actual client quote when available
-    // The previous version was copy-pasted from projectsData.ts (not a real testimonial)
-    quote:
-      "Coderon took something we thought would take years and delivered it with care and precision. Our team went from drowning in paper to running a modern digital operation. The difference has been remarkable.",
-    authorName: 'Palmsure Management',
-    authorRole: 'Insurance Brokers, South Africa',
-    siteUrl: 'https://www.palmsure.co.za/',
-  },
+  // Palmsure: add their real review here when it arrives (no placeholder quotes on the live site).
 ];

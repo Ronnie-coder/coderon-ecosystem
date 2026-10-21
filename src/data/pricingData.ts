@@ -4,7 +4,7 @@
 // affordable for small businesses. USD prices are set for international clients,
 // not converted from ZAR. "From" prices: the final price is agreed before work starts.
 
-export type PriceKey = 'starter' | 'business' | 'growth' | 'fix' | 'careBasic' | 'carePlus' | 'software';
+export type PriceKey = 'starter' | 'business' | 'growth' | 'monthly' | 'fix' | 'careBasic' | 'carePlus' | 'software';
 export type Currency = 'ZAR' | 'USD';
 
 export interface PricePlan {
@@ -74,6 +74,24 @@ export const websitePlans: PricePlan[] = [
   },
 ];
 
+// No upfront cost: the website, hosting and care for one monthly fee, month to month.
+export const monthlyPlan: PricePlan = {
+  key: 'monthly',
+  name: 'Monthly Website',
+  slug: 'web-development',
+  price: { ZAR: 599, USD: 79 },
+  period: 'per month',
+  summary: 'A professional website with no upfront cost. Hosting, care and small changes included.',
+  includes: [
+    'Website with up to 3 pages, designed for you',
+    'No upfront cost',
+    'Hosting, updates and backups included',
+    'Up to 30 minutes of changes every month',
+    'WhatsApp and call buttons, Google set-up',
+    'Month to month',
+  ],
+};
+
 export const fixPlan: PricePlan = {
   key: 'fix',
   name: 'Website Fix',
@@ -129,7 +147,7 @@ export const softwarePlan: PricePlan = {
   includes: ['Free discovery call', 'Clear scope and a fixed quote', 'Built in stages you can test', 'You own the code'],
 };
 
-export const allPlans: PricePlan[] = [...websitePlans, fixPlan, ...carePlans, softwarePlan];
+export const allPlans: PricePlan[] = [...websitePlans, monthlyPlan, fixPlan, ...carePlans, softwarePlan];
 
 export const priceFor = (key: PriceKey) => allPlans.find((p) => p.key === key)!;
 

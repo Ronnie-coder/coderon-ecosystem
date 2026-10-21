@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { FiArrowRight } from 'react-icons/fi';
-import { websitePlans, fixPlan, carePlans, softwarePlan } from '@/data/pricingData';
+import { websitePlans, monthlyPlan, fixPlan, carePlans, softwarePlan } from '@/data/pricingData';
 import { canonical } from '@/lib/site';
 import PageHeader from '@/components/ui/PageHeader';
 import PlanCard from '@/components/pricing/PlanCard';
@@ -11,7 +11,7 @@ import { CurrencySwitch, Price } from '@/components/ui/Price';
 export const metadata: Metadata = {
   title: 'Pricing: Website Packages, Website Fix, Care Plans',
   description:
-    'Clear prices for small business websites (from R3,500 / $650), website fixes, monthly care plans and custom software. One fixed price before any work starts.',
+    'Clear prices for small business websites: from R3,500 once-off or R599 a month with no upfront cost, plus website fixes, care plans and custom software.',
   alternates: { canonical: canonical('pricing') },
 };
 
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: 'How do I pay?',
-    a: 'For once-off work: 50% to start and 50% when you are happy and the site goes live. Care plans are billed monthly and you can cancel any month with 30 days notice.',
+    a: 'For once-off work: 50% to start and 50% when you are happy and the site goes live. Monthly Website and care plans are billed monthly, month to month, with 30 days notice to cancel.',
   },
   {
     q: 'What about domain and hosting?',
@@ -84,6 +84,18 @@ export default function PricingPage() {
             ))}
           </div>
           <p className="mt-6 text-sm text-ink/60">Need more than 10 pages or an online shop? We quote it after a free call.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="monthly" className="section border-t-2 border-line/15">
+        <div className="container grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
+          <SectionHead
+            id="monthly"
+            eyebrow="No upfront cost"
+            title={<>Prefer to pay <span className="accent">monthly?</span></>}
+            intro="Get a professional website without paying a lump sum. One monthly fee covers the website, hosting, updates and small changes, month to month."
+          />
+          <PlanCard plan={monthlyPlan} ctaHref="/contact/?topic=monthly" ctaLabel="Get a Monthly Website" />
         </div>
       </section>
 

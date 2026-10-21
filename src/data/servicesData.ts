@@ -38,6 +38,8 @@ export interface Service {
   slug: string;
   seoTitle?: string;
   kind: 'website' | 'software';
+  /** The visitor's problem in their words, shown on the homepage offer cards. */
+  need: string;
   description: string;
   detailedDescription: string;
   forWho: string[];
@@ -53,6 +55,7 @@ export const services: Service[] = [
     icon: 'F',
     title: 'Website Fix',
     slug: 'website-fix',
+    need: 'Your website is slow, broken or says “not secure”',
     seoTitle: 'Website Fix: Speed, Security & Mobile Repairs',
     kind: 'website',
     description:
@@ -88,6 +91,7 @@ export const services: Service[] = [
     icon: 'W',
     title: 'New Website',
     slug: 'web-development',
+    need: "No website yet, or one you'd rather not share",
     seoTitle: 'Website Design & Development for Small Businesses',
     kind: 'website',
     description:
@@ -123,6 +127,7 @@ export const services: Service[] = [
     icon: 'C',
     title: 'Website Care Plan',
     slug: 'website-care-plan',
+    need: 'Nobody is looking after your website',
     seoTitle: 'Website Maintenance & Care Plan',
     kind: 'website',
     description:
@@ -156,12 +161,13 @@ export const services: Service[] = [
     icon: 'S',
     title: 'Custom Software & Automation',
     slug: 'custom-software',
+    need: 'Your team is buried in admin and spreadsheets',
     seoTitle: 'Custom Software & Business Automation',
     kind: 'software',
     description:
       'If your team runs on spreadsheets, paperwork or WhatsApp threads, we build the tool that does the job for you.',
     detailedDescription:
-      'Some problems are not solved by a website. You might be copying data between spreadsheets, chasing approvals, or doing the same report every week.\nWe build software around how your business already works: internal tools, client portals, dashboards and automations. We have built insurance systems, invoicing software and lead generation tools. You own the code, and we keep it simple to use.',
+      'Some problems are not solved by a website. You might be copying data between spreadsheets, chasing approvals, or doing the same report every week.\nWe build software around how your business already works: internal tools, client portals, dashboards and automations. We have built invoicing software (QuotePilot), lead generation tools and chatbots. You own the code, and we keep it simple to use.',
     forWho: [
       'Your team does the same manual task every day',
       'Off-the-shelf software does not fit how you work',

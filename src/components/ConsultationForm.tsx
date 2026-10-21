@@ -12,6 +12,7 @@ import { FiCheck, FiCheckCircle, FiAlertCircle, FiLoader, FiArrowLeft, FiArrowRi
 
 const NEEDS = [
   { value: 'New website', label: 'A new website', hint: 'Fast, mobile-first, set up for Google' },
+  { value: 'Monthly website', label: 'A website, paid monthly', hint: 'No upfront cost' },
   { value: 'Website fix', label: 'Fix my website', hint: 'Slow, "not secure" or broken on phones' },
   { value: 'Website care plan', label: 'Monthly care', hint: 'Updates, fixes and changes' },
   { value: 'Custom software', label: 'Custom software', hint: 'Portals, dashboards, automation' },
@@ -24,6 +25,7 @@ const TOPIC_TO_NEED: Record<string, { need: string; note?: string }> = {
   starter: { need: 'New website', note: 'Starter package (1 page)' },
   business: { need: 'New website', note: 'Business package (up to 5 pages)' },
   growth: { need: 'New website', note: 'Growth package (up to 10 pages)' },
+  monthly: { need: 'Monthly website', note: 'Monthly Website plan' },
   fix: { need: 'Website fix' },
   care: { need: 'Website care plan' },
   careBasic: { need: 'Website care plan', note: 'Care Basic' },

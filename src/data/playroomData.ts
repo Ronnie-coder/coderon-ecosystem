@@ -12,7 +12,7 @@ export const liveProjects: PlayroomProject[] = [
     sector: 'Hair salon',
     location: 'Hellerup, Denmark',
     description:
-      'A hair salon in Hellerup with 25 years of experience and a slow, dated website. We redesigned it, set it up for Google with local schema and area pages, and built booking right into the site.',
+      'A hair salon in Hellerup with 25 years of experience and a slow, dated website. We redesigned it, set it up for local search with a page per treatment and area pages, and brought their Planway booking inside the site.',
     tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     imageUrl: '/images/eddiescut-after.webp',
     beforeImage: '/images/eddiescut-before.webp',
@@ -28,30 +28,32 @@ export const liveProjects: PlayroomProject[] = [
     year: '2026',
     stat: { label: 'Mobile PageSpeed', before: 47, after: 92 },
     roles: ['Design', 'Development', 'SEO set-up'],
-    servicesDelivered: ['Website redesign', 'SEO set-up', 'Booking on the site', 'Google Maps', 'Area pages'],
+    servicesDelivered: ['Website redesign', 'Booking inside the site', 'Page per treatment', 'Area pages', 'Local schema', 'Google Maps', 'Search Console'],
     narrative_challenge:
-      'The old website was slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. The booking button sent people away to another site to book. And the salon only appeared for "Hellerup", not for nearby areas their clients come from.',
+      'The old website was slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. Like most Danish salons they book through Planway, but the old booking button sent people off the website to Planway. And the site only talked about Hellerup, not the nearby areas their clients come from.',
     narrative_solution:
-      'We redesigned the website in Next.js with clear prices and a smooth scrolling menu. Booking now opens inside the website, so clients book without leaving. We gave each treatment its own page with the questions people ask, added local business schema and Google Maps, and built pages for the nearby areas the salon wanted to reach, like Gentofte and Charlottenlund.',
+      'We redesigned the website in Next.js with clear prices and a smooth scrolling menu. Instead of sending people away, the Planway booking now opens in a window on the website itself. Each treatment has its own page with the questions people ask, linked from the homepage text. We built pages for Gentofte and Charlottenlund, added local business schema, opening hours and Google Maps, configured the domain (DNS) and the contact form emails, and host the site on Vercel with Vercel Analytics and Google Search Console.',
     narrative_results: [
       'Mobile PageSpeed performance from 47 to 92',
       '100 out of 100 for accessibility, best practices and SEO in Lighthouse',
-      'Clients book inside the website instead of being sent away',
+      'Clients book through Planway inside the website instead of being sent away',
       'A page for each treatment, plus pages for Gentofte and Charlottenlund',
       'Local business schema and Google Maps set up',
     ],
   },
 
   // 2. PALMSURE
+  // A corporate website redesign we still maintain. The client portal is Palmsure's own system;
+  // we linked it from the site. Facts confirmed by Ronnie (Oct 2026).
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
-    category: 'Custom software',
-    sector: 'Insurance brokers',
+    category: 'Website redesign + care plan',
+    sector: 'Insurance brokers (FSP 47156)',
     location: 'South Africa',
     description:
-      'An independent insurance broker (Authorised FSP 47156) that ran on paper. We moved their work onto a modern web platform, and gave them a clear website with a client portal where policyholders can log in.',
-    tech: ['Angular', 'TypeScript', 'Legacy Migration'],
+      'A corporate website redesign for an independent insurance broker: clear cover pages, their legal documents set up properly, a quote request flow and their client portal one click away. We still look after the site every month.',
+    tech: ['Angular', 'TypeScript', 'Vercel'],
     imageUrl: '/images/palmsure-showcase-2026.webp',
     liveUrl: 'https://www.palmsure.co.za/',
     caseStudyUrl: '/playroom/palmsure/',
@@ -59,27 +61,24 @@ export const liveProjects: PlayroomProject[] = [
     clientLogo: '/images/logos/palmsure.webp',
     logo: '/images/logos/palmsure.webp',
     year: '2025',
-    roles: ['Technical Lead', 'Frontend Arch.', 'UI/UX'],
-    servicesDelivered: [
-      'System Migration',
-      'Angular Development',
-      'API Integration',
-    ],
+    roles: ['Design', 'Development', 'Ongoing care'],
+    servicesDelivered: ['Website redesign', 'Legal pages', 'Quote request flow', 'SEO set-up', 'Local schema', 'Review widget', 'Cookie consent', 'Monthly care'],
     narrative_challenge:
-      'Palmsure was operating on decades of paper-based processes and disconnected spreadsheets. This created data redundancy, slow claims processing, and no real-time visibility for management.',
+      'Palmsure is a respected broker, but their website did not show it. Clients needed to understand the cover on offer, find the legal documents a financial services provider must publish, and reach the client portal without hunting for it.',
     narrative_solution:
-      'We engineered a complete digital platform using Angular. The system centralised their entire workflow with strict TypeScript typing and a modular architecture built to handle complex insurance logic securely and reliably.',
+      'We redesigned the site in Angular as a clean corporate website. Each type of cover has its own page, the legal documents are set up and easy to find, and a step-by-step quote form asks the right questions. The Client Portal button links straight to their existing portal. We added a Google review widget, optimised every image for speed, set up local business schema and basic SEO, configured the domain (DNS) and the contact form emails, and host the site on Vercel with Cookiebot consent, Vercel Analytics and Google Search Console.',
     narrative_results: [
-      'Client portal, so policyholders can log in online',
-      'Clear website that explains their cover and the underwriters they work with',
-      '100% digitisation of paper records',
-      'Significantly reduced claim processing time',
-      'Real-time reporting dashboard for management',
+      'A corporate website that explains their cover in plain words',
+      'Legal documents published and easy to find',
+      'Step-by-step quote request form',
+      'Client Portal one click away from every page',
+      'Google reviews shown on the site',
+      'Looked after by us every month',
     ],
   },
 
   // 3. GIFTED TOURS
-  // Results kept to what we can show. Ronnie: add PageSpeed/enquiry numbers back when there is proof.
+  // Facts confirmed by Ronnie (Oct 2026).
   {
     id: 'gifted-tours',
     title: 'Gifted Tours',
@@ -87,8 +86,8 @@ export const liveProjects: PlayroomProject[] = [
     sector: 'Tours and shuttles',
     location: 'Cape Town, South Africa',
     description:
-      'A great tour company with a website that did not show it. We rebuilt it so it is fast, works on every phone, is set up properly for Google, and speaks to visitors in their own language.',
-    tech: ['Next.js', 'SEO set-up', 'Vercel'],
+      'A Cape Town tour and shuttle company with a website that did not do their tours justice. We redesigned it with a booking request form, nine languages, an immersive gallery with maps for every area, and a local SEO set-up.',
+    tech: ['Next.js', 'Google Maps', 'Vercel'],
     imageUrl: '/images/gifted-tours-showcase-2026.webp',
     liveUrl: 'https://giftedtours.co.za/',
     caseStudyUrl: '/playroom/gifted-tours/',
@@ -97,17 +96,17 @@ export const liveProjects: PlayroomProject[] = [
     logo: '/images/logos/gifted-tours.webp',
     year: '2025',
     roles: ['Design', 'Development', 'SEO set-up'],
-    servicesDelivered: ['Website redesign', 'Speed and SEO set-up', 'Hosting and domain set-up'],
+    servicesDelivered: ['Website redesign', 'Booking request form', 'Nine languages', 'Gallery with Google Maps', 'QR business card', 'Local SEO set-up'],
     narrative_challenge:
-      'The old website was slow, hard to use on a phone and did not explain the tours clearly. Their email was also not working properly, so enquiries were getting lost.',
+      'Gifted Tours runs great tours across Cape Town and beyond, but the old website was hard to use on a phone, did not show the places they take guests, and made booking slow. Their email was also not working properly, so enquiries were getting lost.',
     narrative_solution:
-      'We rebuilt the site in Next.js with a mobile-first design, clear tour pages and booking buttons. To welcome visitors from abroad, we added a language switcher with nine languages. We also added structured data so Google understands the business, and set up their email and domain properly.',
+      'We redesigned the site with a booking request form that captures the details they need up front: tour type (Cape Peninsula, wine tasting, Garden Route, airport transfer and more), preferred vehicle, tour length including a custom duration, and date. A language switcher shows the site in nine languages. A large, window-style gallery shows each area with photos and an embedded Google Map. A QR code lets people save their business card in one scan. We also set up local SEO and schema, configured the domain (DNS) and the contact form emails, and host the site on Vercel with analytics and Google Search Console.',
     narrative_results: [
-      'Fast, mobile-first website that matches the quality of their tours',
-      'Available in English, Afrikaans, German, French, Dutch, Spanish, Italian, Portuguese and Chinese',
-      'Dark mode, fleet and gallery pages, and a Book a Tour button on every page',
-      'Structured data and sitemap so Google understands the business',
-      'Business email working again',
+      'Booking requests arrive with tour, vehicle, duration and date filled in',
+      'Website in English, Afrikaans, German, French, Dutch, Spanish, Italian, Portuguese and Chinese',
+      'Gallery that shows every area with photos and Google Maps',
+      'QR code to save their business card',
+      'Local SEO set-up and business email working again',
     ],
   },
 

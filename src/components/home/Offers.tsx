@@ -12,7 +12,7 @@ export default function Offers() {
         <div className="max-w-2xl" data-reveal>
           <p className="eyebrow">What we do</p>
           <h2 id="offers-title" className="h-section mt-3">
-            Four ways we can <span className="accent">help.</span>
+            Sound like <span className="accent">you?</span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-ink/75">
             We do <Link href="/web-design-cape-town/" className="kw">web design in Cape Town</Link> and across South Africa:{' '}
@@ -37,7 +37,8 @@ export default function Offers() {
                       <FiArrowUpRight aria-hidden="true" />
                     </span>
                   </div>
-                  <h3 className="mt-6 text-2xl font-extrabold tracking-tight md:text-3xl">{s.title}</h3>
+                  <p className="eyebrow mt-6">{s.title}</p>
+                  <h3 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight md:text-3xl">{s.need}</h3>
                   <p className="mt-3 text-ink/75">{s.description}</p>
                   <p className="mt-auto pt-8 text-lg font-bold">
                     <span className="text-ink/60">from </span>

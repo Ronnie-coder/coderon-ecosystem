@@ -11,7 +11,7 @@ export default function Testimonials() {
             Don&apos;t take <span className="accent">our</span> word for it.
           </h2>
         </div>
-        <ul className="mt-12 grid gap-6 md:grid-cols-2">
+        <ul className={`mt-12 grid gap-6 ${testimonials.length > 1 ? 'md:grid-cols-2' : 'max-w-3xl'}`}>
           {testimonials.map((t) => (
             <li key={t.id} data-reveal>
               <figure className="card-pop flex h-full flex-col p-7 md:p-9">

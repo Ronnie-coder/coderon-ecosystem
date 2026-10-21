@@ -142,7 +142,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <h2 id="prices-title" className="h-section">Prices</h2>
             <Link href="/pricing/" className="link-underline font-bold">See all prices</Link>
           </div>
-          <div className={`mt-10 grid gap-6 ${plans.length >= 3 ? 'lg:grid-cols-3' : plans.length === 2 ? 'md:grid-cols-2' : 'max-w-xl'}`}>
+          <div className={`mt-10 grid gap-6 ${plans.length >= 4 ? 'md:grid-cols-2 xl:grid-cols-4' : plans.length === 3 ? 'lg:grid-cols-3' : plans.length === 2 ? 'md:grid-cols-2' : 'max-w-xl'}`}>
             {plans.map((p) => (
               <PlanCard key={p.key} plan={p} ctaHref={cta.href} ctaLabel={kind === 'website' ? `Get a quote for ${p.name}` : 'Book a free call'} />
             ))}
