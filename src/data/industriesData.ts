@@ -48,7 +48,7 @@ export const industries: Industry[] = [
     faqs: [
       { q: 'How much does a website for a small business cost?', a: 'Our Starter one-page website is R3,500 once-off and a full Business website with up to 5 pages is R8,500. You get one fixed price before we start.' },
       { q: 'Will I show up first on Google?', a: 'Nobody can honestly promise that. We build your site so Google can understand it and help you set up your Google Business Profile, which is where most local searches start.' },
-      { q: 'Can customers book or WhatsApp me from the site?', a: 'Yes. Every site has WhatsApp and call buttons, and the Growth package can include online booking.' },
+      { q: 'Can customers book or WhatsApp me from the site?', a: 'Yes. Every site has buttons that open WhatsApp or call you in one tap, and the Growth package can include online booking.' },
     ],
   },
   {

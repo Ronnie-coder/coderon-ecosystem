@@ -25,5 +25,17 @@ export const testimonials: Testimonial[] = [
     authorRole: 'Shuttle & Tour Services, Cape Town',
     siteUrl: 'https://www.giftedtours.co.za',
   },
-  // Palmsure: add their real review here when it arrives (no placeholder quotes on the live site).
+  {
+    id: 2,
+    logoUrl: '/images/logos/palmsure.webp',
+    logoAlt: 'Palmsure Insurance Brokers logo',
+    logoWidth: 120,
+    logoHeight: 120,
+    // Their review, received Oct 2026.
+    quote:
+      'Coderon did an exceptional job redesigning our website for Palmsure Insurance Brokers! They seamlessly integrated our client portal link directly into the site, making access effortless for our clients. The team built out clean, structured service pages, set up our basic local SEO to boost our visibility, and ensured all necessary legal documentation was properly integrated to keep the site fully compliant. Their attention to detail, technical skill, and understanding of our industry made the entire process smooth and efficient. Highly recommend Coderon for any web development and digital solutions!',
+    authorName: 'Palmsure Insurance Brokers',
+    authorRole: 'Insurance brokers, South Africa',
+    siteUrl: 'https://www.palmsure.co.za/',
+  },
 ];

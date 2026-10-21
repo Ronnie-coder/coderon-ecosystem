@@ -68,7 +68,7 @@ export default function WebDesignCapeTownPage() {
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-ink/75 md:text-xl">
           Coderon is a Cape Town studio that builds fast, mobile-first websites for small businesses, set up properly for
-          Google, with WhatsApp and call buttons on every page. Clear prices from R3,500 once-off.
+          Google, with buttons on every page that let customers WhatsApp or call you in one tap. Clear prices from R3,500 once-off.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/contact/?topic=new" className="btn-primary px-6 py-4 text-lg">

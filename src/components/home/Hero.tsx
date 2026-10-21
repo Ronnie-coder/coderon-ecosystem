@@ -17,7 +17,7 @@ export default function Hero() {
 
         <div className="mt-8 grid items-end gap-8 md:mt-12 lg:grid-cols-[1.25fr_1fr]">
           <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-ink/75 [animation-delay:150ms] md:text-xl">
-            We design fast websites for small businesses, set up for Google with WhatsApp and call buttons on every page,
+            We design fast websites for small businesses, set up for Google, with buttons that let customers WhatsApp or call you in one tap,
             and build custom software when spreadsheets and paperwork slow you down. Pay once, or monthly.
           </p>
           <div className="flex animate-fade-up flex-wrap gap-3 [animation-delay:250ms] lg:justify-end">

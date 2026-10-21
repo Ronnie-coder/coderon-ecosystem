@@ -30,11 +30,12 @@ export const websitePlans: PricePlan[] = [
     summary: 'One strong page that says what you do and how to reach you.',
     timeline: 'About 1 week',
     includes: [
-      'One scrolling page (up to 5 sections)',
-      'Works on every phone and screen',
-      'Contact form and WhatsApp button',
-      'Page title, description and local business schema',
-      'Help setting up your Google Business Profile',
+      'One scrolling page (up to 5 sections) about your business',
+      'Looks right on every phone, tablet and computer',
+      'Buttons that open WhatsApp or call you in one tap',
+      'A contact form that sends enquiries to your email',
+      'Set up so Google can read your site: page title, description and your business details',
+      'Help setting up your Google Business Profile (your business on Google Maps)',
     ],
   },
   {
@@ -49,9 +50,9 @@ export const websitePlans: PricePlan[] = [
     includes: [
       'Everything in Starter',
       'Up to 5 pages',
-      'Sitemap and Google Search Console connected',
-      'Google Analytics, so you can see your visitors',
-      'Edit text and images yourself, or we do it',
+      'Your site submitted to Google (sitemap and Google Search Console)',
+      'Visitor stats, so you can see how many people visit',
+      'Change text and photos yourself, or ask us to',
       '30 days of free fixes after launch',
     ],
   },
@@ -66,29 +67,30 @@ export const websitePlans: PricePlan[] = [
     includes: [
       'Everything in Business',
       'Up to 10 pages',
-      'Blog or online booking / enquiry system',
-      'A page for each service or area you work in',
-      'Speed and SEO set-up report at launch',
+      'A blog, or online booking or enquiry forms',
+      'A page for each service or area you work in, so people searching for it find the right page',
+      'A launch report on speed and Google set-up',
       '60 days of free fixes after launch',
     ],
   },
 ];
 
-// No upfront cost: the website, hosting and care for one monthly fee, month to month.
+// No big upfront cost. The client owns and pays for their domain; we host and look after the site.
 export const monthlyPlan: PricePlan = {
   key: 'monthly',
   name: 'Monthly Website',
   slug: 'web-development',
   price: { ZAR: 599, USD: 79 },
   period: 'per month',
-  summary: 'No big upfront cost: pay your first month and we start. Domain, hosting, care and small changes included.',
+  summary: 'No big upfront cost: pay your first month and we start. Hosting, care and small changes included.',
   includes: [
-    'Website with up to 3 pages, designed for you',
-    'Domain name (.co.za or .com) and hosting included',
+    'A website with up to 3 pages, designed for you',
+    'Hosting included: we keep your site online',
     'Updates, backups and security checks',
-    'Up to 30 minutes of changes every month',
-    'WhatsApp and call buttons, Google set-up',
-    'First month paid upfront, then month to month',
+    'Up to 30 minutes of changes every month (new photos, prices, text)',
+    'Buttons that open WhatsApp or call you in one tap',
+    'Set up so Google can read your site',
+    'You own your domain (your web address); we help you buy one if needed',
   ],
 };
 
@@ -101,12 +103,12 @@ export const fixPlan: PricePlan = {
   summary: 'Fix speed, "not secure" and phone problems on the website you already have.',
   timeline: '5 to 7 working days',
   includes: [
-    'Free website check first',
-    'Speed improvements',
-    'HTTPS fixed, so "not secure" goes away',
-    'Layout fixed for phones',
-    'Titles, descriptions and sitemap for Google',
-    'Before-and-after report',
+    'We look at your site first and tell you what is wrong, free',
+    'Faster loading, especially on phones',
+    'The "not secure" warning removed (HTTPS fixed)',
+    'Layout fixed so it works on phones',
+    'Page titles, descriptions and sitemap set up for Google',
+    'A before-and-after report',
   ],
 };
 
@@ -118,7 +120,7 @@ export const carePlans: PricePlan[] = [
     price: { ZAR: 450, USD: 59 },
     period: 'per month',
     summary: 'We keep your website safe, updated and online.',
-    includes: ['Updates and backups', 'Uptime monitoring', 'Monthly speed and security check', 'Fixes if something breaks'],
+    includes: ['Software updates and regular backups', 'We get an alert if your site goes down, and fix it', 'A speed and security check every month', 'Fixes if something breaks'],
   },
   {
     key: 'carePlus',
@@ -130,8 +132,8 @@ export const carePlans: PricePlan[] = [
     highlight: true,
     includes: [
       'Everything in Care Basic',
-      'Up to 1 hour of changes every month',
-      'Monthly report in plain English',
+      'Up to 1 hour of changes every month (text, photos, prices, new sections)',
+      'A short monthly report in plain English',
       'Same-day replies on working days',
     ],
   },
