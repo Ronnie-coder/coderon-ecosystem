@@ -107,7 +107,7 @@ export const industries: Industry[] = [
     faqs: [
       { q: 'Can you add our FSP number and disclosures?', a: 'Yes. We show your FSP number and add the policies and disclosures you give us, like your complaints and conflict-of-interest policies. Your compliance officer signs off the content.' },
       { q: 'Can you link our client portal or insurer platform?', a: 'Yes. We add a clear Client Portal button on every page that opens your existing portal.' },
-      { q: 'Do you look after the website afterwards?', a: 'Yes. Palmsure is on a monthly care plan: we keep the site updated, secure and fast, and make changes when they need them.' },
+      { q: 'Do you look after the website afterwards?', a: 'Yes. Our care plans keep your site updated, secure and fast, with changes when you need them. We still look after the Palmsure website every month.' },
     ],
   },
 ];

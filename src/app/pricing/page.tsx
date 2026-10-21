@@ -25,8 +25,12 @@ const faqs = [
     a: 'For once-off work: 50% to start and 50% when you are happy and the site goes live. Monthly Website and care plans are billed monthly, month to month, with 30 days notice to cancel.',
   },
   {
+    q: 'How does the Monthly Website work?',
+    a: 'You pay the first month upfront and we start. Your domain and hosting are included. After that you pay monthly and can cancel any time with 30 days notice. Your domain stays yours; the website itself stays with Coderon if you cancel.',
+  },
+  {
     q: 'What about domain and hosting?',
-    a: 'You pay the domain and hosting provider directly, so you always own them. We help you choose an affordable option and set everything up.',
+    a: 'With a once-off package you pay the domain and hosting provider directly, so you always own them, and we set everything up. With the Monthly Website, your domain and hosting are included in the monthly fee.',
   },
   {
     q: 'Do you work with businesses outside South Africa?',
@@ -88,14 +92,41 @@ export default function PricingPage() {
       </section>
 
       <section aria-labelledby="monthly" className="section border-t-2 border-line/15">
-        <div className="container grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
-          <SectionHead
-            id="monthly"
-            eyebrow="No upfront cost"
-            title={<>Prefer to pay <span className="accent">monthly?</span></>}
-            intro="Get a professional website without paying a lump sum. One monthly fee covers the website, hosting, updates and small changes, month to month."
-          />
-          <PlanCard plan={monthlyPlan} ctaHref="/contact/?topic=monthly" ctaLabel="Get a Monthly Website" />
+        <div className="container grid items-start gap-12 lg:grid-cols-[1.1fr_1fr]">
+          <div>
+            <SectionHead
+              id="monthly"
+              eyebrow="No big upfront cost"
+              title={<>Prefer to pay <span className="accent">monthly?</span></>}
+              intro="Get a professional website without paying a lump sum. One monthly fee covers the website, your domain, hosting, updates and small changes."
+            />
+            <h3 className="mt-10 text-xl font-extrabold">How it works</h3>
+            <ol className="mt-4 space-y-4">
+              {[
+                ['Pay your first month', 'You pay the first month upfront and we start building. No other set-up fee.'],
+                ['We set up your domain', 'No domain yet? We register one for you (.co.za or .com), included in the fee. Already have one? We connect it.'],
+                ['Your site goes live', 'Usually within about a week. Hosting, updates, backups and up to 30 minutes of changes a month are included.'],
+                ['Then month to month', 'You pay monthly. Cancel any time with 30 days notice.'],
+              ].map(([t, d], i) => (
+                <li key={t} className="flex gap-4">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink font-extrabold" aria-hidden="true">{i + 1}</span>
+                  <div>
+                    <p className="font-bold">{t}</p>
+                    <p className="text-ink/75">{d}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="card mt-8 p-5">
+              <h3 className="font-extrabold">If you cancel</h3>
+              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-ink/80">
+                <li>Your domain name is registered in your business&apos;s name, so it stays yours.</li>
+                <li>The website design and code stay with Coderon, and the site goes offline at the end of your notice.</li>
+                <li>Want to keep the website itself? Choose a once-off package instead and it is yours.</li>
+              </ul>
+            </div>
+          </div>
+          <PlanCard plan={monthlyPlan} ctaHref="/contact/?topic=monthly" ctaLabel="Start my Monthly Website" />
         </div>
       </section>
 

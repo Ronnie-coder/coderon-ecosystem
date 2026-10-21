@@ -81,14 +81,14 @@ export const monthlyPlan: PricePlan = {
   slug: 'web-development',
   price: { ZAR: 599, USD: 79 },
   period: 'per month',
-  summary: 'A professional website with no upfront cost. Hosting, care and small changes included.',
+  summary: 'No big upfront cost: pay your first month and we start. Domain, hosting, care and small changes included.',
   includes: [
     'Website with up to 3 pages, designed for you',
-    'No upfront cost',
-    'Hosting, updates and backups included',
+    'Domain name (.co.za or .com) and hosting included',
+    'Updates, backups and security checks',
     'Up to 30 minutes of changes every month',
     'WhatsApp and call buttons, Google set-up',
-    'Month to month',
+    'First month paid upfront, then month to month',
   ],
 };
 

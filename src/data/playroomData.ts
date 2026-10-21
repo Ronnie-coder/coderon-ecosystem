@@ -48,7 +48,7 @@ export const liveProjects: PlayroomProject[] = [
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
-    category: 'Website redesign + care plan',
+    category: 'Website redesign',
     sector: 'Insurance brokers (FSP 47156)',
     location: 'South Africa',
     description:
