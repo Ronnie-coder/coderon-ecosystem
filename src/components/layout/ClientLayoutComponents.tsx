@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Navbar from "@/components/Navbar";
 import { BackToTopButton } from '@/components/BackToTopButton';
-import CookieBanner from "@/components/layout/CookieBanner";
+import Consent from '@/components/analytics/Consent';
 import Reveal from '@/components/motion/Reveal';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 
@@ -27,7 +27,7 @@ export const ClientLayoutComponents = ({ part = 'top' }: { part?: 'top' | 'botto
         <WhatsAppButton />
         <BackToTopButton />
       </aside>
-      <CookieBanner />
+      <Consent />
     </>
   );
 };

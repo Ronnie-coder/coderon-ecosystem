@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "October 16, 2026";
+  const lastUpdated = "October 22, 2026";
 
   return (
     <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
@@ -28,6 +28,15 @@ export default function PrivacyPolicyPage() {
           <li>Maintain the security and integrity of our Site.</li>
         </ul>
 
+
+        <h2>Cookies and analytics</h2>
+        <p>When you first visit, we ask before using any analytics cookies. You can change your choice at any time with &quot;Cookie settings&quot; at the bottom of every page.</p>
+        <ul>
+          <li><strong>Necessary (always on):</strong> remembers your theme, animation and currency choices, and keeps a draft of the quote form in your own browser.</li>
+          <li><strong>Analytics (only if you accept):</strong> Google Analytics and Microsoft Clarity show us which pages people visit and how they use them, so we can improve the site. We do not use this for advertising.</li>
+          <li><strong>Vercel Analytics:</strong> counts page visits without cookies and without identifying you.</li>
+        </ul>
+        <p>When you send the quote form, your details are emailed to us through our email provider (Resend) so we can reply.</p>
 
         <h2>3. Data Sharing and Disclosure</h2>
         <p>We do not sell your personal information. We may share it with trusted third-party service providers (like our email service, Resend) only as necessary to deliver our services. These parties are contractually obligated to keep your information confidential.</p>

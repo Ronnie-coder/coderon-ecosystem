@@ -8,6 +8,7 @@
 // Accessibility: each step's heading takes focus when it appears, the tracker marks the
 // current step with aria-current, and errors are announced and tied to their fields.
 import { useEffect, useRef, useState } from 'react';
+import { track } from '@/lib/track';
 import { FiCheck, FiCheckCircle, FiAlertCircle, FiLoader, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
 const NEEDS = [
@@ -111,7 +112,10 @@ export const ConsultationForm = () => {
   const next = () => {
     const e = validate(step);
     setErrors(e);
-    if (Object.keys(e).length === 0) setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    if (Object.keys(e).length === 0) {
+      track('quote_step', { step: step + 1, step_name: STEPS[step], need: form.need });
+      setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    }
   };
 
   const submit = async (ev: React.FormEvent) => {
@@ -139,6 +143,7 @@ export const ConsultationForm = () => {
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error);
       setStatus('sent');
+      track('generate_lead', { need: form.need, package: form.note || undefined, prefer: form.prefer });
       try {
         localStorage.removeItem(DRAFT_KEY);
       } catch {}

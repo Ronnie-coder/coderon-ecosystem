@@ -8,6 +8,7 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { Logo } from '@/components/Logo';
 import { MotionSwitch, ThemeButton, QUOTE_HREF, WHATSAPP_HREF } from '@/components/Navbar';
 import { services } from '@/data/servicesData';
+import { CookieSettingsButton } from '@/components/analytics/Consent';
 
 const socials = [
   { href: 'https://github.com/Ronnie-coder', label: 'GitHub', Icon: FaGithub },
@@ -145,6 +146,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-5">
             <Link href="/privacy-policy/" className="hover:text-ink">Privacy</Link>
             <Link href="/terms-of-service/" className="hover:text-ink">Terms</Link>
+            <CookieSettingsButton className="hover:text-ink" />
             <CapeTownClock />
           </div>
         </div>

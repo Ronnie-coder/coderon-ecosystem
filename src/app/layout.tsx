@@ -2,12 +2,10 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import { Suspense } from 'react';
-import Script from 'next/script';
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
 import "@/styles/demos.scss";
 import { ClientLayoutComponents } from '@/components/layout/ClientLayoutComponents';
-import { AnalyticsWrapper } from '@/components/AnalyticsWrapper';
 import { ThemeProvider, prefsBootScript } from "@/contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
 import { SITE_URL, organizationJsonLd } from "@/lib/site";
@@ -103,23 +101,6 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: prefsBootScript }} />
-        {/* ✅ Google Analytics 4 Script - Injected safely for Next.js App Router */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-TQQX3FHT1B`}
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-TQQX3FHT1B');
-            `,
-          }}
-        />
       </head>
       <body>
         <script
@@ -127,8 +108,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <ThemeProvider>
-          {/* ✅ GA only in ONE place now */}
-          <AnalyticsWrapper />
           <Suspense fallback={null}>
             <ClientLayoutComponents />
           </Suspense>

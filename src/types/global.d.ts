@@ -43,10 +43,6 @@ export interface PlayroomDemo {
 
 declare global {
   interface Window {
-    gtag: (
-      command: 'config' | 'event',
-      target: string,
-      params?: { [key: string]: any }
-    ) => void;
+    gtag: (...args: any[]) => void;
   }
 }

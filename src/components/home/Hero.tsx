@@ -11,14 +11,14 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden">
       <div className="container pb-14 pt-12 md:pb-20 md:pt-20">
         <p className="eyebrow animate-fade-up">Coderon · Cape Town web studio</p>
-        <h1 id="hero-title" className="h-display mt-5 max-w-[21ch]">
-          Websites and software for businesses <span className="accent marker">ready to grow.</span>
+        <h1 id="hero-title" className="h-display mt-5 max-w-[18ch]">
+          Small business. <span className="accent marker">Serious</span> website.
         </h1>
 
         <div className="mt-8 grid items-end gap-8 md:mt-12 lg:grid-cols-[1.25fr_1fr]">
           <p className="max-w-xl animate-fade-up text-lg leading-relaxed text-ink/75 [animation-delay:150ms] md:text-xl">
-            We design fast websites for small businesses, set up for Google, with buttons that let customers WhatsApp or call you in one tap,
-            and build custom software when spreadsheets and paperwork slow you down. Pay once, or monthly.
+            Fast websites that look the part, are set up properly for Google, and let customers WhatsApp or call you in one tap.
+            Need more? We build custom software too.
           </p>
           <div className="flex animate-fade-up flex-wrap gap-3 [animation-delay:250ms] lg:justify-end">
             <Link href="/contact/" className="btn-primary px-6 py-4 text-lg">
@@ -33,7 +33,10 @@ export default function Hero() {
         <ul className="mt-12 flex animate-fade-up flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-ink/70 [animation-delay:350ms]">
           <li className="flex items-center gap-2">
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-gold" />
-            Websites from <Price price={websitePlans[0].price} className="text-ink" />, or <Price price={monthlyPlan.price} className="text-ink" /> a month
+            <span>
+              Websites from <Price price={websitePlans[0].price} className="text-ink" />, or{' '}
+              <Price price={monthlyPlan.price} className="text-ink" /> a month
+            </span>
           </li>
           <li className="flex items-center gap-2">
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-gold" />

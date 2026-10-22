@@ -86,8 +86,8 @@ export const liveProjects: PlayroomProject[] = [
     sector: 'Tours and shuttles',
     location: 'Cape Town, South Africa',
     description:
-      'A Cape Town tour and shuttle company with a website that did not do their tours justice. We redesigned it with a booking request form, nine languages, an immersive gallery with maps for every area, and a local SEO set-up.',
-    tech: ['Next.js', 'Google Maps', 'Vercel'],
+      'A Cape Town tour and shuttle company with a website that did not do their tours justice. We redesigned it with a booking request form, nine languages, a full-width adventure gallery, and a local SEO set-up.',
+    tech: ['Next.js', 'Multilingual', 'Vercel'],
     imageUrl: '/images/gifted-tours-showcase-2026.webp',
     liveUrl: 'https://giftedtours.co.za/',
     caseStudyUrl: '/playroom/gifted-tours/',
@@ -96,15 +96,15 @@ export const liveProjects: PlayroomProject[] = [
     logo: '/images/logos/gifted-tours.webp',
     year: '2025',
     roles: ['Design', 'Development', 'SEO set-up'],
-    servicesDelivered: ['Website redesign', 'Booking request form', 'Nine languages', 'Gallery with Google Maps', 'QR business card', 'Local SEO set-up'],
+    servicesDelivered: ['Website redesign', 'Booking request form', 'Nine languages', 'Adventure gallery', 'QR business card', 'Local SEO set-up'],
     narrative_challenge:
       'Gifted Tours runs great tours across Cape Town and beyond, but the old website was hard to use on a phone, did not show the places they take guests, and made booking slow. Their email was also not working properly, so enquiries were getting lost.',
     narrative_solution:
-      'We redesigned the site with a booking request form that captures the details they need up front: tour type (Cape Peninsula, wine tasting, Garden Route, airport transfer and more), preferred vehicle, tour length including a custom duration, and date. A language switcher shows the site in nine languages. A large, window-style gallery shows each area with photos and an embedded Google Map. A QR code lets people save their business card in one scan. We also set up local SEO and schema, configured the domain (DNS) and the contact form emails, and host the site on Vercel with analytics and Google Search Console.',
+      'We redesigned the site with a booking request form that captures the details they need up front: tour type (Cape Peninsula, wine tasting, Garden Route, airport transfer and more), preferred vehicle, tour length including a custom duration, and date. A language switcher shows the site in nine languages. A large, full-width gallery shows each adventure with its photo, its name and the place it happens. A QR code lets people save their business card in one scan. We also set up local SEO and schema, configured the domain (DNS) and the contact form emails, and host the site on Vercel with analytics and Google Search Console.',
     narrative_results: [
       'Booking requests arrive with tour, vehicle, duration and date filled in',
       'Website in English, Afrikaans, German, French, Dutch, Spanish, Italian, Portuguese and Chinese',
-      'Gallery that shows every area with photos and Google Maps',
+      'A full-width gallery of their adventures, each with its name and place',
       'QR code to save their business card',
       'Local SEO set-up and business email working again',
     ],
