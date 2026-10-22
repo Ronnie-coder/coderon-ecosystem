@@ -7,6 +7,7 @@ import WhyCoderon from '@/components/home/WhyCoderon';
 import Steps from '@/components/home/Steps';
 import Testimonials from '@/components/home/Testimonials';
 import LatestJournal from '@/components/home/LatestJournal';
+import SectionBreak from '@/components/ui/SectionBreak';
 import { getAllPosts } from '@/lib/journal';
 
 export const metadata: Metadata = {
@@ -24,12 +25,16 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <SectionBreak />
       <WhoWeHelp />
       <WorkShowcase />
+      <SectionBreak />
       <Offers />
       <WhyCoderon />
       <Steps />
+      <SectionBreak />
       <Testimonials />
+      <SectionBreak />
       <LatestJournal posts={posts} />
     </>
   );

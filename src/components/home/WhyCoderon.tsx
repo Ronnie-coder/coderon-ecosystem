@@ -12,8 +12,14 @@ const reasons = [
 // Dark band: why Coderon over the alternatives, with the main call to action.
 export default function WhyCoderon() {
   return (
-    <section aria-labelledby="why-title" className="border-y-2 border-line bg-[#16130E] text-[#F2EBDD]">
-      <div className="container py-16 md:py-24">
+    <section aria-labelledby="why-title" className="band-angled relative overflow-hidden bg-[#16130E] text-[#F2EBDD] dark:bg-[#2B2416]" data-snap>
+      <div aria-hidden="true" className="pointer-events-none absolute -left-20 bottom-0 text-[#F2C230] opacity-[0.07]" data-speed="1.15">
+        <svg viewBox="10 10 44 44" className="h-[420px] w-[420px]">
+          <path d="M44.5 21.5 A16 16 0 1 0 44.5 42.5" fill="none" stroke="currentColor" strokeWidth={7} strokeLinecap="round" />
+          <rect x="43" y="28" width="7" height="8" rx="1.5" fill="currentColor" />
+        </svg>
+      </div>
+      <div className="container relative py-24 md:py-32">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div data-reveal>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#F2C230]">Why Coderon</p>

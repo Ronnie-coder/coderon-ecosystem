@@ -5,7 +5,7 @@ import type { JournalPost } from '@/lib/journal';
 export default function LatestJournal({ posts }: { posts: JournalPost[] }) {
   if (!posts.length) return null;
   return (
-    <section aria-labelledby="journal-title" className="section border-t-2 border-line/15">
+    <section aria-labelledby="journal-title" className="section" data-snap>
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-6" data-reveal>
           <div>

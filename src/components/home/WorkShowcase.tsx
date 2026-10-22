@@ -30,7 +30,7 @@ export default function WorkShowcase() {
   }, [autoplay, index, go]);
 
   return (
-    <section aria-labelledby="work-title" className="section">
+    <section aria-labelledby="work-title" className="section" data-snap>
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-6" data-reveal>
           <div>

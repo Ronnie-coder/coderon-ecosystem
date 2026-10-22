@@ -8,7 +8,14 @@ import { websitePlans, monthlyPlan } from '@/data/pricingData';
 // Only the gold markers and the lines below it animate (CSS).
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden">
+    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden" data-snap>
+      {/* Big faint logo mark that drifts slower than the page (parallax). */}
+      <div aria-hidden="true" className="pointer-events-none absolute -right-28 -top-10 -z-10 text-[var(--logo-accent)] opacity-[0.08]" data-speed="0.6">
+        <svg viewBox="10 10 44 44" className="h-[460px] w-[460px] md:h-[680px] md:w-[680px]">
+          <path d="M44.5 21.5 A16 16 0 1 0 44.5 42.5" fill="none" stroke="currentColor" strokeWidth={7} strokeLinecap="round" />
+          <rect x="43" y="28" width="7" height="8" rx="1.5" fill="currentColor" />
+        </svg>
+      </div>
       <div className="container pb-14 pt-12 md:pb-20 md:pt-20">
         <p className="eyebrow animate-fade-up">Coderon · Cape Town web studio</p>
         <h1 id="hero-title" className="h-display mt-5 max-w-[20ch]">

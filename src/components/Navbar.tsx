@@ -94,7 +94,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b-2 transition-colors duration-200 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b-2 transition-colors duration-200 ${
         scrolled || open ? 'border-line bg-paper/95 backdrop-blur' : 'border-transparent bg-paper'
       }`}
     >

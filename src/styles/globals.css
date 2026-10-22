@@ -37,6 +37,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -173,3 +174,10 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 /* Keyword links inside body copy: bold, underlined, gold on hover. They pass page
    authority to service pages and tell readers (and Google) what each page is about. */
 .kw { @apply font-bold text-ink underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-gold-text; }
+
+/* Section breaker lines draw outwards from the logo once revealed. */
+html[data-motion='full'] .section-break__line { transform: scaleX(0); transition: transform 1s cubic-bezier(.65,0,.35,1) 0.15s; }
+html[data-motion='full'] .is-revealed .section-break__line { transform: scaleX(1); }
+
+/* Angled edges for dark bands (section breakers between light and dark). */
+.band-angled { clip-path: polygon(0 3vw, 100% 0, 100% calc(100% - 3vw), 0 100%); }

@@ -7,7 +7,7 @@ import { Price } from '@/components/ui/Price';
 // The four offers, in plain English, with a "from" price on each.
 export default function Offers() {
   return (
-    <section aria-labelledby="offers-title" className="section border-t-2 border-line/15">
+    <section aria-labelledby="offers-title" className="section" data-snap>
       <div className="container">
         <div className="max-w-2xl" data-reveal>
           <p className="eyebrow">What we do</p>

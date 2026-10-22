@@ -7,7 +7,7 @@ const steps = [
 
 export default function Steps() {
   return (
-    <section aria-labelledby="steps-title" className="section">
+    <section aria-labelledby="steps-title" className="section" data-snap>
       <div className="container">
         <div className="max-w-2xl" data-reveal>
           <p className="eyebrow">How it works</p>

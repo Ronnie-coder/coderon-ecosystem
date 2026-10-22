@@ -111,8 +111,14 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <ClientLayoutComponents />
           </Suspense>
-          <main id="main">{children}</main>
-          <Footer />
+          {/* ScrollSmoother moves #smooth-content; fixed UI (header, floating buttons, consent) stays outside it. */}
+          <div id="smooth-wrapper">
+            <div id="smooth-content">
+              <div aria-hidden="true" className="h-[72px]" />
+              <main id="main">{children}</main>
+              <Footer />
+            </div>
+          </div>
           <Suspense fallback={null}>
             <ClientLayoutComponents part="bottom" />
           </Suspense>

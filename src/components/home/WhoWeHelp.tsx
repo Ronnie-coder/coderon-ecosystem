@@ -5,7 +5,7 @@ import Accent from '@/components/ui/Accent';
 
 export default function WhoWeHelp() {
   return (
-    <section aria-labelledby="who-title" className="section">
+    <section aria-labelledby="who-title" className="section" data-snap>
       <div className="container">
         <div className="max-w-2xl" data-reveal>
           <p className="eyebrow">Who we help</p>

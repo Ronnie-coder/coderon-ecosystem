@@ -3,7 +3,7 @@ import { testimonials } from '@/data/testimonialsData';
 
 export default function Testimonials() {
   return (
-    <section aria-labelledby="testimonials-title" className="section border-t-2 border-line/15">
+    <section aria-labelledby="testimonials-title" className="section" data-snap>
       <div className="container">
         <div className="max-w-2xl" data-reveal>
           <p className="eyebrow">Client words</p>
