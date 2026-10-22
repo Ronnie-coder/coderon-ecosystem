@@ -13,8 +13,8 @@ const reasons = [
 export default function WhyCoderon() {
   return (
     <section aria-labelledby="why-title" className="band-angled relative overflow-hidden bg-[#16130E] text-[#F2EBDD] dark:bg-[#2B2416]" data-snap>
-      <div aria-hidden="true" className="pointer-events-none absolute -left-20 bottom-0 text-[#F2C230] opacity-[0.07]" data-speed="1.15">
-        <svg viewBox="10 10 44 44" className="h-[420px] w-[420px]">
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-[12%] left-[3%] hidden text-[#F2C230] opacity-[0.07] xl:block" data-speed="1.05">
+        <svg viewBox="8 8 48 48" className="h-[240px] w-[240px]">
           <path d="M44.5 21.5 A16 16 0 1 0 44.5 42.5" fill="none" stroke="currentColor" strokeWidth={7} strokeLinecap="round" />
           <rect x="43" y="28" width="7" height="8" rx="1.5" fill="currentColor" />
         </svg>
