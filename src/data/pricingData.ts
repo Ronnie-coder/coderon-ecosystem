@@ -69,6 +69,7 @@ export const websitePlans: PricePlan[] = [
       'Up to 10 pages',
       'A blog, or online booking or enquiry forms',
       'A page for each service or area you work in, so people searching for it find the right page',
+      'Tracking of calls, WhatsApp taps and enquiries, so you see what brings in customers',
       'A launch report on speed and Google set-up',
       '60 days of free fixes after launch',
     ],

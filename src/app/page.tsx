@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Hero from '@/components/home/Hero';
-import Marquee from '@/components/home/Marquee';
 import WorkShowcase from '@/components/home/WorkShowcase';
 import Offers from '@/components/home/Offers';
 import WhoWeHelp from '@/components/home/WhoWeHelp';
@@ -25,7 +24,6 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <Marquee />
       <WhoWeHelp />
       <WorkShowcase />
       <Offers />
