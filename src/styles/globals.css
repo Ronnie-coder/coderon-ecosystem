@@ -156,22 +156,18 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 }
 @keyframes reveal-fallback { to { opacity: 1; } }
 
-/* Gold marker that draws under highlighted words in headlines. */
-.marker { position: relative; white-space: nowrap; }
-.marker::after {
-  content: '';
-  position: absolute;
-  left: -0.04em;
-  right: -0.04em;
-  bottom: 0.06em;
-  height: 0.22em;
-  z-index: -1;
-  border-radius: 0.1em;
-  background: rgb(var(--gold) / 0.55);
-  transform-origin: left;
+/* Gold marker that draws under highlighted words in headlines. Drawn as a background so it
+   follows the text when a long phrase wraps onto several lines. */
+.marker {
+  background-image: linear-gradient(rgb(var(--gold) / 0.55), rgb(var(--gold) / 0.55));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 100% 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   animation: marker 0.9s cubic-bezier(.65,0,.35,1) 0.35s both;
 }
-@keyframes marker { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes marker { from { background-size: 0% 0.2em; } to { background-size: 100% 0.2em; } }
 @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Keyword links inside body copy: bold, underlined, gold on hover. They pass page

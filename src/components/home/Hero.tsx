@@ -11,8 +11,9 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden">
       <div className="container pb-14 pt-12 md:pb-20 md:pt-20">
         <p className="eyebrow animate-fade-up">Coderon · Cape Town web studio</p>
-        <h1 id="hero-title" className="h-display mt-5 max-w-[18ch]">
-          Small business. <span className="accent marker">Serious</span> website.
+        <h1 id="hero-title" className="h-display mt-5 max-w-[20ch]">
+          Your business is real.{' '}<br className="hidden lg:block" />
+          <span className="accent marker">Your website should look it.</span>
         </h1>
 
         <div className="mt-8 grid items-end gap-8 md:mt-12 lg:grid-cols-[1.25fr_1fr]">
