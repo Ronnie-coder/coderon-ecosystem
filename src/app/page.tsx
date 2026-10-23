@@ -11,7 +11,7 @@ import SectionBreak from '@/components/ui/SectionBreak';
 import { getAllPosts } from '@/lib/journal';
 
 export const metadata: Metadata = {
-  title: { absolute: 'Web Design Cape Town & Custom Software for Small Businesses | Coderon' },
+  title: { absolute: 'Web Design Cape Town & Custom Software | Coderon' },
   description:
     'Coderon is a Cape Town web studio: fast websites set up for Google with WhatsApp buttons, from R3,500 once-off, plus custom software for growing businesses.',
   alternates: { canonical: '/' },

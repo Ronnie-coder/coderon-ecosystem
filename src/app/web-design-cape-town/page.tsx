@@ -11,7 +11,7 @@ import BrowserFrame from '@/components/ui/BrowserFrame';
 import Accent from '@/components/ui/Accent';
 
 export const metadata: Metadata = {
-  title: 'Web Design Cape Town: Small Business Websites from R3,500',
+  title: 'Web Design Cape Town: Websites from R3,500',
   description:
     'Web design in Cape Town for small businesses: fast, mobile-first websites set up for Google, with WhatsApp buttons and clear once-off prices from R3,500.',
   alternates: { canonical: canonical('web-design-cape-town') },

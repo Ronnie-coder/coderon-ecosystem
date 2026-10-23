@@ -24,7 +24,7 @@ export const industries: Industry[] = [
   {
     slug: 'local-service-businesses',
     name: 'Local service businesses',
-    seoTitle: 'Websites for Plumbers, Electricians, Salons & Local Businesses',
+    seoTitle: 'Websites for Plumbers, Salons & Local Businesses',
     metaDescription:
       'Fast, mobile-first websites for local service businesses in South Africa: trades, salons, clinics and cleaners. Click-to-WhatsApp, Google set-up, from R3,500.',
     headline: 'Websites for businesses people *call*.',
@@ -54,7 +54,7 @@ export const industries: Industry[] = [
   {
     slug: 'tourism',
     name: 'Tour operators & guesthouses',
-    seoTitle: 'Website Design for Tour Operators & Guesthouses in South Africa',
+    seoTitle: 'Websites for Tour Operators & Guesthouses',
     metaDescription:
       'Websites for tour operators, shuttle services and guesthouses in South Africa: beautiful photos, fast on mobile, multilingual, with Book Now and WhatsApp buttons.',
     headline: 'Websites that make people want to *book*.',
@@ -83,7 +83,7 @@ export const industries: Industry[] = [
   {
     slug: 'insurance-brokers',
     name: 'Insurance brokers & FSPs',
-    seoTitle: 'Website Design for Insurance Brokers (FSPs) in South Africa',
+    seoTitle: 'Websites for Insurance Brokers (FSPs) in SA',
     metaDescription:
       'Websites for South African insurance brokers and financial services providers: clear cover pages, legal documents, quote request forms, client portal links and monthly care.',
     headline: 'Websites that make *brokers* look as trusted as they are.',

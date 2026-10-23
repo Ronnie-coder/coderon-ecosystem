@@ -11,8 +11,8 @@ interface SalesDoughnutChartProps {
 const SalesDoughnutChart = ({ chartData, chartOptions }: SalesDoughnutChartProps) => {
   return (
     <div className="c-chart-container">
-      <h3 className="c-chart-container__title">Sales by Region</h3>
-      <Doughnut data={chartData} options={chartOptions} />
+      <h2 className="c-chart-container__title">Sales by Region</h2>
+      <Doughnut data={chartData} options={chartOptions} aria-label="Doughnut chart of sales by region (sample data)" role="img" />
     </div>
   );
 };

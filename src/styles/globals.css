@@ -59,6 +59,7 @@
 
   /* Motion off: either the visitor's OS setting or our own switch (html[data-motion="reduce"]). */
   @media (prefers-reduced-motion: reduce) {
+    html:not([data-motion='full']),
     html:not([data-motion='full']) *,
     html:not([data-motion='full']) *::before,
     html:not([data-motion='full']) *::after {
@@ -68,6 +69,7 @@
       scroll-behavior: auto !important;
     }
   }
+  html[data-motion='reduce'],
   html[data-motion='reduce'] *,
   html[data-motion='reduce'] *::before,
   html[data-motion='reduce'] *::after {

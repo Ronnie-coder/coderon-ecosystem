@@ -6,7 +6,7 @@ import PageHeader from '@/components/ui/PageHeader';
 import Accent from '@/components/ui/Accent';
 
 export const metadata: Metadata = {
-  title: 'Who We Help: Websites for Local Businesses, Tourism & Brokers',
+  title: 'Who We Help: Local Businesses, Tourism & Brokers',
   description:
     'Coderon builds websites and software for local service businesses, tour operators and guesthouses, and insurance brokers in South Africa and abroad.',
   alternates: { canonical: '/industries/' },

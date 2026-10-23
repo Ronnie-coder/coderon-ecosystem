@@ -7,7 +7,7 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { getAllPosts, getPost } from '@/lib/journal';
 import { getNotionBlocks } from '@/lib/notionJournal';
 import NotionBlocks from '@/components/journal/NotionBlocks';
-import { canonical, SITE_URL } from '@/lib/site';
+import { canonical, SITE_URL, metaDescription, seoTitle } from '@/lib/site';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(slug);
   if (!post) return { title: 'Post not found' };
   return {
-    title: post.title,
-    description: post.description,
+    title: seoTitle(post.title),
+    description: metaDescription(post.description),
     alternates: { canonical: canonical(`journal/${slug}`) },
     openGraph: {
       type: 'article',

@@ -3,8 +3,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Demo: Business AI Chatbot',
-  description: 'Interact with a live demo of a Coderon business chatbot.',
+  title: 'Demo: Business Chatbot',
+  description: 'Try a live demo of a business chatbot built by Coderon: it answers questions about our services and points you to the right one.',
+  alternates: { canonical: '/playroom/business-chatbot/' },
 };
 
 const BusinessChatbotPage = () => {

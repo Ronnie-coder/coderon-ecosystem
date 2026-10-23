@@ -6,7 +6,7 @@ import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import { industries, industryBySlug } from '@/data/industriesData';
 import { liveProjects } from '@/data/playroomData';
 import { priceFor } from '@/data/pricingData';
-import { canonical, SITE_URL } from '@/lib/site';
+import { canonical, SITE_URL, metaDescription } from '@/lib/site';
 import Accent from '@/components/ui/Accent';
 import BrowserFrame from '@/components/ui/BrowserFrame';
 import PlanCard from '@/components/pricing/PlanCard';
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!industry) return { title: 'Not found' };
   return {
     title: industry.seoTitle,
-    description: industry.metaDescription,
+    description: metaDescription(industry.metaDescription),
     alternates: { canonical: canonical(`industries/${slug}`) },
     openGraph: { url: canonical(`industries/${slug}`) },
   };

@@ -92,9 +92,9 @@ export const ConsultationForm = () => {
     headingRef.current?.focus();
   }, [step, status]);
 
+  // Errors stay put until the next "Next"/submit, so the layout never jumps while someone types.
   const update = (key: keyof Form, value: string) => {
     setForm((f) => ({ ...f, [key]: value }));
-    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   };
 
   const validate = (s: number): Errors => {

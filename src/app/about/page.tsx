@@ -7,7 +7,7 @@ import PageHeader from '@/components/ui/PageHeader';
 export const metadata: Metadata = {
   title: 'About Coderon',
   description:
-    'Coderon is a small web and software studio in Cape Town, founded by Ronnie Nyamhute. We build fast websites and custom software for growing businesses in South Africa and abroad.',
+    'Coderon is a Cape Town web and software studio founded by Ronnie Nyamhute. Fast websites and custom software for growing businesses.',
   alternates: { canonical: '/about/' },
 };
 

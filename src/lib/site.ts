@@ -49,3 +49,18 @@ export const organizationJsonLd = {
   sameAs: BUSINESS.sameAs,
   knowsAbout: ['Website design', 'Website speed optimisation', 'Local SEO set-up', 'Custom software', 'Business automation'],
 };
+
+/** Shortens text for a meta description (Google shows about 155-160 characters). */
+export function metaDescription(text: string, max = 158): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const firstSentence = clean.match(/^.*?[.!?](\s|$)/)?.[0]?.trim();
+  if (firstSentence && firstSentence.length >= 70 && firstSentence.length <= max) return firstSentence;
+  const cut = clean.slice(0, max - 1);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '…';
+}
+
+/** Page title for the <title> tag: drops the " | Coderon" suffix when it would push past ~60 characters. */
+export function seoTitle(title: string): string | { absolute: string } {
+  return title.length + ' | Coderon'.length > 62 ? { absolute: title } : title;
+}

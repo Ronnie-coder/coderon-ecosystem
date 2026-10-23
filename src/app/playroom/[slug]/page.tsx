@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiCheck } from 'react-icons/fi';
 import { liveProjects } from '@/data/playroomData';
-import { canonical } from '@/lib/site';
+import { canonical, metaDescription } from '@/lib/site';
 import BrowserFrame from '@/components/ui/BrowserFrame';
 import CountUp from '@/components/ui/CountUp';
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!project) return { title: 'Case study not found' };
   return {
     title: `${project.title}: case study`,
-    description: project.description,
+    description: metaDescription(project.description),
     alternates: { canonical: canonical(`playroom/${slug}`) },
     openGraph: { url: canonical(`playroom/${slug}`), images: [{ url: project.imageUrl }] },
   };
