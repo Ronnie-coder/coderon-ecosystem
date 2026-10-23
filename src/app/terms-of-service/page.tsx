@@ -12,7 +12,7 @@ export default function TermsOfServicePage() {
 
   return (
     <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
-      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-extrabold [&>h1]:tracking-tight [&>h1]:text-ink">
+      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-semibold [&>h1]:tracking-tight [&>h1]:text-ink">
         <h1>Terms of Service</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
         

@@ -51,7 +51,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <div>
             <div className="flex items-center gap-4">
               {project.clientLogo && (
-                <span className="grid h-14 w-14 place-items-center rounded-xl border-2 border-line bg-white p-2">
+                <span className="grid h-14 w-14 place-items-center rounded-xl border border-line bg-white p-2">
                   <Image src={project.clientLogo} alt="" width={44} height={44} className="h-auto max-h-10 w-auto" />
                 </span>
               )}
@@ -66,11 +66,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
               </a>
             </div>
           </div>
-          <BrowserFrame src={project.imageUrl} alt={`Homepage of the ${project.title} website`} url={host} priority className="shadow-hard-lg" />
+          <BrowserFrame src={project.imageUrl} alt={`Homepage of the ${project.title} website`} url={host} priority className="shadow-soft-lg" />
         </div>
       </header>
 
-      <section aria-label="Project facts" className="border-y-2 border-line bg-card">
+      <section aria-label="Project facts" className="border-y border-line bg-card">
         <dl className="container grid gap-6 py-8 sm:grid-cols-3 lg:grid-cols-[1fr_1fr_0.6fr_2fr]">
           {facts.map((f) => (
             <div key={f.label}>
@@ -84,7 +84,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <dd className="mt-2">
                 <ul className="flex flex-wrap gap-2">
                   {project.servicesDelivered.map((s) => (
-                    <li key={s} className="chip whitespace-nowrap border-line/40 text-sm">{s}</li>
+                    <li key={s} className="chip whitespace-nowrap border-line text-sm">{s}</li>
                   ))}
                 </ul>
               </dd>
@@ -95,12 +95,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
       {project.stat && (
         <section aria-label="Result" className="container pt-16">
-          <div className="card flex flex-col gap-6 border-ink bg-gold p-8 text-[#16130E] shadow-hard-lg dark:border-gold md:flex-row md:items-center md:justify-between md:p-10" data-reveal>
+          <div className="card flex flex-col gap-6 border-gold bg-gold p-8 text-[#16130E] shadow-soft-lg md:flex-row md:items-center md:justify-between md:p-10" data-reveal>
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.18em]">{project.stat.label}</p>
               <p className="mt-2 font-serif text-2xl italic">Google Lighthouse, mobile test, before and after</p>
             </div>
-            <p className="flex items-baseline gap-4 text-6xl font-extrabold tracking-tight md:text-8xl">
+            <p className="flex items-baseline gap-4 text-6xl font-semibold tracking-tight md:text-8xl">
               <span className="opacity-50 line-through decoration-4">{project.stat.before}</span>
               <span aria-hidden="true">→</span>
               <CountUp from={project.stat.before} to={project.stat.after} />
@@ -114,21 +114,21 @@ export default async function CaseStudyPage({ params }: PageProps) {
           {project.narrative_challenge && (
             <div data-reveal>
               <p className="font-mono text-sm font-semibold text-ink/65">01</p>
-              <h2 className="mt-2 text-2xl font-extrabold">The problem</h2>
+              <h2 className="mt-2 text-2xl font-semibold">The problem</h2>
               <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_challenge}</p>
             </div>
           )}
           {project.narrative_solution && (
             <div data-reveal>
               <p className="font-mono text-sm font-semibold text-ink/65">02</p>
-              <h2 className="mt-2 text-2xl font-extrabold">What we did</h2>
+              <h2 className="mt-2 text-2xl font-semibold">What we did</h2>
               <p className="mt-3 text-lg leading-relaxed text-ink/80">{project.narrative_solution}</p>
             </div>
           )}
           {project.narrative_results && project.narrative_results.length > 0 && (
             <div className="card-pop h-fit p-7" data-reveal>
               <p className="font-mono text-sm font-semibold text-ink/65">03</p>
-              <h2 className="mt-2 text-2xl font-extrabold">The result</h2>
+              <h2 className="mt-2 text-2xl font-semibold">The result</h2>
               <ul className="mt-4 space-y-3">
                 {project.narrative_results.map((r) => (
                   <li key={r} className="flex gap-3">
@@ -145,7 +145,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </section>
 
       {project.lighthouseBefore && project.lighthouseAfter && (
-        <section aria-labelledby="proof" className="section border-t-2 border-line/15">
+        <section aria-labelledby="proof" className="section border-t border-line">
           <div className="container">
             <div className="max-w-2xl" data-reveal>
               <p className="eyebrow">The proof</p>
@@ -158,7 +158,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 { src: project.lighthouseAfter, label: 'After', cls: 'bg-good text-paper' },
               ].map((s) => (
                 <figure key={s.label} className="card overflow-hidden" data-reveal>
-                  <figcaption className="flex items-center justify-between border-b-2 border-line px-5 py-3 font-bold">
+                  <figcaption className="flex items-center justify-between border-b border-line px-5 py-3 font-bold">
                     {s.label}
                     <span className={`rounded-full px-3 py-0.5 text-xs ${s.cls}`}>{s.label === 'Before' ? 'Old site' : 'New site'}</span>
                   </figcaption>
@@ -180,13 +180,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </section>
       )}
 
-      <nav aria-label="Next project" className="border-t-2 border-line">
+      <nav aria-label="Next project" className="border-t border-line">
         <Link href={next.caseStudyUrl || `/playroom/${next.id}/`} className="group container flex items-center justify-between gap-6 py-12">
           <span>
             <span className="eyebrow">Next project</span>
-            <span className="mt-2 block text-3xl font-extrabold tracking-tight transition-colors group-hover:text-gold-text md:text-5xl">{next.title}</span>
+            <span className="mt-2 block text-3xl font-semibold tracking-tight transition-colors group-hover:text-gold-text md:text-5xl">{next.title}</span>
           </span>
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border-2 border-ink text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
             <FiArrowRight aria-hidden="true" />
           </span>
         </Link>

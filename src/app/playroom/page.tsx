@@ -38,13 +38,13 @@ export default function WorkPage() {
             </Link>
             <div className="px-2 pb-2 lg:px-4">
               <p className="eyebrow">{p.category}</p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">{p.title}</h2>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{p.title}</h2>
               <p className="mt-1 font-semibold text-ink/60">
                 {p.sector} · {p.location} · {p.year}
               </p>
               <p className="mt-4 text-lg text-ink/75">{p.description}</p>
               {p.stat && (
-                <p className="mt-5 inline-flex items-baseline gap-2 rounded-xl border-2 border-ink bg-gold px-4 py-2 font-bold text-[#16130E] dark:border-gold">
+                <p className="mt-5 inline-flex items-baseline gap-2 rounded-full border border-gold bg-gold px-4 py-2 font-bold text-[#16130E]">
                   {p.stat.label}: <span className="line-through opacity-80">{p.stat.before}</span> → <span className="text-xl">{p.stat.after}</span>
                 </p>
               )}
@@ -65,7 +65,7 @@ export default function WorkPage() {
       </section>
 
       {interactiveDemos.length > 0 && (
-        <section aria-labelledby="lab" className="section border-t-2 border-line/15">
+        <section aria-labelledby="lab" className="section border-t border-line">
           <div className="container">
             <div className="max-w-2xl" data-reveal>
               <p className="eyebrow">The lab</p>
@@ -77,7 +77,7 @@ export default function WorkPage() {
                 <li key={d.id} data-reveal>
                   <Link href={`${d.href}/`} className="card-pop group flex h-full flex-col p-6">
                     <p className="eyebrow">{d.category}</p>
-                    <h3 className="mt-3 text-xl font-extrabold">{d.title}</h3>
+                    <h3 className="mt-3 text-xl font-semibold">{d.title}</h3>
                     <p className="mt-2 text-ink/75">{d.description}</p>
                     <span className="mt-auto inline-flex items-center gap-2 pt-5 font-bold">
                       Open the demo <FiArrowRight aria-hidden="true" className="transition-transform group-hover:translate-x-1" />

@@ -80,7 +80,7 @@ export default function WebDesignCapeTownPage() {
         </div>
       </header>
 
-      <section aria-labelledby="packages" className="section border-t-2 border-line/15">
+      <section aria-labelledby="packages" className="section border-t border-line">
         <div className="container">
           <h2 id="packages" className="h-section" data-reveal>Website <span className="accent">packages</span></h2>
           <div className="mt-10 grid gap-8 lg:grid-cols-3">
@@ -91,14 +91,14 @@ export default function WebDesignCapeTownPage() {
         </div>
       </section>
 
-      <section aria-labelledby="why" className="section border-t-2 border-line/15 bg-ink/[0.03]">
+      <section aria-labelledby="why" className="section border-t border-line bg-ink/[0.03]">
         <div className="container">
           <h2 id="why" className="h-section" data-reveal>Why Cape Town businesses <span className="accent">choose</span> us</h2>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {reasons.map((r) => (
               <li key={r.title} className="card p-6" data-reveal>
                 <FiCheck aria-hidden="true" className="text-2xl text-gold-text" />
-                <h3 className="mt-3 text-xl font-extrabold">{r.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold">{r.title}</h3>
                 <p className="mt-2 text-ink/75">{r.text}</p>
               </li>
             ))}
@@ -113,7 +113,7 @@ export default function WebDesignCapeTownPage() {
             {proof.map((p) => (
               <Link key={p.id} href={p.caseStudyUrl || '/playroom/'} className="card-pop group block p-5" data-reveal>
                 <BrowserFrame src={p.imageUrl} alt={`The ${p.title} website`} />
-                <p className="mt-5 text-2xl font-extrabold">{p.title}</p>
+                <p className="mt-5 text-2xl font-semibold">{p.title}</p>
                 <p className="text-ink/70">{p.sector} · {p.location}</p>
               </Link>
             ))}
@@ -121,13 +121,13 @@ export default function WebDesignCapeTownPage() {
         </div>
       </section>
 
-      <section aria-labelledby="areas" className="section border-t-2 border-line/15">
+      <section aria-labelledby="areas" className="section border-t border-line">
         <div className="container grid gap-10 lg:grid-cols-2">
           <div data-reveal>
             <h2 id="areas" className="h-section">Across <span className="accent">Cape Town</span></h2>
             <p className="mt-4 text-lg text-ink/75">We work with businesses all over the city and the Winelands, and with clients across South Africa online.</p>
             <ul className="mt-6 flex flex-wrap gap-2">
-              {areas.map((a) => <li key={a} className="chip border-line/40">{a}</li>)}
+              {areas.map((a) => <li key={a} className="chip border-line">{a}</li>)}
             </ul>
           </div>
           <div data-reveal>
@@ -137,7 +137,7 @@ export default function WebDesignCapeTownPage() {
                 <li key={i.slug}>
                   <Link href={`/industries/${i.slug}/`} className="card group flex items-center justify-between gap-4 p-5 hover:bg-gold/10">
                     <span>
-                      <span className="block font-extrabold">{i.name}</span>
+                      <span className="block font-semibold">{i.name}</span>
                       <span className="block text-sm text-ink/70"><Accent text={i.headline} /></span>
                     </span>
                     <FiArrowRight aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-1" />
@@ -149,7 +149,7 @@ export default function WebDesignCapeTownPage() {
         </div>
       </section>
 
-      <section aria-labelledby="faq" className="section border-t-2 border-line/15">
+      <section aria-labelledby="faq" className="section border-t border-line">
         <div className="container grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <h2 id="faq" className="h-section">Questions</h2>
           <div className="space-y-4">

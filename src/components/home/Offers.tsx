@@ -33,12 +33,12 @@ export default function Offers() {
                 <Link href={`/services/${s.slug}/`} className="card-pop group flex h-full flex-col p-7 md:p-8">
                   <div className="flex items-start justify-between gap-4">
                     <span className="font-mono text-sm font-semibold text-ink/65">0{i + 1}</span>
-                    <span className="grid h-11 w-11 place-items-center rounded-xl border-2 border-ink text-xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
+                    <span className="grid h-11 w-11 place-items-center rounded-full border border-line text-xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
                       <FiArrowUpRight aria-hidden="true" />
                     </span>
                   </div>
                   <p className="eyebrow mt-6">{s.title}</p>
-                  <h3 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight md:text-3xl">{s.need}</h3>
+                  <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">{s.need}</h3>
                   <p className="mt-3 text-ink/75">{s.description}</p>
                   <p className="mt-auto pt-8 text-lg font-bold">
                     <span className="text-ink/60">from </span>

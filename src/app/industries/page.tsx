@@ -27,7 +27,7 @@ export default function IndustriesPage() {
               <p className="eyebrow">{i.name}</p>
               <FiArrowUpRight aria-hidden="true" className="text-2xl transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </div>
-            <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight"><Accent text={i.headline} /></h2>
+            <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight"><Accent text={i.headline} /></h2>
             <p className="mt-3 text-ink/75">{i.examples.slice(0, 4).join(' · ')}</p>
           </Link>
         ))}
@@ -36,7 +36,7 @@ export default function IndustriesPage() {
             <p className="eyebrow">Any other business</p>
             <FiArrowUpRight aria-hidden="true" className="text-2xl transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>
-          <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight">Something <span className="accent">else?</span></h2>
+          <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight">Something <span className="accent">else?</span></h2>
           <p className="mt-3 text-ink/75">Shops, schools, churches, NGOs, consultants, start-ups. Tell us what you do.</p>
         </Link>
       </section>

@@ -45,7 +45,7 @@ function Block({ b }: { b: NotionBlock }) {
       return <blockquote><Text rt={v.rich_text} />{kids}</blockquote>;
     case 'callout':
       return (
-        <div className="not-prose rounded-xl border-2 border-line bg-gold/15 p-5 text-ink">
+        <div className="not-prose rounded-xl border border-line bg-gold/15 p-5 text-ink">
           {v.icon?.emoji && <span className="mr-2" aria-hidden="true">{v.icon.emoji}</span>}
           <Text rt={v.rich_text} />
           {kids}

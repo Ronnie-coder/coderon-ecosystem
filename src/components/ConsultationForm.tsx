@@ -53,7 +53,7 @@ const EMPTY: Form = { need: '', note: '', business: '', website: '', message: ''
 type Errors = Partial<Record<keyof Form, string>>;
 
 const inputCls = (bad?: string) =>
-  `w-full rounded-xl border-2 bg-paper px-4 py-3 outline-none transition focus:border-ink disabled:opacity-60 ${bad ? 'border-bad' : 'border-line'}`;
+  `w-full rounded-xl border bg-paper px-4 py-3 outline-none transition focus:border-ink focus:ring-4 focus:ring-gold/25 disabled:opacity-60 ${bad ? 'border-bad' : 'border-field'}`;
 
 export const ConsultationForm = () => {
   const [form, setForm] = useState<Form>(EMPTY);
@@ -161,9 +161,9 @@ export const ConsultationForm = () => {
 
   if (status === 'sent') {
     return (
-      <div className="card flex h-fit flex-col items-start gap-3 border-ink bg-gold p-8 text-[#16130E] dark:border-gold" role="status">
+      <div className="card flex h-fit flex-col items-start gap-3 border-gold bg-gold p-8 text-[#16130E]" role="status">
         <FiCheckCircle aria-hidden="true" className="text-4xl" />
-        <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold outline-none">
+        <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-semibold outline-none">
           Thanks, {form.name.split(' ')[0]}! Your request is in.
         </h2>
         <p>
@@ -210,8 +210,8 @@ export const ConsultationForm = () => {
                 >
                   <span
                     aria-hidden="true"
-                    className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 text-xs ${
-                      done ? 'border-ink bg-ink text-paper' : current ? 'border-ink bg-gold text-[#16130E]' : 'border-line/40'
+                    className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border text-xs ${
+                      done ? 'border-ink bg-ink text-paper' : current ? 'border-gold bg-gold text-[#16130E]' : 'border-field'
                     }`}
                   >
                     {done ? <FiCheck /> : i + 1}
@@ -228,14 +228,14 @@ export const ConsultationForm = () => {
       </div>
 
       <div className="mt-8">
-        <h2 id="quote-step-title" ref={headingRef} tabIndex={-1} className="text-2xl font-extrabold tracking-tight outline-none">
+        <h2 id="quote-step-title" ref={headingRef} tabIndex={-1} className="text-2xl font-semibold tracking-tight outline-none">
           {step === 0 && 'What do you need?'}
           {step === 1 && 'Tell us about your business'}
           {step === 2 && 'How can we reach you?'}
         </h2>
 
         {errorList.length > 0 && (
-          <div role="alert" className="mt-4 rounded-xl border-2 border-bad p-4 text-bad">
+          <div role="alert" className="mt-4 rounded-xl border border-bad p-4 text-bad">
             <p className="flex items-center gap-2 font-bold">
               <FiAlertCircle aria-hidden="true" /> Please check {errorList.length === 1 ? 'this' : 'these'}:
             </p>
@@ -266,8 +266,8 @@ export const ConsultationForm = () => {
                     }}
                     className="peer sr-only"
                   />
-                  <span className="flex h-full flex-col rounded-xl border-2 border-line/50 p-4 transition peer-checked:border-ink peer-checked:bg-gold peer-checked:text-[#16130E] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 dark:peer-checked:border-gold">
-                    <span className="font-extrabold">{n.label}</span>
+                  <span className="flex h-full flex-col rounded-xl border border-field p-4 transition peer-checked:border-gold peer-checked:bg-gold peer-checked:text-[#16130E] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 dark:peer-checked:border-gold">
+                    <span className="font-semibold">{n.label}</span>
                     <span className="mt-0.5 text-sm opacity-75">{n.hint}</span>
                   </span>
                 </label>
@@ -345,7 +345,7 @@ export const ConsultationForm = () => {
                 {CONTACT_WAYS.map((w) => (
                   <label key={w} className="cursor-pointer">
                     <input type="radio" name="prefer" value={w} checked={form.prefer === w} onChange={() => update('prefer', w)} className="peer sr-only" />
-                    <span className="inline-block rounded-full border-2 border-line/50 px-4 py-2 font-semibold transition peer-checked:border-ink peer-checked:bg-gold peer-checked:text-[#16130E] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 dark:peer-checked:border-gold">
+                    <span className="inline-block rounded-full border border-field px-4 py-2 font-semibold transition peer-checked:border-gold peer-checked:bg-gold peer-checked:text-[#16130E] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 dark:peer-checked:border-gold">
                       {w}
                     </span>
                   </label>
@@ -373,7 +373,7 @@ export const ConsultationForm = () => {
       </div>
 
       {status === 'error' && sendError && (
-        <p role="alert" className="mt-6 flex items-start gap-2 rounded-xl border-2 border-bad p-4 font-semibold text-bad">
+        <p role="alert" className="mt-6 flex items-start gap-2 rounded-xl border border-bad p-4 font-semibold text-bad">
           <FiAlertCircle aria-hidden="true" className="mt-0.5 shrink-0" /> {sendError}
         </p>
       )}

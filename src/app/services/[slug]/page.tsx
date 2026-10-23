@@ -80,7 +80,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
       </header>
 
-      <section className="border-y-2 border-line/15 bg-ink/[0.03]">
+      <section className="border-y border-line bg-ink/[0.03]">
         <div className="container grid gap-12 py-16 md:py-20 lg:grid-cols-[1.4fr_1fr]">
           <div data-reveal>
             <h2 className="h-section">How we <span className="accent">help</span></h2>
@@ -93,7 +93,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <ul className="mt-5 space-y-4">
               {benefits.map((b) => (
                 <li key={b.text} className="flex gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border-2 border-ink bg-gold text-[#16130E] dark:border-gold" aria-hidden="true">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold bg-gold text-[#16130E]" aria-hidden="true">
                     <b.icon />
                   </span>
                   <span className="self-center font-semibold">{b.text}</span>
@@ -122,11 +122,11 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <ol className="mt-8 space-y-6">
               {steps.map((step, i) => (
                 <li key={step.title} className="flex gap-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-ink text-lg font-extrabold" aria-hidden="true">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-lg font-semibold" aria-hidden="true">
                     {i + 1}
                   </span>
                   <div>
-                    <h3 className="text-xl font-extrabold">{step.title}</h3>
+                    <h3 className="text-xl font-semibold">{step.title}</h3>
                     <p className="mt-1 text-ink/75">{step.text}</p>
                   </div>
                 </li>
@@ -136,7 +136,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section id="prices" aria-labelledby="prices-title" className="section scroll-mt-24 border-t-2 border-line/15">
+      <section id="prices" aria-labelledby="prices-title" className="section scroll-mt-24 border-t border-line">
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <h2 id="prices-title" className="h-section">Prices</h2>
@@ -150,7 +150,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section aria-labelledby="faq-title" className="section border-t-2 border-line/15">
+      <section aria-labelledby="faq-title" className="section border-t border-line">
         <div className="container grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <h2 id="faq-title" className="h-section">Questions</h2>
           <div className="space-y-4">

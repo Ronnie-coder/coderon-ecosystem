@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
-      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-extrabold [&>h1]:tracking-tight [&>h1]:text-ink">
+      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-semibold [&>h1]:tracking-tight [&>h1]:text-ink">
         <h1>Privacy Policy</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
         <p>Coderon (Pty) Ltd (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you visit coderon.co.za (the &quot;Site&quot;), in compliance with South Africa&apos;s Protection of Personal Information Act (POPIA).</p>

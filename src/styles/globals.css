@@ -1,19 +1,21 @@
-/* Coderon design system: "Daylight Editorial".
-   Warm paper, ink-black type, gold accents and hard offset shadows.
-   Colour tokens are RGB channels so Tailwind can apply opacity (bg-ink/60). */
+/* Coderon design system: "Coderon Clean".
+   Calm neutrals, hairline borders, soft shadows, pill buttons and one accent: gold.
+   Dark mode is true neutral black. Colour tokens are RGB channels so Tailwind can
+   apply opacity (bg-ink/60). */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --paper: 244 238 227;     /* #F4EEE3 */
-    --card: 255 253 248;      /* #FFFDF8 */
-    --ink: 22 19 14;          /* #16130E */
+    --paper: 248 246 241;     /* #F8F6F1 soft warm white */
+    --card: 255 255 255;      /* #FFFFFF */
+    --ink: 20 20 19;          /* #141413 */
     --gold: 242 194 48;       /* #F2C230  fills only; ink text on it = 11:1 */
-    --gold-text: 138 101 8;   /* #8A6508  gold as text on paper = 4.6:1 (AA) */
-    --line: 22 19 14;
-    --shadow: 22 19 14;
+    --gold-text: 138 101 8;   /* #8A6508  gold as text on paper = 4.9:1 (AA) */
+    --line: 229 226 218;      /* #E5E2DA  hairlines (decorative) */
+    --field: 138 134 125;     /* #8A867D  form-control borders, 3.4:1 (WCAG 1.4.11) */
+    --shadow: 20 20 19;
     --good: 30 122 70;
     --bad: 179 38 30;
     --warn: 154 91 0;
@@ -21,13 +23,14 @@
     color-scheme: light;
   }
   [data-theme='dark'] {
-    --paper: 19 17 13;        /* #13110D */
-    --card: 29 26 20;         /* #1D1A14 */
-    --ink: 242 235 221;       /* #F2EBDD */
+    --paper: 10 10 10;        /* #0A0A0A */
+    --card: 22 22 22;         /* #161616 */
+    --ink: 242 242 242;       /* #F2F2F2 */
     --gold: 242 194 48;
     --gold-text: 242 194 48;
-    --line: 107 97 80;        /* #6B6150 */
-    --shadow: 242 194 48;
+    --line: 42 42 42;         /* #2A2A2A */
+    --field: 112 112 112;     /* #707070  3.7:1 on cards */
+    --shadow: 0 0 0;
     --good: 95 211 148;
     --bad: 255 138 128;
     --warn: 245 176 76;
@@ -82,45 +85,52 @@
 
 @layer components {
   .eyebrow {
-    @apply font-mono text-xs font-semibold uppercase tracking-[0.2em] text-gold-text;
+    @apply inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink/60;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-1.5 w-1.5 shrink-0 rounded-full bg-gold;
   }
   .accent {
     @apply font-serif font-normal italic text-gold-text;
   }
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-ink px-5 py-3 text-base font-bold
-      transition-[transform,box-shadow,background-color] duration-150 ease-out
-      hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent px-5 py-3 text-base font-semibold
+      transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.98];
   }
   .btn-primary {
-    @apply btn bg-gold text-[#16130E] shadow-hard hover:shadow-hard-lg dark:border-gold;
+    @apply btn bg-gold text-[#16130E] hover:bg-[#F6CF55];
   }
   .btn-dark {
-    @apply btn bg-ink text-paper shadow-hard-gold;
+    @apply btn bg-ink text-paper hover:bg-ink/85;
   }
   .btn-ghost {
-    @apply btn bg-transparent text-ink hover:bg-ink/5;
+    @apply btn bg-ink/[0.06] text-ink hover:bg-ink/[0.11];
   }
   .card {
-    @apply rounded-2xl border-2 border-line bg-card;
+    @apply rounded-2xl border border-line bg-card;
   }
   .card-pop {
-    @apply card shadow-hard transition-[transform,box-shadow] duration-200 ease-out hover:-translate-x-1 hover:-translate-y-1 hover:shadow-hard-lg;
+    @apply card shadow-soft transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-ink/20 hover:shadow-soft-lg;
   }
   .chip {
-    @apply inline-flex items-center rounded-full border-2 border-line px-3 py-1 text-xs font-bold;
+    @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs font-semibold;
   }
   .link-underline {
-    @apply underline decoration-2 underline-offset-4 transition-colors hover:text-gold-text;
+    @apply underline decoration-1 underline-offset-4 transition-colors hover:text-gold-text;
   }
   .section {
     @apply py-16 md:py-24;
   }
   .h-display {
-    @apply text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.03em] sm:text-6xl lg:text-[5.4rem];
+    @apply text-[2.6rem] font-semibold leading-[1] tracking-[-0.04em] sm:text-6xl lg:text-[5.2rem];
   }
   .h-section {
-    @apply text-3xl font-extrabold leading-[1.05] tracking-[-0.02em] md:text-5xl;
+    @apply text-3xl font-semibold leading-[1.08] tracking-[-0.03em] md:text-5xl;
+  }
+  /* Inverse band: near-black in light mode, a raised panel in dark mode. */
+  .band-dark {
+    @apply bg-[#111111] text-[#F2F2F2] dark:border-y dark:border-line dark:bg-card;
   }
 }
 
@@ -129,8 +139,8 @@
   @apply max-w-[68ch] text-[1.075rem] leading-[1.75] text-ink/85;
 }
 .prose-coderon > * + * { @apply mt-5; }
-.prose-coderon h2 { @apply mt-12 text-3xl font-extrabold leading-tight tracking-tight text-ink; }
-.prose-coderon h3 { @apply mt-8 text-xl font-bold text-ink; }
+.prose-coderon h2 { @apply mt-12 text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink; }
+.prose-coderon h3 { @apply mt-8 text-xl font-semibold text-ink; }
 .prose-coderon h4 { @apply mt-6 font-bold text-ink; }
 .prose-coderon a { @apply font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4 hover:text-gold-text; }
 .prose-coderon strong { @apply font-bold text-ink; }
@@ -138,12 +148,12 @@
 .prose-coderon ol { @apply list-decimal space-y-2 pl-6 marker:font-bold marker:text-gold-text; }
 .prose-coderon blockquote { @apply border-l-4 border-gold pl-5 font-serif text-2xl italic leading-snug text-ink; }
 .prose-coderon code { @apply rounded-md bg-ink/10 px-1.5 py-0.5 font-mono text-[0.9em]; }
-.prose-coderon pre { @apply overflow-x-auto rounded-xl border-2 border-line bg-[#16130E] p-5 text-sm text-[#F2EBDD]; }
+.prose-coderon pre { @apply overflow-x-auto rounded-xl border border-line bg-[#111111] p-5 text-sm text-[#F2F2F2]; }
 .prose-coderon pre code { @apply bg-transparent p-0; }
-.prose-coderon img { @apply rounded-xl border-2 border-line; }
-.prose-coderon hr { @apply my-10 border-t-2 border-line/20; }
+.prose-coderon img { @apply rounded-xl border border-line; }
+.prose-coderon hr { @apply my-10 border-t border-line; }
 .prose-coderon table { @apply w-full border-collapse text-left text-sm; }
-.prose-coderon th, .prose-coderon td { @apply border-b border-line/25 px-3 py-2; }
+.prose-coderon th, .prose-coderon td { @apply border-b border-line px-3 py-2; }
 .prose-coderon th { @apply font-bold text-ink; }
 
 /* Logo cursor: blinks 4 times after the C is drawn, and again while the logo is hovered. */
@@ -159,18 +169,6 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 }
 @keyframes reveal-fallback { to { opacity: 1; } }
 
-/* Gold marker that draws under highlighted words in headlines. Drawn as a background so it
-   follows the text when a long phrase wraps onto several lines. */
-.marker {
-  background-image: linear-gradient(rgb(var(--gold) / 0.55), rgb(var(--gold) / 0.55));
-  background-repeat: no-repeat;
-  background-position: 0 88%;
-  background-size: 100% 0.2em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  animation: marker 0.9s cubic-bezier(.65,0,.35,1) 0.35s both;
-}
-@keyframes marker { from { background-size: 0% 0.2em; } to { background-size: 100% 0.2em; } }
 @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* Keyword links inside body copy: bold, underlined, gold on hover. They pass page
@@ -181,5 +179,6 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 html[data-motion='full'] .section-break__line { transform: scaleX(0); transition: transform 1s cubic-bezier(.65,0,.35,1) 0.15s; }
 html[data-motion='full'] .is-revealed .section-break__line { transform: scaleX(1); }
 
-/* Angled edges for dark bands (section breakers between light and dark). */
-.band-angled { clip-path: polygon(0 3vw, 100% 0, 100% calc(100% - 3vw), 0 100%); }
+/* Logo mascot (components/motion/LogoMascot.tsx): the glow behind the cursor "eye" breathes slowly. */
+.mascot-glow { animation: mascot-glow 5s ease-in-out infinite; }
+@keyframes mascot-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }

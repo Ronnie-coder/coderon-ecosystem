@@ -74,7 +74,7 @@ export default function PricingPage() {
         <CurrencySwitch className="mt-8" />
       </PageHeader>
 
-      <section aria-labelledby="websites" className="section border-t-2 border-line/15">
+      <section aria-labelledby="websites" className="section border-t border-line">
         <div className="container">
           <SectionHead
             id="websites"
@@ -91,7 +91,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section aria-labelledby="monthly" className="section border-t-2 border-line/15">
+      <section aria-labelledby="monthly" className="section border-t border-line">
         <div className="container grid items-start gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <SectionHead
@@ -100,7 +100,7 @@ export default function PricingPage() {
               title={<>Prefer to pay <span className="accent">monthly?</span></>}
               intro="Get a professional website without paying a lump sum. One monthly fee covers the website, hosting, updates and small changes. Your domain stays in your name."
             />
-            <h3 className="mt-10 text-xl font-extrabold">How it works</h3>
+            <h3 className="mt-10 text-xl font-semibold">How it works</h3>
             <ol className="mt-4 space-y-4">
               {[
                 ['Get your domain', 'Your domain is your web address, like yourbusiness.co.za. You buy it in your own name (a .co.za is about R100 a year). No domain yet? We show you how, step by step.'],
@@ -109,7 +109,7 @@ export default function PricingPage() {
                 ['Then month to month', 'You pay monthly. Cancel any time with 30 days notice.'],
               ].map(([t, d], i) => (
                 <li key={t} className="flex gap-4">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink font-extrabold" aria-hidden="true">{i + 1}</span>
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line font-semibold" aria-hidden="true">{i + 1}</span>
                   <div>
                     <p className="font-bold">{t}</p>
                     <p className="text-ink/75">{d}</p>
@@ -118,7 +118,7 @@ export default function PricingPage() {
               ))}
             </ol>
             <div className="card mt-8 p-5">
-              <h3 className="font-extrabold">If you cancel</h3>
+              <h3 className="font-semibold">If you cancel</h3>
               <ul className="mt-3 list-disc space-y-1.5 pl-5 text-ink/80">
                 <li>Your domain is in your name, so it stays yours.</li>
                 <li>The website design and code stay with Coderon, and the site goes offline at the end of your notice.</li>
@@ -130,7 +130,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section aria-labelledby="fix" className="section border-t-2 border-line/15">
+      <section aria-labelledby="fix" className="section border-t border-line">
         <div className="container grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
           <SectionHead
             id="fix"
@@ -142,7 +142,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section aria-labelledby="care" className="section border-t-2 border-line/15">
+      <section aria-labelledby="care" className="section border-t border-line">
         <div className="container">
           <SectionHead
             id="care"
@@ -158,24 +158,24 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section aria-labelledby="software" className="border-y-2 border-line bg-[#16130E] text-[#F2EBDD]">
+      <section aria-labelledby="software" className="band-dark">
         <div className="container grid items-center gap-10 py-16 md:py-20 lg:grid-cols-[1.4fr_1fr]">
           <div data-reveal>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-[#F2C230]">Custom software</p>
-            <h2 id="software" className="mt-3 text-3xl font-extrabold leading-[1.05] tracking-tight md:text-5xl">
+            <p className="eyebrow text-[#F2F2F2]/60">Custom software</p>
+            <h2 id="software" className="mt-3 text-3xl font-semibold leading-[1.05] tracking-tight md:text-5xl">
               Tools built around <span className="font-serif font-normal italic text-[#F2C230]">how you work.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-lg text-[#F2EBDD]/75">{softwarePlan.summary} Every project is different, so we quote after a free call.</p>
+            <p className="mt-4 max-w-xl text-lg text-[#F2F2F2]/70">{softwarePlan.summary} Every project is different, so we quote after a free call.</p>
           </div>
-          <div className="rounded-2xl border-2 border-[#F2EBDD] p-7 shadow-[6px_6px_0_#F2C230]" data-reveal>
-            <p className="font-semibold text-[#F2EBDD]/70">Projects from</p>
-            <Price price={softwarePlan.price} className="mt-1 block text-5xl font-extrabold tracking-tight" />
-            <ul className="mt-5 space-y-2 text-[#F2EBDD]/85">
+          <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-7" data-reveal>
+            <p className="font-semibold text-[#F2F2F2]/70">Projects from</p>
+            <Price price={softwarePlan.price} className="mt-1 block text-5xl font-semibold tracking-tight" />
+            <ul className="mt-5 space-y-2 text-[#F2F2F2]/85">
               {softwarePlan.includes.map((i) => (
                 <li key={i}>✦ {i}</li>
               ))}
             </ul>
-            <Link href="/contact/?topic=software" className="btn mt-7 w-full border-[#F2C230] bg-[#F2C230] text-[#16130E]">
+            <Link href="/contact/?topic=software" className="btn-primary mt-7 w-full">
               Book a free call <FiArrowRight aria-hidden="true" />
             </Link>
           </div>

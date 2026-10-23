@@ -14,7 +14,7 @@ const BusinessChatbotPage = () => {
   return (
     <div className="container pb-20 pt-12 md:pt-16">
       <div className="max-w-2xl">
-        <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">Demo: business chatbot</h1>
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">Demo: business chatbot</h1>
         <p className="mt-4 text-lg text-ink/75">
           This is a live example of an intelligent chatbot. It can be trained on your company&apos;s data to answer questions, book meetings, and improve customer engagement.
         </p>

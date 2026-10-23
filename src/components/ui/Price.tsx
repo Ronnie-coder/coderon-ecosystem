@@ -43,14 +43,14 @@ export function Price({ price, className }: { price: { ZAR: number; USD: number 
 export function CurrencySwitch({ className = '' }: { className?: string }) {
   const [currency, setCurrency] = useCurrency();
   return (
-    <div role="group" aria-label="Currency" className={`inline-flex rounded-xl border-2 border-ink p-1 ${className}`}>
+    <div role="group" aria-label="Currency" className={`inline-flex rounded-full border border-line p-1 ${className}`}>
       {(['ZAR', 'USD'] as Currency[]).map((c) => (
         <button
           key={c}
           type="button"
           aria-pressed={currency === c}
           onClick={() => setCurrency(c)}
-          className={`rounded-lg px-4 py-1.5 text-sm font-bold transition-colors ${
+          className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
             currency === c ? 'bg-ink text-paper' : 'text-ink hover:bg-ink/10'
           }`}
         >

@@ -35,20 +35,20 @@ export default async function JournalPage() {
         {latest && (
           <Link href={`/journal/${latest.slug}/`} className="card-pop group grid gap-6 p-7 md:grid-cols-[1fr_auto] md:items-end md:p-10" data-reveal>
             <div>
-              <p className="chip border-ink bg-gold text-[#16130E]">Latest</p>
-              <h2 className="mt-5 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight md:text-5xl">{latest.title}</h2>
+              <p className="chip border-gold bg-gold text-[#16130E]">Latest</p>
+              <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{latest.title}</h2>
               <p className="mt-4 max-w-2xl text-lg text-ink/75">{latest.description}</p>
               <p className="mt-6 font-mono text-sm text-ink/60">
                 <time dateTime={latest.date}>{fmt(latest.date)}</time> · {latest.readingTime} min read
               </p>
             </div>
-            <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-ink text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
+            <span className="grid h-14 w-14 place-items-center rounded-full border border-line text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
               <FiArrowRight aria-hidden="true" />
             </span>
           </Link>
         )}
 
-        <ul className="mt-8 divide-y-2 divide-line/15 border-y-2 border-line/15">
+        <ul className="mt-8 divide-y divide-line border-y border-line">
           {rest.map((p) => (
             <li key={p.slug} data-reveal>
               <Link href={`/journal/${p.slug}/`} className="group grid gap-2 py-7 md:grid-cols-[180px_1fr_auto] md:items-center md:gap-8">
@@ -56,7 +56,7 @@ export default async function JournalPage() {
                   <time dateTime={p.date}>{fmt(p.date)}</time>
                 </p>
                 <div>
-                  <h2 className="text-xl font-extrabold tracking-tight transition-colors group-hover:text-gold-text md:text-2xl">{p.title}</h2>
+                  <h2 className="text-xl font-semibold tracking-tight transition-colors group-hover:text-gold-text md:text-2xl">{p.title}</h2>
                   <p className="mt-1 line-clamp-2 text-ink/70">{p.description}</p>
                 </div>
                 <span className="hidden text-sm font-semibold text-ink/60 md:block">{p.readingTime} min</span>

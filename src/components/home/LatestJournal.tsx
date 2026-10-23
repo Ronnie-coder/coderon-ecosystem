@@ -27,7 +27,7 @@ export default function LatestJournal({ posts }: { posts: JournalPost[] }) {
                   {' · '}
                   {p.readingTime} min read
                 </p>
-                <h3 className="mt-4 text-xl font-extrabold leading-snug tracking-tight">{p.title}</h3>
+                <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight">{p.title}</h3>
                 <p className="mt-3 line-clamp-3 text-ink/75">{p.description}</p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-6 font-bold">
                   Read <FiArrowRight aria-hidden="true" className="transition-transform group-hover:translate-x-1" />

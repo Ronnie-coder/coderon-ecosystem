@@ -71,18 +71,18 @@ export default async function IndustryPage({ params }: PageProps) {
         </div>
         <ul className="mt-10 flex flex-wrap gap-2" aria-label="Who this is for">
           {industry.examples.map((e) => (
-            <li key={e} className="chip border-line/40 text-sm">{e}</li>
+            <li key={e} className="chip border-line text-sm">{e}</li>
           ))}
         </ul>
       </header>
 
-      <section aria-labelledby="pains" className="section border-t-2 border-line/15 bg-ink/[0.03]">
+      <section aria-labelledby="pains" className="section border-t border-line bg-ink/[0.03]">
         <div className="container">
           <h2 id="pains" className="h-section" data-reveal>Sound <span className="accent">familiar?</span></h2>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {industry.pains.map((p) => (
               <li key={p.title} className="card p-6" data-reveal>
-                <h3 className="text-xl font-extrabold">{p.title}</h3>
+                <h3 className="text-xl font-semibold">{p.title}</h3>
                 <p className="mt-2 text-ink/75">{p.text}</p>
               </li>
             ))}
@@ -99,7 +99,7 @@ export default async function IndustryPage({ params }: PageProps) {
                 <li key={s.title} className="flex gap-4">
                   <span className="mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold text-[#16130E]" aria-hidden="true"><FiCheck /></span>
                   <div>
-                    <h3 className="text-lg font-extrabold">{s.title}</h3>
+                    <h3 className="text-lg font-semibold">{s.title}</h3>
                     <p className="mt-1 text-ink/75">{s.text}</p>
                   </div>
                 </li>
@@ -109,7 +109,7 @@ export default async function IndustryPage({ params }: PageProps) {
           {project && (
             <Link href={project.caseStudyUrl || '/playroom/'} className="card-pop group block p-5" data-reveal>
               <p className="eyebrow">Real project</p>
-              <p className="mt-2 text-2xl font-extrabold">{project.title}</p>
+              <p className="mt-2 text-2xl font-semibold">{project.title}</p>
               <p className="mt-1 text-ink/70">{project.sector} · {project.location}</p>
               <BrowserFrame src={project.imageUrl} alt={`The ${project.title} website`} className="mt-5" />
               <span className="mt-5 inline-flex items-center gap-2 font-bold">
@@ -120,7 +120,7 @@ export default async function IndustryPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section aria-labelledby="prices" className="section border-t-2 border-line/15">
+      <section aria-labelledby="prices" className="section border-t border-line">
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <h2 id="prices" className="h-section">Clear <span className="accent">prices</span></h2>
@@ -134,7 +134,7 @@ export default async function IndustryPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section aria-labelledby="faq" className="section border-t-2 border-line/15">
+      <section aria-labelledby="faq" className="section border-t border-line">
         <div className="container grid gap-10 lg:grid-cols-[1fr_1.5fr]">
           <h2 id="faq" className="h-section">Questions</h2>
           <div className="space-y-4">

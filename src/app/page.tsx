@@ -25,7 +25,6 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <SectionBreak />
       <WhoWeHelp />
       <WorkShowcase />
       <SectionBreak />

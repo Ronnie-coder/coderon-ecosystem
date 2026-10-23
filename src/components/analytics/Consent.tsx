@@ -109,9 +109,9 @@ export default function Consent() {
   return (
     <section
       aria-label="Cookie choices"
-      className="fixed inset-x-3 bottom-3 z-50 max-w-lg rounded-2xl border-2 border-ink bg-card p-5 text-ink shadow-hard sm:left-4 sm:right-auto"
+      className="fixed inset-x-3 bottom-3 z-50 max-w-lg rounded-2xl border border-line bg-card p-5 text-ink shadow-soft sm:left-4 sm:right-auto"
     >
-      <h2 className="text-lg font-extrabold">Cookies, your choice</h2>
+      <h2 className="text-lg font-semibold">Cookies, your choice</h2>
       <p className="mt-2 text-sm text-ink/80">
         We use a few cookies to see which pages help people most, so we can improve the site. Nothing is sold or used for
         ads. Read our{' '}

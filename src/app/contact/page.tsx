@@ -30,10 +30,10 @@ export default function ContactPage() {
             href="https://wa.me/27678184898"
             target="_blank"
             rel="noopener noreferrer"
-            className="card-pop group block border-ink bg-gold p-6 text-[#16130E] dark:border-gold"
+            className="card-pop group block border-gold bg-gold p-6 text-[#16130E]"
           >
             <p className="text-sm font-bold uppercase tracking-[0.18em]">Prefer to chat?</p>
-            <p className="mt-2 flex items-center gap-2 text-2xl font-extrabold">
+            <p className="mt-2 flex items-center gap-2 text-2xl font-semibold">
               <FaWhatsapp aria-hidden="true" /> WhatsApp us
             </p>
             <p className="mt-1">Send a voice note or a message. +27 67 818 4898</p>
@@ -44,7 +44,7 @@ export default function ContactPage() {
           </a>
 
           <div className="card p-6">
-            <h2 className="text-xl font-extrabold">Other ways to reach us</h2>
+            <h2 className="text-xl font-semibold">Other ways to reach us</h2>
             <ul className="mt-5 space-y-4">
               <li className="flex gap-3">
                 <FiMail aria-hidden="true" className="mt-1 shrink-0 text-gold-text" />

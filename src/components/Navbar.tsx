@@ -36,7 +36,7 @@ export function MotionSwitch({ className = '' }: { className?: string }) {
     >
       <span
         aria-hidden="true"
-        className={`relative h-6 w-10 rounded-full border-2 border-ink transition-colors ${on ? 'bg-gold' : 'bg-transparent'}`}
+        className={`relative h-6 w-10 rounded-full border border-field transition-colors ${on ? 'bg-gold' : 'bg-transparent'}`}
       >
         <span
           className={`absolute top-0.5 h-4 w-4 rounded-full bg-ink transition-[left] duration-200 ${on ? 'left-[18px]' : 'left-0.5'}`}
@@ -57,7 +57,7 @@ export function ThemeButton({ className = '' }: { className?: string }) {
       type="button"
       onClick={toggleTheme}
       aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className={`grid h-10 w-10 place-items-center rounded-xl border-2 border-transparent text-lg transition hover:border-ink ${className}`}
+      className={`grid h-10 w-10 place-items-center rounded-full border border-transparent text-lg transition hover:bg-ink/[0.06] ${className}`}
     >
       {dark ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
     </button>
@@ -94,8 +94,8 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b-2 transition-colors duration-200 ${
-        scrolled || open ? 'border-line bg-paper/95 backdrop-blur' : 'border-transparent bg-paper'
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200 ${
+        scrolled || open ? 'border-line bg-paper/80 backdrop-blur-md' : 'border-transparent bg-paper'
       }`}
     >
       <a
@@ -118,12 +118,12 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className="group relative rounded-lg px-3 py-2 text-[15px] font-semibold"
+                    className="group relative rounded-lg px-3 py-2 text-[15px] font-medium text-ink/80 transition-colors hover:text-ink aria-[current=page]:text-ink"
                   >
                     {link.label}
                     <span
                       aria-hidden="true"
-                      className={`absolute inset-x-3 -bottom-0.5 h-[3px] origin-left rounded-full bg-gold transition-transform duration-200 ${
+                      className={`absolute inset-x-3 -bottom-0.5 h-[2px] origin-left rounded-full bg-gold transition-transform duration-200 ${
                         active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                       }`}
                     />
@@ -141,7 +141,7 @@ const Navbar = () => {
           </Link>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-xl border-2 border-ink text-xl lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-line text-xl lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
@@ -158,7 +158,7 @@ const Navbar = () => {
           aria-label="Mobile navigation"
           className="container h-[calc(100dvh-72px)] overflow-y-auto pb-10 pt-4 lg:hidden"
         >
-          <ul className="divide-y-2 divide-line/15">
+          <ul className="divide-y divide-line">
             {navLinks.map((link, i) => {
               const active = isActivePath(pathname, link.href);
               return (
@@ -166,7 +166,7 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className="flex items-center justify-between py-4 text-3xl font-extrabold tracking-tight"
+                    className="flex items-center justify-between py-4 text-3xl font-semibold tracking-tight"
                   >
                     {link.label}
                     {active && <span aria-hidden="true" className="h-3 w-3 rounded-full bg-gold" />}
@@ -180,7 +180,7 @@ const Navbar = () => {
           </Link>
           <div className="mt-8 flex items-center justify-between">
             <MotionSwitch />
-            <ThemeButton className="border-ink" />
+            <ThemeButton className="border-line" />
           </div>
         </nav>
       )}

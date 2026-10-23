@@ -8,7 +8,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Coderon on WhatsApp (opens in a new tab)"
-      className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full border-2 border-ink bg-[#075E54] text-3xl text-white shadow-hard transition-transform hover:-translate-y-0.5 hover:scale-105"
+      className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#075E54] text-3xl text-white shadow-soft-lg transition-transform hover:-translate-y-0.5 hover:scale-105"
     >
       <FaWhatsapp aria-hidden="true" />
     </a>

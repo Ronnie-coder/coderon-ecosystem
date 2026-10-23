@@ -55,7 +55,7 @@ export default function WorkShowcase() {
           {/* Screenshot */}
           <div className="card-pop relative p-4 md:p-5" aria-roledescription="carousel" aria-label="Projects">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <span className="chip border-ink bg-gold text-[#16130E]">
+              <span className="chip border-gold bg-gold text-[#16130E]">
                 {index + 1} / {total}
               </span>
               <span className="truncate text-sm font-semibold text-ink/70">
@@ -81,10 +81,10 @@ export default function WorkShowcase() {
 
             {/* Controls + progress */}
             <div className="mt-4 flex items-center gap-3">
-              <button type="button" onClick={() => go(-1)} aria-label="Previous project" className="grid h-10 w-10 place-items-center rounded-xl border-2 border-ink hover:bg-ink/5">
+              <button type="button" onClick={() => go(-1)} aria-label="Previous project" className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5">
                 <FiArrowLeft aria-hidden="true" />
               </button>
-              <button type="button" onClick={() => go(1)} aria-label="Next project" className="grid h-10 w-10 place-items-center rounded-xl border-2 border-ink hover:bg-ink/5">
+              <button type="button" onClick={() => go(1)} aria-label="Next project" className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5">
                 <FiArrowRight aria-hidden="true" />
               </button>
               <div className="flex flex-1 gap-1.5" aria-hidden="true">
@@ -106,7 +106,7 @@ export default function WorkShowcase() {
                   type="button"
                   onClick={() => setPaused((p) => !p)}
                   aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
-                  className="grid h-10 w-10 place-items-center rounded-xl border-2 border-ink hover:bg-ink/5"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5"
                 >
                   {paused ? <FiPlay aria-hidden="true" /> : <FiPause aria-hidden="true" />}
                 </button>
@@ -118,19 +118,19 @@ export default function WorkShowcase() {
           <div className="flex flex-col gap-6" aria-live={autoplay ? 'off' : 'polite'}>
             <div key={project.id} className="card flex flex-1 animate-fade-up flex-col p-6 md:p-7">
               <p className="eyebrow">{project.category}</p>
-              <h3 className="mt-3 text-3xl font-extrabold tracking-tight">{project.title}</h3>
+              <h3 className="mt-3 text-3xl font-semibold tracking-tight">{project.title}</h3>
               <p className="mt-3 text-ink/75">{project.description}</p>
               <div className="mt-auto flex flex-wrap gap-2 pt-6">
                 {project.tech.map((t) => (
-                  <span key={t} className="chip border-line/40">{t}</span>
+                  <span key={t} className="chip border-line">{t}</span>
                 ))}
               </div>
             </div>
 
             {project.stat ? (
-              <div key={`${project.id}-stat`} className="card animate-fade-up border-ink bg-gold p-6 text-[#16130E] dark:border-gold">
+              <div key={`${project.id}-stat`} className="card animate-fade-up border-gold bg-gold p-6 text-[#16130E]">
                 <p className="text-xs font-bold uppercase tracking-[0.18em]">{project.stat.label}</p>
-                <p className="mt-2 flex items-baseline gap-3 text-5xl font-extrabold tracking-tight md:text-6xl">
+                <p className="mt-2 flex items-baseline gap-3 text-5xl font-semibold tracking-tight md:text-6xl">
                   <span className="text-[#16130E]/55 line-through decoration-[3px]">{project.stat.before}</span>
                   <span aria-hidden="true">→</span>
                   <CountUp from={project.stat.before} to={project.stat.after} />

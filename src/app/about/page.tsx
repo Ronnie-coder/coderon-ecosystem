@@ -45,7 +45,7 @@ export default function AboutPage() {
 
       <section className="container grid gap-12 pb-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div className="relative mx-auto w-full max-w-md" data-reveal>
-          <div className="overflow-hidden rounded-2xl border-2 border-ink shadow-hard-lg dark:border-line">
+          <div className="overflow-hidden rounded-2xl border border-line shadow-soft-lg">
             <Image
               src="/images/ronnie-nyamhute.jpg"
               alt="Ronnie Nyamhute, founder of Coderon"
@@ -55,7 +55,7 @@ export default function AboutPage() {
               priority
             />
           </div>
-          <p className="absolute -bottom-5 -right-3 rotate-[-3deg] rounded-xl border-2 border-ink bg-gold px-4 py-2 font-bold text-[#16130E] shadow-hard-sm">
+          <p className="absolute -bottom-5 -right-3 rotate-[-3deg] rounded-full border border-gold bg-gold px-4 py-2 font-bold text-[#16130E] shadow-soft">
             Ronnie, founder
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section aria-labelledby="how-we-work" className="section border-t-2 border-line/15">
+      <section aria-labelledby="how-we-work" className="section border-t border-line">
         <div className="container">
           <h2 id="how-we-work" className="h-section" data-reveal>
             How we <span className="accent">work</span>
@@ -87,7 +87,7 @@ export default function AboutPage() {
             {values.map((v, i) => (
               <li key={v.title} className="card p-6" data-reveal>
                 <span className="font-mono text-sm font-semibold text-ink/65">0{i + 1}</span>
-                <h3 className="mt-4 text-xl font-extrabold">{v.title}</h3>
+                <h3 className="mt-4 text-xl font-semibold">{v.title}</h3>
                 <p className="mt-2 text-ink/75">{v.text}</p>
               </li>
             ))}

@@ -9,6 +9,7 @@ import { Logo } from '@/components/Logo';
 import { MotionSwitch, ThemeButton, QUOTE_HREF, WHATSAPP_HREF } from '@/components/Navbar';
 import { services } from '@/data/servicesData';
 import { CookieSettingsButton } from '@/components/analytics/Consent';
+import LogoMascot from '@/components/motion/LogoMascot';
 
 const socials = [
   { href: 'https://github.com/Ronnie-coder', label: 'GitHub', Icon: FaGithub },
@@ -48,25 +49,29 @@ export default function Footer() {
   if (pathname?.startsWith('/admin')) return null;
 
   return (
-    <footer className="mt-10 border-t-2 border-line">
-      {/* Closing call to action */}
-      <section aria-labelledby="footer-cta" className="bg-[#16130E] text-[#F2EBDD]">
-        <div className="container flex flex-col items-start justify-between gap-8 py-14 md:flex-row md:items-center">
-          <h2 id="footer-cta" className="max-w-2xl text-3xl font-extrabold leading-[1.05] tracking-tight md:text-5xl">
+    <footer className="mt-10">
+      {/* Closing call to action: the C rises from the bottom edge and watches the pointer. */}
+      <section aria-labelledby="footer-cta" className="band-dark overflow-hidden">
+        <div className="container flex flex-col items-center pt-16 text-center md:pt-24">
+          <h2 id="footer-cta" className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] md:text-6xl">
             Not sure what your website needs? <span className="font-serif font-normal italic text-[#F2C230]">Ask us.</span>
           </h2>
-          <div className="flex flex-wrap gap-3">
-            <Link href={QUOTE_HREF} className="btn border-[#F2C230] bg-[#F2C230] text-[#16130E] shadow-[5px_5px_0_#F2EBDD]">
+          <p className="mt-5 max-w-xl text-lg text-[#F2F2F2]/70">A free, straight answer within one working day. No obligation.</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href={QUOTE_HREF} className="btn-primary px-6">
               Get a free quote
             </Link>
             <a
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn border-[#F2EBDD] text-[#F2EBDD] hover:bg-white/10"
+              className="btn bg-white/10 px-6 text-[#F2F2F2] hover:bg-white/[0.16]"
             >
-              <FaWhatsapp aria-hidden="true" /> WhatsApp us
+              <FaWhatsapp aria-hidden="true" /> WhatsApp us<span className="sr-only"> (opens in a new tab)</span>
             </a>
+          </div>
+          <div aria-hidden="true" className="relative mt-12 h-[158px] w-full overflow-hidden sm:h-[196px] md:h-[240px]">
+            <LogoMascot className="absolute left-1/2 top-0 w-[250px] -translate-x-1/2 text-white/20 sm:w-[310px] md:w-[380px]" />
           </div>
         </div>
       </section>
@@ -88,7 +93,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Coderon on ${label}`}
-                  className="grid h-10 w-10 place-items-center rounded-xl border-2 border-line transition hover:-translate-y-0.5 hover:bg-gold hover:text-[#16130E]"
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition hover:border-gold hover:bg-gold hover:text-[#16130E]"
                 >
                   <Icon aria-hidden="true" />
                 </a>
@@ -140,7 +145,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t-2 border-line/15">
+      <div className="border-t border-line">
         <div className="container flex flex-col gap-3 py-6 text-sm text-ink/70 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Coderon (Pty) Ltd.</p>
           <div className="flex flex-wrap items-center gap-5">

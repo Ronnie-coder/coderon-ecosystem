@@ -73,7 +73,7 @@ export default async function JournalArticlePage({ params }: PageProps) {
         <Link href="/journal/" className="inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
           <FiArrowLeft aria-hidden="true" /> Journal
         </Link>
-        <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">{post.title}</h1>
+        <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">{post.title}</h1>
         {post.description && <p className="mt-5 text-xl text-ink/75">{post.description}</p>}
         <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm text-ink/60">
           <span>{post.author}</span>
@@ -86,7 +86,7 @@ export default async function JournalArticlePage({ params }: PageProps) {
         </p>
       </header>
 
-      <div className="container max-w-4xl border-t-2 border-line/15 pb-16 pt-10">
+      <div className="container max-w-4xl border-t border-line pb-16 pt-10">
         <div className="prose-coderon">{body}</div>
       </div>
 
@@ -97,7 +97,7 @@ export default async function JournalArticlePage({ params }: PageProps) {
             {more.map((p) => (
               <li key={p.slug}>
                 <Link href={`/journal/${p.slug}/`} className="card-pop group flex h-full flex-col p-6">
-                  <h3 className="text-lg font-extrabold leading-snug">{p.title}</h3>
+                  <h3 className="text-lg font-semibold leading-snug">{p.title}</h3>
                   <span className="mt-auto inline-flex items-center gap-2 pt-5 font-bold">
                     Read <FiArrowRight aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
                   </span>

@@ -18,10 +18,10 @@ export default function Steps() {
         <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <li key={s.title} className="card relative p-6" data-reveal>
-              <span className="grid h-12 w-12 place-items-center rounded-full border-2 border-ink bg-gold text-xl font-extrabold text-[#16130E] dark:border-gold">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-gold text-xl font-semibold text-[#16130E]">
                 {i + 1}
               </span>
-              <h3 className="mt-5 text-xl font-extrabold">{s.title}</h3>
+              <h3 className="mt-5 text-xl font-semibold">{s.title}</h3>
               <p className="mt-2 text-ink/75">{s.text}</p>
             </li>
           ))}

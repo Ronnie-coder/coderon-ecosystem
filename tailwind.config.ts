@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 
-// Coderon design system: "Daylight Editorial".
+// Coderon design system: "Coderon Clean".
 // Colours are CSS variables (RGB channels) so light and dark themes swap in one place:
 // see src/styles/globals.css.
 const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
@@ -18,6 +18,7 @@ const config: Config = {
         gold: v('gold'),
         'gold-text': v('gold-text'),
         line: v('line'),
+        field: v('field'),
         good: v('good'),
         bad: v('bad'),
         warn: v('warn'),
@@ -28,10 +29,8 @@ const config: Config = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        'hard-sm': '3px 3px 0 rgb(var(--shadow))',
-        hard: '5px 5px 0 rgb(var(--shadow))',
-        'hard-lg': '8px 8px 0 rgb(var(--shadow))',
-        'hard-gold': '5px 5px 0 rgb(var(--gold))',
+        soft: '0 1px 2px rgb(var(--shadow) / 0.04), 0 6px 20px -8px rgb(var(--shadow) / 0.10)',
+        'soft-lg': '0 2px 4px rgb(var(--shadow) / 0.04), 0 20px 48px -16px rgb(var(--shadow) / 0.18)',
       },
       keyframes: {
         marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
