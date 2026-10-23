@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import { supabase, logEvent, type Lead } from '@/lib/outreach/db';
 import { notionUpdateStage } from '@/lib/outreach/notion';
+import { requireAdmin } from '@/lib/adminAuth';
 
 type Action = 'skip' | 'bad_email' | 'not_fit' | 'replied' | 'call_booked' | 'won' | 'lost' | 'unsubscribed' | 'undo_skip';
 
 export async function POST(req: Request) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   const { leadId, action, dealValue } = (await req.json()) as { leadId: string; action: Action; dealValue?: number };
   if (!leadId || !action) return NextResponse.json({ error: 'leadId and action required' }, { status: 400 });
 

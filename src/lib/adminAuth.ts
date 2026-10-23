@@ -31,11 +31,31 @@ export async function verifySessionToken(token: string | undefined | null): Prom
   if (!token || !secret()) return false;
   const [expires, sig] = token.split('.');
   if (!expires || !sig || Number(expires) < Date.now()) return false;
-  const expected = await hmacHex(expires);
-  if (expected.length !== sig.length) return false;
+  return safeEqual(sig, await hmacHex(expires));
+}
+
+/** Constant-time string compare, so response timing doesn't leak how much matched. */
+export function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
   let diff = 0;
-  for (let i = 0; i < sig.length; i++) diff |= expected.charCodeAt(i) ^ sig.charCodeAt(i);
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
+}
+
+/**
+ * Second check inside admin API routes, on top of middleware. Next.js has had
+ * middleware-bypass bugs, so routes that read leads or send email verify the
+ * session themselves. Returns a 401 response, or null when signed in.
+ */
+export async function requireAdmin(req: Request): Promise<Response | null> {
+  const cookie = req.headers.get('cookie') || '';
+  const token = cookie
+    .split(';')
+    .map((c) => c.trim())
+    .find((c) => c.startsWith(`${AUTH_COOKIE}=`))
+    ?.slice(AUTH_COOKIE.length + 1);
+  if (await verifySessionToken(token ? decodeURIComponent(token) : null)) return null;
+  return Response.json({ error: 'Unauthorized' }, { status: 401 });
 }
 
 // Cron routes are called by cron-job.org. When CRON_SECRET is set, require it as
@@ -44,6 +64,6 @@ export function isCronAuthorized(req: Request): boolean {
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) return true;
   const url = new URL(req.url);
-  if (url.searchParams.get('key') === cronSecret) return true;
-  return req.headers.get('authorization') === `Bearer ${cronSecret}`;
+  if (safeEqual(url.searchParams.get('key') || '', cronSecret)) return true;
+  return safeEqual(req.headers.get('authorization') || '', `Bearer ${cronSecret}`);
 }

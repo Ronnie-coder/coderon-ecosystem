@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { requireAdmin } from '@/lib/adminAuth';
 
 // Clients are created inside the handlers so `next build` works without the env vars.
 const getSupabase = () =>
@@ -10,6 +11,8 @@ const getResend = () => new Resend(process.env.RESEND_API_KEY);
 // 1. GET: paginated, searchable lead list for the "All leads" tab (never the whole table:
 // Supabase caps a plain select at 1,000 rows, which is what hid pitches on the old dashboard).
 export async function GET(req: NextRequest) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   try {
     const url = new URL(req.url);
     const page = Math.max(0, Number(url.searchParams.get('page') || 0));
@@ -44,6 +47,8 @@ export async function GET(req: NextRequest) {
 
 // 2. POST: Ingest leads into Supabase
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   try {
     const body = await req.json();
     const { 

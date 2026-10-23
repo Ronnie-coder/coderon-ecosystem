@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/outreach/db';
 import { getBudget } from '@/lib/outreach/budget';
 import { TIMEZONE } from '@/lib/outreach/config';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +19,9 @@ function localDay(iso: string) {
 }
 
 // True totals via COUNT queries (the old dashboard downloaded rows and hit Supabase's 1,000-row cap).
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   try {
     const [total, verified, queue, noIssue, unverifiedBacklog, budget, pitchedRows] = await Promise.all([
       count((q) => q),

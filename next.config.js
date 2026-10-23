@@ -31,17 +31,34 @@ const securityHeaders = [
     key: 'X-DNS-Prefetch-Control',
     value: 'on'
   },
-  // 7. Content Security Policy for the A+ grade - UPDATED FOR EXTERNAL SCRIPTS & IFRAMES
+  // 7. Content Security Policy: only the services the site really uses
+  //    (Google Analytics, Microsoft Clarity, Vercel Analytics, the Botpress demo iframe).
+  //    'unsafe-eval' is only needed by the dev server.
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://va.vercel-scripts.com https://js.stripe.com https://www.paypal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; frame-src 'self' https://cdn.botpress.cloud https://lottie.host https://js.stripe.com https://www.paypal.com; connect-src 'self' https://*.clarity.ms https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://va.vercel-scripts.com https://vitals.vercel-insights.com;"
-  }
+    value: [
+      "default-src 'self'",
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://va.vercel-scripts.com`,
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "frame-src 'self' https://cdn.botpress.cloud",
+      "connect-src 'self' https://*.clarity.ms https://c.bing.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      'upgrade-insecure-requests',
+    ].join('; '),
+  },
 ];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   trailingSlash: true,
+  // Don't advertise the framework in every response.
+  poweredByHeader: false,
   
   // --- RETIRED SERVICE PAGES ---
   // The 5 old services were merged into 4 clearer offers; keep old links working.
@@ -82,10 +99,11 @@ const nextConfig = {
   compress: true,
   // ✅ Reduce bundle size
   experimental: {
+    // Keep Next.js security-upgrade notices on for coding agents (the default, set explicitly).
+    agentUpgrade: 'security',
     optimizePackageImports: [
       'framer-motion',
       'react-icons',
-      'lottie-react',
     ],
   },
 };

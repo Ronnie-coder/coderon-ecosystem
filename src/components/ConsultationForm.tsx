@@ -139,7 +139,13 @@ export const ConsultationForm = () => {
       const res = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: form.name, email: form.email, service: form.need, message: lines.join('\n') }),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          service: form.need,
+          message: lines.join('\n'),
+          company_url: new FormData(ev.currentTarget as HTMLFormElement).get('company_url') || '',
+        }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error);
       setStatus('sent');
@@ -395,6 +401,13 @@ export const ConsultationForm = () => {
         </button>
       </div>
       <p className="mt-4 text-sm text-ink/60">Free and no obligation. We reply within one working day.</p>
+      {/* Spam trap: hidden from people and screen readers; bots that fill every field get dropped. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Leave this empty
+          <input type="text" name="company_url" tabIndex={-1} autoComplete="off" defaultValue="" />
+        </label>
+      </div>
     </form>
   );
 };

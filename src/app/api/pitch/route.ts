@@ -4,10 +4,13 @@ import { getBudget } from '@/lib/outreach/budget';
 import { newMessageId, sendOutreachEmail } from '@/lib/outreach/send';
 import { notionCreatePitch } from '@/lib/outreach/notion';
 import { buildPitch, renderEmail } from './pitch-templates';
+import { requireAdmin } from '@/lib/adminAuth';
 
 // Sends the pitch for one lead. Everything is loaded server-side from the lead's verified
 // audit; the client only sends the lead id.
 export async function POST(req: Request) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   try {
     const { leadId } = await req.json();
     if (!leadId) return NextResponse.json({ error: 'leadId required' }, { status: 400 });

@@ -2,11 +2,14 @@ import { NextResponse } from 'next/server';
 import { supabase, type Lead } from '@/lib/outreach/db';
 import { cleanCompanyName } from '@/lib/outreach/names';
 import { buildPitch, renderEmail } from '../../pitch/pitch-templates';
+import { requireAdmin } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 
 // Next pitch-ready leads, best first, with the exact email that will be sent.
 export async function GET(req: Request) {
+  const denied = await requireAdmin(req);
+  if (denied) return denied;
   const url = new URL(req.url);
   const limit = Math.min(Number(url.searchParams.get('limit') || 15), 50);
   const exclude = (url.searchParams.get('exclude') || '').split(',').filter(Boolean);
