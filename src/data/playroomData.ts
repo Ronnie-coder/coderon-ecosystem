@@ -3,117 +3,129 @@ import type { PlayroomProject, PlayroomDemo } from '@/types/global';
 
 // --- MAIN PORTFOLIO ---
 export const liveProjects: PlayroomProject[] = [
-  // 1. EDDIE'S CUT (NEW HERO PROJECT)
+  // 1. EDDIE'S CUT
+  // Numbers below match the Lighthouse screenshots in /public/images (mobile run).
   {
     id: 'eddies-cut',
     title: "Eddie's Cut",
-    category: 'Web Redesign & Performance',
+    category: 'Website redesign',
+    sector: 'Hair salon',
+    location: 'Hellerup, Denmark',
     description:
-      'A complete digital overhaul for a premium Hellerup hair salon. We migrated them off an outdated site builder to a custom Next.js architecture, hitting perfect 100/100 Lighthouse scores.',
+      'A hair salon in Hellerup with 25 years of experience and a slow, dated website. We redesigned it, set it up for local search with a page per treatment and area pages, and brought their Planway booking inside the site.',
     tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     imageUrl: '/images/eddiescut-after.webp',
-    beforeImage: '/images/eddiescut-before.webp', // Feeds the scanner
-    afterImage: '/images/eddiescut-after.webp',   // Feeds the scanner
+    beforeImage: '/images/eddiescut-before.webp',
+    afterImage: '/images/eddiescut-after.webp',
     lighthouseBefore: '/images/eddiescut-lighthouse-before.webp',
     lighthouseAfter: '/images/eddiescut-lighthouse-after.webp',
-    featureImages: ['/images/eddiescut-feature-pricing.webp'], 
+    featureImages: ['/images/eddiescut-feature-pricing.webp'],
     liveUrl: 'https://eddiescut.dk',
-    caseStudyUrl: '/playroom/eddies-cut',
+    caseStudyUrl: '/playroom/eddies-cut/',
     client: "Eddie's Cut",
-    clientLogo: '/images/razor.svg', // ✅ Fixed logo path included
+    clientLogo: '/images/razor.svg',
+    logo: '/images/logos/eddies-cut.svg',
     year: '2026',
-    roles: ['Lead Developer', 'Performance Engineer', 'UI/UX'],
-    servicesDelivered: [
-      'Custom Web Development',
-      'SEO & Performance Optimisation',
-      'Zero-Downtime DNS Migration',
-    ],
+    stat: { label: 'Mobile PageSpeed', before: 47, after: 92 },
+    roles: ['Design', 'Development', 'SEO set-up'],
+    servicesDelivered: ['Website redesign', 'Booking inside the site', 'Page per treatment', 'Area pages', 'Local schema', 'Google Maps', 'Search Console'],
     narrative_challenge:
-      'The salon’s existing website was sluggish, outdated, and penalized by Google for poor performance. They needed a premium digital presence that matched their 25 years of bespoke hairdressing experience, and a safe server migration without breaking their established business emails.',
+      'The old website was slow on phones: Google PageSpeed scored it 47 out of 100 on mobile. Like most Danish salons they book through Planway, but the old booking button sent people off the website to Planway. And the site only talked about Hellerup, not the nearby areas their clients come from.',
     narrative_solution:
-      'We engineered a lightning-fast Next.js application featuring an ultra-smooth Framer Motion scroll-tracking navigation system. We also executed a flawless, zero-downtime DNS migration on One.com, ensuring their emails remained completely untouched.',
+      'We redesigned the website in Next.js with clear prices and a smooth scrolling menu. Instead of sending people away, the Planway booking now opens in a window on the website itself. Each treatment has its own page with the questions people ask, linked from the homepage text. We built pages for Gentofte and Charlottenlund, added local business schema, opening hours and Google Maps, configured the domain (DNS) and the contact form emails, and host the site on Vercel with Vercel Analytics and Google Search Console.',
     narrative_results: [
-      'Perfect 100/100 Google Lighthouse Performance Score',
-      'Flawless Zero-Downtime DNS Migration',
-      'Dynamic Browser Tab & Scroll-Tracking Navigation',
+      'Mobile PageSpeed performance from 47 to 92',
+      '100 out of 100 for accessibility, best practices and SEO in Lighthouse',
+      'Clients book through Planway inside the website instead of being sent away',
+      'A page for each treatment, plus pages for Gentofte and Charlottenlund',
+      'Local business schema and Google Maps set up',
     ],
   },
 
   // 2. PALMSURE
+  // A corporate website redesign we still maintain. The client portal is Palmsure's own system;
+  // we linked it from the site. Facts confirmed by Ronnie (Oct 2026).
   {
     id: 'palmsure',
     title: 'Palmsure Insurance',
-    category: 'Digital Transformation',
+    category: 'Website redesign',
+    sector: 'Insurance brokers (FSP 47156)',
+    location: 'South Africa',
     description:
-      'Coderon led the complete digital transformation for Palmsure, migrating decades of paper-based processes to a robust, modern web platform built on Angular.',
-    tech: ['Angular', 'TypeScript', 'Legacy Migration'],
-    imageUrl: '/images/palmsure-showcase.webp',
+      'A corporate website redesign for an independent insurance broker: clear cover pages, their legal documents set up properly, a quote request flow and their client portal one click away. We still look after the site every month.',
+    tech: ['Angular', 'TypeScript', 'Vercel'],
+    imageUrl: '/images/palmsure-showcase-2026.webp',
     liveUrl: 'https://www.palmsure.co.za/',
-    caseStudyUrl: '/playroom/palmsure',
+    caseStudyUrl: '/playroom/palmsure/',
     client: 'Palmsure Insurance',
-    clientLogo: '/images/palmsure-logo.png',
+    clientLogo: '/images/logos/palmsure.webp',
+    logo: '/images/logos/palmsure.webp',
     year: '2025',
-    roles: ['Technical Lead', 'Frontend Arch.', 'UI/UX'],
-    servicesDelivered: [
-      'System Migration',
-      'Angular Development',
-      'API Integration',
-    ],
+    roles: ['Design', 'Development', 'Ongoing care'],
+    servicesDelivered: ['Website redesign', 'Legal pages', 'Quote request flow', 'SEO set-up', 'Local schema', 'Review widget', 'Cookie consent', 'Monthly care'],
     narrative_challenge:
-      'Palmsure was operating on decades of paper-based processes and disconnected spreadsheets. This created data redundancy, slow claims processing, and no real-time visibility for management.',
+      'Palmsure is a respected broker, but their website did not show it. Clients needed to understand the cover on offer, find the legal documents a financial services provider must publish, and reach the client portal without hunting for it.',
     narrative_solution:
-      'We engineered a complete digital platform using Angular. The system centralised their entire workflow with strict TypeScript typing and a modular architecture built to handle complex insurance logic securely and reliably.',
+      'We redesigned the site in Angular as a clean corporate website. Each type of cover has its own page, the legal documents are set up and easy to find, and a step-by-step quote form asks the right questions. The Client Portal button links straight to their existing portal. We added a Google review widget, optimised every image for speed, set up local business schema and basic SEO, configured the domain (DNS) and the contact form emails, and host the site on Vercel with Cookiebot consent, Vercel Analytics and Google Search Console.',
     narrative_results: [
-      '100% digitisation of paper records',
-      'Significantly reduced claim processing time',
-      'Real-time reporting dashboard for management',
+      'A corporate website that explains their cover in plain words',
+      'Legal documents published and easy to find',
+      'Step-by-step quote request form',
+      'Client Portal one click away from every page',
+      'Google reviews shown on the site',
+      'Looked after by us every month',
     ],
   },
 
   // 3. GIFTED TOURS
+  // Facts confirmed by Ronnie (Oct 2026).
   {
     id: 'gifted-tours',
     title: 'Gifted Tours',
-    category: 'Web Redesign',
+    category: 'Website redesign',
+    sector: 'Tours and shuttles',
+    location: 'Cape Town, South Africa',
     description:
-      'A lightning-fast, modern, and SEO-optimised platform that finally gives Gifted Tours the digital presence their service deserves.',
-    tech: ['Next.js', 'SEO', 'Vercel'],
-    imageUrl: '/images/gifted-tours-showcase.webp',
+      'A Cape Town tour and shuttle company with a website that did not do their tours justice. We redesigned it with a booking request form, nine languages, a full-width adventure gallery, and a local SEO set-up.',
+    tech: ['Next.js', 'Multilingual', 'Vercel'],
+    imageUrl: '/images/gifted-tours-showcase-2026.webp',
     liveUrl: 'https://giftedtours.co.za/',
-    caseStudyUrl: '/playroom/gifted-tours',
+    caseStudyUrl: '/playroom/gifted-tours/',
     client: 'Gifted Tours',
-    clientLogo: '/images/gifted-tours-logo.png',
+    clientLogo: '/images/logos/gifted-tours.webp',
+    logo: '/images/logos/gifted-tours.webp',
     year: '2025',
-    roles: ['Frontend Dev', 'SEO Engineer'],
-    servicesDelivered: [
-      'Website Redesign',
-      'Performance Optimisation',
-      'Vercel Deployment',
-    ],
+    roles: ['Design', 'Development', 'SEO set-up'],
+    servicesDelivered: ['Website redesign', 'Booking request form', 'Nine languages', 'Adventure gallery', 'QR business card', 'Local SEO set-up'],
     narrative_challenge:
-      'The previous website was slow, not mobile-responsive, and invisible to Google. Gifted Tours was losing potential clients because their digital presence did not reflect their service quality.',
+      'Gifted Tours runs great tours across Cape Town and beyond, but the old website was hard to use on a phone, did not show the places they take guests, and made booking slow. Their email was also not working properly, so enquiries were getting lost.',
     narrative_solution:
-      'We rebuilt the site using Next.js static site generation for instant page loads. Mobile-first design and structured data for Google rich snippets were built in from day one.',
+      'We redesigned the site with a booking request form that captures the details they need up front: tour type (Cape Peninsula, wine tasting, Garden Route, airport transfer and more), preferred vehicle, tour length including a custom duration, and date. A language switcher shows the site in nine languages. A large, full-width gallery shows each adventure with its photo, its name and the place it happens. A QR code lets people save their business card in one scan. We also set up local SEO and schema, configured the domain (DNS) and the contact form emails, and host the site on Vercel with analytics and Google Search Console.',
     narrative_results: [
-      'PageSpeed score increased from 45 to 98',
-      'First page Google ranking for key local terms',
-      '2× increase in mobile enquiries',
+      'Booking requests arrive with tour, vehicle, duration and date filled in',
+      'Website in English, Afrikaans, German, French, Dutch, Spanish, Italian, Portuguese and Chinese',
+      'A full-width gallery of their adventures, each with its name and place',
+      'QR code to save their business card',
+      'Local SEO set-up and business email working again',
     ],
   },
 
   // 4. QUOTEPILOT
   {
     id: 'quotepilot',
-    title: 'QuotePilot SaaS',
-    category: 'SaaS Product',
+    title: 'QuotePilot',
+    category: 'Our own product',
+    sector: 'Invoicing software',
+    location: 'Built in Cape Town',
     description:
       'A professional invoicing platform built for African freelancers and SMEs. Create branded invoices, connect your payment gateway, and get paid faster.',
     tech: ['Next.js', 'Supabase', 'PostgreSQL'],
     imageUrl: '/images/quotepilot-showcase.webp',
     liveUrl: 'https://quotepilot.coderon.co.za/',
-    caseStudyUrl: '/playroom/quotepilot',
+    caseStudyUrl: '/playroom/quotepilot/',
     client: 'Coderon (Internal)',
-    clientLogo: '/images/logo.png',
+    clientLogo: '/images/logos/quotepilot.svg',
+    logo: '/images/logos/quotepilot.svg',
     year: '2025',
     roles: ['Product Owner', 'Full-Stack Dev'],
     servicesDelivered: [

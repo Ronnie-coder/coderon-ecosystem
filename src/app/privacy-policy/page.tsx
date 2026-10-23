@@ -2,16 +2,17 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Coderon",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy-policy/" },
   description: "Coderon's Privacy Policy explains how we collect, use, and protect your data in compliance with South Africa's POPIA.",
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "November 19, 2025";
+  const lastUpdated = "October 22, 2026";
 
   return (
-    <main className="l-legal-page">
-      <div className="l-legal-page__container">
+    <div className="container max-w-4xl pb-24 pt-12 md:pt-20">
+      <div className="prose-coderon [&>h1]:text-5xl [&>h1]:font-semibold [&>h1]:tracking-tight [&>h1]:text-ink">
         <h1>Privacy Policy</h1>
         <p><strong>Last Updated:</strong> {lastUpdated}</p>
         <p>Coderon (Pty) Ltd (&quot;we,&quot; &quot;us,&quot; &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you visit coderon.co.za (the &quot;Site&quot;), in compliance with South Africa&apos;s Protection of Personal Information Act (POPIA).</p>
@@ -26,6 +27,16 @@ export default function PrivacyPolicyPage() {
           <li>Analyze website usage to enhance user experience.</li>
           <li>Maintain the security and integrity of our Site.</li>
         </ul>
+
+
+        <h2>Cookies and analytics</h2>
+        <p>When you first visit, we ask before using any analytics cookies. You can change your choice at any time with &quot;Cookie settings&quot; at the bottom of every page.</p>
+        <ul>
+          <li><strong>Necessary (always on):</strong> remembers your theme, animation and currency choices, and keeps a draft of the quote form in your own browser.</li>
+          <li><strong>Analytics (only if you accept):</strong> Google Analytics and Microsoft Clarity show us which pages people visit and how they use them, so we can improve the site. We do not use this for advertising.</li>
+          <li><strong>Vercel Analytics:</strong> counts page visits without cookies and without identifying you.</li>
+        </ul>
+        <p>When you send the quote form, your details are emailed to us through our email provider (Resend) so we can reply.</p>
 
         <h2>3. Data Sharing and Disclosure</h2>
         <p>We do not sell your personal information. We may share it with trusted third-party service providers (like our email service, Resend) only as necessary to deliver our services. These parties are contractually obligated to keep your information confidential.</p>
@@ -43,6 +54,6 @@ export default function PrivacyPolicyPage() {
             <li><strong>Phone:</strong> <a href="tel:+27678184898">+27 67 818 4898</a></li>
         </ul>
       </div>
-    </main>
+    </div>
   );
 }

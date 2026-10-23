@@ -11,8 +11,8 @@ interface RevenueBarChartProps {
 const RevenueBarChart = ({ chartData, chartOptions }: RevenueBarChartProps) => {
   return (
     <div className="c-chart-container">
-      <h3 className="c-chart-container__title">Monthly Revenue</h3>
-      <Bar data={chartData} options={chartOptions} />
+      <h2 className="c-chart-container__title">Monthly Revenue</h2>
+      <Bar data={chartData} options={chartOptions} aria-label="Bar chart of monthly revenue (sample data)" role="img" />
     </div>
   );
 };

@@ -1,0 +1,184 @@
+/* Coderon design system: "Coderon Clean".
+   Calm neutrals, hairline borders, soft shadows, pill buttons and one accent: gold.
+   Dark mode is true neutral black. Colour tokens are RGB channels so Tailwind can
+   apply opacity (bg-ink/60). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --paper: 248 246 241;     /* #F8F6F1 soft warm white */
+    --card: 255 255 255;      /* #FFFFFF */
+    --ink: 20 20 19;          /* #141413 */
+    --gold: 242 194 48;       /* #F2C230  fills only; ink text on it = 11:1 */
+    --gold-text: 138 101 8;   /* #8A6508  gold as text on paper = 4.9:1 (AA) */
+    --line: 229 226 218;      /* #E5E2DA  hairlines (decorative) */
+    --field: 138 134 125;     /* #8A867D  form-control borders, 3.4:1 (WCAG 1.4.11) */
+    --shadow: 20 20 19;
+    --good: 30 122 70;
+    --bad: 179 38 30;
+    --warn: 154 91 0;
+    --logo-accent: #B8860B;
+    color-scheme: light;
+  }
+  [data-theme='dark'] {
+    --paper: 10 10 10;        /* #0A0A0A */
+    --card: 22 22 22;         /* #161616 */
+    --ink: 242 242 242;       /* #F2F2F2 */
+    --gold: 242 194 48;
+    --gold-text: 242 194 48;
+    --line: 42 42 42;         /* #2A2A2A */
+    --field: 112 112 112;     /* #707070  3.7:1 on cards */
+    --shadow: 0 0 0;
+    --good: 95 211 148;
+    --bad: 255 138 128;
+    --warn: 245 176 76;
+    --logo-accent: #F2C230;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-gold text-[#16130E];
+  }
+  :focus-visible {
+    outline: 3px solid rgb(var(--gold));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  [data-theme='light'] :focus-visible,
+  :root:not([data-theme]) :focus-visible {
+    outline-color: rgb(var(--ink));
+  }
+
+  /* Motion off: either the visitor's OS setting or our own switch (html[data-motion="reduce"]). */
+  @media (prefers-reduced-motion: reduce) {
+    html:not([data-motion='full']),
+    html:not([data-motion='full']) *,
+    html:not([data-motion='full']) *::before,
+    html:not([data-motion='full']) *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  html[data-motion='reduce'],
+  html[data-motion='reduce'] *,
+  html[data-motion='reduce'] *::before,
+  html[data-motion='reduce'] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink/60;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-1.5 w-1.5 shrink-0 rounded-full bg-gold;
+  }
+  .accent {
+    @apply font-serif font-normal italic text-gold-text;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent px-5 py-3 text-base font-semibold
+      transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply btn bg-gold text-[#16130E] hover:bg-[#F6CF55];
+  }
+  .btn-dark {
+    @apply btn bg-ink text-paper hover:bg-ink/85;
+  }
+  .btn-ghost {
+    @apply btn bg-ink/[0.06] text-ink hover:bg-ink/[0.11];
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-card;
+  }
+  .card-pop {
+    @apply card shadow-soft transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-ink/20 hover:shadow-soft-lg;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs font-semibold;
+  }
+  .link-underline {
+    @apply underline decoration-1 underline-offset-4 transition-colors hover:text-gold-text;
+  }
+  .section {
+    @apply py-16 md:py-24;
+  }
+  .h-display {
+    @apply text-[2.6rem] font-semibold leading-[1] tracking-[-0.04em] sm:text-6xl lg:text-[5.2rem];
+  }
+  .h-section {
+    @apply text-3xl font-semibold leading-[1.08] tracking-[-0.03em] md:text-5xl;
+  }
+  /* Inverse band: near-black in light mode, a raised panel in dark mode. */
+  .band-dark {
+    @apply bg-[#111111] text-[#F2F2F2] dark:border-y dark:border-line dark:bg-card;
+  }
+}
+
+/* Long-form text (journal posts, legal pages). */
+.prose-coderon {
+  @apply max-w-[68ch] text-[1.075rem] leading-[1.75] text-ink/85;
+}
+.prose-coderon > * + * { @apply mt-5; }
+.prose-coderon h2 { @apply mt-12 text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink; }
+.prose-coderon h3 { @apply mt-8 text-xl font-semibold text-ink; }
+.prose-coderon h4 { @apply mt-6 font-bold text-ink; }
+.prose-coderon a { @apply font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4 hover:text-gold-text; }
+.prose-coderon strong { @apply font-bold text-ink; }
+.prose-coderon ul { @apply list-disc space-y-2 pl-6 marker:text-gold-text; }
+.prose-coderon ol { @apply list-decimal space-y-2 pl-6 marker:font-bold marker:text-gold-text; }
+.prose-coderon blockquote { @apply border-l-4 border-gold pl-5 font-serif text-2xl italic leading-snug text-ink; }
+.prose-coderon code { @apply rounded-md bg-ink/10 px-1.5 py-0.5 font-mono text-[0.9em]; }
+.prose-coderon pre { @apply overflow-x-auto rounded-xl border border-line bg-[#111111] p-5 text-sm text-[#F2F2F2]; }
+.prose-coderon pre code { @apply bg-transparent p-0; }
+.prose-coderon img { @apply rounded-xl border border-line; }
+.prose-coderon hr { @apply my-10 border-t border-line; }
+.prose-coderon table { @apply w-full border-collapse text-left text-sm; }
+.prose-coderon th, .prose-coderon td { @apply border-b border-line px-3 py-2; }
+.prose-coderon th { @apply font-bold text-ink; }
+
+/* Logo cursor: blinks 4 times after the C is drawn, and again while the logo is hovered. */
+.logo-cursor { animation: blink 1.1s steps(1) 1.1s 4; }
+a:hover .logo-cursor, a:focus-visible .logo-cursor { animation: blink 0.9s steps(1) infinite; }
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* Scroll reveals (components/motion/Reveal.tsx). Hidden only while animations are on;
+   the fallback animation shows everything after 3s if the script never runs. */
+html[data-motion='full'] [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  animation: reveal-fallback 0.4s ease 3s forwards;
+}
+@keyframes reveal-fallback { to { opacity: 1; } }
+
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Keyword links inside body copy: bold, underlined, gold on hover. They pass page
+   authority to service pages and tell readers (and Google) what each page is about. */
+.kw { @apply font-bold text-ink underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-gold-text; }
+
+/* Section breaker lines draw outwards from the logo once revealed. */
+html[data-motion='full'] .section-break__line { transform: scaleX(0); transition: transform 1s cubic-bezier(.65,0,.35,1) 0.15s; }
+html[data-motion='full'] .is-revealed .section-break__line { transform: scaleX(1); }
+
+/* Logo mascot (components/motion/LogoMascot.tsx): the glow behind the cursor "eye" breathes slowly. */
+.mascot-glow { animation: mascot-glow 5s ease-in-out infinite; }
+@keyframes mascot-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }

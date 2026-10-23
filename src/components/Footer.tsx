@@ -1,174 +1,161 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  FaGithub,
-  FaLinkedin,
-  FaFacebook,
-  FaArrowRight,
-} from 'react-icons/fa';
-import { FiTwitter } from 'react-icons/fi';
-import { BackToTopButton } from '@/components/BackToTopButton';
+import { FaGithub, FaLinkedinIn, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { Logo } from '@/components/Logo';
+import { MotionSwitch, ThemeButton, QUOTE_HREF, WHATSAPP_HREF } from '@/components/Navbar';
+import { services } from '@/data/servicesData';
+import { CookieSettingsButton } from '@/components/analytics/Consent';
+import LogoMascot from '@/components/motion/LogoMascot';
 
-const Footer = () => {
-  const [currentTime, setCurrentTime] = useState('');
-  const pathname = usePathname();
+const socials = [
+  { href: 'https://github.com/Ronnie-coder', label: 'GitHub', Icon: FaGithub },
+  { href: 'https://www.linkedin.com/in/ronnie-nyamhute-8b302b360', label: 'LinkedIn', Icon: FaLinkedinIn },
+  { href: 'https://x.com/Coderon28', label: 'X (Twitter)', Icon: FaXTwitter },
+  { href: 'https://www.facebook.com/profile.php?id=61586558918279', label: 'Facebook', Icon: FaFacebookF },
+];
 
+const company = [
+  { href: '/industries/', label: 'Who we help' },
+  { href: '/web-design-cape-town/', label: 'Web design Cape Town' },
+  { href: '/playroom/', label: 'Our work' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/about/', label: 'About' },
+  { href: '/journal/', label: 'Journal' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+function CapeTownClock() {
+  const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
-    const updateTime = () => {
-      setCurrentTime(
-        new Date().toLocaleTimeString('en-ZA', {
-          timeZone: 'Africa/Johannesburg',
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      );
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 30000);
-    return () => clearInterval(timer);
+    const fmt = () =>
+      new Intl.DateTimeFormat('en-ZA', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Johannesburg' }).format(new Date());
+    setTime(fmt());
+    const id = setInterval(() => setTime(fmt()), 30_000);
+    return () => clearInterval(id);
   }, []);
+  return (
+    <span className="font-mono text-xs text-ink/60">
+      Cape Town · <span suppressHydrationWarning>{time ?? '--:--'}</span> SAST
+    </span>
+  );
+}
 
-  const currentYear = new Date().getFullYear();
-
-  // Hide Footer completely on private admin pages
-  if (pathname?.startsWith('/admin')) {
-    return null;
-  }
+export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) return null;
 
   return (
-    <footer className="c-footer" aria-label="Site footer">
-      <div className="c-footer__container">
-        <div className="c-footer__grid">
-
-          {/* BRAND COLUMN */}
-          <div className="c-footer__col c-footer__col--brand">
-            <Link
-              href="/"
-              className="c-footer__logo-link"
-              aria-label="Coderon — go to homepage"
-            >
-              <span className="c-footer__logo-text">CODERON</span>
+    <footer className="mt-10">
+      {/* Closing call to action: the C rises from the bottom edge and watches the pointer. */}
+      <section aria-labelledby="footer-cta" className="band-dark overflow-hidden">
+        <div className="container flex flex-col items-center pt-16 text-center md:pt-24">
+          <h2 id="footer-cta" className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] md:text-6xl">
+            Not sure what your website needs? <span className="font-serif font-normal italic text-[#F2C230]">Ask us.</span>
+          </h2>
+          <p className="mt-5 max-w-xl text-lg text-[#F2F2F2]/70">A free, straight answer within one working day. No obligation.</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href={QUOTE_HREF} className="btn-primary px-6">
+              Get a free quote
             </Link>
-
-            <p className="c-footer__tagline">
-              We build the software that helps founders and growing businesses
-              run faster, smarter, and at scale.
-            </p>
-
-            <div className="c-footer__social">
-              <a
-                href="https://github.com/Ronnie-coder"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Coderon on GitHub"
-              >
-                <FaGithub aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/ronnie-nyamhute-8b302b360"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Coderon on LinkedIn"
-              >
-                <FaLinkedin aria-hidden="true" />
-              </a>
-              <a
-                href="https://x.com/Coderon28"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Coderon on X (formerly Twitter)"
-              >
-                <FiTwitter aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61586558918279"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Coderon on Facebook"
-              >
-                <FaFacebook aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
-          {/* COMPANY COLUMN */}
-          <div className="c-footer__col c-footer__col--links">
-            <h4 className="c-footer__col-heading">Company</h4>
-            <ul className="c-footer__link-list" role="list">
-              <li><Link href="/services">Services</Link></li>
-              <li><Link href="/playroom">Our Work</Link></li>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/journal">Journal</Link></li>
-            </ul>
-          </div>
-
-          {/* WORK WITH US COLUMN */}
-          <div className="c-footer__col c-footer__col--contact">
-            <h4 className="c-footer__col-heading">Work With Us</h4>
-
-            <p className="c-footer__text">
-              Ready to build something? Let&apos;s talk about your
-              project and what&apos;s possible.
-            </p>
-
-            <Link
-              href="/contact"
-              className="c-footer__cta"
-              aria-label="Request a project proposal from Coderon"
+            <a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-white/10 px-6 text-[#F2F2F2] hover:bg-white/[0.16]"
             >
-              Request a Proposal
-              <FaArrowRight aria-hidden="true" />
-            </Link>
-
-            <ul
-              className="c-footer__link-list c-footer__link-list--contact"
-              role="list"
-              aria-label="Contact details"
-            >
-              <li>
-                <a href="mailto:info@coderon.co.za">
-                  info@coderon.co.za
-                </a>
-              </li>
-              <li>
-                <a href="tel:+27678184898">
-                  +27 67 818 4898
-                </a>
-              </li>
-            </ul>
+              <FaWhatsapp aria-hidden="true" /> WhatsApp us<span className="sr-only"> (opens in a new tab)</span>
+            </a>
           </div>
-
-        </div>
-
-        {/* BOTTOM BAR */}
-        <div className="c-footer__bottom-bar">
-          <div className="c-footer__legal-info">
-            <span>
-              &copy; {currentYear} Coderon (Pty) Ltd.
-            </span>
-            <Link href="/privacy-policy">Privacy Policy</Link>
-            <Link href="/terms-of-service">Terms of Service</Link>
-          </div>
-
-          <div className="c-footer__meta-info">
-            {currentTime && (
-              <div
-                className="c-footer__clock"
-                aria-label={`Current time in Johannesburg: ${currentTime}`}
-              >
-                {currentTime} SAST
-              </div>
-            )}
+          <div aria-hidden="true" className="relative mt-12 h-[158px] w-full overflow-hidden sm:h-[196px] md:h-[240px]">
+            <LogoMascot className="absolute left-1/2 top-0 w-[250px] -translate-x-1/2 text-white/20 sm:w-[310px] md:w-[380px]" />
           </div>
         </div>
+      </section>
 
+      <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+        <div>
+          <Link href="/" aria-label="Coderon home" className="inline-block text-ink">
+            <Logo height={28} animated />
+          </Link>
+          <p className="mt-4 max-w-xs text-ink/70">
+            Fast websites set up properly for Google, and custom software that saves your team time. Based in Cape Town,
+            working worldwide.
+          </p>
+          <ul className="mt-6 flex gap-2">
+            {socials.map(({ href, label, Icon }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Coderon on ${label}`}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition hover:border-gold hover:bg-gold hover:text-[#16130E]"
+                >
+                  <Icon aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <nav aria-labelledby="footer-services">
+          <h2 id="footer-services" className="eyebrow">Services</h2>
+          <ul className="mt-4 space-y-2.5">
+            {services.map((s) => (
+              <li key={s.slug}>
+                <Link href={`/services/${s.slug}/`} className="font-medium hover:text-gold-text">
+                  {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-labelledby="footer-company">
+          <h2 id="footer-company" className="eyebrow">Company</h2>
+          <ul className="mt-4 space-y-2.5">
+            {company.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="font-medium hover:text-gold-text">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="eyebrow">Talk to us</h2>
+          <ul className="mt-4 space-y-2.5 font-medium">
+            <li>
+              <a href="mailto:info@coderon.co.za" className="hover:text-gold-text">info@coderon.co.za</a>
+            </li>
+            <li>
+              <a href="tel:+27678184898" className="hover:text-gold-text">+27 67 818 4898</a>
+            </li>
+          </ul>
+          <div className="mt-6 flex items-center gap-3">
+            <MotionSwitch />
+            <ThemeButton className="border-line" />
+          </div>
+        </div>
       </div>
-      <BackToTopButton />
+
+      <div className="border-t border-line">
+        <div className="container flex flex-col gap-3 py-6 text-sm text-ink/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Coderon (Pty) Ltd.</p>
+          <div className="flex flex-wrap items-center gap-5">
+            <Link href="/privacy-policy/" className="hover:text-ink">Privacy</Link>
+            <Link href="/terms-of-service/" className="hover:text-ink">Terms</Link>
+            <CookieSettingsButton className="hover:text-ink" />
+            <CapeTownClock />
+          </div>
+        </div>
+      </div>
     </footer>
   );
-};
-
-export default Footer;
+}

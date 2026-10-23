@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
-import { faker } from '@faker-js/faker';
+import { randFloat } from '@/lib/random';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -33,8 +33,8 @@ const FleetTrackerMap = () => {
   useEffect(() => {
     const initialTrucks: Truck[] = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
-      lat: faker.number.float({ min: -34, max: -22 }),
-      lng: faker.number.float({ min: 18, max: 32 }),
+      lat: randFloat(-34, -22),
+      lng: randFloat(18, 32),
     }));
     setTrucks(initialTrucks);
   }, []);
@@ -44,8 +44,8 @@ const FleetTrackerMap = () => {
       setTrucks(currentTrucks =>
         currentTrucks.map(truck => ({
           ...truck,
-          lat: truck.lat + faker.number.float({ min: -0.01, max: 0.01 }),
-          lng: truck.lng + faker.number.float({ min: -0.01, max: 0.01 }),
+          lat: truck.lat + randFloat(-0.01, 0.01),
+          lng: truck.lng + randFloat(-0.01, 0.01),
         }))
       );
     }, 2000);

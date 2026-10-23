@@ -1,28 +1,33 @@
 ---
-title: 'Migrating a Premium European Salon to a 100/100 Next.js Architecture'
-description: 'How we rescued a high-end Danish salon from a sluggish legacy site builder and delivered a lightning-fast custom web platform.'
+title: "Eddie's Cut: Redesigning a Danish Salon's Website"
+description: "How we redesigned Eddie's Cut, a hair salon in Hellerup, Denmark: mobile PageSpeed from 47 to 92, booking inside the site, and pages for every treatment and nearby area."
 date: '2026-07-06'
+author: 'Ronnie Nyamhute'
 ---
 
-An agency's true test isn't just building something that looks good—it's engineering a platform that performs flawlessly in the real world. Recently, Coderon partnered with **Eddie's Cut**, a premium hair salon based in Hellerup, Denmark, with over 25 years of high-end hairdressing experience. 
+**Eddie's Cut** is a hair salon in Hellerup, Denmark, with more than 25 years of experience. Their reputation was excellent. Their website was not keeping up.
 
-They had the offline reputation, but their online presence was actively hurting their business. Here is how we transformed their digital footprint.
+## The problem: slow, sending people away, and only found in one area
 
-### The Challenge: Outdated, Sluggish, and Invisible
-Eddie's Cut was operating on a legacy site builder. The platform was incredibly slow, aesthetically dated, and—worst of all—penalized heavily by Google for poor performance metrics. 
+- On a phone the site was slow: Google PageSpeed gave it **47 out of 100** for mobile performance.
+- The booking button opened a separate booking site, so people left the salon's website to book.
+- The salon wanted to reach clients from nearby areas like Gentofte and Charlottenlund, but the site only really talked about Hellerup.
 
-When a client wants to book a premium haircut, their first digital touchpoint needs to reflect that same level of quality. Instead, visitors were met with layout shifts, slow loading times, and a clunky booking integration. Furthermore, their business relied heavily on an established email ecosystem hosted on One.com, meaning any server migration came with the massive risk of dropping critical client communications.
+## What we did
 
-### Our Solution: A Custom Next.js Architecture
-We didn't just redesign their website; we ripped out the old foundation and built a mathematically perfect digital engine. 
+1. **A redesign in Next.js.** A calm, premium look, clear prices by category (cuts, colour, care, beard) and a smooth menu that follows you as you scroll.
+2. **Booking inside the website.** The booking system now opens within the site, so clients book without leaving.
+3. **A page for each treatment.** Every service has its own page with the questions people actually ask. The homepage links to them in the text, so both visitors and Google can find them.
+4. **Pages for nearby areas.** "Frisør Gentofte" and "Frisør Charlottenlund" pages speak to clients in the areas the salon wanted to grow in.
+5. **Local SEO basics.** Local business schema, Google Maps on the contact section, opening hours, and titles and descriptions on every page.
 
-1. **Next.js & React Ecosystem:** We migrated them off the sluggish site builder onto a custom Next.js architecture, utilizing static site generation for instantaneous page loads.
-2. **Premium Micro-Interactions:** Using Framer Motion, we implemented an ultra-smooth, scroll-tracking navigation system that feels deeply satisfying to use, matching the bespoke nature of their services.
-3. **Zero-Downtime DNS Migration:** We orchestrated a flawless server and DNS migration. We routed their new high-performance frontend through modern hosting while safely pointing their MX records back to One.com, ensuring their business emails never went offline for a single second.
+## The result
 
-### The Result: Pure Performance
-The transformation was night and day. 
+On the same Google Lighthouse mobile test, the new site scores:
 
-By stripping away the bloated legacy code, we achieved **perfect 100/100 Lighthouse Performance Scores** across Performance, Accessibility, Best Practices, and SEO. 
+- **Performance: 92** (was 47)
+- **Accessibility: 100** (was 88)
+- **Best Practices: 100**
+- **SEO: 100** (was 92)
 
-The client now has a lightning-fast, highly responsive platform that instantly validates their premium pricing the second a visitor lands on the page. Eddie and his team are thrilled with the outcome—not just because the site looks beautiful, but because it finally runs like the top-tier business they have spent 25 years building.
+The salon now has a website that loads quickly on a phone, keeps people on the page when they book, and talks to clients across Hellerup, Gentofte and Charlottenlund. See the before and after screenshots in the [Eddie's Cut case study](/playroom/eddies-cut/).
