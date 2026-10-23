@@ -50,6 +50,9 @@ function loadAnalytics() {
       const y = l.getElementsByTagName(r)[0];
       y.parentNode!.insertBefore(t, y);
     })(window, document, 'clarity', 'script', CLARITY_ID);
+    // Clarity's consent signal (Consent API v2): it only loads after the visitor accepts
+    // analytics, so analytics is granted; we run no ads, so ad storage stays denied.
+    window.clarity?.('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
   }
 }
 
