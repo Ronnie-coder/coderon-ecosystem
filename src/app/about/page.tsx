@@ -30,6 +30,13 @@ const values = [
   },
 ];
 
+const journey = [
+  { title: 'Self-taught', text: 'Full-stack development with freeCodeCamp.' },
+  { title: 'Coderon', text: 'Registered the business and got to work.' },
+  { title: 'First client', text: 'Gifted Tours, a Cape Town tour company.' },
+  { title: 'Now', text: 'Palmsure, QuotePilot and a motorbike shop.' },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -63,25 +70,38 @@ export default function AboutPage() {
         <div data-reveal>
           <h2 className="h-section">The story behind the <span className="accent">code</span></h2>
           <blockquote className="mt-8 border-l-4 border-gold pl-5 font-serif text-2xl italic leading-snug md:text-3xl">
-            &ldquo;Every visitor matters. A website should work for everyone, not only for people who find technology
-            easy.&rdquo;
+            &ldquo;Anyone can make a website move. The real craft is making it work for everyone.&rdquo;
           </blockquote>
           <p className="mt-8 text-lg leading-relaxed text-ink/80">
-            I started with a love for websites and how they work. I learned full-stack development through freeCodeCamp,
-            and one thing stood out early: anyone can add animations, but a website has more important jobs. It needs the
-            right HTML so browsers, search engines and screen readers understand it, and it needs to follow the WCAG
-            accessibility guidelines, because every visitor matters, not just the ones who find technology easy.
+            It started with curiosity. I wanted to know how websites really work, under the surface, so I taught myself
+            full-stack development with freeCodeCamp, one project at a time.
           </p>
           <p className="mt-5 text-lg leading-relaxed text-ink/80">
-            That idea became Coderon. I registered the business and got to work, and this year the first projects came in.
-            Gifted Tours was the first client, then came the Palmsure redesign and QuotePilot, my own invoicing tool for
-            freelancers. I also redesigned the website of a hair salon in Denmark.
+            Somewhere along the way the big lesson landed: animation is the easy part. What makes a website good is
+            underneath. Clean, meaningful HTML that browsers, Google and screen readers can read. Accessibility built in from
+            day one, so the site welcomes everyone, including people on a screen reader, a keyboard or an old phone, not
+            only the people who find technology easy.
           </p>
           <p className="mt-5 text-lg leading-relaxed text-ink/80">
-            Right now I am building a website for my cousin&apos;s motorbike business, free of charge, to help him get going
-            and to show what a good website can do for a small business. Every project teaches me what businesses really
-            need, and that goes into the next one.
+            That belief became Coderon. I registered the business, put my head down and kept building, and this year it
+            paid off with my first client, Gifted Tours. The Palmsure redesign followed, and so did QuotePilot, an invoicing
+            tool I built for freelancers.
           </p>
+          <p className="mt-5 text-lg leading-relaxed text-ink/80">
+            Right now I&apos;m building a website for my cousin&apos;s motorbike business, for free, to help him grow and to
+            prove with real results what a good website can do for a small business. Every project makes the next one
+            better, and you get all of it.
+          </p>
+
+          <ol aria-label="The journey so far" className="mt-10 grid gap-5 border-t border-line pt-8 sm:grid-cols-4">
+            {journey.map((step) => (
+              <li key={step.title}>
+                <span aria-hidden="true" className="block h-2 w-2 rounded-full bg-gold" />
+                <p className="mt-3 font-semibold">{step.title}</p>
+                <p className="mt-1 text-sm text-ink/70">{step.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

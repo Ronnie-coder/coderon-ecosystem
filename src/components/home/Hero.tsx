@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi';
 import { Price } from '@/components/ui/Price';
-import LogoMascot from '@/components/motion/LogoMascot';
+import ServicePool from '@/components/home/ServicePool';
 import { websitePlans, monthlyPlan } from '@/data/pricingData';
 
 // Server component: the headline is the LCP element, so it paints immediately.
-// Below the buttons the Coderon C draws itself as you scroll (LogoMascot); the text drifts
-// up and fades as you leave the hero (SectionMotion).
+// Below the buttons our services float around a handwritten "coderon" (ServicePool); the
+// text drifts up and fades as you leave the hero (SectionMotion).
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden" data-snap data-exit="hero">
@@ -43,11 +43,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* The C rises from the line and draws itself as you scroll. Decorative. */}
-      <div className="container">
-        <div className="relative mt-10 h-[191px] overflow-hidden border-b border-line sm:h-[255px] md:mt-14 md:h-[326px]">
-          <LogoMascot className="absolute left-1/2 top-0 w-[300px] -translate-x-1/2 text-ink/25 sm:w-[400px] md:w-[512px]" />
-        </div>
+      {/* Our services float around a handwritten "coderon", like rings in a water toy. */}
+      <div className="container mt-10 md:mt-14">
+        <ServicePool />
       </div>
 
       <ul className="container flex animate-fade-up flex-wrap justify-center gap-x-8 gap-y-3 py-7 text-sm font-medium text-ink/80 [animation-delay:350ms]">

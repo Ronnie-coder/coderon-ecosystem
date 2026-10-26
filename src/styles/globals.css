@@ -185,9 +185,17 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 html[data-motion='full'] .section-break__line { transform: scaleX(0); transition: transform 1s cubic-bezier(.65,0,.35,1) 0.15s; }
 html[data-motion='full'] .is-revealed .section-break__line { transform: scaleX(1); }
 
-/* Logo mascot (components/motion/LogoMascot.tsx). With animations on, the C starts undrawn
-   and the cursor hidden; the script draws them as you scroll. With animations off (or no
-   script) it is a finished drawing. Once complete, the cursor blinks like a text cursor. */
-html[data-motion='full'] .mascot-draw { stroke-dasharray: 100; stroke-dashoffset: 100; }
-html[data-motion='full'] .mascot-cursor { opacity: 0; }
-html[data-motion='full'] .is-complete .mascot-cursor { animation: blink 1.1s steps(1) 0.5s infinite; }
+/* Handwritten "coderon" (components/motion/HandwrittenCoderon.tsx): written once, like the
+   iPhone "hello". Hidden only while animations are on, until it scrolls into view. */
+:root { --hw-1: #8A6508; --hw-2: #C9961A; }
+[data-theme='dark'] { --hw-1: #F2C230; --hw-2: #FFE08A; }
+html[data-motion='full'] .handwriting path { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+html[data-motion='full'] .handwriting.is-written path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 3.4s cubic-bezier(.5, .05, .3, 1);
+}
+
+/* Service pool (components/home/ServicePool.tsx): services fade in as they rise into place.
+   Fallback shows them after 3s if the script never runs. */
+.pool-item { transition: opacity 0.7s ease; }
+html[data-motion='full'] .pool:not(.is-in) .pool-item { opacity: 0; animation: reveal-fallback 0.4s ease 3s forwards; }

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiArrowRight } from 'react-icons/fi';
-import LogoMascot from '@/components/motion/LogoMascot';
 
 const reasons = [
   { n: '01', title: 'Prices on the page', text: 'Websites from R3,500 once-off. One fixed quote before we start, no hidden costs.' },
@@ -14,12 +13,6 @@ const reasons = [
 export default function WhyCoderon() {
   return (
     <section aria-labelledby="why-title" className="band-dark relative overflow-hidden" data-snap>
-      {/* The C peeks up from the bottom edge under the heading and watches the pointer. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 hidden lg:block">
-        <div className="container relative h-[190px] overflow-hidden">
-          <LogoMascot className="absolute left-8 top-0 w-[300px] text-white/20" />
-        </div>
-      </div>
       <div className="container relative py-24 md:py-32">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div data-reveal>
