@@ -37,13 +37,13 @@ export default function Reveal() {
       const reveal = (batch: Element[]) => {
         gsap.fromTo(
           batch,
-          { opacity: 0, y: 22 },
+          { opacity: 0, y: 32 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.9,
             ease: 'power3.out',
-            stagger: 0.08,
+            stagger: 0.09,
             clearProps: 'transform',
             onStart() {
               batch.forEach((el) => el.classList.add('is-revealed'));

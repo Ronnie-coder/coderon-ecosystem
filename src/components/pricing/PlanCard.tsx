@@ -37,7 +37,7 @@ export default function PlanCard({ plan, ctaHref, ctaLabel }: { plan: PricePlan;
       </ul>
       <Link
         href={ctaHref}
-        className={`mt-8 w-full ${featured ? 'btn-primary' : 'btn-ghost'}`}
+        className={`mt-8 w-full ${featured ? 'btn-primary' : 'btn-dark'}`}
       >
         {ctaLabel}
       </Link>

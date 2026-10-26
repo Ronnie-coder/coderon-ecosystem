@@ -2,12 +2,12 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import { FiArrowLeft, FiArrowRight, FiArrowUpRight, FiCheck } from 'react-icons/fi';
+import { FiArrowUpRight, FiCheck } from 'react-icons/fi';
 import { liveProjects } from '@/data/playroomData';
 import { canonical, metaDescription } from '@/lib/site';
 import BrowserFrame from '@/components/ui/BrowserFrame';
 import CountUp from '@/components/ui/CountUp';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -44,9 +44,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   return (
     <>
       <header className="container pb-12 pt-12 md:pt-16">
-        <Link href="/playroom/" className="inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
-          <FiArrowLeft aria-hidden="true" /> All work
-        </Link>
+        <BackLink href="/playroom/" label="All work" />
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center">
           <div>
             <div className="flex items-center gap-4">
@@ -180,17 +178,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </section>
       )}
 
-      <nav aria-label="Next project" className="border-t border-line">
-        <Link href={next.caseStudyUrl || `/playroom/${next.id}/`} className="group container flex items-center justify-between gap-6 py-12">
-          <span>
-            <span className="eyebrow">Next project</span>
-            <span className="mt-2 block text-3xl font-semibold tracking-tight transition-colors group-hover:text-gold-text md:text-5xl">{next.title}</span>
-          </span>
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line text-2xl transition-colors group-hover:bg-gold group-hover:text-[#16130E]">
-            <FiArrowRight aria-hidden="true" />
-          </span>
-        </Link>
-      </nav>
+      <PageEndNav
+        back={{ href: '/playroom/', label: 'All work' }}
+        next={{ href: next.caseStudyUrl || `/playroom/${next.id}/`, label: 'Next project', title: next.title }}
+      />
     </>
   );
 }

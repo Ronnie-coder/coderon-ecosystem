@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight } from 'react-icons/fi';
 import { getAllPosts, getPost } from '@/lib/journal';
 import { getNotionBlocks } from '@/lib/notionJournal';
 import NotionBlocks from '@/components/journal/NotionBlocks';
 import { canonical, SITE_URL, metaDescription, seoTitle } from '@/lib/site';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
+import ReadingProgress from '@/components/journal/ReadingProgress';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -70,9 +72,7 @@ export default async function JournalArticlePage({ params }: PageProps) {
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="container max-w-4xl pb-10 pt-12 md:pt-20">
-        <Link href="/journal/" className="inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
-          <FiArrowLeft aria-hidden="true" /> Journal
-        </Link>
+        <BackLink href="/journal/" label="Journal" />
         <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">{post.title}</h1>
         {post.description && <p className="mt-5 text-xl text-ink/75">{post.description}</p>}
         <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm text-ink/60">
@@ -86,8 +86,9 @@ export default async function JournalArticlePage({ params }: PageProps) {
         </p>
       </header>
 
+      <ReadingProgress targetId="post-body" />
       <div className="container max-w-4xl border-t border-line pb-16 pt-10">
-        <div className="prose-coderon">{body}</div>
+        <div id="post-body" className="prose-coderon">{body}</div>
       </div>
 
       {more.length > 0 && (
@@ -107,6 +108,7 @@ export default async function JournalArticlePage({ params }: PageProps) {
           </ul>
         </aside>
       )}
+      <PageEndNav back={{ href: '/journal/', label: 'All journal posts' }} />
     </article>
   );
 }

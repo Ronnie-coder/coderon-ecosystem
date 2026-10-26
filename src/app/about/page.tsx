@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    title: 'No shortcuts',
-    text: 'Clean code, proper set-up and simple notes on how everything works, so you are never locked in or left in the dark.',
+    title: 'Built properly',
+    text: 'The right HTML, clean code and simple notes on how everything works, so browsers, Google and screen readers understand your site and you are never locked in.',
   },
   {
-    title: 'Real problems first',
-    text: 'We add automation or AI only when it removes real work from your day, and we measure it by the time you get back.',
+    title: 'Everyone is welcome',
+    text: 'We build to the WCAG accessibility guidelines, so people using a keyboard, a screen reader or an older phone can use your site too.',
   },
   {
     title: 'You talk to the builder',
@@ -63,17 +63,24 @@ export default function AboutPage() {
         <div data-reveal>
           <h2 className="h-section">The story behind the <span className="accent">code</span></h2>
           <blockquote className="mt-8 border-l-4 border-gold pl-5 font-serif text-2xl italic leading-snug md:text-3xl">
-            &ldquo;Growing businesses deserve software that fits how they actually work, not a watered-down tool built for
-            someone else&apos;s market.&rdquo;
+            &ldquo;Every visitor matters. A website should work for everyone, not only for people who find technology
+            easy.&rdquo;
           </blockquote>
           <p className="mt-8 text-lg leading-relaxed text-ink/80">
-            Coderon started from a simple observation: small and growing businesses were being let down by slow websites and
-            off-the-shelf software that did not fit local payments, local customers or local ways of working.
+            I started with a love for websites and how they work. I learned full-stack development through freeCodeCamp,
+            and one thing stood out early: anyone can add animations, but a website has more important jobs. It needs the
+            right HTML so browsers, search engines and screen readers understand it, and it needs to follow the WCAG
+            accessibility guidelines, because every visitor matters, not just the ones who find technology easy.
           </p>
           <p className="mt-5 text-lg leading-relaxed text-ink/80">
-            So we started building. A corporate website for an insurance broker, which we still look after. New websites for a tour company and a hair salon in
-            Denmark. An invoicing tool for freelancers. Every project teaches us what businesses really need, and that goes
-            into the next one.
+            That idea became Coderon. I registered the business and got to work, and this year the first projects came in.
+            Gifted Tours was the first client, then came the Palmsure redesign and QuotePilot, my own invoicing tool for
+            freelancers. I also redesigned the website of a hair salon in Denmark.
+          </p>
+          <p className="mt-5 text-lg leading-relaxed text-ink/80">
+            Right now I am building a website for my cousin&apos;s motorbike business, free of charge, to help him get going
+            and to show what a good website can do for a small business. Every project teaches me what businesses really
+            need, and that goes into the next one.
           </p>
         </div>
       </section>

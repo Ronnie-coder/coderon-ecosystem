@@ -104,8 +104,14 @@
   .btn-dark {
     @apply btn bg-ink text-paper hover:bg-ink/85;
   }
+  /* Secondary button: a tinted pill with a visible edge, so it reads as clickable in light mode too. */
   .btn-ghost {
-    @apply btn bg-ink/[0.06] text-ink hover:bg-ink/[0.11];
+    @apply btn bg-ink/[0.07] text-ink ring-1 ring-inset ring-ink/[0.16] hover:bg-ink/[0.12] hover:ring-ink/25;
+  }
+  /* Round icon buttons (slideshow arrows, menu). */
+  .btn-icon {
+    @apply grid h-10 w-10 place-items-center rounded-full border border-ink/20 bg-card text-ink shadow-soft transition
+      hover:border-ink/40 active:scale-95;
   }
   .card {
     @apply rounded-2xl border border-line bg-card;
@@ -123,10 +129,10 @@
     @apply py-16 md:py-24;
   }
   .h-display {
-    @apply text-[2.6rem] font-semibold leading-[1] tracking-[-0.04em] sm:text-6xl lg:text-[5.2rem];
+    @apply text-balance text-[2.6rem] font-semibold leading-[1] tracking-[-0.04em] sm:text-6xl lg:text-[5.2rem];
   }
   .h-section {
-    @apply text-3xl font-semibold leading-[1.08] tracking-[-0.03em] md:text-5xl;
+    @apply text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.03em] md:text-5xl;
   }
   /* Inverse band: near-black in light mode, a raised panel in dark mode. */
   .band-dark {
@@ -179,6 +185,9 @@ html[data-motion='full'] [data-reveal]:not(.is-revealed) {
 html[data-motion='full'] .section-break__line { transform: scaleX(0); transition: transform 1s cubic-bezier(.65,0,.35,1) 0.15s; }
 html[data-motion='full'] .is-revealed .section-break__line { transform: scaleX(1); }
 
-/* Logo mascot (components/motion/LogoMascot.tsx): the glow behind the cursor "eye" breathes slowly. */
-.mascot-glow { animation: mascot-glow 5s ease-in-out infinite; }
-@keyframes mascot-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+/* Logo mascot (components/motion/LogoMascot.tsx). With animations on, the C starts undrawn
+   and the cursor hidden; the script draws them as you scroll. With animations off (or no
+   script) it is a finished drawing. Once complete, the cursor blinks like a text cursor. */
+html[data-motion='full'] .mascot-draw { stroke-dasharray: 100; stroke-dashoffset: 100; }
+html[data-motion='full'] .mascot-cursor { opacity: 0; }
+html[data-motion='full'] .is-complete .mascot-cursor { animation: blink 1.1s steps(1) 0.5s infinite; }

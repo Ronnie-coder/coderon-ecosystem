@@ -37,6 +37,7 @@ const config: Config = {
         blink: { '0%, 49%': { opacity: '1' }, '50%, 100%': { opacity: '0' } },
         draw: { from: { strokeDashoffset: '101' }, to: { strokeDashoffset: '0' } },
         'fade-up': { from: { opacity: '0', transform: 'translateY(14px)' }, to: { opacity: '1', transform: 'none' } },
+        rise: { from: { opacity: '0', transform: 'translateY(0.45em)' }, to: { opacity: '1', transform: 'none' } },
         progress: { from: { transform: 'scaleX(0)' }, to: { transform: 'scaleX(1)' } },
       },
       animation: {
@@ -44,6 +45,7 @@ const config: Config = {
         blink: 'blink 1.1s steps(1) infinite',
         draw: 'draw 1.1s cubic-bezier(.65,0,.35,1) both',
         'fade-up': 'fade-up .7s cubic-bezier(.2,.7,.2,1) both',
+        rise: 'rise .9s cubic-bezier(.2,.7,.2,1) both',
       },
     },
   },

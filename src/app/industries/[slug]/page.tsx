@@ -10,6 +10,7 @@ import { canonical, SITE_URL, metaDescription } from '@/lib/site';
 import Accent from '@/components/ui/Accent';
 import BrowserFrame from '@/components/ui/BrowserFrame';
 import PlanCard from '@/components/pricing/PlanCard';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -33,6 +34,7 @@ export default async function IndustryPage({ params }: PageProps) {
   const { slug } = await params;
   const industry = industryBySlug(slug);
   if (!industry) notFound();
+  const nextIndustry = industries[(industries.indexOf(industry) + 1) % industries.length];
   const project = liveProjects.find((p) => p.id === industry.caseStudyId);
   const plans = industry.recommended.map(priceFor);
 
@@ -56,7 +58,8 @@ export default async function IndustryPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, breadcrumbs]) }} />
 
       <header className="container pb-14 pt-12 md:pt-20">
-        <p className="eyebrow">{industry.name}</p>
+        <BackLink href="/industries/" label="Who we help" />
+        <p className="eyebrow mt-8 flex">{industry.name}</p>
         <h1 className="h-display mt-4 max-w-[15ch]">
           <Accent text={industry.headline} />
         </h1>
@@ -150,6 +153,10 @@ export default async function IndustryPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      <PageEndNav
+        back={{ href: '/industries/', label: 'Who we help' }}
+        next={{ href: `/industries/${nextIndustry.slug}/`, label: 'Next', title: nextIndustry.name }}
+      />
     </>
   );
 }

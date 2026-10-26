@@ -2,11 +2,12 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
+import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import { services } from '@/data/servicesData';
 import { allPlans } from '@/data/pricingData';
 import { canonical, SITE_URL } from '@/lib/site';
 import PlanCard from '@/components/pricing/PlanCard';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -30,6 +31,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
+  const nextService = services[(services.indexOf(service) + 1) % services.length];
 
   const { title, description, detailedDescription, forWho, benefits, steps, faqs, kind } = service;
   const plans = allPlans.filter((p) => p.slug === slug);
@@ -67,9 +69,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <header className="container pb-12 pt-12 md:pb-16 md:pt-16">
-        <Link href="/services/" className="inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
-          <FiArrowLeft aria-hidden="true" /> All services
-        </Link>
+        <BackLink href="/services/" label="All services" />
         <h1 className="h-display mt-6 max-w-[14ch]">{title}</h1>
         <p className="mt-6 max-w-2xl text-lg text-ink/75 md:text-xl">{description}</p>
         <div className="mt-8 flex flex-wrap gap-3">
@@ -166,6 +166,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+      <PageEndNav
+        back={{ href: '/services/', label: 'All services' }}
+        next={{ href: `/services/${nextService.slug}/`, label: 'Next service', title: nextService.title }}
+      />
     </>
   );
 }

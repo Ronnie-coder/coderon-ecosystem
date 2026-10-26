@@ -6,6 +6,7 @@ import { BackToTopButton } from '@/components/BackToTopButton';
 import Consent from '@/components/analytics/Consent';
 import Reveal from '@/components/motion/Reveal';
 import SmoothScroll from '@/components/motion/SmoothScroll';
+import SectionMotion from '@/components/motion/SectionMotion';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 
 // "top" renders before <main> (navbar); "bottom" renders after the footer so the floating
@@ -20,6 +21,7 @@ export const ClientLayoutComponents = ({ part = 'top' }: { part?: 'top' | 'botto
         <Navbar />
         <Reveal />
         <SmoothScroll />
+        <SectionMotion />
       </>
     );
   }

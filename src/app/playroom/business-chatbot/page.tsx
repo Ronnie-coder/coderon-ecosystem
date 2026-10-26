@@ -1,6 +1,6 @@
 // CORRECTED: src/app/playroom/business-chatbot/page.tsx
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import BackLink from '@/components/ui/BackLink';
 
 export const metadata: Metadata = {
   title: 'Demo: Business Chatbot',
@@ -13,14 +13,13 @@ const BusinessChatbotPage = () => {
 
   return (
     <div className="container pb-20 pt-12 md:pt-16">
+      <BackLink href="/playroom/" label="Back to our work" className="mb-8" />
       <div className="max-w-2xl">
         <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">Demo: business chatbot</h1>
         <p className="mt-4 text-lg text-ink/75">
           This is a live example of an intelligent chatbot. It can be trained on your company&apos;s data to answer questions, book meetings, and improve customer engagement.
         </p>
-        <Link href="/playroom/" className="mt-4 inline-block font-semibold text-ink/70 hover:text-ink">
-          &larr; Back to our work
-        </Link>
+
       </div>
 
       <div className="card mt-10 overflow-hidden">

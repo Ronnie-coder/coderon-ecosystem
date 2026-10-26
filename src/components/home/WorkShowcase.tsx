@@ -81,10 +81,10 @@ export default function WorkShowcase() {
 
             {/* Controls + progress */}
             <div className="mt-4 flex items-center gap-3">
-              <button type="button" onClick={() => go(-1)} aria-label="Previous project" className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5">
+              <button type="button" onClick={() => go(-1)} aria-label="Previous project" className="btn-icon">
                 <FiArrowLeft aria-hidden="true" />
               </button>
-              <button type="button" onClick={() => go(1)} aria-label="Next project" className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5">
+              <button type="button" onClick={() => go(1)} aria-label="Next project" className="btn-icon">
                 <FiArrowRight aria-hidden="true" />
               </button>
               <div className="flex flex-1 gap-1.5" aria-hidden="true">
@@ -106,7 +106,7 @@ export default function WorkShowcase() {
                   type="button"
                   onClick={() => setPaused((p) => !p)}
                   aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line hover:bg-ink/5"
+                  className="btn-icon"
                 >
                   {paused ? <FiPlay aria-hidden="true" /> : <FiPause aria-hidden="true" />}
                 </button>

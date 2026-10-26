@@ -1,7 +1,6 @@
 // src/app/playroom/sales-dashboard/page.tsx
 "use client";
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { randFloat, randInt } from '@/lib/random';
 import {
@@ -16,12 +15,13 @@ import {
   ChartOptions,
   ChartData
 } from 'chart.js';
-import { FaArrowLeft, FaDollarSign, FaUsers, FaChartLine } from 'react-icons/fa';
+import { FaDollarSign, FaUsers, FaChartLine } from 'react-icons/fa';
 
 // Import our custom components
 import StatCard from '@/components/dashboard/StatCard';
 import RevenueBarChart from '@/components/dashboard/RevenueBarChart';
 import SalesDoughnutChart from '@/components/dashboard/SalesDoughnutChart';
+import BackLink from '@/components/ui/BackLink';
 
 // Register the chart components we need. This is crucial.
 ChartJS.register(
@@ -105,10 +105,7 @@ const SalesDashboardPage = () => {
 
   return (
     <div className="demo-scope container pb-20 pt-12 md:pt-16">
-      <Link href="/playroom/" className="mb-8 inline-flex items-center gap-2 font-semibold text-ink/70 hover:text-ink">
-        <FaArrowLeft />
-        Back to our work
-      </Link>
+      <BackLink href="/playroom/" label="Back to our work" className="mb-8" />
 
       <div className="c-dashboard">
         <div className="c-dashboard__header">

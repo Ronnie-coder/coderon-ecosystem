@@ -45,7 +45,10 @@ export default function SmoothScroll() {
       const onScrollEnd = () => {
         if (sections.length < 2 || keyboard) return;
         const y = window.scrollY;
-        const nearest = sections.map(topOf).reduce((a, b) => (Math.abs(b - y) < Math.abs(a - y) ? b : a));
+        // Never snap back to the very top: a small scroll from the hero should stay put.
+        const tops = sections.map(topOf).filter((t) => t > 8);
+        if (!tops.length) return;
+        const nearest = tops.reduce((a, b) => (Math.abs(b - y) < Math.abs(a - y) ? b : a));
         const gap = Math.abs(nearest - y);
         if (gap < 4 || gap > window.innerHeight * 0.18) return;
         if (smooth) smooth.scrollTo(Math.max(0, nearest), true);

@@ -141,7 +141,7 @@ const Navbar = () => {
           </Link>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-line text-xl lg:hidden"
+            className="btn-icon text-xl lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"

@@ -6,11 +6,12 @@ import LogoMascot from '@/components/motion/LogoMascot';
 import { websitePlans, monthlyPlan } from '@/data/pricingData';
 
 // Server component: the headline is the LCP element, so it paints immediately.
-// Below the buttons the Coderon C rises from a hairline and follows the pointer.
+// Below the buttons the Coderon C draws itself as you scroll (LogoMascot); the text drifts
+// up and fades as you leave the hero (SectionMotion).
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden" data-snap>
-      <div className="container flex flex-col items-center pt-12 text-center md:pt-20">
+    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden" data-snap data-exit="hero">
+      <div className="container flex flex-col items-center pt-12 text-center md:pt-20" data-hero-text>
         <Link
           href="/pricing/#monthly"
           className="group inline-flex animate-fade-up items-center gap-2.5 rounded-full border border-line bg-card py-1 pl-1 pr-3.5 text-sm font-medium text-ink/80 shadow-soft transition-colors hover:border-ink/20"
@@ -24,7 +25,7 @@ export default function Hero() {
 
         <h1 id="hero-title" className="h-display mt-7 max-w-[18ch]">
           Your business is real.<br />
-          <span className="accent">Your website should look it.</span>
+          <span className="accent inline-block animate-rise text-balance [animation-delay:120ms]">Your website should look it.</span>
         </h1>
 
         <p className="mt-6 max-w-2xl animate-fade-up text-lg leading-relaxed text-ink/70 [animation-delay:150ms] md:text-xl">
@@ -42,14 +43,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* The C rises from the line and keeps an eye on the visitor. Decorative. */}
+      {/* The C rises from the line and draws itself as you scroll. Decorative. */}
       <div className="container">
         <div className="relative mt-10 h-[191px] overflow-hidden border-b border-line sm:h-[255px] md:mt-14 md:h-[326px]">
           <LogoMascot className="absolute left-1/2 top-0 w-[300px] -translate-x-1/2 text-ink/25 sm:w-[400px] md:w-[512px]" />
         </div>
       </div>
 
-      <ul className="container flex animate-fade-up flex-wrap justify-center gap-x-8 gap-y-3 py-7 text-sm font-medium text-ink/70 [animation-delay:350ms]">
+      <ul className="container flex animate-fade-up flex-wrap justify-center gap-x-8 gap-y-3 py-7 text-sm font-medium text-ink/80 [animation-delay:350ms]">
         <li className="flex items-center gap-2">
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold" />
           <span>
