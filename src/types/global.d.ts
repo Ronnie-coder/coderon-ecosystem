@@ -23,7 +23,13 @@ export interface PlayroomProject {
   lighthouseBefore?: string;
   lighthouseAfter?: string;
   // ✅ ADDED THIS SO NEXT.JS RECOGNIZES THE ARRAY
-  featureImages?: string[]; 
+  featureImages?: string[];
+  sector?: string;
+  /** Small logo for the client ribbon on the homepage. */
+  logo?: string;
+  location?: string;
+  /** A before/after number we can prove (e.g. a Lighthouse screenshot). */
+  stat?: { label: string; before: number; after: number };
 }
 
 export interface PlayroomDemo {
@@ -37,10 +43,6 @@ export interface PlayroomDemo {
 
 declare global {
   interface Window {
-    gtag: (
-      command: 'config' | 'event',
-      target: string,
-      params?: { [key: string]: any }
-    ) => void;
+    gtag: (...args: any[]) => void;
   }
 }

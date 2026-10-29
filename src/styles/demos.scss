@@ -1,0 +1,18 @@
+// Styles for the interactive demos in the Lab (/playroom/sales-dashboard etc.).
+// Old variable names are mapped onto the new design tokens.
+@use 'sales-dashboard';
+@use 'sentiment-analyzer';
+@use 'fleet-tracker';
+
+.demo-scope {
+  --text-primary: rgb(var(--ink));
+  --text-secondary: rgb(var(--ink) / 0.7);
+  --surface-color: rgb(var(--card));
+  --border-color: rgb(var(--line) / 0.35);
+  --primary-gold: rgb(var(--gold));
+  --primary-gold-hover: rgb(var(--gold) / 0.85);
+  --primary-gold-rgb: 242, 194, 48;
+  --text-on-gold: #16130e;
+  --negative-color: rgb(var(--bad));
+  --negative-color-rgb: 179, 38, 30;
+}

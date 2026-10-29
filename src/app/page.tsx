@@ -1,37 +1,40 @@
-// src/app/page.tsx
-import dynamic from 'next/dynamic';
-import Hero from '@/components/Hero';
-import { projects } from '@/data/projectsData';
+import type { Metadata } from 'next';
+import Hero from '@/components/home/Hero';
+import WorkShowcase from '@/components/home/WorkShowcase';
+import Offers from '@/components/home/Offers';
+import WhoWeHelp from '@/components/home/WhoWeHelp';
+import WhyCoderon from '@/components/home/WhyCoderon';
+import Steps from '@/components/home/Steps';
+import Testimonials from '@/components/home/Testimonials';
+import LatestJournal from '@/components/home/LatestJournal';
+import SectionBreak from '@/components/ui/SectionBreak';
+import { getAllPosts } from '@/lib/journal';
 
-// ✅ Only Hero loads eagerly — it's the LCP element
-// ✅ Everything below fold is lazy loaded via standard dynamic imports
+export const metadata: Metadata = {
+  title: { absolute: 'Web Design Cape Town & Custom Software | Coderon' },
+  description:
+    'Coderon is a Cape Town web studio: fast websites set up for Google with WhatsApp buttons, from R3,500 once-off, plus custom software for growing businesses.',
+  alternates: { canonical: '/' },
+};
 
-const ServicesShowcase = dynamic(() => import('@/components/ServicesShowcase'));
-const ImpactSection = dynamic(() => import('@/components/ImpactSection'));
+// Picks up new journal posts (Notion) without a deploy.
+export const revalidate = 3600;
 
-// QuotePilot import removed to keep homepage clean
-
-const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
-const TheDrumSection = dynamic(() => import('@/components/TheDrumSection'));
-const ContactSection = dynamic(() => import('@/components/ContactSection'));
-
-const featuredProject = projects?.[0] ?? null;
-
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await getAllPosts();
   return (
     <>
-      {/* ✅ Hero is eager — must paint fast for LCP */}
       <Hero />
-      <ServicesShowcase />
-      {featuredProject && (
-        <ImpactSection project={featuredProject} />
-      )}
-      
-      {/* QuotePilot CTA removed from here */}
-      
-      <TestimonialsSection />
-      <TheDrumSection />
-      <ContactSection />
+      <WhoWeHelp />
+      <WorkShowcase />
+      <SectionBreak />
+      <Offers />
+      <WhyCoderon />
+      <Steps />
+      <SectionBreak />
+      <Testimonials />
+      <SectionBreak />
+      <LatestJournal posts={posts} />
     </>
   );
 }

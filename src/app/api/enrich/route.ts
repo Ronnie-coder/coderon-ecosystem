@@ -1,248 +1,87 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { supabase, type Lead } from '@/lib/outreach/db';
+import { isCronAuthorized } from '@/lib/adminAuth';
+import { auditWebsite, hunterLookup, opportunityScore, ratingFromNotes, type Audit } from '@/lib/outreach/audit';
+import { domainOf } from '@/lib/outreach/names';
 
 export const maxDuration = 60;
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const PER_RUN = 4; // each audit can take ~30-45s (PageSpeed), run in parallel within the 60s limit
 
-const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+function summarize(audit: Audit): string {
+  const parts = audit.issues.map((i) => `✅ ${i.label}`);
+  if (!audit.reachable) parts.push('⚠️ Site unreachable');
+  if (audit.reachable && !audit.issues.length) parts.push('No verified issue');
+  if (audit.email) parts.push(`✉️ ${audit.email}`);
+  return parts.join(', ');
+}
 
-const extractDomain = (url: string) => {
-  try {
-    return new URL(url).hostname.replace('www.', '');
-  } catch (e) {
-    return null;
+async function processLead(lead: Lead) {
+  const audit = await auditWebsite(lead.website!, { existingEmail: lead.email });
+
+  // Hunter.io free quota is tiny: only spend it on leads we could actually pitch.
+  if (!audit.email && audit.trigger) {
+    const domain = domainOf(lead.website);
+    const found = domain ? await hunterLookup(domain) : null;
+    if (found) {
+      audit.email = found.email;
+      audit.email_ok = true;
+      audit.email_source = 'hunter';
+      audit.first_name = found.first_name;
+    }
   }
-};
 
-export async function GET() {
+  const baseNotes = (lead.notes || '').split(' | Audit:')[0];
+  const { error } = await supabase
+    .from('leads')
+    .update({
+      status: lead.status === 'new' ? 'audited' : lead.status,
+      email: audit.email || lead.email,
+      email_ok: audit.email_ok,
+      first_name: audit.first_name || lead.first_name,
+      audit,
+      audit_version: 2,
+      pitch_trigger: audit.trigger,
+      opportunity_score: opportunityScore(audit, ratingFromNotes(lead.notes)),
+      notes: `${baseNotes} | Audit: ${summarize(audit)}`,
+    })
+    .eq('id', lead.id);
+  if (error) throw new Error(error.message);
+  return audit;
+}
+
+// Runs every 15 min (cron-job.org). Verifies the existing pitch-ready backlog first, then
+// new leads from the hunter. No email per run any more; see the daily digest.
+export async function GET(req: Request) {
+  if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
-    const { data: leads, error: fetchError } = await supabase
-      .from('leads')
-      .select('*')
-      .not('website', 'is', null)
-      .eq('status', 'new')
-      .limit(5); 
-
-    if (fetchError || !leads || leads.length === 0) {
-      return NextResponse.json({ message: 'No new leads to enrich.' });
-    }
-
-    let enrichedCount = 0;
-    let criticalFlawsFound = 0;
-    let errors = [];
-
-    for (const lead of leads) {
-      let targetUrl = lead.website;
-      if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-        targetUrl = `https://${targetUrl}`;
-      }
-
-      let auditNotes: string[] = [];
-      let extractedEmails: string[] = [];
-      let penalty = 0;
-      const domain = extractDomain(targetUrl);
-
-      // 1. TIMED FETCH & REDIRECT-AWARE SSL CHECK
-      const t0 = Date.now();
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 6000); 
-        const res = await fetch(targetUrl, {
-          signal: controller.signal,
-          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-        });
-        clearTimeout(timeoutId);
-
-        const loadSeconds = ((Date.now() - t0) / 1000).toFixed(1);
-        auditNotes.push(`⏱ Load: ${loadSeconds}s`);
-
-        // Check if final redirected URL uses HTTP (no SSL)
-        if (res.url.startsWith('http://')) {
-          auditNotes.push('⚠️ No SSL');
-          penalty += 15; // Increased penalty for critical trust issue
-          criticalFlawsFound++;
-        }
-
-        const html = await res.text();
-        
-        // 2. BASIC SEO
-        if (!html.match(/<title[^>]*>([^<]+)<\/title>/i)) { auditNotes.push('❌ No Title'); penalty += 5; }
-        if (!html.match(/<meta[^>]*name=["']description["'][^>]*>/i)) { auditNotes.push('❌ No Meta Desc'); penalty += 5; }
-        if (!html.match(/<h1[^>]*>([^<]+)<\/h1>/i)) { auditNotes.push('❌ No H1'); penalty += 5; }
-        
-        // 3. DEEP VALUE TELEMETRY (UPDATED FOR NEW TEMPLATES)
-        if (!html.includes('application/ld+json')) { 
-          auditNotes.push('❌ No Local Schema'); 
-          penalty += 5; 
-        }
-
-        // Meta Pixel Check
-        const hasPixel = html.includes('fbevents.js') || html.includes('connect.facebook.net');
-        if (hasPixel) {
-          auditNotes.push('⚡ Meta Pixel Active');
-        } else {
-          auditNotes.push('❌ No Meta Pixel');
-          penalty += 10;
-          criticalFlawsFound++;
-        }
-
-        // Google Analytics / Google Ads Check
-        const hasGA = html.includes('googletagmanager.com/gtag') || html.includes('gtm.js') || html.includes('google-analytics.com');
-        if (hasGA) {
-          auditNotes.push('⚡ Google Ads Active');
-        } else {
-          auditNotes.push('❌ No Google Analytics');
-          penalty += 10;
-          criticalFlawsFound++;
-        }
-
-        // 4. WEBSITE EMAIL SCRAPE (HOMEPAGE)
-        const foundEmails = html.match(EMAIL_REGEX) || [];
-        let cleanEmails = Array.from(new Set(foundEmails)).filter(
-          (email) => !email.endsWith('.png') && !email.endsWith('.jpg') && !email.endsWith('.webp')
-        );
-
-        // 5. SUBPAGE SCRAPE FALLBACK (/contact, /about) IF HOMEPAGE YIELDS NO EMAIL
-        if (cleanEmails.length === 0) {
-          const subpaths = ['/contact', '/about', '/contact-us'];
-          for (const path of subpaths) {
-            try {
-              const subUrl = new URL(path, res.url).href;
-              const subRes = await fetch(subUrl, {
-                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-              });
-              const subHtml = await subRes.text();
-              const subFound = subHtml.match(EMAIL_REGEX) || [];
-              const subClean = Array.from(new Set(subFound)).filter(
-                (e) => !e.endsWith('.png') && !e.endsWith('.jpg') && !e.endsWith('.webp')
-              );
-              if (subClean.length > 0) {
-                cleanEmails = subClean;
-                auditNotes.push('🔍 Subpage Scrape Hit');
-                break;
-              }
-            } catch (e) {
-              // Ignore subpage fetch timeouts
-            }
-          }
-        }
-
-        if (cleanEmails.length > 0) extractedEmails = cleanEmails;
-
-      } catch (err: any) {
-        auditNotes.push('⚠️ Fetch Blocked/Timeout');
-      }
-
-      // 6. HUNTER.IO API INTEGRATION
-      if (domain && process.env.HUNTER_API_KEY) {
-        try {
-          const companyRes = await fetch(`https://api.hunter.io/v2/companies/find?domain=${domain}&api_key=${process.env.HUNTER_API_KEY}`);
-          const companyData = await companyRes.json();
-          if (companyData.data) {
-            const industry = companyData.data.industry;
-            const year = companyData.data.founded_year;
-            if (industry || year) {
-              auditNotes.push(`🏢 ${industry || 'Corp'} (Est. ${year || 'N/A'})`);
-            }
-          }
-        } catch (e) { console.log('Company Enrichment failed'); }
-
-        if (extractedEmails.length === 0) {
-          try {
-            const hunterRes = await fetch(`https://api.hunter.io/v2/domain-search?domain=${domain}&api_key=${process.env.HUNTER_API_KEY}`);
-            const hunterData = await hunterRes.json();
-            if (hunterData.data?.emails?.length > 0) {
-              extractedEmails = [hunterData.data.emails[0].value];
-              auditNotes.push('🎯 Hunter Sniper');
-            }
-          } catch (e) { console.log('Domain Search failed'); }
-        }
-
-        if (extractedEmails.length > 0) {
-          try {
-            const verifyRes = await fetch(`https://api.hunter.io/v2/email-verifier?email=${extractedEmails[0]}&api_key=${process.env.HUNTER_API_KEY}`);
-            const verifyData = await verifyRes.json();
-            if (verifyData.data?.status === 'invalid') {
-              extractedEmails = [];
-              auditNotes.push('🗑️ Dead Email Blocked');
-            } else {
-              auditNotes.push('✅ Email Verified');
-            }
-          } catch (e) { console.log('Verifier failed'); }
-        }
-      }
-
-      const primaryEmail = extractedEmails.length > 0 ? extractedEmails[0] : null;
-      const updatedNotes = `${lead.notes || ''} | Audit: ${auditNotes.join(', ')}`;
-      const finalScore = Math.max(0, lead.lead_score - penalty); 
-
-      // 7. UPDATE SUPABASE VAULT
-      const { error: updateError } = await supabase
+    const pending = () =>
+      supabase
         .from('leads')
-        .update({
-          email: primaryEmail || lead.email,
-          notes: updatedNotes,
-          status: 'audited',
-          lead_score: finalScore
-        })
-        .eq('id', lead.id);
+        .select('*')
+        .not('website', 'is', null)
+        .is('pitched_at', null)
+        .or('audit_version.is.null,audit_version.lt.2');
 
-      if (updateError) {
-        errors.push({ id: lead.id, error: updateError.message });
-      } else {
-        enrichedCount++;
-      }
+    const { data: backlog } = await pending().eq('status', 'audited').not('email', 'is', null).limit(PER_RUN);
+    let leads = (backlog || []) as Lead[];
+    if (leads.length < PER_RUN) {
+      const { data: fresh } = await pending().in('status', ['new', 'audited']).limit(PER_RUN - leads.length);
+      leads = leads.concat((fresh || []) as Lead[]);
     }
+    if (!leads.length) return NextResponse.json({ message: 'Nothing left to verify.' });
 
-    // 8. TELEMETRY REPORT VIA RESEND
-    if (enrichedCount > 0 && process.env.RESEND_API_KEY) {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'CodeRun System <onboarding@resend.dev>',
-          to: 'ronnie@coderon.co.za', // Update this if needed
-          subject: `🟢 CodeRun Operations: ${enrichedCount} Leads Audited`,
-          html: `
-            <div style="font-family: system-ui, -apple-system, sans-serif; padding: 30px; background-color: #020617; color: #e2e8f0; max-width: 600px; margin: 0 auto; border-radius: 12px; border: 1px solid #1e293b;">
-              <h2 style="color: #38bdf8; margin-top: 0; font-size: 24px; border-bottom: 1px solid #1e293b; padding-bottom: 15px;">
-                CodeRun Autonomous Engine
-              </h2>
-              <h3 style="color: #f8fafc; font-size: 14px; text-transform: uppercase; margin-top: 25px;">Executive Summary</h3>
-              <p style="color: #94a3b8; font-size: 15px; line-height: 1.6;">Your automated lead generation and deep technical auditing cycle has completed successfully.</p>
-              
-              <div style="background-color: #0f172a; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #1e293b;">
-                <h3 style="color: #f8fafc; font-size: 14px; text-transform: uppercase; margin-top: 0;">System Telemetry</h3>
-                <ul style="list-style-type: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 15px;">
-                  <li style="padding-bottom: 8px;"><strong>Total Targets Audited:</strong> <span style="color: #38bdf8;">${enrichedCount}</span></li>
-                  <li><strong>Critical Vulnerabilities Detected:</strong> <span style="color: #f87171;">${criticalFlawsFound}</span></li>
-                </ul>
-              </div>
-              <a href="https://www.coderon.co.za/admin/leads" style="display: inline-block; padding: 12px 24px; background-color: #0284c7; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; margin-bottom: 30px;">
-                Access Command Center
-              </a>
-              <div style="border-top: 1px solid #1e293b; padding-top: 20px; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <strong>🔒 SECURE AUTOMATED TRANSMISSION</strong><br>
-                CODERON (PTY) LTD | REG: 2025/482790/07<br>
-                www.coderon.co.za<br><br>
-              </div>
-            </div>
-          `
-        })
-      });
-    }
+    const results = await Promise.allSettled(leads.map(processLead));
+    const report = results.map((r, i) => ({
+      company: leads[i].company_name,
+      ok: r.status === 'fulfilled',
+      trigger: r.status === 'fulfilled' ? r.value.trigger : null,
+      email: r.status === 'fulfilled' ? r.value.email : null,
+      error: r.status === 'rejected' ? String(r.reason) : undefined,
+    }));
 
-    return NextResponse.json({
-      message: `Audited ${enrichedCount} leads.`,
-      errors: errors.length > 0 ? errors : 'None'
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Fatal error', details: error.message }, { status: 500 });
+    return NextResponse.json({ message: `Verified ${report.filter((r) => r.ok).length} leads.`, report });
+  } catch (error) {
+    return NextResponse.json({ error: 'Fatal error', details: (error as Error).message }, { status: 500 });
   }
 }

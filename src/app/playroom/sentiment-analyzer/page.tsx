@@ -2,9 +2,9 @@
 "use client";
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Sentiment from 'sentiment';
-import { FaArrowLeft, FaSmile, FaMeh, FaFrown } from 'react-icons/fa';
+import { FaSmile, FaMeh, FaFrown } from 'react-icons/fa';
+import BackLink from '@/components/ui/BackLink';
 
 // Define the structure of our analysis result for TypeScript
 interface AnalysisResult {
@@ -62,11 +62,8 @@ const SentimentAnalyzerPage = () => {
   };
 
   return (
-    <div className="c-page-container">
-      <Link href="/playroom" className="c-dashboard-back-link">
-        <FaArrowLeft />
-        Back to Playroom
-      </Link>
+    <div className="demo-scope container pb-20 pt-12 md:pt-16">
+      <BackLink href="/playroom/" label="Back to our work" className="mb-8" />
       
       <div className="c-analyzer">
         <div className="c-analyzer__header">

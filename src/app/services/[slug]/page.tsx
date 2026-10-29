@@ -1,110 +1,175 @@
 // src/app/services/[slug]/page.tsx
-import { services } from '@/data/servicesData';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FiArrowRight, FiCheck } from 'react-icons/fi';
+import { services } from '@/data/servicesData';
+import { allPlans } from '@/data/pricingData';
+import { canonical, SITE_URL } from '@/lib/site';
+import PlanCard from '@/components/pricing/PlanCard';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
 
-// ✅ FIX: params must be typed as a Promise in newer Next.js versions
 type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // ✅ FIX: Await the params before destructuring
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  
-  const service = services.find(s => s.slug === slug);
-
-  if (!service) return { title: 'Service Not Found' };
-  
-  // ✅ Let the layout template handle suffix formatting perfectly to prevent tab clutters
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
+  if (!service) return { title: 'Service not found' };
   return {
-    title: service.title,
+    title: service.seoTitle || service.title,
     description: service.description,
+    alternates: { canonical: canonical(`services/${service.slug}`) },
+    openGraph: { url: canonical(`services/${service.slug}`) },
   };
 }
 
 export async function generateStaticParams() {
-  return services.map(service => ({ slug: service.slug }));
+  return services.map((service) => ({ slug: service.slug }));
 }
 
-// ✅ FIX: Component must be async to await params
 export default async function ServiceDetailPage({ params }: PageProps) {
-  // ✅ FIX: Await the params before destructuring
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  
-  const service = services.find(s => s.slug === slug);
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
+  if (!service) notFound();
+  const nextService = services[(services.indexOf(service) + 1) % services.length];
 
-  if (!service) { notFound(); }
+  const { title, description, detailedDescription, forWho, benefits, steps, faqs, kind } = service;
+  const plans = allPlans.filter((p) => p.slug === slug);
+  const cta = kind === 'website'
+    ? { href: `/contact/?topic=${slug === 'website-fix' ? 'fix' : slug === 'website-care-plan' ? 'care' : 'new'}`, label: 'Get a free quote' }
+    : { href: '/contact/?topic=software', label: 'Talk about custom software' };
 
-  const { title, description, detailedDescription, benefits } = service;
-
-  // JSON-LD for SEO (Service Schema)
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: title,
-    description: description,
-    provider: {
-      '@type': 'Organization',
-      name: 'Coderon',
-      url: 'https://coderon.co.za'
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: title,
+      description,
+      serviceType: title,
+      provider: { '@id': `${SITE_URL}/#organization` },
+      url: `${SITE_URL}${canonical(`services/${slug}`)}`,
+      areaServed: 'Worldwide',
+      offers: plans.map((p) => ({
+        '@type': 'Offer',
+        name: p.name,
+        price: p.price.ZAR,
+        priceCurrency: 'ZAR',
+        description: p.summary,
+      })),
     },
-    areaServed: 'Global', 
-    serviceType: title
-  };
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ];
 
   return (
-    <main className="service-detail-page">
-      {/* Inject SEO Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="service-hero">
-        <div className="container">
-          <Link href="/services" className="back-link"><FaArrowLeft /> Back to Services</Link>
-          <h1 className="animate-fade-up">{title}</h1>
-          <p className="subtitle animate-fade-up delay-100">{description}</p>
+      <header className="container pb-12 pt-12 md:pb-16 md:pt-16">
+        <BackLink href="/services/" label="All services" />
+        <h1 className="h-display mt-6 max-w-[14ch]">{title}</h1>
+        <p className="mt-6 max-w-2xl text-lg text-ink/75 md:text-xl">{description}</p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href={cta.href} className="btn-primary px-6 py-4 text-lg">
+            {cta.label} <FiArrowRight aria-hidden="true" />
+          </Link>
+          <a href="#prices" className="btn-ghost px-6 py-4 text-lg">See prices</a>
         </div>
-      </section>
+      </header>
 
-      <section className="service-content">
-        <div className="container service-grid">
-          
-          {/* Left Column: Prose */}
-          <div className="service-description-prose animate-fade-in delay-200">
-            <h2>Our Approach</h2>
-            <div className="prose-content">
-              {detailedDescription.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
+      <section className="border-y border-line bg-ink/[0.03]">
+        <div className="container grid gap-12 py-16 md:py-20 lg:grid-cols-[1.4fr_1fr]">
+          <div data-reveal>
+            <h2 className="h-section">How we <span className="accent">help</span></h2>
+            {detailedDescription.split('\n').map((p, i) => (
+              <p key={i} className="mt-5 text-lg leading-relaxed text-ink/80">{p}</p>
+            ))}
           </div>
-
-          {/* Right Column: Benefits Card */}
-          <div className="service-benefits-panel animate-slide-left delay-300">
-            <h3>Why Choose Coderon?</h3>
-            <ul className="benefits-list">
-              {benefits.map((benefit, index) => (
-                <li key={index} className="benefit-item">
-                  <div className="icon-box">
-                    <benefit.icon />
-                  </div>
-                  <span className="benefit-text">{benefit.text}</span>
+          <aside className="card-pop h-fit p-7" aria-labelledby="included" data-reveal>
+            <h2 id="included" className="eyebrow">What you get</h2>
+            <ul className="mt-5 space-y-4">
+              {benefits.map((b) => (
+                <li key={b.text} className="flex gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-gold bg-gold text-[#16130E]" aria-hidden="true">
+                    <b.icon />
+                  </span>
+                  <span className="self-center font-semibold">{b.text}</span>
                 </li>
               ))}
             </ul>
-            <div className="cta-wrapper">
-              <Link href="/contact" className="btn btn-full-width">
-                Request a Quote
-              </Link>
-            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container grid gap-12 lg:grid-cols-2">
+          <div data-reveal>
+            <h2 className="h-section">Is this for <span className="accent">you?</span></h2>
+            <ul className="mt-8 space-y-4">
+              {forWho.map((item) => (
+                <li key={item} className="flex gap-3 text-lg">
+                  <FiCheck aria-hidden="true" className="mt-1 shrink-0 text-gold-text" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div data-reveal>
+            <h2 className="h-section">How it <span className="accent">works</span></h2>
+            <ol className="mt-8 space-y-6">
+              {steps.map((step, i) => (
+                <li key={step.title} className="flex gap-5">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-lg font-semibold" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="text-xl font-semibold">{step.title}</h3>
+                    <p className="mt-1 text-ink/75">{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
-    </main>
+
+      <section id="prices" aria-labelledby="prices-title" className="section scroll-mt-24 border-t border-line">
+        <div className="container">
+          <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
+            <h2 id="prices-title" className="h-section">Prices</h2>
+            <Link href="/pricing/" className="link-underline font-bold">See all prices</Link>
+          </div>
+          <div className={`mt-10 grid gap-6 ${plans.length >= 4 ? 'md:grid-cols-2 xl:grid-cols-4' : plans.length === 3 ? 'lg:grid-cols-3' : plans.length === 2 ? 'md:grid-cols-2' : 'max-w-xl'}`}>
+            {plans.map((p) => (
+              <PlanCard key={p.key} plan={p} ctaHref={cta.href} ctaLabel={kind === 'website' ? `Get a quote for ${p.name}` : 'Book a free call'} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="faq-title" className="section border-t border-line">
+        <div className="container grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+          <h2 id="faq-title" className="h-section">Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((f) => (
+              <details key={f.q} className="card group p-5 [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold">
+                  {f.q}
+                  <span aria-hidden="true" className="text-2xl transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-ink/75">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      <PageEndNav
+        back={{ href: '/services/', label: 'All services' }}
+        next={{ href: `/services/${nextService.slug}/`, label: 'Next service', title: nextService.title }}
+      />
+    </>
   );
 }

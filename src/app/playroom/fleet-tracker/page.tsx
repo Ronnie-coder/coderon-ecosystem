@@ -1,16 +1,12 @@
 import React from 'react';
-import Link from 'next/link';
-import { FaArrowLeft } from 'react-icons/fa';
 import FleetTrackerClientWrapper from '@/components/playroom/FleetTrackerClientWrapper';
+import BackLink from '@/components/ui/BackLink';
 
 // This page is now a pure Server Component. Its function is layout and delegation.
 const FleetTrackerPage = () => {
   return (
-    <div className="c-page-container">
-      <Link href="/playroom" className="c-dashboard-back-link">
-        <FaArrowLeft />
-        Back to Playroom
-      </Link>
+    <div className="demo-scope container pb-20 pt-12 md:pt-16">
+      <BackLink href="/playroom/" label="Back to our work" className="mb-8" />
       
       <div className="c-tracker">
         <div className="c-tracker__header">

@@ -1,67 +1,114 @@
 // src/app/journal/[slug]/page.tsx
-import { getJournalEntries } from '@/lib/journal';
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Metadata } from 'next';
-import React from 'react';
+import type { Metadata } from 'next';
+import { FiArrowRight } from 'react-icons/fi';
+import { getAllPosts, getPost } from '@/lib/journal';
+import { getNotionBlocks } from '@/lib/notionJournal';
+import NotionBlocks from '@/components/journal/NotionBlocks';
+import { canonical, SITE_URL, metaDescription, seoTitle } from '@/lib/site';
+import BackLink, { PageEndNav } from '@/components/ui/BackLink';
+import ReadingProgress from '@/components/journal/ReadingProgress';
 
-// ✅ FIX: The 'params' prop MUST be a Promise in Next.js 16+
 type PageProps = { params: Promise<{ slug: string }> };
 
+// New Notion posts appear without a deploy (and scheduled posts go live on their date).
+export const revalidate = 3600;
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const posts = getJournalEntries();
-  return posts.map((post) => ({ slug: post.slug }));
+  return (await getAllPosts()).map((post) => ({ slug: post.slug }));
 }
 
-// ✅ FIX: Await the params before using them
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-
-  const postMeta = getJournalEntries().find(p => p.slug === slug);
-  if (!postMeta) return { title: 'Post Not Found' };
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) return { title: 'Post not found' };
   return {
-    title: postMeta.title,
-    description: postMeta.description,
+    title: seoTitle(post.title),
+    description: metaDescription(post.description),
+    alternates: { canonical: canonical(`journal/${slug}`) },
+    openGraph: {
+      type: 'article',
+      url: canonical(`journal/${slug}`),
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      authors: [post.author],
+    },
+    twitter: { title: post.title, description: post.description },
   };
 }
 
-// ✅ FIX: Component must be async to await params
 export default async function JournalArticlePage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) notFound();
 
-  const Content = dynamic(() => import(`../(posts)/${slug}.mdx`).catch(() => notFound()));
-  const postMeta = getJournalEntries().find(p => p.slug === slug);
-
-  if (!postMeta) {
-    notFound();
+  let body: React.ReactNode;
+  if (post.source === 'notion' && post.notionId) {
+    body = <NotionBlocks blocks={await getNotionBlocks(post.notionId)} />;
+  } else {
+    const Content = dynamic(() => import(`../(posts)/${slug}.mdx`));
+    body = <Content />;
   }
 
+  const all = await getAllPosts();
+  const more = all.filter((p) => p.slug !== slug).slice(0, 2);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    mainEntityOfPage: `${SITE_URL}${canonical(`journal/${slug}`)}`,
+  };
+
   return (
-    <article className="c-article-page">
-      <div className="c-page-container">
-        <header className="c-page-header">
-          <h1>{postMeta.title}</h1>
-          <p className="article-meta">
-            <span>
-              Published on {new Date(postMeta.date).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long', day: 'numeric',
-              })}
-            </span>
-            <span className="reading-time"> • {postMeta.readingTime} min read</span>
-          </p>
-        </header>
+    <article>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <header className="container max-w-4xl pb-10 pt-12 md:pt-20">
+        <BackLink href="/journal/" label="Journal" />
+        <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">{post.title}</h1>
+        {post.description && <p className="mt-5 text-xl text-ink/75">{post.description}</p>}
+        <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm text-ink/60">
+          <span>{post.author}</span>
+          <span aria-hidden="true">·</span>
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </time>
+          <span aria-hidden="true">·</span>
+          <span>{post.readingTime} min read</span>
+        </p>
+      </header>
 
-        <main className="c-article-content">
-          <Content />
-        </main>
-
-        <footer className="c-article-footer">
-          <Link href="/journal/">← Back to All Articles</Link>
-        </footer>
+      <ReadingProgress targetId="post-body" />
+      <div className="container max-w-4xl border-t border-line pb-16 pt-10">
+        <div id="post-body" className="prose-coderon">{body}</div>
       </div>
+
+      {more.length > 0 && (
+        <aside aria-labelledby="more-posts" className="container max-w-4xl pb-20">
+          <h2 id="more-posts" className="eyebrow">Keep reading</h2>
+          <ul className="mt-5 grid gap-5 md:grid-cols-2">
+            {more.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/journal/${p.slug}/`} className="card-pop group flex h-full flex-col p-6">
+                  <h3 className="text-lg font-semibold leading-snug">{p.title}</h3>
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 font-bold">
+                    Read <FiArrowRight aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
+      <PageEndNav back={{ href: '/journal/', label: 'All journal posts' }} />
     </article>
   );
 }

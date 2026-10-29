@@ -14,7 +14,7 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    logoUrl: '/images/gifted-tours-logo.png',
+    logoUrl: '/images/logos/gifted-tours.webp',
     logoAlt: 'Gifted Tours Logo',
     logoWidth: 160,
     logoHeight: 50,
@@ -27,16 +27,15 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    logoUrl: '/images/palmsure-logo.png',
-    logoAlt: 'Palmsure Insurance Brokers Logo',
-    logoWidth: 150,
-    logoHeight: 50,
-    // ⚠️ PLACEHOLDER — replace with actual client quote when available
-    // The previous version was copy-pasted from projectsData.ts (not a real testimonial)
+    logoUrl: '/images/logos/palmsure.webp',
+    logoAlt: 'Palmsure Insurance Brokers logo',
+    logoWidth: 120,
+    logoHeight: 120,
+    // Their review, received Oct 2026.
     quote:
-      "Coderon took something we thought would take years and delivered it with care and precision. Our team went from drowning in paper to running a modern digital operation. The difference has been remarkable.",
-    authorName: 'Palmsure Management',
-    authorRole: 'Insurance Brokers, South Africa',
+      'Coderon did an exceptional job redesigning our website for Palmsure Insurance Brokers! They seamlessly integrated our client portal link directly into the site, making access effortless for our clients. The team built out clean, structured service pages, set up our basic local SEO to boost our visibility, and ensured all necessary legal documentation was properly integrated to keep the site fully compliant. Their attention to detail, technical skill, and understanding of our industry made the entire process smooth and efficient. Highly recommend Coderon for any web development and digital solutions!',
+    authorName: 'Palmsure Insurance Brokers',
+    authorRole: 'Insurance brokers, South Africa',
     siteUrl: 'https://www.palmsure.co.za/',
   },
 ];

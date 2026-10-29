@@ -14,7 +14,7 @@ const StatCard = ({ title, value, Icon }: StatCardProps) => {
         <Icon />
       </div>
       <div className="c-stat-card__info">
-        <h3 className="c-stat-card__title">{title}</h3>
+        <h2 className="c-stat-card__title">{title}</h2>
         <p className="c-stat-card__value">{value}</p>
       </div>
     </div>

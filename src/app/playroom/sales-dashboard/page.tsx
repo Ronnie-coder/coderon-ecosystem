@@ -1,9 +1,8 @@
 // src/app/playroom/sales-dashboard/page.tsx
 "use client";
 
-import Link from 'next/link';
-import { useMemo } from 'react';
-import { faker } from '@faker-js/faker';
+import { useEffect, useState } from 'react';
+import { randFloat, randInt } from '@/lib/random';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,12 +15,13 @@ import {
   ChartOptions,
   ChartData
 } from 'chart.js';
-import { FaArrowLeft, FaDollarSign, FaUsers, FaChartLine } from 'react-icons/fa';
+import { FaDollarSign, FaUsers, FaChartLine } from 'react-icons/fa';
 
 // Import our custom components
 import StatCard from '@/components/dashboard/StatCard';
 import RevenueBarChart from '@/components/dashboard/RevenueBarChart';
 import SalesDoughnutChart from '@/components/dashboard/SalesDoughnutChart';
+import BackLink from '@/components/ui/BackLink';
 
 // Register the chart components we need. This is crucial.
 ChartJS.register(
@@ -34,53 +34,58 @@ ChartJS.register(
   Legend
 );
 
-const SalesDashboardPage = () => {
-  const dashboardData = useMemo(() => {
-    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-    const totalRevenue = faker.number.int({ min: 500000, max: 1200000 });
+// Random demo numbers. Made in the browser only (after the first render), so the
+// server HTML and the browser agree and React doesn't throw a hydration error.
+function makeData(live: boolean) {
+  const int = (min: number, max: number) => (live ? randInt(min, max) : 0);
+  const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
-    return {
-      stats: {
-        totalRevenue: `R ${totalRevenue.toLocaleString()}`,
-        newCustomers: faker.number.int({ min: 80, max: 250 }).toString(),
-        salesGrowth: `${faker.number.float({ min: 2.5, max: 15, fractionDigits: 1 })}%`,
-      },
-      revenueData: {
-        labels,
-        datasets: [
-          {
-            label: 'Revenue (R)',
-            data: labels.map(() => faker.number.int({ min: 80000, max: 200000 })),
-            backgroundColor: 'rgba(212, 175, 55, 0.6)',
-            borderColor: 'rgba(212, 175, 55, 1)',
-            borderWidth: 1,
-          },
-        ],
-      },
-      salesByRegionData: {
-        labels: ['Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Other'],
-        datasets: [
-          {
-            label: 'Sales',
-            data: [
-              faker.number.int({ min: 300, max: 500 }),
-              faker.number.int({ min: 200, max: 400 }),
-              faker.number.int({ min: 100, max: 300 }),
-              faker.number.int({ min: 50, max: 150 }),
-            ],
-            backgroundColor: [
-              'rgba(212, 175, 55, 0.8)',
-              'rgba(240, 240, 240, 0.8)',
-              'rgba(160, 160, 160, 0.8)',
-              'rgba(51, 51, 51, 0.8)',
-            ],
-            borderColor: '#1A1A1A',
-            borderWidth: 2,
-          },
-        ],
-      },
-    };
-  }, []);
+  return {
+    stats: {
+      totalRevenue: live ? `R ${randInt(500000, 1200000).toLocaleString('en-ZA')}` : '—',
+      newCustomers: live ? randInt(80, 250).toString() : '—',
+      salesGrowth: live ? `${randFloat(2.5, 15, 1)}%` : '—',
+    },
+    revenueData: {
+      labels,
+      datasets: [
+        {
+          label: 'Revenue (R)',
+          data: labels.map(() => int(80000, 200000)),
+          backgroundColor: 'rgba(212, 175, 55, 0.6)',
+          borderColor: 'rgba(212, 175, 55, 1)',
+          borderWidth: 1,
+        },
+      ],
+    },
+    salesByRegionData: {
+      labels: ['Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Other'],
+      datasets: [
+        {
+          label: 'Sales',
+          data: [
+            int(300, 500),
+            int(200, 400),
+            int(100, 300),
+            int(50, 150),
+          ],
+          backgroundColor: [
+            'rgba(212, 175, 55, 0.8)',
+            'rgba(240, 240, 240, 0.8)',
+            'rgba(160, 160, 160, 0.8)',
+            'rgba(51, 51, 51, 0.8)',
+          ],
+          borderColor: '#1A1A1A',
+          borderWidth: 2,
+        },
+      ],
+    },
+  };
+}
+
+const SalesDashboardPage = () => {
+  const [dashboardData, setDashboardData] = useState(() => makeData(false));
+  useEffect(() => setDashboardData(makeData(true)), []);
 
   const barChartOptions: ChartOptions<'bar'> = {
     responsive: true,
@@ -99,11 +104,8 @@ const SalesDashboardPage = () => {
   };
 
   return (
-    <div className="c-page-container">
-      <Link href="/playroom" className="c-dashboard-back-link">
-        <FaArrowLeft />
-        Back to Playroom
-      </Link>
+    <div className="demo-scope container pb-20 pt-12 md:pt-16">
+      <BackLink href="/playroom/" label="Back to our work" className="mb-8" />
 
       <div className="c-dashboard">
         <div className="c-dashboard__header">
