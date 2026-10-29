@@ -150,10 +150,10 @@ export const liveProjects: PlayroomProject[] = [
 export const interactiveDemos: PlayroomDemo[] = [
   {
     id: 'business-chatbot',
-    title: 'Lead Gen Chatbot',
-    category: 'Automation',
+    title: 'Kojo, our AI assistant',
+    category: 'Chatbot & AI',
     description:
-      'An automated agent that qualifies leads 24/7. Ask it anything about Coderon\'s services and it will guide you to the right solution.',
+      'Our own Botpress assistant: it captures enquiries (service, contact details, project brief) and answers questions about Coderon. Try it.',
     tech: ['Botpress', 'Integration'],
     href: '/playroom/business-chatbot',
   },

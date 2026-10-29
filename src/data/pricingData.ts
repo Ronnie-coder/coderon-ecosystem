@@ -146,7 +146,7 @@ export const softwarePlan: PricePlan = {
   slug: 'custom-software',
   price: { ZAR: 15000, USD: 1500 },
   period: 'from',
-  summary: 'Internal tools, client portals, dashboards and automations, built around how you work.',
+  summary: 'Internal tools, client portals, dashboards, automations, chatbots and AI integrations, built around how you work.',
   includes: ['Free discovery call', 'Clear scope and a fixed quote', 'Built in stages you can test', 'You own the code'],
 };
 

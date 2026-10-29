@@ -165,14 +165,15 @@ export const services: Service[] = [
     seoTitle: 'Custom Software & Business Automation',
     kind: 'software',
     description:
-      'If your team runs on spreadsheets, paperwork or WhatsApp threads, we build the tool that does the job for you.',
+      'If your team runs on spreadsheets, paperwork or WhatsApp threads, we build the tool that does the job for you, from internal tools to chatbots and AI integrations.',
     detailedDescription:
-      'Some problems are not solved by a website. You might be copying data between spreadsheets, chasing approvals, or doing the same report every week.\nWe build software around how your business already works: internal tools, client portals, dashboards and automations. We have built invoicing software (QuotePilot), lead generation tools and chatbots. You own the code, and we keep it simple to use.',
+      'Some problems are not solved by a website. You might be copying data between spreadsheets, chasing approvals, or doing the same report every week.\nWe build software around how your business already works: internal tools, client portals, dashboards, automations, chatbots and AI integrations. We have built invoicing software (QuotePilot), lead generation tools and Kojo, our own AI assistant. You own the code, and we keep it simple to use.',
     forWho: [
       'Your team does the same manual task every day',
       'Off-the-shelf software does not fit how you work',
       'You need a dashboard, portal or internal tool',
       'You want to connect the tools you already use',
+      'You want a chatbot that captures enquiries and answers customers',
     ],
     benefits: [
       { text: 'Built around your exact workflow', icon: FaDraftingCompass },
@@ -187,7 +188,7 @@ export const services: Service[] = [
     ],
     faqs: [
       { q: 'How much does custom software cost?', a: 'It depends on what you need, so we quote per project after a free call.' },
-      { q: 'Do you build AI tools?', a: 'Yes, when it genuinely helps, for example chatbots that answer customer questions or tools that sort documents.' },
+      { q: 'Do you build chatbots and AI tools?', a: 'Yes. We build chatbots and AI integrations, like Kojo, our own assistant that captures enquiries and answers questions about Coderon. We use AI where it genuinely saves you time.' },
     ],
     priceKey: 'software',
   },

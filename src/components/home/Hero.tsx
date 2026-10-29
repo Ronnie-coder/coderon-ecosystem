@@ -2,12 +2,10 @@ import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi';
 import { Price } from '@/components/ui/Price';
-import ServicePool from '@/components/home/ServicePool';
 import { websitePlans, monthlyPlan } from '@/data/pricingData';
 
 // Server component: the headline is the LCP element, so it paints immediately.
-// Below the buttons our services float around a handwritten "coderon" (ServicePool); the
-// text drifts up and fades as you leave the hero (SectionMotion).
+// The text drifts up and fades as you leave the hero (SectionMotion).
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden" data-snap data-exit="hero">
@@ -43,12 +41,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Our services float around a handwritten "coderon", like rings in a water toy. */}
-      <div className="container mt-10 md:mt-14">
-        <ServicePool />
-      </div>
-
-      <ul className="container flex animate-fade-up flex-wrap justify-center gap-x-8 gap-y-3 py-7 text-sm font-medium text-ink/80 [animation-delay:350ms]">
+      <ul className="container mt-14 flex animate-fade-up flex-wrap justify-center gap-x-8 gap-y-3 border-t border-line py-7 text-sm font-medium text-ink/80 [animation-delay:350ms] md:mt-20">
         <li className="flex items-center gap-2">
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-gold" />
           <span>

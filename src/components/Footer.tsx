@@ -9,7 +9,6 @@ import { Logo } from '@/components/Logo';
 import { MotionSwitch, ThemeButton, QUOTE_HREF, WHATSAPP_HREF } from '@/components/Navbar';
 import { services } from '@/data/servicesData';
 import { CookieSettingsButton } from '@/components/analytics/Consent';
-import HandwrittenCoderon from '@/components/motion/HandwrittenCoderon';
 
 const socials = [
   { href: 'https://github.com/Ronnie-coder', label: 'GitHub', Icon: FaGithub },
@@ -50,9 +49,9 @@ export default function Footer() {
 
   return (
     <footer className="mt-10">
-      {/* Closing call to action, signed off with a handwritten "coderon". */}
+      {/* Closing call to action */}
       <section aria-labelledby="footer-cta" className="band-dark overflow-hidden">
-        <div className="container flex flex-col items-center pt-16 text-center md:pt-24">
+        <div className="container flex flex-col items-center py-16 text-center md:py-24">
           <h2 id="footer-cta" className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-[-0.03em] md:text-6xl">
             Not sure what your website needs? <span className="font-serif font-normal italic text-[#F2C230]">Ask us.</span>
           </h2>
@@ -70,8 +69,6 @@ export default function Footer() {
               <FaWhatsapp aria-hidden="true" /> WhatsApp us<span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
-          {/* Signed off by hand, like a letter. */}
-          <HandwrittenCoderon className="mb-14 mt-12 w-[200px] [--hw-1:#F2C230] [--hw-2:#FFE08A] md:w-[260px]" />
         </div>
       </section>
 
