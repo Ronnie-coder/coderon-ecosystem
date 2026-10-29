@@ -143,8 +143,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Coderon was started */}
-      <section aria-labelledby="why-coderon" className="section border-t border-line">
+      {/* Founder */}
+      <section aria-labelledby="founder" className="section border-t border-line">
         <div className="container grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="relative mx-auto w-full max-w-md" data-reveal>
             <div className="overflow-hidden rounded-2xl border border-line shadow-soft-lg">
@@ -162,23 +162,27 @@ export default function AboutPage() {
           </div>
 
           <div data-reveal>
-            <p className="eyebrow">Why Coderon</p>
-            <h2 id="why-coderon" className="h-section mt-3">
-              Why we <span className="accent">started</span>
+            <p className="eyebrow">The founder</p>
+            <h2 id="founder" className="h-section mt-3">
+              Meet the <span className="accent">founder</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink/80">
-              Ronnie Nyamhute started Coderon after teaching himself full-stack development and noticing the same thing again
-              and again: animation is the easy part. What makes a website good is underneath it. Semantic HTML that browsers,
-              search engines and screen readers understand, speed on everyday phones, and accessibility built in from the
-              first line of code.
+              Ronnie Nyamhute fell for the web the way some people fall for engines. He wanted to know how websites work,
+              what runs underneath them, and what makes a visitor pick up the phone and become a customer.
             </p>
             <p className="mt-5 text-lg leading-relaxed text-ink/80">
-              Too many small businesses were paying for websites that looked fine but didn&apos;t do that job. Coderon was
-              started to build them properly, at a fair price agreed upfront, and to stay with each business as it grows.
+              That curiosity made him a self-taught full-stack developer, and then a founder. He saw small businesses paying
+              for websites that looked fine but didn&apos;t bring in work: slow on phones, invisible on Google, hard for some
+              visitors to use. He started Coderon to change that, with websites built properly from the first line of code
+              and judged by what they do for the business.
+            </p>
+            <p className="mt-5 text-lg leading-relaxed text-ink/80">
+              Ronnie leads every project personally, from the first conversation to launch and beyond. His aim is simple:
+              when a client&apos;s business grows, their website should be one of the reasons why.
             </p>
             <figure className="mt-8 border-l-4 border-gold pl-5">
               <blockquote className="font-serif text-2xl italic leading-snug md:text-3xl">
-                &ldquo;Anyone can make a website move. The real craft is making it work for everyone.&rdquo;
+                &ldquo;A good website doesn&apos;t just look the part. It helps the business behind it grow.&rdquo;
               </blockquote>
               <figcaption className="mt-3 text-sm font-medium text-ink/70">Ronnie Nyamhute, Founder</figcaption>
             </figure>
