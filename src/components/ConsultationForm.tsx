@@ -144,7 +144,7 @@ export const ConsultationForm = () => {
           email: form.email,
           service: form.need,
           message: lines.join('\n'),
-          company_url: new FormData(ev.currentTarget as HTMLFormElement).get('company_url') || '',
+          leave_empty: new FormData(ev.currentTarget as HTMLFormElement).get('leave_empty') || '',
         }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error);
@@ -401,11 +401,12 @@ export const ConsultationForm = () => {
         </button>
       </div>
       <p className="mt-4 text-sm text-ink/60">Free and no obligation. We reply within one working day.</p>
-      {/* Spam trap: hidden from people and screen readers; bots that fill every field get dropped. */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+      {/* Spam trap for bots. display:none so browsers never autofill it, and a name autofill
+          doesn't recognise. If it is ever filled, the email is still sent, marked as possible spam. */}
+      <div aria-hidden="true" className="hidden">
         <label>
           Leave this empty
-          <input type="text" name="company_url" tabIndex={-1} autoComplete="off" defaultValue="" />
+          <input type="text" name="leave_empty" tabIndex={-1} autoComplete="off" defaultValue="" />
         </label>
       </div>
     </form>
