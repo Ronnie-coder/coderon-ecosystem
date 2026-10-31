@@ -16,10 +16,10 @@ const oneLine = (v: string, max: number) => v.replace(/[\r\n]+/g, ' ').trim().sl
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, service, message, company_url } = body ?? {};
-
-    // Spam trap filled in: pretend it worked so the bot moves on.
-    if (company_url) return NextResponse.json({ data: { id: 'ok' } });
+    const { name, email, service, message } = body ?? {};
+    // Spam trap (company_url: pages cached before it was renamed). Never drop the enquiry: a
+    // browser's autofill can fill it by mistake, so it is still sent, just marked.
+    const flagged = Boolean(body?.leave_empty || body?.company_url);
 
     if ([name, email, service, message].some((v) => typeof v !== 'string' || !v.trim())) {
       return NextResponse.json({ error: 'Please fill in all the fields.' }, { status: 400 });
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     const { data, error } = await getResend().emails.send({
       from: 'Coderon Website <onboarding@resend.dev>',
       to: ['ronnie@coderon.co.za'],
-      subject: `New Inquiry: ${clean.service} for ${clean.name}`,
+      subject: `${flagged ? '[Possible spam] ' : ''}New Inquiry: ${clean.service} for ${clean.name}`,
       reply_to: clean.email,
       react: emailComponent,
     });
@@ -52,6 +52,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to send email.' }, { status: 500 });
     }
 
+    // One line per enquiry (no personal details), so the Vercel logs show every send.
+    console.log(`Quote form: email sent${flagged ? ' (marked possible spam)' : ''}`, data?.id);
     return NextResponse.json({ data });
   } catch (err) {
     console.error('API Route Error:', err);
