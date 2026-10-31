@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-yellow: #f5c400;
+  --color-brand-green: #1e8e3e;
+  --color-brand-green-dark: #14612a;
+  --color-ink: #16181b;
+  --color-paper: #ffffff;
+  --color-muted: #f4f5f0;
+  --color-ink-soft: #4a4f57;
+
+  --font-heading: var(--font-barlow), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-photo: 1.25rem;
+}
+
+:root {
+  --brand-yellow: #f5c400;
+  --brand-green: #1e8e3e;
+  --brand-green-dark: #14612a;
+  --ink: #16181b;
+  --paper: #ffffff;
+  --muted: #f4f5f0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand-green-dark);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-dark :focus-visible {
+  outline-color: var(--brand-yellow);
+}
+
+@layer components {
+/* Diagonal brand stripes, like the flyers */
+.stripe-bg {
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--brand-yellow) 0 22px,
+    transparent 22px 34px,
+    var(--brand-green) 34px 56px,
+    transparent 56px 68px
+  );
+}
+.stripe-bar {
+  height: 10px;
+  background: linear-gradient(100deg, var(--brand-yellow) 0 60%, transparent 60% 63%, var(--brand-green) 63% 100%);
+  clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%);
+}
+
+/* Shared photo treatment so mixed WhatsApp photos feel like one set */
+.photo-treat {
+  filter: contrast(1.06) saturate(1.05);
+}
+
+.prose-ha p {
+  margin-top: 0.9rem;
+  line-height: 1.7;
+}
+.prose-ha h2 {
+  margin-top: 2.25rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.prose-ha h3 {
+  margin-top: 1.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.prose-ha ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+  line-height: 1.7;
+}
+.prose-ha a {
+  color: var(--brand-green-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+}
+
+html.ha-consented .ha-cookie-banner {
+  display: none;
+}
+
+/* Transform-only so text is visible at first paint (does not delay LCP). */
+@keyframes fade-up {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
