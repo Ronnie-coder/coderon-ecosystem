@@ -7,11 +7,13 @@ import { NextResponse } from 'next/server';
 // Created inside the handler so `next build` works without RESEND_API_KEY.
 const getResend = () => new Resend(process.env.RESEND_API_KEY);
 
-const LIMITS = { name: 120, email: 200, service: 80, message: 5000 };
+const LIMITS = { name: 120, email: 200, service: 80, message: 5000, business: 120, website: 200, phone: 30, prefer: 20, package: 80 };
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // One line, trimmed and capped: stops header tricks via newlines in the subject.
 const oneLine = (v: string, max: number) => v.replace(/[\r\n]+/g, ' ').trim().slice(0, max);
+// Optional fields: a trimmed one-line string, or '' when missing or not text.
+const optional = (v: unknown, max: number) => (typeof v === 'string' ? oneLine(v, max) : '');
 
 export async function POST(request: Request) {
   try {
@@ -36,13 +38,20 @@ export async function POST(request: Request) {
       email: oneLine(email, LIMITS.email),
       service: oneLine(service, LIMITS.service),
       message: message.trim(),
+      business: optional(body.business, LIMITS.business),
+      website: optional(body.website, LIMITS.website),
+      phone: optional(body.phone, LIMITS.phone),
+      prefer: optional(body.prefer, LIMITS.prefer),
+      plan: optional(body.package, LIMITS.package),
+      receivedAt: new Date(),
     };
     const emailComponent = await ContactEmail(clean);
+    const who = clean.business ? `${clean.name} (${clean.business})` : clean.name;
 
     const { data, error } = await getResend().emails.send({
       from: 'Coderon Website <onboarding@resend.dev>',
       to: ['ronnie@coderon.co.za'],
-      subject: `${flagged ? '[Possible spam] ' : ''}New Inquiry: ${clean.service} for ${clean.name}`,
+      subject: `${flagged ? '[Possible spam] ' : ''}New quote request: ${clean.service} · ${who}`,
       reply_to: clean.email,
       react: emailComponent,
     });

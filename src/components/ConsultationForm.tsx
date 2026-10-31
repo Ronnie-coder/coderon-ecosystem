@@ -126,16 +126,8 @@ export const ConsultationForm = () => {
     if (Object.keys(e).length) return;
     setStatus('sending');
     setSendError('');
-    const lines = [
-      form.message.trim(),
-      '',
-      form.note ? `Package: ${form.note}` : null,
-      form.business ? `Business: ${form.business}` : null,
-      form.website ? `Website: ${form.website}` : null,
-      form.phone ? `Phone / WhatsApp: ${form.phone}` : null,
-      `Prefers: ${form.prefer}`,
-    ].filter((l) => l !== null);
     try {
+      // Each detail is sent on its own, so the email Ronnie gets can lay them out clearly.
       const res = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -143,7 +135,12 @@ export const ConsultationForm = () => {
           name: form.name,
           email: form.email,
           service: form.need,
-          message: lines.join('\n'),
+          message: form.message.trim(),
+          package: form.note,
+          business: form.business,
+          website: form.website,
+          phone: form.phone,
+          prefer: form.prefer,
           leave_empty: new FormData(ev.currentTarget as HTMLFormElement).get('leave_empty') || '',
         }),
       });
