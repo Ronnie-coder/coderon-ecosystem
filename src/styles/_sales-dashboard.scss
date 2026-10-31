@@ -21,28 +21,32 @@
     margin-top: $spacing-sm;
   }
 
+  // One column on phones (12 columns of gaps alone are wider than a small screen).
   &__grid {
     display: grid;
     gap: $spacing-lg;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    @media (min-width: 992px) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
   }
 
   &__stats {
-    grid-column: span 12;
     display: grid;
     gap: $spacing-lg;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    @media (min-width: 992px) {
+      grid-column: span 12;
+    }
   }
   
   &__main-chart {
-    grid-column: span 12;
     @media (min-width: 992px) {
       grid-column: span 8;
     }
   }
 
   &__secondary-chart {
-    grid-column: span 12;
     @media (min-width: 992px) {
       grid-column: span 4;
     }
@@ -75,6 +79,8 @@
 
   &__info {
     flex-grow: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   &__title {

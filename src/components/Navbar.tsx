@@ -95,7 +95,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200 ${
-        scrolled || open ? 'border-line bg-paper/80 backdrop-blur-md' : 'border-transparent bg-paper'
+        open ? 'border-line bg-paper' : scrolled ? 'border-line bg-paper/80 backdrop-blur-md' : 'border-transparent bg-paper'
       }`}
     >
       <a
@@ -156,7 +156,7 @@ const Navbar = () => {
         <nav
           id="mobile-nav"
           aria-label="Mobile navigation"
-          className="container h-[calc(100dvh-72px)] overflow-y-auto pb-10 pt-4 lg:hidden"
+          className="mobile-nav container overflow-y-auto pb-10 pt-4 lg:hidden"
         >
           <ul className="divide-y divide-line">
             {navLinks.map((link, i) => {

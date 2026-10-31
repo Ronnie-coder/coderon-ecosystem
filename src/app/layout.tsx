@@ -101,6 +101,14 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: prefsBootScript }} />
+        {/* Older iPhones (iOS 15.3 and earlier) lack structuredClone, which Next.js's router uses.
+            Its route data is plain JSON, so a JSON copy is a safe stand-in. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if(typeof structuredClone!=='function'){window.structuredClone=function(v){return v===undefined?v:JSON.parse(JSON.stringify(v))}}",
+          }}
+        />
       </head>
       <body>
         <script
