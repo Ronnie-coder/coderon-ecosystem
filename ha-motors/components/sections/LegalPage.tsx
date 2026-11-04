@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 import { Container } from "../ui/Section";
+import { BackButton } from "../BackButton";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 export function LegalPage({ title, path, updated, children }: { title: string; path: string; updated: string; children: ReactNode }) {
   return (
     <section className="bg-paper pb-20">
-      <Container className="pt-6">
+      <Container className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-5">
+        <BackButton />
         <Breadcrumbs items={[{ name: title, path }]} />
       </Container>
       <Container className="pt-8">

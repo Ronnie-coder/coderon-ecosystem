@@ -15,6 +15,11 @@ export function Motion() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Count page views within this visit (used by the Back button) and tell the inline failsafe we're alive.
+    const w = window as Window & { __haNavs?: number; __haMotion?: boolean };
+    w.__haNavs = (w.__haNavs ?? 0) + 1;
+    w.__haMotion = true;
+
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const reveals = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)"));
 

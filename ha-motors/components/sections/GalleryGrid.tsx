@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Photo, PhotoCategory } from "@/lib/photos";
+import { closeDialog, openDialog } from "@/lib/dialog";
 import { Icon } from "../ui/Icon";
 
 /**
@@ -29,9 +30,9 @@ export function GalleryGrid({ photos: allPhotos, initial, filters = false }: { p
 
   const open = (i: number) => {
     setIndex(i);
-    dialogRef.current?.showModal();
+    openDialog(dialogRef.current);
   };
-  const close = useCallback(() => dialogRef.current?.close(), []);
+  const close = useCallback(() => closeDialog(dialogRef.current), []);
   const step = useCallback((d: number) => setIndex((i) => (i === null ? i : (i + d + photos.length) % photos.length)), [photos.length]);
 
   useEffect(() => {

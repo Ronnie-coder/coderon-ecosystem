@@ -14,9 +14,9 @@ export function StatsStrip() {
   return (
     <section aria-label="Why riders choose H A Motors" className="relative z-10 -mt-8 pb-4 sm:-mt-10">
       <Container>
-        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-ink/10 shadow-[0_20px_50px_-25px_rgb(22_24_27/0.5)] lg:grid-cols-4">
-          {stats.map((s, i) => (
-            <li key={s.value} data-reveal data-reveal-delay={i * 80} className="flex items-center gap-3 bg-white p-4 sm:p-5">
+        <ul data-reveal className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-ink/10 shadow-[0_20px_50px_-25px_rgb(22_24_27/0.5)] lg:grid-cols-4">
+          {stats.map((s) => (
+            <li key={s.value} className="flex items-center gap-3 bg-white p-4 sm:p-5">
               <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-yellow text-ink sm:grid">
                 <Icon name={s.icon} className="h-5 w-5" />
               </span>

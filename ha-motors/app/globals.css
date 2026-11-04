@@ -29,6 +29,15 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* No 300ms tap delay / double-tap zoom on buttons in older mobile browsers */
+a,
+button,
+summary,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgb(245 196 0 / 0.25);
+}
+
 body {
   background: var(--paper);
   color: var(--ink);
@@ -339,4 +348,17 @@ html.js [data-reveal].is-in {
 /* Captions inside dark bands (unlayered so it overrides the light default) */
 .on-dark figcaption {
   color: rgb(255 255 255 / 0.85);
+}
+
+/* <dialog> fallback for browsers without native support */
+dialog:not([open]) {
+  display: none;
+}
+dialog[open] {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  z-index: 60;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
 }

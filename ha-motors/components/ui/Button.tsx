@@ -9,7 +9,7 @@ import { TrackedLink } from "./TrackedLink";
 export type Tone = "yellow" | "green" | "greenOutline" | "ink" | "white" | "whiteOutline";
 
 const tones: Record<Tone, string> = {
-  yellow: "bg-brand-yellow text-ink hover:bg-[#ffd21f] shadow-[0_3px_0_#14612a]",
+  yellow: "bg-brand-yellow text-ink hover:bg-[#ffd21f] shadow-[0_3px_0_#14612a] active:translate-y-[3px] active:shadow-none",
   green: "bg-brand-green-dark text-white hover:bg-[#0f4a20]",
   greenOutline: "border-2 border-brand-green-dark text-brand-green-dark hover:bg-brand-green-dark hover:text-white",
   ink: "bg-ink text-white hover:bg-black",
@@ -18,7 +18,7 @@ const tones: Record<Tone, string> = {
 };
 
 export const btnBase =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-bold transition-colors duration-150 text-center sm:whitespace-nowrap";
+  "inline-flex min-h-12 select-none items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-150 text-center active:scale-[0.98] sm:whitespace-nowrap";
 
 export function btnClass(tone: Tone, extra = "") {
   return `${btnBase} ${tones[tone]} ${extra}`;

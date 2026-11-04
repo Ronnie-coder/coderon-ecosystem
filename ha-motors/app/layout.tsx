@@ -3,6 +3,7 @@ import { Barlow_Condensed, Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { ConsentDefaults, ConsentProvider } from "@/components/consent/ConsentProvider";
 import { CookieBanner, PreferencesModal } from "@/components/consent/CookieBanner";
+import { BackToTop } from "@/components/BackToTop";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -52,7 +53,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en-ZA" className={`${barlow.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         {/* Marks JS as available so scroll-reveal styles only apply when they can be undone. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            // Failsafe: if the site's JS never starts (very old browser, blocked script), un-hide content after 4s.
+            __html:
+              "(function(){var d=document.documentElement;if('IntersectionObserver' in window){d.classList.add('js');setTimeout(function(){if(!window.__haMotion)d.classList.remove('js')},4000)}})()",
+          }}
+        />
         <ConsentDefaults />
       </head>
       <body className="min-h-dvh antialiased">
@@ -65,7 +72,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
           <Footer />
-          <aside aria-label="Quick WhatsApp contact">
+          <aside aria-label="Quick actions">
+            <BackToTop />
             <FloatingWhatsApp />
           </aside>
           <Motion />

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { routes } from "@/lib/site";
+import { closeDialog, openDialog } from "@/lib/dialog";
 import { useConsent } from "./ConsentProvider";
 
 const btn = "min-h-11 rounded-xl px-4 py-2.5 text-sm font-bold transition-colors";
@@ -84,9 +85,9 @@ export function PreferencesModal() {
       // Sync toggles with the stored choice each time the dialog opens.
       setA(analytics);
       setM(marketing);
-      d.showModal(); // native modal: focus is trapped, background inert, Esc closes
+      openDialog(d); // native modal: focus is trapped, background inert, Esc closes
     } else if (!preferencesOpen && d.open) {
-      d.close();
+      closeDialog(d);
     }
   }, [preferencesOpen, analytics, marketing]);
 

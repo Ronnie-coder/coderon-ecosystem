@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { PhotoKey } from "@/lib/photos";
 import { PhotoCard } from "../ui/PhotoCard";
 import { Container } from "../ui/Section";
+import { BackButton } from "../BackButton";
 import { Breadcrumbs } from "./Breadcrumbs";
 
 /**
@@ -38,7 +39,8 @@ export function PageHero({
         <div data-parallax="-0.1" className="absolute -bottom-32 -left-24 h-64 w-64 rounded-full bg-brand-green/25 blur-3xl" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgb(245_196_0/0.12),transparent_55%)]" />
       </div>
-      <Container className="relative pt-6">
+      <Container className="relative flex flex-wrap items-center gap-x-4 gap-y-2 pt-5">
+        <BackButton tone="dark" fallback={crumbs.length > 1 ? crumbs[crumbs.length - 2]!.path : "/"} />
         <Breadcrumbs items={crumbs} tone="dark" />
       </Container>
       <Container className={`relative grid items-center gap-10 pt-8 pb-16 sm:pt-12 sm:pb-20 ${hasAside ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}>
