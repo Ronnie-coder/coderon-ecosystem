@@ -4,12 +4,13 @@ Mobile motorcycle, scooter and quad bike mechanic + delivery scooter rental in B
 Next.js (App Router, TypeScript strict), Tailwind CSS v4, deployed on Vercel. No CMS, no database, no backend:
 content lives in typed TS files and forms post straight to Web3Forms.
 
-> This app lives in the `ha-motors/` folder of the `coderon-ecosystem` repo. Run every command below from inside `ha-motors/`.
+> Home repo: `Ronnie-coder/ha-motors` (this folder is the repo root). An earlier copy also lives in the
+> `ha-motors/` folder of `coderon-ecosystem`; treat the `ha-motors` repo as the source of truth.
+> Google Business Profile copy, ready to paste: [`docs/google-business-profile.md`](docs/google-business-profile.md).
 
 ## Quick start
 
 ```bash
-cd ha-motors
 npm install
 cp .env.example .env.local   # then fill in the values (see below)
 npm run dev                  # http://localhost:3000
@@ -98,7 +99,7 @@ Add **real** reviews only to `reviews` in `lib/business.ts` (`name`, `text`, opt
 
 ## Deploying on Vercel
 
-The Vercel project is **`ha-motors`**, with Root Directory `ha-motors`, framework Next.js and Node 22.x.
+The Vercel project is **`ha-motors`** (team CODERON PROJECTS), framework Next.js, Node 24.x. Root Directory is the repo root (it was `ha-motors` while the code lived in `coderon-ecosystem`).
 
 - **Preview:** each deployment from this branch gets a unique preview URL. Previews automatically send `X-Robots-Tag: noindex`.
 - **Production:** promote a reviewed preview (Vercel dashboard → Deployments → ⋯ → Promote to Production). The production `*.vercel.app` URL is the live, indexable site and the link for the Google Business Profile.
