@@ -80,11 +80,14 @@ Alt text and captions are in `lib/photos.ts`.
 
 ## Logo
 
-`components/Logo.tsx` renders the supplied brand-kit files from `public/brand/` and never redraws the logo. The web icons (favicon, `icon.svg`, apple icon, 192/512 icons, Open Graph image) are already in place. **The horizontal/stacked lockups (`ha-motors-brand/svg/*`) haven't been supplied yet**, so the header and footer currently show the supplied HA icon next to the name in text. To switch to the real lockups:
+`components/Logo.tsx` renders the supplied brand-kit files from `public/brand/` and never redraws the logo. The web icons (favicon, `icon.svg`, apple icon, 192/512 icons, Open Graph image) are in place.
 
-1. Put the `ha-motors-brand/` folder (with `svg/` and `web/`) in `ha-motors/`.
-2. Run `npm run brand`. This copies the SVGs to `public/brand/`, the web icons to `app/` and `public/`, writes `lib/brand-manifest.json`, and deletes `ha-motors-brand/`.
-3. Commit and redeploy. The Logo component picks up the lockups automatically.
+In `public/brand/` now: `logo-icon.svg`, `logo-icon-yellow.svg`, `logo-stacked.svg`, `logo-stacked-white.svg`.
+**Still to come:** `logo-horizontal.svg` and `logo-horizontal-white.svg`. Until they arrive, the header shows the HA icon next to the name in text, and the footer uses the white stacked logo. To add them:
+
+1. Copy both files into `public/brand/`.
+2. Add their file names to `lib/brand-manifest.json` (or put the whole `ha-motors-brand/` kit in the project root and run `npm run brand`, which does both steps).
+3. Check the horizontal aspect ratio in `components/Logo.tsx` matches the SVG's `viewBox`, then commit and redeploy. The header and footer switch over automatically.
 
 ## Reviews
 

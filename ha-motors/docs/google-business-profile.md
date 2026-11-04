@@ -28,7 +28,7 @@ Keep every detail **identical** to the website (name, phone, hours). Google cros
 
 ## 3. Business description (under 750 characters, no links)
 
-> H A Motors is a mobile motorcycle, scooter and quad bike mechanic in Bloemfontein. Adrich has been fixing bikes since 2017 and comes to you anywhere in Bloem for services, electrical fault finding, engine repairs (top-end and carburettor rebuilds, seals and gaskets) and tyres. All brands, including Honda, Big Boy, Suzuki and Lifan, and dead bikes brought back to life. Quotes upfront, with the call-out fee included. Open Saturday and Sunday 08:00 to 17:00, weekdays by appointment. We also rent SYM Jet 14 200cc delivery scooters for R550 per week, with maintenance and servicing included and insured. WhatsApp us a photo of your bike for a quote.
+> H A Motors is a mobile motorcycle, scooter and quad bike mechanic in Bloemfontein. Adrich has been fixing bikes since 2017 and comes to you anywhere in Bloem for services, electrical fault finding, engine repairs (top-end and carburettor rebuilds, seals and gaskets) and tyres. All brands, including Honda, Big Boy, Suzuki and Lifan, and dead bikes brought back to life. Quotes upfront, with the call-out fee included. Open Saturday and Sunday 08:00 to 17:00, weekdays by appointment. We also rent SYM Jet 14 200 delivery scooters for R550 per week, with maintenance and servicing included and insured. WhatsApp us a photo of your bike for a quote.
 
 ## 4. Services (Edit profile → Services)
 
@@ -45,7 +45,7 @@ Add each one under the matching category. Leave price blank for repairs (quote o
 - **Scooter repairs and services:** all brands, commuter and delivery scooters.
 
 **Motorcycle rental agency**
-- **Scooter rental, SYM Jet 14 200cc:** R550 per week. Maintenance and servicing included, insured. Needs a valid ID, driver's licence and proof of address.
+- **Scooter rental, SYM Jet 14 200:** R550 per week. Maintenance and servicing included, insured. Needs a valid ID, driver's licence and proof of address.
 
 ## 5. Photos (upload in this order)
 

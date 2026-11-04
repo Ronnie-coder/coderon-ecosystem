@@ -88,13 +88,13 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
     work: true,
   },
   "sym-jet14-front": {
-    alt: "SYM Jet 14 200cc rental scooter, front view",
-    caption: "SYM Jet 14 200cc, front",
+    alt: "SYM Jet 14 200 rental scooter, front view",
+    caption: "SYM Jet 14 200, front",
     work: false,
   },
   "sym-jet14-side": {
-    alt: "SYM Jet 14 200cc rental scooter, side view",
-    caption: "SYM Jet 14 200cc, side",
+    alt: "SYM Jet 14 200 rental scooter, side view",
+    caption: "SYM Jet 14 200, side",
     work: false,
   },
 };

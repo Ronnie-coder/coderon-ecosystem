@@ -7,7 +7,7 @@ const all = [
   { href: routes.motorcycle, title: "Motorcycle repairs", text: "Services, electrics, engines and tyres. All brands." },
   { href: routes.scooter, title: "Scooter repairs", text: "Commuter and delivery scooters, fixed where you are." },
   { href: routes.quad, title: "Quad bike repairs", text: "Sport and utility quads, brakes, winches and more." },
-  { href: routes.rental, title: "Scooter rental", text: "SYM Jet 14 200cc, R550 a week, maintenance included." },
+  { href: routes.rental, title: "Scooter rental", text: "SYM Jet 14 200, R550 a week, maintenance included." },
 ];
 
 export function OtherServices({ current }: { current: string }) {

@@ -12,29 +12,41 @@ const files: Record<Variant, Record<Tone, string>> = {
 };
 
 // Intrinsic aspect ratios used to reserve space (no layout shift). Adjust if the kit differs.
-const ratio: Record<Variant, number> = { horizontal: 4.2, stacked: 1.3, icon: 1 };
+// TODO: confirm the horizontal ratio once logo-horizontal.svg arrives (read it from its viewBox).
+const ratio: Record<Variant, number> = { horizontal: 4.2, stacked: 520 / 380, icon: 1 };
 
 const available = new Set<string>(brandFiles as string[]);
 
 /**
  * Renders the supplied brand-kit logo files from /public/brand. Never redraw the logo here.
- * TODO: the horizontal/stacked lockups (ha-motors-brand/svg) haven't been supplied yet.
- * Until they are, this shows the supplied HA icon next to a plain text name. Run `npm run brand`
- * with the kit in the project root and the real lockups are used automatically.
+ * TODO: logo-horizontal.svg and logo-horizontal-white.svg haven't been supplied yet. Until they are,
+ * the header shows the supplied HA icon next to a plain text name, and the footer uses the stacked
+ * logo (`stackedFallbackHeight`). Drop the files in public/brand, add them to lib/brand-manifest.json
+ * (or run `npm run brand` with the kit), and the real lockups are used automatically.
  */
 export function Logo({
-  variant = "horizontal",
+  variant: requestedVariant = "horizontal",
   tone = "light",
-  height = 40,
+  height: requestedHeight = 40,
   priority = false,
   className = "",
+  stackedFallbackHeight,
 }: {
   variant?: Variant;
   tone?: Tone;
   height?: number;
   priority?: boolean;
   className?: string;
+  /** If the horizontal lockup is missing, render the stacked one at this height instead. */
+  stackedFallbackHeight?: number;
 }) {
+  const useStacked =
+    requestedVariant === "horizontal" &&
+    !available.has(files.horizontal[tone]) &&
+    stackedFallbackHeight !== undefined &&
+    available.has(files.stacked[tone]);
+  const variant: Variant = useStacked ? "stacked" : requestedVariant;
+  const height = useStacked && stackedFallbackHeight ? stackedFallbackHeight : requestedHeight;
   const file = files[variant][tone];
 
   if (available.has(file)) {
@@ -55,7 +67,7 @@ export function Logo({
   // Interim: supplied icon + text name.
   const icon = (
     <Image
-      src="/brand/logo-icon.svg"
+      src={tone === "dark" && available.has(files.icon.dark) ? `/brand/${files.icon.dark}` : "/brand/logo-icon.svg"}
       alt=""
       width={height}
       height={height}

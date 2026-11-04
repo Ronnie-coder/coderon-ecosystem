@@ -16,7 +16,7 @@ import { routes } from "@/lib/site";
 export const metadata: Metadata = {
   title: { absolute: "Scooter Rental Bloemfontein | R550/Week | H A Motors" },
   description:
-    "Delivery scooter rental in Bloemfontein: SYM Jet 14 200cc for R550 per week. Maintenance and servicing included, insured. Only 3 scooters, enquire early.",
+    "Delivery scooter rental in Bloemfontein: SYM Jet 14 200 for R550 per week. Maintenance and servicing included, insured. Only 3 scooters, enquire early.",
   alternates: { canonical: routes.rental },
   openGraph: { url: routes.rental, title: "Scooter Rental in Bloemfontein: R550 per Week | H A Motors" },
 };
@@ -111,6 +111,9 @@ export default function ScooterRentalPage() {
                 </div>
               ))}
             </dl>
+            <p className="mt-3 text-sm text-ink-soft">
+              Manufacturer figures. They can vary slightly between model years. The &quot;200&quot; is SYM&apos;s model name.
+            </p>
           </div>
           <div>
             <Eyebrow>What you need</Eyebrow>

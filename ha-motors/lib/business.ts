@@ -86,7 +86,7 @@ export const business = {
 
   rental: {
     fleetSize: 3,
-    model: "SYM Jet 14 200cc",
+    model: "SYM Jet 14 200",
     colour: "white",
     priceWeekly: 550,
     priceDisplay: "R550",
@@ -100,24 +100,26 @@ export const business = {
     requirements: ["Valid ID", "Valid driver's licence", "Proof of address"],
     audience: "Delivery riders (food and grocery delivery apps, couriers) and commuters",
     /**
-     * TODO: confirm SYM Jet 14 200cc specs with Adrich. Do not invent figures.
-     * `null` renders as "To be confirmed" on the rental page.
+     * Manufacturer / SA dealer figures for the SYM Jet 14 200 (the "200" is the model name; the engine
+     * is 168.9cc). Figures can differ slightly by model year, so the page labels them as approximate.
+     * Under-seat storage is left out: no published figure for this model.
      */
     specs: [
-      { label: "Model", value: "SYM Jet 14" },
-      { label: "Engine", value: "200cc" },
+      { label: "Model", value: "SYM Jet 14 200" },
+      { label: "Engine", value: "168.9cc, 4-stroke single cylinder" },
+      { label: "Gearbox", value: "Automatic (CVT), twist and go" },
+      { label: "Fuel tank", value: "About 7.5 litres" },
+      { label: "Seat height", value: "About 77 cm" },
+      { label: "Wheels", value: "14-inch, disc brakes front and rear" },
       { label: "Colour", value: "White" },
-      { label: "Fuel tank", value: null },
-      { label: "Seat height", value: null },
-      { label: "Under-seat storage", value: null },
     ] as { label: string; value: string | null }[],
   },
 
   /** From Adrich's own answers (Nov 2026). First person, in Adrich's voice. */
   about: [
-    "I'm Adrich, and I've been working on bikes since 2017. I learned the trade in a bike shop, where I worked on a lot of Honda, Big Boy, Suzuki and Lifan bikes.",
-    "Engines and electrical faults are what I do best, and nothing beats getting a dead bike running again. If your bike has been standing or someone told you it's not worth fixing, send me a photo.",
-    "I started H A Motors out of passion. I want riders in Bloem to get the best service, whether you ride for fun or your bike is how you earn a living, and I want to grow H A Motors into something big, one job done properly at a time.",
+    "I'm Adrich, and I've been working on bikes since 2017. I learned the trade in a bike shop, where I worked on a lot of Honda, Big Boy, Suzuki and Lifan bikes. Engines and electrical faults are what I do best, and nothing beats getting a dead bike running again.",
+    "How I work: you get an honest quote before I start, I explain what's wrong in plain language, and if you're a delivery rider, I know your bike is your income, so I work to get you back on the road fast.",
+    "I started H A Motors out of passion. I want riders in Bloem to get the best service, and I want to grow H A Motors into something big, one job done properly at a time.",
     "When I'm not fixing bikes, I'm riding one: a SYM Jet 200.",
   ],
 
@@ -127,6 +129,8 @@ export const business = {
     background: "Learned the trade working in a bike shop",
     brands: ["Honda", "Big Boy", "Suzuki", "Lifan"],
     strengths: ["Engines", "Electrical faults", "Getting dead bikes running again"],
+    /** Adrich agreed with these as "how I work" (answer to Q7). */
+    approach: ["Honest quotes", "Explains the problem", "Fast turnaround for delivery riders"],
     rides: "SYM Jet 200",
   },
 

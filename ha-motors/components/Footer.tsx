@@ -29,7 +29,7 @@ export function Footer() {
       <div aria-hidden="true" className="stripe-bar" />
       <div className="mx-auto grid max-w-6xl gap-10 px-4 pt-14 pb-10 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <Logo variant="horizontal" tone="dark" height={40} />
+          <Logo variant="horizontal" tone="dark" height={40} stackedFallbackHeight={110} />
           <p className="mt-4 text-white/85">
             {business.name} · {business.tagline} · Serving all of {business.area.city}
           </p>
