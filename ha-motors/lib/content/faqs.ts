@@ -5,7 +5,7 @@ export type Faq = { q: string; a: string };
 const r = business.rental;
 
 export const homeFaqs: Faq[] = [
-  { q: "Do you work on all brands?", a: "Yes. We work on all brands of motorcycles, scooters and quad bikes." },
+  { q: "Do you work on all brands?", a: `Yes. We work on all brands of motorcycles, scooters and quad bikes. ${business.owner} has done a lot of work on ${business.experience.brands.join(", ")} since ${business.experience.since}.` },
   { q: "Do you come to me?", a: `Yes. ${business.owner} does call-outs anywhere in ${business.area.city}. You can also arrange to drop your bike off.` },
   { q: "Is there a call-out fee?", a: "It depends on distance, and we include it in your quote upfront. No surprises." },
   { q: "How do I get a price?", a: "WhatsApp us the make, model and the problem, with a photo if you can. We'll come back to you with a quote." },

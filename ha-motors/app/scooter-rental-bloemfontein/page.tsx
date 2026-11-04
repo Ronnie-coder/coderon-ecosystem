@@ -144,6 +144,10 @@ export default function ScooterRentalPage() {
               <Link href={routes.motorcycle} className="font-semibold text-brand-green-dark underline underline-offset-2">delivery motorcycles</Link>{" "}
               every week, so our rental scooters are looked after by the same hands. Servicing and maintenance are part of your weekly rate.
             </p>
+            <p className="mt-4 text-lg">
+              {business.owner} has been fixing bikes since {business.experience.since} and rides a {business.experience.rides} too, so
+              you&apos;re renting from someone who knows these scooters inside out.
+            </p>
           </div>
         </div>
       </Section>

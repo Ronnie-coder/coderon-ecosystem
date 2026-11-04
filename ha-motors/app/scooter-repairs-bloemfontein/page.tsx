@@ -31,6 +31,10 @@ export default function ScooterRepairsPage() {
         traffic and summer heat. That wears out the parts most riders never see: the drive belt, the clutch and rollers in the
         variator, brake pads and the battery. Catching these early is far cheaper than a breakdown halfway through a shift.
       </p>
+      <p>
+        Adrich has been working on scooters and motorcycles since 2017, including plenty of the Big Boy, Honda, Suzuki and
+        Lifan models you see on Bloem&apos;s roads. And when the work is done, Adrich rides a SYM Jet 200.
+      </p>
 
       <h2>Common scooter faults we fix</h2>
       <ul>

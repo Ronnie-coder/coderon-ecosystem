@@ -34,6 +34,11 @@ export default function MotorcycleRepairsPage() {
         tell you upfront and arrange a drop-off instead. Either way, the call-out fee depends on distance and is already in
         your quote.
       </p>
+      <p>
+        Adrich has been fixing motorcycles since 2017 and learned the trade working in a bike shop, with a lot of time spent on
+        Honda, Big Boy, Suzuki and Lifan bikes. That&apos;s the everyday commuter and delivery stuff Bloem rides on, but we work on
+        all brands.
+      </p>
 
       <h2>Motorcycle services</h2>
       <p>
@@ -61,6 +66,14 @@ export default function MotorcycleRepairsPage() {
       </p>
       <InlinePhotos photos={["cylinder-head-removed", "piston-new-gasket"]} />
       <InlinePhotos photos={["oil-seal-replacement"]} />
+
+      <h2>Dead bikes brought back to life</h2>
+      <p>
+        Got a bike that&apos;s been standing in the garage for months, or one someone told you isn&apos;t worth fixing? Getting
+        dead bikes running again is the work Adrich enjoys most. Flat battery, stale fuel, a gummed-up carburettor, perished
+        seals and corroded wiring are the usual suspects. WhatsApp a photo and we&apos;ll tell you what it&apos;s likely to need
+        before you spend anything.
+      </p>
 
       <h2>Motorcycle tyres</h2>
       <p>

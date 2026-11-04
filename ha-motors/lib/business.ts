@@ -113,10 +113,22 @@ export const business = {
     ] as { label: string; value: string | null }[],
   },
 
-  /** TODO: replace with Adrich's story (2 to 4 short paragraphs). */
+  /** From Adrich's own answers (Nov 2026). First person, in Adrich's voice. */
   about: [
-    "Adrich is the mechanic behind H A Motors, fixing motorcycles, scooters and quad bikes across Bloemfontein.",
+    "I'm Adrich, and I've been working on bikes since 2017. I learned the trade in a bike shop, where I worked on a lot of Honda, Big Boy, Suzuki and Lifan bikes.",
+    "Engines and electrical faults are what I do best, and nothing beats getting a dead bike running again. If your bike has been standing or someone told you it's not worth fixing, send me a photo.",
+    "I started H A Motors out of passion. I want riders in Bloem to get the best service, whether you ride for fun or your bike is how you earn a living, and I want to grow H A Motors into something big, one job done properly at a time.",
+    "When I'm not fixing bikes, I'm riding one: a SYM Jet 200.",
   ],
+
+  /** Short facts from Adrich, used around the site. */
+  experience: {
+    since: 2017,
+    background: "Learned the trade working in a bike shop",
+    brands: ["Honda", "Big Boy", "Suzuki", "Lifan"],
+    strengths: ["Engines", "Electrical faults", "Getting dead bikes running again"],
+    rides: "SYM Jet 200",
+  },
 
   /** Real reviews only. Never invent, generate or paraphrase. Leave empty until real ones exist. */
   reviews: [] as Review[],

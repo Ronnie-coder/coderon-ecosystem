@@ -32,8 +32,11 @@ const vehicleCards: { href: string; title: string; text: string; photo: PhotoKey
   { href: routes.quad, title: "Quad bikes", text: "Sport and utility quads, brakes, winches and engines.", photo: "quad-front-teardown" },
 ];
 
+const xp = business.experience;
+
 const why: { icon: IconName; title: string; text: string }[] = [
-  { icon: "wrench", title: "All brands", text: "Motorcycles, scooters and quads, whatever the badge." },
+  { icon: "clock", title: `Since ${xp.since}`, text: `${business.owner} has been fixing bikes since ${xp.since}, and learned the trade in a bike shop.` },
+  { icon: "wrench", title: "All brands", text: `Motorcycles, scooters and quads. Lots of ${xp.brands.join(", ")}.` },
   { icon: "van", title: "Mobile service", text: "We come to you anywhere in Bloem." },
   { icon: "calendar", title: "Weekend hours", text: "Open Saturday and Sunday, weekdays by appointment." },
   { icon: "tag", title: "Upfront quotes", text: "Call-out included in the quote before we start." },
@@ -79,7 +82,7 @@ export default function HomePage() {
               </ButtonLink>
             </div>
             <ul className="mt-7 flex flex-wrap gap-2" aria-label="Why riders call us">
-              {["All brands", "Call-outs anywhere in Bloem", "Open weekends"].map((chip) => (
+              {["All brands", "Call-outs anywhere in Bloem", "Open weekends", `Fixing bikes since ${xp.since}`].map((chip) => (
                 <li key={chip} className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-3 py-1.5 text-sm font-semibold">
                   <Icon name="check" className="h-4 w-4 text-brand-green-dark" /> {chip}
                 </li>
@@ -157,7 +160,7 @@ export default function HomePage() {
       <Section bg="muted" labelledBy="why-title">
         <Eyebrow>Why H A Motors</Eyebrow>
         <H2 id="why-title">A mechanic you can just WhatsApp</H2>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {why.map((w) => (
             <li key={w.title} className="rounded-2xl bg-white p-5 shadow-sm">
               <Icon name={w.icon} className="h-8 w-8 text-brand-green-dark" />
@@ -185,13 +188,26 @@ export default function HomePage() {
         <div className="grid items-center gap-10 md:grid-cols-[1fr_1.2fr]">
           <PhotoCard photo="adrich-kawasaki-ninja" stripe sizes="(min-width: 768px) 420px, 92vw" className="mx-auto w-full max-w-sm" />
           <div>
-            <Eyebrow>About</Eyebrow>
+            <Eyebrow>About · Since {xp.since}</Eyebrow>
             <H2 id="about-title">Meet {business.owner}</H2>
             <div className="mt-4 space-y-4 text-lg">
               {business.about.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
+            <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { k: "Fixing bikes", v: `Since ${xp.since}` },
+                { k: "Trained", v: "In a bike shop" },
+                { k: "Best at", v: "Engines & electrics" },
+                { k: "Rides", v: xp.rides },
+              ].map((f) => (
+                <div key={f.k} className="rounded-xl border-l-4 border-brand-yellow bg-white px-3 py-2 shadow-sm">
+                  <dt className="text-xs font-bold tracking-wider text-ink-soft uppercase">{f.k}</dt>
+                  <dd className="font-heading text-lg leading-tight font-bold uppercase">{f.v}</dd>
+                </div>
+              ))}
+            </dl>
             <WhatsAppButton tone="green" className="mt-6">WhatsApp {business.owner}</WhatsAppButton>
           </div>
         </div>
