@@ -122,6 +122,7 @@ Add **real** reviews only to `reviews` in `lib/business.ts` (`name`, `text`, opt
 
 The Vercel project deploys from this GitHub repo (`Ronnie-coder/ha-motors`). Framework Next.js, Node 24.x, Root Directory: repo root.
 
+- **Live site:** https://ha-motors-eight.vercel.app (this is the `NEXT_PUBLIC_SITE_URL` and the link for Google Business Profile).
 - **`main` = production.** Every push to `main` goes live on the production URL.
 - **Any other branch = preview.** Push work to a branch (e.g. `develop`) to get a preview URL; merge to `main` when approved.
 - Previews are behind Vercel login (Deployment Protection). Use **Share** on a deployment to send a time-limited link.

@@ -16,7 +16,7 @@ Keep every detail **identical** to the website (name, phone, hours). Google cros
 | Do you have a location customers can visit? | **No**. It's a service-area business, so the address stays hidden. Google still asks for an address privately for verification; it isn't shown publicly. |
 | Service area | `Bloemfontein` (add `Mangaung` too if offered) |
 | Phone | `061 104 3739` |
-| Website | Live site URL + tracking, e.g. `https://ha-motors-coderon-projects-1f9ae3b2.vercel.app/?utm_source=google&utm_medium=organic&utm_campaign=gbp` (change it to `https://hamotors.co.za/?utm_source=google&utm_medium=organic&utm_campaign=gbp` after the domain switch) |
+| Website | Live site URL + tracking, e.g. `https://ha-motors-eight.vercel.app/?utm_source=google&utm_medium=organic&utm_campaign=gbp` (change it to `https://hamotors.co.za/?utm_source=google&utm_medium=organic&utm_campaign=gbp` after the domain switch) |
 
 ## 2. Hours
 
