@@ -23,7 +23,7 @@ export function FloatingWhatsApp() {
       event="whatsapp_click"
       intent={rental ? "rental" : "repair"}
       href={href}
-      className="fixed right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-ink shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] ring-4 ring-white transition-[bottom,transform] duration-200 hover:scale-105 sm:right-6"
+      className="fixed right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-ink shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] ring-4 ring-white transition-transform duration-200 hover:scale-105 sm:right-6"
       style={{ bottom: "calc(max(1rem, env(safe-area-inset-bottom)) + var(--banner-h, 0px))" }}
       aria-label={rental ? "WhatsApp Adrich about renting a scooter" : "WhatsApp Adrich for a quote"}
     >

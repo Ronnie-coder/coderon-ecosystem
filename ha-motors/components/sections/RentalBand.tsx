@@ -14,6 +14,7 @@ export function RentalBand() {
       <div aria-hidden="true" className="absolute inset-y-0 -left-24 hidden w-40 -skew-x-12 bg-brand-green xl:block" />
       <Container className="relative grid items-center gap-10 md:grid-cols-2">
         <div>
+          <div data-reveal="left">
           <p className="mb-3 text-sm font-bold tracking-[0.14em] text-brand-yellow uppercase">Scooter rental</p>
           <h2 id="rental-band-title" className="text-4xl font-extrabold uppercase sm:text-5xl">
             Rent a {r.model}. <span className="text-brand-yellow">{r.priceDisplay}/week.</span>
@@ -30,11 +31,13 @@ export function RentalBand() {
             ))}
           </ul>
           <p className="mt-5 font-semibold text-brand-yellow">{r.scarcity}</p>
+          <p className="mt-2 text-white/85">That&apos;s under R{Math.ceil(r.priceWeekly / 7 / 10) * 10} a day, with maintenance included.</p>
           <ButtonLink href={routes.rental} tone="yellow" className="mt-6 text-lg">
             Check Availability
           </ButtonLink>
+          </div>
         </div>
-        <PhotoCard photo="sym-jet14-front" stripe sizes="(min-width: 768px) 480px, 92vw" className="mx-auto w-full max-w-md" />
+        <div data-reveal="right" className="w-full"><PhotoCard photo="sym-jet14-front" stripe sizes="(min-width: 768px) 480px, 92vw" className="mx-auto w-full max-w-md" /></div>
       </Container>
     </section>
   );

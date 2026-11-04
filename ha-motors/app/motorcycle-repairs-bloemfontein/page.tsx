@@ -52,16 +52,16 @@ export default function MotorcycleRepairsPage() {
       <p>
         Electrical faults are the ones that drive riders mad: a battery that keeps going flat, lights that flicker, a bike
         that cranks but won&apos;t fire, or one that dies at a robot and won&apos;t restart. These usually come down to the
-        charging system, a tired regulator or stator, a corroded connector or damaged wiring. We trace the actual fault
+        charging system (the parts that keep your battery topped up), a corroded connector or damaged wiring. We trace the actual fault
         instead of throwing parts at it.
       </p>
       <InlinePhotos photos={["motorcycle-wiring-repair"]} />
 
       <h2>Engine and carburettor repairs</h2>
       <p>
-        Signs your engine needs attention: blue smoke, oil where it shouldn&apos;t be, a ticking or knocking top end, loss of
-        compression or a bike that runs fine cold and badly hot. We do top-end rebuilds, carburettor rebuilds, and replace
-        seals and gaskets. A carburettor that&apos;s been standing with old fuel is one of the most common reasons a bike
+        Signs your engine needs attention: blue smoke, oil where it shouldn&apos;t be, a ticking or knocking from the top of
+        the engine, weak pulling power, or a bike that runs fine cold and badly hot. We do top-end rebuilds (piston, rings,
+        valves and cylinder head), carburettor rebuilds, and replace seals and gaskets. A carburettor that&apos;s been standing with old fuel is one of the most common reasons a bike
         won&apos;t idle or starts and then stalls; a proper strip, clean and rebuild usually sorts it.
       </p>
       <InlinePhotos photos={["cylinder-head-removed", "piston-new-gasket"]} />

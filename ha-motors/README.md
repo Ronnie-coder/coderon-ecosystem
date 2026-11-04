@@ -45,6 +45,28 @@ Set them in Vercel under **Project → Settings → Environment Variables** (Pro
 
 Spam protection is Web3Forms' built-in honeypot (`botcheck`). No CAPTCHA.
 
+## Pages
+
+| Route | What it's for |
+|---|---|
+| `/` | Home: overview, trust facts, services, rental, how it works, recent work, about teaser, FAQ |
+| `/repairs` | All repairs: vehicle picker, the four services in plain language, call-out vs drop-off |
+| `/motorcycle-repairs-bloemfontein`, `/scooter-repairs-bloemfontein`, `/quad-bike-repairs-bloemfontein` | One page per vehicle type (local SEO) with a quote form |
+| `/scooter-rental-bloemfontein` | Rental: price, what's included, 3 steps, specs, requirements, enquiry form |
+| `/gallery` | All work photos with filters (motorcycles, scooters, quads, rental) and a lightbox |
+| `/about` | Adrich's story, how Adrich works, strengths |
+| `/faq` | Every question, grouped by topic (also FAQPage schema) |
+| `/contact` | WhatsApp, call, email, quote form, hours |
+| `/rental-terms`, `/privacy-policy`, `/cookie-policy` | Legal |
+
+## Motion and accessibility
+
+- **Header scooter** (`components/ScrollRider.tsx`): rides along the bottom of the header as you scroll (a reading-progress bar).
+- **Scroll reveals and parallax** (`components/motion/Motion.tsx`): add `data-reveal` (optionally `="left" | "right" | "zoom"` and `data-reveal-delay="120"`) to any element, or `data-parallax="0.15"` to a decorative layer.
+- Everything respects **prefers-reduced-motion**: no reveals, no parallax, no marquee scrolling, no spinning wheels.
+- Content is only hidden for reveal once JavaScript is running, so nothing disappears without JS.
+- Checked with axe-core (WCAG 2.1 A/AA + best practice) on every page at desktop and mobile sizes: 0 violations. Keep it that way: contrast AA, labelled controls, one H1 per page, 44px tap targets.
+
 ## Editing business info
 
 Everything (phone, email, hours, services, rental price, specs, the About text, reviews, Google review link) lives in **`lib/business.ts`**. Pages, footer, forms, WhatsApp messages and schema all read from it. Change it there and redeploy.
@@ -82,12 +104,8 @@ Alt text and captions are in `lib/photos.ts`.
 
 `components/Logo.tsx` renders the supplied brand-kit files from `public/brand/` and never redraws the logo. The web icons (favicon, `icon.svg`, apple icon, 192/512 icons, Open Graph image) are in place.
 
-In `public/brand/` now: `logo-icon.svg`, `logo-icon-yellow.svg`, `logo-stacked.svg`, `logo-stacked-white.svg`.
-**Still to come:** `logo-horizontal.svg` and `logo-horizontal-white.svg`. Until they arrive, the header shows the HA icon next to the name in text, and the footer uses the white stacked logo. To add them:
-
-1. Copy both files into `public/brand/`.
-2. Add their file names to `lib/brand-manifest.json` (or put the whole `ha-motors-brand/` kit in the project root and run `npm run brand`, which does both steps).
-3. Check the horizontal aspect ratio in `components/Logo.tsx` matches the SVG's `viewBox`, then commit and redeploy. The header and footer switch over automatically.
+All six lockups are in `public/brand/` (horizontal, stacked and icon, each in a light and dark version) and listed in
+`lib/brand-manifest.json`. To replace a logo, overwrite the SVG with the same file name and redeploy.
 
 ## Reviews
 
@@ -102,11 +120,12 @@ Add **real** reviews only to `reviews` in `lib/business.ts` (`name`, `text`, opt
 
 ## Deploying on Vercel
 
-The Vercel project is **`ha-motors`** (team CODERON PROJECTS), framework Next.js, Node 24.x. Root Directory is the repo root (it was `ha-motors` while the code lived in `coderon-ecosystem`).
+The Vercel project deploys from this GitHub repo (`Ronnie-coder/ha-motors`). Framework Next.js, Node 24.x, Root Directory: repo root.
 
-- **Preview:** each deployment from this branch gets a unique preview URL. Previews automatically send `X-Robots-Tag: noindex`.
-- **Production:** promote a reviewed preview (Vercel dashboard → Deployments → ⋯ → Promote to Production). The production `*.vercel.app` URL is the live, indexable site and the link for the Google Business Profile.
-- After the first production deploy, set `NEXT_PUBLIC_SITE_URL` to that exact `https://….vercel.app` URL and redeploy.
+- **`main` = production.** Every push to `main` goes live on the production URL.
+- **Any other branch = preview.** Push work to a branch (e.g. `develop`) to get a preview URL; merge to `main` when approved.
+- Previews are behind Vercel login (Deployment Protection). Use **Share** on a deployment to send a time-limited link.
+- `NEXT_PUBLIC_SITE_URL` must be the production URL (set under Settings → Environment Variables), then redeploy.
 
 ## Switching to hamotors.co.za later
 

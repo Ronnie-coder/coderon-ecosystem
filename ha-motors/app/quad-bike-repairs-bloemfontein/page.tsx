@@ -35,7 +35,7 @@ export default function QuadRepairsPage() {
 
       <h2>Utility quads: brakes, winches and racks</h2>
       <p>
-        Utility quads pull, carry and work hard in dust and mud. That&apos;s tough on brakes, wheel bearings, CV boots and the winch.
+        Utility quads pull, carry and work hard in dust and mud. That&apos;s tough on brakes, wheel bearings, the rubber boots that protect the drive shafts, and the winch.
         If your brakes feel spongy, pull to one side or squeal, or the winch is slow or dead, it&apos;s time for a look. We strip the
         front end, sort out the brakes and winch, and put it back together so it&apos;s ready to work.
       </p>
@@ -44,8 +44,8 @@ export default function QuadRepairsPage() {
       <h2>Sport quads</h2>
       <p>
         Sport quads are built for fun, which means they get ridden hard. Keep an eye on the chain and sprockets, air filter (sand
-        and dust kill engines), suspension linkages and steering. A rough idle, popping or a loss of top-end power usually points
-        to the carburettor, air filter or a top-end that needs attention.
+        and dust kill engines), suspension and steering. A rough idle, popping, or losing power at high revs usually points to the
+        carburettor, the air filter, or the top of the engine needing attention.
       </p>
       <div className="not-prose my-8 max-w-xs">
         <PhotoCard photo="yamaha-quad" caption sizes="320px" className="w-full" />

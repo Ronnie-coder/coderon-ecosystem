@@ -12,17 +12,15 @@ const files: Record<Variant, Record<Tone, string>> = {
 };
 
 // Intrinsic aspect ratios used to reserve space (no layout shift). Adjust if the kit differs.
-// TODO: confirm the horizontal ratio once logo-horizontal.svg arrives (read it from its viewBox).
-const ratio: Record<Variant, number> = { horizontal: 4.2, stacked: 520 / 380, icon: 1 };
+// From each SVG's viewBox: horizontal 734x150, stacked 520x380, icon 512x512.
+const ratio: Record<Variant, number> = { horizontal: 734 / 150, stacked: 520 / 380, icon: 1 };
 
 const available = new Set<string>(brandFiles as string[]);
 
 /**
  * Renders the supplied brand-kit logo files from /public/brand. Never redraw the logo here.
- * TODO: logo-horizontal.svg and logo-horizontal-white.svg haven't been supplied yet. Until they are,
- * the header shows the supplied HA icon next to a plain text name, and the footer uses the stacked
- * logo (`stackedFallbackHeight`). Drop the files in public/brand, add them to lib/brand-manifest.json
- * (or run `npm run brand` with the kit), and the real lockups are used automatically.
+ * Files available are listed in lib/brand-manifest.json. If a requested lockup is missing, the
+ * component falls back (stacked via `stackedFallbackHeight`, else icon + text name).
  */
 export function Logo({
   variant: requestedVariant = "horizontal",

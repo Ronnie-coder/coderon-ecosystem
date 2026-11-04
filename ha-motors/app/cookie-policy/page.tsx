@@ -22,7 +22,7 @@ export default function CookiePolicyPage() {
       </p>
 
       <h2>Cookies we use</h2>
-      <div className="not-prose mt-4 overflow-x-auto">
+      <div className="not-prose mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Cookies table (scrolls sideways on small screens)">
         <table className="w-full min-w-[34rem] border-collapse text-sm">
           <caption className="sr-only">Cookies used on this website</caption>
           <thead>

@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { Logo } from "@/components/Logo";
+import { Motion } from "@/components/motion/Motion";
 import { business } from "@/lib/business";
 import { businessSchema } from "@/lib/schema";
 import { siteUrl } from "@/lib/site";
@@ -50,6 +51,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en-ZA" className={`${barlow.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
+        {/* Marks JS as available so scroll-reveal styles only apply when they can be undone. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <ConsentDefaults />
       </head>
       <body className="min-h-dvh antialiased">
@@ -62,7 +65,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
           <Footer />
-          <FloatingWhatsApp />
+          <aside aria-label="Quick WhatsApp contact">
+            <FloatingWhatsApp />
+          </aside>
+          <Motion />
           <CookieBanner />
           <PreferencesModal />
         </ConsentProvider>

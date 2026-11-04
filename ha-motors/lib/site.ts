@@ -19,6 +19,9 @@ export function absoluteUrl(path = "/"): string {
 
 export const routes = {
   home: "/",
+  repairs: "/repairs",
+  about: "/about",
+  faq: "/faq",
   motorcycle: "/motorcycle-repairs-bloemfontein",
   scooter: "/scooter-repairs-bloemfontein",
   quad: "/quad-bike-repairs-bloemfontein",
@@ -27,5 +30,5 @@ export const routes = {
   rentalTerms: "/rental-terms",
   privacy: "/privacy-policy",
   cookies: "/cookie-policy",
-  gallery: "/#gallery",
+  gallery: "/gallery",
 } as const;

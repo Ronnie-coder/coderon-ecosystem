@@ -7,7 +7,8 @@ import { CallButton, WhatsAppButton } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 import { PhotoCard } from "../ui/PhotoCard";
 import { Container, Eyebrow } from "../ui/Section";
-import { Breadcrumbs } from "./Breadcrumbs";
+import { routes } from "@/lib/site";
+import { PageHero } from "./PageHero";
 import { CtaBand } from "./CtaBand";
 import { Faq } from "./Faq";
 import { OtherServices } from "./OtherServices";
@@ -37,31 +38,49 @@ export function ServicePage({
 }) {
   return (
     <>
-      <section className="bg-paper">
-        <Container className="pt-6">
-          <Breadcrumbs items={[{ name: crumb, path }]} />
-        </Container>
-        <Container className="grid items-center gap-10 py-8 sm:py-12 lg:grid-cols-[1.15fr_1fr]">
-          <div className="animate-fade-up">
-            <Eyebrow>All brands · Call-outs anywhere in Bloem</Eyebrow>
-            <h1 className="text-[2.5rem] font-extrabold uppercase sm:text-6xl">{h1}</h1>
-            <p className="mt-5 max-w-xl text-lg">{intro}</p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <WhatsAppButton vehicle={vehicle} tone="yellow" className="text-lg">Get a Quote on WhatsApp</WhatsAppButton>
-              <CallButton />
-            </div>
-            <p className="mt-4 flex items-start gap-2 text-sm text-ink-soft">
-              <Icon name="tag" className="mt-0.5 h-4 w-4 shrink-0 text-brand-green-dark" /> {business.callOutFee}
-            </p>
-          </div>
-          <PhotoCard photo={heroPhoto} priority stripe sizes="(min-width: 1024px) 460px, 92vw" className="mx-auto w-full max-w-md lg:max-w-none" />
-        </Container>
-        <div aria-hidden="true" className="stripe-bar" />
-      </section>
+      <PageHero
+        crumbs={[{ name: "Repairs", path: routes.repairs }, { name: crumb, path }]}
+        eyebrow="All brands · Call-outs anywhere in Bloem"
+        title={h1}
+        intro={<p>{intro}</p>}
+        actions={
+          <>
+            <WhatsAppButton vehicle={vehicle} tone="yellow" className="text-lg">Get a Quote on WhatsApp</WhatsAppButton>
+            <CallButton tone="whiteOutline" />
+          </>
+        }
+        footnote={
+          <span className="flex items-start gap-2">
+            <Icon name="tag" className="mt-0.5 h-4 w-4 shrink-0 text-brand-yellow" /> {business.callOutFee}
+          </span>
+        }
+        photo={heroPhoto}
+      />
 
       <section className="bg-paper py-14 sm:py-20">
-        <Container>
-          <div className="prose-ha mx-auto max-w-3xl text-lg">{children}</div>
+        <Container className="grid gap-12 lg:grid-cols-[1fr_20rem]">
+          <div className="prose-ha max-w-3xl text-lg">{children}</div>
+          <aside aria-label="Quick quote" className="lg:sticky lg:top-28 lg:self-start">
+            <div className="rounded-2xl bg-ink p-6 text-white on-dark">
+              <p className="font-heading text-2xl font-extrabold uppercase">Quick quote</p>
+              <p className="mt-2 text-white/85">Send the make, model and problem. A photo helps.</p>
+              <div className="mt-4 grid gap-2">
+                <WhatsAppButton vehicle={vehicle} tone="yellow">WhatsApp a photo</WhatsAppButton>
+                <CallButton tone="whiteOutline" />
+                <a href="#quote" className="mt-1 text-center text-sm font-semibold text-white underline underline-offset-4 hover:text-brand-yellow">
+                  Or fill in the quote form
+                </a>
+              </div>
+            </div>
+            <ul className="mt-4 space-y-2 rounded-2xl border-2 border-ink/10 p-5 text-sm">
+              {[`Working on bikes since ${business.experience.since}`, "All brands", "Call-out included in your quote", "Open weekends 08:00 to 17:00"].map((t) => (
+                <li key={t} className="flex gap-2">
+                  <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-brand-green-dark" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </aside>
         </Container>
       </section>
 
@@ -97,7 +116,7 @@ export function InlinePhotos({ photos, label }: { photos: PhotoKey[]; label?: st
   return (
     <div className={`not-prose my-8 grid gap-4 ${photos.length > 1 ? "sm:grid-cols-2" : ""}`} aria-label={label} role={label ? "group" : undefined}>
       {photos.map((p) => (
-        <PhotoCard key={p} photo={p} caption sizes="(min-width: 640px) 360px, 92vw" className="w-full" />
+        <div key={p} data-reveal="zoom"><PhotoCard photo={p} caption sizes="(min-width: 640px) 360px, 92vw" className="w-full" /></div>
       ))}
     </div>
   );

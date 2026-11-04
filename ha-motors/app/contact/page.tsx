@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { QuoteForm } from "@/components/forms/QuoteForm";
-import { Breadcrumbs } from "@/components/sections/Breadcrumbs";
+import { PageHero } from "@/components/sections/PageHero";
 import { HoursArea } from "@/components/sections/HoursArea";
 import { CallButton, WhatsAppButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -19,30 +19,30 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-paper pb-14 sm:pb-20">
-        <Container className="pt-6">
-          <Breadcrumbs items={[{ name: "Contact", path: routes.contact }]} />
-        </Container>
-        <Container className="pt-8 sm:pt-12">
-          <Eyebrow>Mobile motorcycle mechanic · Bloemfontein</Eyebrow>
-          <h1 className="text-[2.5rem] font-extrabold uppercase sm:text-6xl">Contact {business.name}</h1>
-          <p className="mt-4 max-w-2xl text-lg">
+      <PageHero
+        crumbs={[{ name: "Contact", path: routes.contact }]}
+        eyebrow="Mobile motorcycle mechanic · Bloemfontein"
+        title={<>Contact {business.name}</>}
+        intro={
+          <p>
             WhatsApp is the quickest way to reach {business.owner}. Send a photo of your bike and what&apos;s wrong, and
             you&apos;ll get a quote with the call-out included.
           </p>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:max-w-3xl">
-            <WhatsAppButton tone="green" className="min-h-16 text-xl">WhatsApp {business.phone.local}</WhatsAppButton>
-            <CallButton tone="ink" className="min-h-16 text-xl" />
-          </div>
-          <p className="mt-5 flex flex-wrap items-center gap-2 text-lg">
-            <Icon name="mail" className="h-5 w-5 text-brand-green-dark" />
-            <span>Email:</span>
-            <a href={`mailto:${business.email}`} className="font-semibold break-all text-brand-green-dark underline underline-offset-2">
-              {business.email}
+        }
+        aside={
+          <div className="grid gap-3">
+            <WhatsAppButton tone="yellow" className="min-h-16 text-xl">WhatsApp {business.phone.local}</WhatsAppButton>
+            <CallButton tone="whiteOutline" className="min-h-16 text-xl" />
+            <a
+              href={`mailto:${business.email}`}
+              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border-2 border-white/30 px-4 font-semibold break-all text-white hover:border-white"
+            >
+              <Icon name="mail" className="h-5 w-5 shrink-0" /> {business.email}
             </a>
-          </p>
-        </Container>
-      </section>
+            <p className="mt-2 text-center text-sm text-white/75">{business.hours.summary}</p>
+          </div>
+        }
+      />
 
       <section id="quote" aria-labelledby="quote-title" className="bg-muted py-14 sm:py-20">
         <Container className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">

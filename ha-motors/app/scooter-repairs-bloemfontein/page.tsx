@@ -28,8 +28,8 @@ export default function ScooterRepairsPage() {
       <h2>Scooters work hard. They need a scooter mechanic who gets it.</h2>
       <p>
         A scooter doing deliveries in Bloemfontein can cover more distance in a month than some cars, mostly in stop-start
-        traffic and summer heat. That wears out the parts most riders never see: the drive belt, the clutch and rollers in the
-        variator, brake pads and the battery. Catching these early is far cheaper than a breakdown halfway through a shift.
+        traffic and summer heat. That wears out the parts most riders never see: the drive belt, the clutch, the rollers that
+        change the gearing automatically, the brake pads and the battery. Catching these early is far cheaper than a breakdown halfway through a shift.
       </p>
       <p>
         Adrich has been working on scooters and motorcycles since 2017, including plenty of the Big Boy, Honda, Suzuki and
@@ -40,7 +40,7 @@ export default function ScooterRepairsPage() {
       <ul>
         <li><strong>Won&apos;t start or hard to start:</strong> weak battery, fouled plug, a blocked carburettor jet or a fuel problem.</li>
         <li><strong>Cuts out or stalls at idle:</strong> often a dirty carburettor, air leak or idle setting.</li>
-        <li><strong>Revs but doesn&apos;t pull:</strong> a worn or slipping drive belt, clutch or variator rollers.</li>
+        <li><strong>Revs but doesn&apos;t pull:</strong> a worn or slipping drive belt, clutch or gearing rollers.</li>
         <li><strong>Squealing or grinding brakes:</strong> pads worn down, or discs and drums that need attention.</li>
         <li><strong>Lights, indicators or hooter not working:</strong> a blown fuse, bad earth, broken wire or charging fault.</li>
       </ul>

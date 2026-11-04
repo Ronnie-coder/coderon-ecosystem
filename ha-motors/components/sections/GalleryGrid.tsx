@@ -2,19 +2,30 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Photo } from "@/lib/photos";
+import type { Photo, PhotoCategory } from "@/lib/photos";
 import { Icon } from "../ui/Icon";
 
 /**
  * Responsive grid of work photos. Tapping one opens a lightweight lightbox built on the native
  * <dialog> (focus trapped, Esc closes, arrow keys navigate). Optional "See more" expansion.
  */
-export function GalleryGrid({ photos, initial }: { photos: Photo[]; initial?: number }) {
+const filterLabels: { value: "all" | PhotoCategory; label: string }[] = [
+  { value: "all", label: "All work" },
+  { value: "motorcycle", label: "Motorcycles" },
+  { value: "scooter", label: "Scooters" },
+  { value: "quad", label: "Quad bikes" },
+  { value: "rental", label: "Rental scooters" },
+];
+
+export function GalleryGrid({ photos: allPhotos, initial, filters = false }: { photos: Photo[]; initial?: number; filters?: boolean }) {
+  const [filter, setFilter] = useState<"all" | PhotoCategory>("all");
   const [expanded, setExpanded] = useState(!initial);
   const [index, setIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const photos = filter === "all" ? allPhotos : allPhotos.filter((p) => p.category === filter);
   const shown = expanded || !initial ? photos : photos.slice(0, initial);
+  const available = filterLabels.filter((f) => f.value === "all" || allPhotos.some((p) => p.category === f.value));
 
   const open = (i: number) => {
     setIndex(i);
@@ -38,6 +49,26 @@ export function GalleryGrid({ photos, initial }: { photos: Photo[]; initial?: nu
 
   return (
     <>
+      {filters && (
+        <div className="mb-8">
+          <div role="group" aria-label="Filter photos" className="flex flex-wrap gap-2">
+            {available.map((f) => (
+              <button
+                key={f.value}
+                type="button"
+                aria-pressed={filter === f.value}
+                onClick={() => setFilter(f.value)}
+                className="min-h-11 rounded-full border-2 border-ink/15 px-4 font-semibold transition-colors hover:border-ink aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white"
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+          <p className="sr-only" aria-live="polite">
+            Showing {photos.length} {photos.length === 1 ? "photo" : "photos"}
+          </p>
+        </div>
+      )}
       <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
         {shown.map((p, i) => (
           <li key={p.key}>

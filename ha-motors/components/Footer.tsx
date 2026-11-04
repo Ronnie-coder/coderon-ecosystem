@@ -8,11 +8,14 @@ import { TrackedLink } from "./ui/TrackedLink";
 import { repairLink } from "@/lib/whatsapp";
 
 const quick = [
+  { href: routes.repairs, label: "All repairs" },
   { href: routes.motorcycle, label: "Motorcycle repairs" },
   { href: routes.scooter, label: "Scooter repairs" },
   { href: routes.quad, label: "Quad bike repairs" },
   { href: routes.rental, label: "Scooter rental" },
   { href: routes.gallery, label: "Gallery" },
+  { href: routes.about, label: "About Adrich" },
+  { href: routes.faq, label: "FAQ" },
   { href: routes.contact, label: "Contact" },
 ];
 const legal = [
@@ -64,7 +67,7 @@ export function Footer() {
 
         <nav aria-label="Footer">
           <h2 className="font-heading text-xl font-bold uppercase text-brand-yellow">Quick links</h2>
-          <ul className="mt-3">
+          <ul className="mt-3 grid grid-cols-2 gap-x-6 lg:grid-cols-1">
             {quick.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className={link}>{l.label}</Link>

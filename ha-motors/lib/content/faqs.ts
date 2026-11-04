@@ -43,3 +43,41 @@ export const rentalFaqs: Faq[] = [
   { q: "Can I use it for food and grocery delivery?", a: "Yes. Most of our riders use the scooters for delivery work or for commuting." },
   { q: "Is a scooter available now?", a: `We only have ${r.fleetSize}, so availability changes. WhatsApp us or send the form and we'll let you know.` },
 ];
+
+const byQ = (list: Faq[], q: string): Faq => {
+  const f = list.find((x) => x.q === q);
+  if (!f) throw new Error(`FAQ not found: ${q}`);
+  return f;
+};
+
+/** All FAQs grouped for the /faq page (no duplicates). */
+export const faqGroups: { id: string; title: string; icon: "van" | "wrench" | "tag"; faqs: Faq[] }[] = [
+  {
+    id: "call-outs",
+    title: "Call-outs, quotes & hours",
+    icon: "van",
+    faqs: [
+      byQ(homeFaqs, "Do you come to me?"),
+      byQ(homeFaqs, "Is there a call-out fee?"),
+      byQ(homeFaqs, "How do I get a price?"),
+      byQ(homeFaqs, "Can I book during the week?"),
+      byQ(homeFaqs, "Do you work on all brands?"),
+    ],
+  },
+  {
+    id: "repairs",
+    title: "Repairs",
+    icon: "wrench",
+    faqs: [
+      ...motorcycleFaqs,
+      ...scooterFaqs.filter((f) => !f.q.startsWith("Can I rent")),
+      ...quadFaqs.filter((f) => !f.q.startsWith("Do you sell")),
+    ],
+  },
+  {
+    id: "rental",
+    title: "Scooter rental",
+    icon: "tag",
+    faqs: [...rentalFaqs, byQ(homeFaqs, "Are the rental scooters insured?")],
+  },
+];

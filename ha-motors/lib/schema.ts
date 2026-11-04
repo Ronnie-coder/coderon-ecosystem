@@ -37,6 +37,8 @@ export function businessSchema() {
       closes: h.closes,
     })),
     sameAs: [...b.sameAs],
+    founder: { "@type": "Person", name: b.owner },
+    knowsAbout: ["Motorcycle repair", "Scooter repair", "Quad bike repair", "Motorcycle electrical repairs", "Carburettor rebuilds", "Motorcycle tyres"],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Repairs and scooter rental",
@@ -98,5 +100,19 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
       name: it.name,
       item: absoluteUrl(it.path),
     })),
+  };
+}
+
+/** Service schema for a repair/rental page, linked to the business by @id. */
+export function serviceSchema({ name, path, description, serviceType }: { name: string; path: string; description: string; serviceType?: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    serviceType: serviceType ?? name,
+    description,
+    url: absoluteUrl(path),
+    provider: { "@id": id },
+    areaServed: { "@type": "City", name: business.area.city },
   };
 }

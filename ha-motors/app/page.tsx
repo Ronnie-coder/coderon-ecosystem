@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandMarquee } from "@/components/sections/BrandMarquee";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
@@ -7,13 +8,17 @@ import { HoursArea } from "@/components/sections/HoursArea";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { RentalBand } from "@/components/sections/RentalBand";
 import { Reviews } from "@/components/sections/Reviews";
+import { StatsStrip } from "@/components/sections/StatsStrip";
+import { VehicleCards } from "@/components/sections/VehicleCards";
 import { ButtonLink, WhatsAppButton } from "@/components/ui/Button";
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { PhotoCard } from "@/components/ui/PhotoCard";
-import { Container, Eyebrow, H2, Section } from "@/components/ui/Section";
+import { Container, Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { business } from "@/lib/business";
 import { homeFaqs } from "@/lib/content/faqs";
-import { getPhoto, workPhotoKeys, type PhotoKey } from "@/lib/photos";
+import { serviceDetails } from "@/lib/content/services";
+import { getPhoto, type PhotoKey } from "@/lib/photos";
 import { routes } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -24,126 +29,122 @@ export const metadata: Metadata = {
   openGraph: { url: "/", title: "H A Motors | Mobile Bike Mechanic in Bloemfontein" },
 };
 
-const serviceIcons: Record<string, IconName> = { service: "wrench", electrical: "bolt", engine: "engine", tyres: "tyre" };
-
-const vehicleCards: { href: string; title: string; text: string; photo: PhotoKey }[] = [
-  { href: routes.motorcycle, title: "Motorcycles", text: "Commuters, delivery bikes, cruisers and big adventure bikes.", photo: "carburettor-rebuild" },
-  { href: routes.scooter, title: "Scooters", text: "Won't start, cutting out or due for a service? Sorted.", photo: "honda-scooter-finished" },
-  { href: routes.quad, title: "Quad bikes", text: "Sport and utility quads, brakes, winches and engines.", photo: "quad-front-teardown" },
-];
-
 const xp = business.experience;
-
-const why: { icon: IconName; title: string; text: string }[] = [
-  { icon: "clock", title: `Since ${xp.since}`, text: `${business.owner} has been fixing bikes since ${xp.since}, and learned the trade in a bike shop.` },
-  { icon: "wrench", title: "All brands", text: `Motorcycles, scooters and quads. Lots of ${xp.brands.join(", ")}.` },
-  { icon: "van", title: "Mobile service", text: "We come to you anywhere in Bloem." },
-  { icon: "calendar", title: "Weekend hours", text: "Open Saturday and Sunday, weekdays by appointment." },
-  { icon: "tag", title: "Upfront quotes", text: "Call-out included in the quote before we start." },
-  { icon: "shield", title: "Insured rental fleet", text: "Rental scooters are insured and maintained." },
-];
 
 const featuredWork: PhotoKey[] = [
   "carburettor-rebuild",
   "motorcycle-wiring-repair",
   "cylinder-head-removed",
-  "piston-new-gasket",
   "scooter-stripped",
   "scooter-reassembly",
   "quad-front-teardown",
+  "piston-new-gasket",
   "honda-delivery-bike-teardown",
 ];
 
 export default function HomePage() {
-  // Featured 8 first, then the rest behind "See more".
-  const galleryKeys = [...featuredWork, ...workPhotoKeys.filter((k) => !featuredWork.includes(k))];
-  const gallery = galleryKeys.map(getPhoto);
+  const gallery = featuredWork.map(getPhoto);
+  const topFaqs = homeFaqs.slice(0, 5);
 
   return (
     <>
       {/* 1. Hero */}
-      <section className="relative overflow-hidden bg-paper">
-        <div aria-hidden="true" className="absolute top-0 right-0 hidden h-full w-1/3 bg-muted lg:block" />
-        <Container className="relative grid items-center gap-10 py-10 sm:py-14 lg:grid-cols-[1.15fr_1fr] lg:py-20">
+      <section className="relative overflow-hidden bg-paper pb-16 sm:pb-20">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute top-0 right-0 hidden h-full w-[38%] bg-muted lg:block" />
+          <div data-parallax="0.2" className="stripe-bg absolute top-24 -right-32 hidden h-80 w-[34rem] -rotate-12 opacity-20 lg:block" />
+          <div data-parallax="-0.12" className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-brand-yellow/15 blur-3xl" />
+        </div>
+        <Container className="relative grid items-center gap-12 pt-10 sm:pt-14 lg:grid-cols-[1.15fr_1fr] lg:pt-16">
           <div className="animate-fade-up">
             <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-yellow px-3 py-1 text-sm font-bold text-ink uppercase">
               <Icon name="van" className="h-4 w-4" /> Mobile mechanic · {business.area.city}
             </p>
-            <h1 className="text-[2.6rem] font-extrabold uppercase sm:text-6xl lg:text-7xl">
-              Mobile Motorcycle, Scooter &amp; Quad Repairs in <span className="text-brand-green-dark">Bloemfontein</span>
+            <h1 className="text-[2.6rem] font-extrabold uppercase sm:text-6xl lg:text-[4.1rem]">
+              Mobile Motorcycle, Scooter &amp; Quad Repairs in{" "}
+              <span className="road-underline text-brand-green-dark">Bloemfontein</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg sm:text-xl">
-              All brands. We come to you anywhere in Bloem. Get a quote on WhatsApp.
-            </p>
+            <p className="mt-5 max-w-xl text-lg sm:text-xl">All brands. We come to you anywhere in Bloem. Get a quote on WhatsApp.</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <WhatsAppButton tone="yellow" className="text-lg">Get a Quote on WhatsApp</WhatsAppButton>
               <ButtonLink href={routes.rental} tone="greenOutline" className="text-lg">
                 Rent a Scooter, {business.rental.priceDisplay}/week
               </ButtonLink>
             </div>
-            <ul className="mt-7 flex flex-wrap gap-2" aria-label="Why riders call us">
-              {["All brands", "Call-outs anywhere in Bloem", "Open weekends", `Fixing bikes since ${xp.since}`].map((chip) => (
+            <ul className="mt-7 flex flex-wrap gap-2" aria-label="Quick facts">
+              {["All brands", "Call-outs anywhere in Bloem", "Open weekends"].map((chip) => (
                 <li key={chip} className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-3 py-1.5 text-sm font-semibold">
                   <Icon name="check" className="h-4 w-4 text-brand-green-dark" /> {chip}
                 </li>
               ))}
             </ul>
           </div>
-          <PhotoCard
-            photo="adrich-bmw-workshop"
-            priority
-            stripe
-            sizes="(min-width: 1024px) 460px, 92vw"
-            className="mx-auto w-full max-w-md lg:max-w-none"
-          />
+          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <PhotoCard photo="adrich-bmw-workshop" priority stripe sizes="(min-width: 1024px) 460px, 92vw" className="w-full" />
+            <div className="float-y absolute -top-4 -right-2 rounded-2xl bg-ink px-4 py-3 text-white shadow-xl sm:-right-6">
+              <p className="font-heading text-2xl leading-none font-extrabold text-brand-yellow uppercase">Since {xp.since}</p>
+              <p className="text-xs text-white/80">Working on bikes</p>
+            </div>
+            <div className="absolute -bottom-5 -left-2 flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-xl sm:-left-6">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-green-dark text-white">
+                <Icon name="van" className="h-5 w-5" />
+              </span>
+              <p className="text-sm leading-tight font-semibold">
+                We come to you
+                <span className="block font-normal text-ink-soft">anywhere in Bloem</span>
+              </p>
+            </div>
+          </div>
         </Container>
-        <div aria-hidden="true" className="stripe-bar" />
       </section>
+
+      <StatsStrip />
 
       {/* 2. Services */}
       <Section bg="paper" labelledBy="services-title">
-        <Eyebrow>What we fix</Eyebrow>
-        <H2 id="services-title">Repairs for every kind of bike</H2>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {business.repairs.services.map((s) => (
-            <li key={s.key} className="rounded-2xl border-2 border-ink/10 p-5">
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-yellow text-ink">
-                <Icon name={serviceIcons[s.key] ?? "wrench"} className="h-6 w-6" />
-              </span>
-              <h3 className="mt-4 text-2xl font-bold uppercase">{s.short}</h3>
-              <p className="mt-1 text-ink-soft">{s.blurb}</p>
-            </li>
-          ))}
-        </ul>
-        <ul className="mt-10 grid gap-5 md:grid-cols-3">
-          {vehicleCards.map((c) => (
-            <li key={c.href}>
-              <Link href={c.href} className="group block rounded-[var(--radius-photo)] bg-muted p-3 transition-shadow hover:shadow-lg">
-                <PhotoCard photo={c.photo} aspect="4/3" sizes="(min-width: 768px) 340px, 92vw" />
-                <div className="px-2 pt-4 pb-2">
-                  <h3 className="text-3xl font-extrabold uppercase">{c.title}</h3>
-                  <p className="mt-1 text-ink-soft">{c.text}</p>
-                  <span className="mt-3 inline-flex items-center gap-1 font-bold text-brand-green-dark">
-                    Get a Quote <Icon name="chevronRight" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </div>
+        <SectionHeading
+          id="services-title"
+          eyebrow="What we fix"
+          title="Repairs for every kind of bike"
+          intro="Motorcycles, scooters and quad bikes, all brands. Here's what we do most."
+          action={<ButtonLink href={routes.repairs} tone="greenOutline">All repairs</ButtonLink>}
+        />
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {serviceDetails.map((s, i) => (
+            <li key={s.key} data-reveal data-reveal-delay={i * 80}>
+              <Link
+                href={`${routes.repairs}#${s.key}`}
+                className="lift group flex h-full flex-col rounded-2xl border-2 border-ink/10 bg-white p-5 hover:border-brand-green-dark"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-yellow text-ink transition-transform group-hover:-rotate-6">
+                  <Icon name={s.icon} className="h-6 w-6" />
+                </span>
+                <h3 className="mt-4 text-2xl font-bold uppercase">{s.title}</h3>
+                <p className="mt-1 flex-1 text-ink-soft">{s.summary}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-green-dark">
+                  Learn more <Icon name="chevronRight" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
               </Link>
             </li>
           ))}
         </ul>
+        <div className="mt-12">
+          <VehicleCards />
+        </div>
       </Section>
 
       {/* 3. We come to you */}
-      <section aria-labelledby="callout-title" className="bg-brand-yellow py-14 text-ink">
-        <Container className="grid items-center gap-6 md:grid-cols-[auto_1fr_auto]">
-          <span className="hidden h-20 w-20 place-items-center rounded-2xl bg-ink text-brand-yellow md:grid">
+      <section aria-labelledby="callout-title" className="relative overflow-hidden bg-brand-yellow py-14 text-ink">
+        <div aria-hidden="true" data-parallax="0.15" className="absolute -top-10 right-10 h-40 w-40 rounded-full border-[18px] border-ink/10" />
+        <Container className="relative grid items-center gap-6 md:grid-cols-[auto_1fr_auto]">
+          <span data-reveal="zoom" className="hidden h-20 w-20 place-items-center rounded-2xl bg-ink text-brand-yellow md:grid">
             <Icon name="van" className="h-10 w-10" />
           </span>
-          <div>
+          <div data-reveal>
             <h2 id="callout-title" className="text-4xl font-extrabold uppercase sm:text-5xl">We come to you</h2>
             <p className="mt-2 max-w-2xl text-lg">
-              Breakdown at home, at work or on a delivery shift? {business.owner} comes to you anywhere in {business.area.city}. The
-              call-out fee depends on distance and is included in your quote.
+              Breakdown at home, at work or on a delivery shift? {business.owner} comes to you anywhere in {business.area.city}.
+              The call-out fee depends on distance and is included in your quote.
             </p>
           </div>
           <WhatsAppButton tone="ink" className="text-lg">Get a Quote</WhatsAppButton>
@@ -156,70 +157,52 @@ export default function HomePage() {
       {/* 5. How it works */}
       <HowItWorks />
 
-      {/* 6. Why H A Motors */}
-      <Section bg="muted" labelledBy="why-title">
-        <Eyebrow>Why H A Motors</Eyebrow>
-        <H2 id="why-title">A mechanic you can just WhatsApp</H2>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {why.map((w) => (
-            <li key={w.title} className="rounded-2xl bg-white p-5 shadow-sm">
-              <Icon name={w.icon} className="h-8 w-8 text-brand-green-dark" />
-              <h3 className="mt-3 text-xl font-bold uppercase">{w.title}</h3>
-              <p className="mt-1 text-sm text-ink-soft">{w.text}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      <BrandMarquee />
 
-      {/* 7. Recent work gallery */}
+      {/* 6. Recent work */}
       <Section bg="paper" id="gallery" labelledBy="gallery-title">
-        <Eyebrow>Recent work</Eyebrow>
-        <H2 id="gallery-title">Real bikes, real repairs</H2>
-        <p className="mt-3 max-w-2xl text-ink-soft">Every photo is from an actual job. Tap a photo to see it bigger.</p>
+        <SectionHeading
+          id="gallery-title"
+          eyebrow="Recent work"
+          title="Real bikes, real repairs"
+          intro="Every photo is from an actual job. Tap a photo to see it bigger."
+          action={<ButtonLink href={routes.gallery} tone="greenOutline">See the full gallery</ButtonLink>}
+        />
         <div className="mt-8">
-          <GalleryGrid photos={gallery} initial={8} />
+          <GalleryGrid photos={gallery} />
         </div>
       </Section>
 
       <Reviews />
 
-      {/* 8. About Adrich */}
+      {/* 7. About teaser */}
       <Section bg="muted" id="about" labelledBy="about-title">
         <div className="grid items-center gap-10 md:grid-cols-[1fr_1.2fr]">
-          <PhotoCard photo="adrich-kawasaki-ninja" stripe sizes="(min-width: 768px) 420px, 92vw" className="mx-auto w-full max-w-sm" />
+          <div data-reveal="left">
+            <PhotoCard photo="adrich-kawasaki-ninja" stripe sizes="(min-width: 768px) 420px, 92vw" className="mx-auto w-full max-w-sm" />
+          </div>
           <div>
-            <Eyebrow>About · Since {xp.since}</Eyebrow>
-            <H2 id="about-title">Meet {business.owner}</H2>
-            <div className="mt-4 space-y-4 text-lg">
-              {business.about.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
+            <SectionHeading id="about-title" eyebrow={`About · Since ${xp.since}`} title={`Meet ${business.owner}`} />
+            <p data-reveal className="mt-4 text-lg">{business.about[0]}</p>
+            <p data-reveal className="mt-4 text-lg">{business.about[1]}</p>
+            <div data-reveal className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <ButtonLink href={routes.about} tone="ink">More about Adrich</ButtonLink>
+              <WhatsAppButton tone="green">WhatsApp {business.owner}</WhatsAppButton>
             </div>
-            <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {[
-                { k: "Fixing bikes", v: `Since ${xp.since}` },
-                { k: "Trained", v: "In a bike shop" },
-                { k: "Best at", v: "Engines & electrics" },
-                { k: "Rides", v: xp.rides },
-              ].map((f) => (
-                <div key={f.k} className="rounded-xl border-l-4 border-brand-yellow bg-white px-3 py-2 shadow-sm">
-                  <dt className="text-xs font-bold tracking-wider text-ink-soft uppercase">{f.k}</dt>
-                  <dd className="font-heading text-lg leading-tight font-bold uppercase">{f.v}</dd>
-                </div>
-              ))}
-            </dl>
-            <WhatsAppButton tone="green" className="mt-6">WhatsApp {business.owner}</WhatsAppButton>
           </div>
         </div>
       </Section>
 
-      {/* 9. Hours and service area */}
+      {/* 8. Hours and service area */}
       <HoursArea bg="paper" />
 
-      {/* 10. FAQ */}
-      <Faq faqs={homeFaqs} bg="muted" />
+      {/* 9. FAQ */}
+      <Faq faqs={topFaqs} bg="muted" />
+      <div className="-mt-8 bg-muted pb-14 text-center">
+        <ButtonLink href={routes.faq} tone="greenOutline">See all questions</ButtonLink>
+      </div>
 
-      {/* 11. Final CTA */}
+      {/* 10. Final CTA */}
       <CtaBand />
     </>
   );

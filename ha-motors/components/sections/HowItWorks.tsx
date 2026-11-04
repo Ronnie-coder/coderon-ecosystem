@@ -13,7 +13,7 @@ export function HowItWorks() {
       <H2 id="how-title">Three steps. That&apos;s it.</H2>
       <ol className="mt-10 grid gap-5 md:grid-cols-3">
         {steps.map((s, i) => (
-          <li key={s.title} className="relative rounded-2xl border-2 border-ink/10 bg-white p-6">
+          <li key={s.title} data-reveal data-reveal-delay={i * 120} className="lift relative rounded-2xl border-2 border-ink/10 bg-white p-6">
             <span aria-hidden="true" className="font-heading text-7xl leading-none font-extrabold text-brand-yellow italic">
               {i + 1}
             </span>

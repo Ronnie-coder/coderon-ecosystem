@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RentalForm } from "@/components/forms/RentalForm";
-import { Breadcrumbs } from "@/components/sections/Breadcrumbs";
+import { PageHero } from "@/components/sections/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { OtherServices } from "@/components/sections/OtherServices";
@@ -9,6 +9,7 @@ import { CallButton, WhatsAppButton } from "@/components/ui/Button";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { PhotoCard } from "@/components/ui/PhotoCard";
 import { Container, Eyebrow, H2, Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { business } from "@/lib/business";
 import { rentalFaqs } from "@/lib/content/faqs";
 import { routes } from "@/lib/site";
@@ -27,35 +28,38 @@ export default function ScooterRentalPage() {
   const r = business.rental;
   return (
     <>
-      <section className="bg-paper">
-        <Container className="pt-6">
-          <Breadcrumbs items={[{ name: "Scooter rental", path: routes.rental }]} />
-        </Container>
-        <Container className="grid items-center gap-10 py-8 sm:py-12 lg:grid-cols-[1.1fr_1fr]">
-          <div className="animate-fade-up">
-            <Eyebrow>Delivery riders and commuters</Eyebrow>
-            <h1 className="text-[2.5rem] font-extrabold uppercase sm:text-6xl">
-              Scooter Rental in Bloemfontein: <span className="bg-brand-yellow px-2 text-ink">R550 per Week</span>
-            </h1>
-            <p className="mt-5 max-w-xl text-lg">
-              Start earning this week. A reliable {r.model} with maintenance and servicing included, and it&apos;s insured.
-              Made for food and grocery delivery riders, couriers and anyone who needs to get to work.
-            </p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 font-bold text-brand-yellow">
-              <Icon name="bolt" className="h-4 w-4" /> {r.scarcity}
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <WhatsAppButton intent="rental" tone="yellow" className="text-lg">Check Availability on WhatsApp</WhatsAppButton>
-              <CallButton intent="rental" />
-            </div>
-          </div>
+      <PageHero
+        crumbs={[{ name: "Scooter rental", path: routes.rental }]}
+        eyebrow="Delivery riders and commuters"
+        title={
+          <>
+            Scooter Rental in Bloemfontein: <span className="text-brand-yellow">R550 per Week</span>
+          </>
+        }
+        intro={
+          <p>
+            Start earning this week. A reliable {r.model} with maintenance and servicing included, and it&apos;s insured. Made for
+            food and grocery delivery riders, couriers and anyone who needs to get to work.
+          </p>
+        }
+        actions={
+          <>
+            <WhatsAppButton intent="rental" tone="yellow" className="text-lg">Check Availability on WhatsApp</WhatsAppButton>
+            <CallButton intent="rental" tone="whiteOutline" />
+          </>
+        }
+        footnote={
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-yellow px-4 py-2 font-bold text-ink">
+            <Icon name="bolt" className="h-4 w-4" /> {r.scarcity}
+          </span>
+        }
+        aside={
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <PhotoCard photo="sym-jet14-front" priority aspect="3/4" sizes="(min-width: 1024px) 230px, 46vw" />
             <PhotoCard photo="sym-jet14-side" aspect="3/4" sizes="(min-width: 1024px) 230px, 46vw" className="mt-8" />
           </div>
-        </Container>
-        <div aria-hidden="true" className="stripe-bar" />
-      </section>
+        }
+      />
 
       <Section bg="paper" labelledBy="included-title">
         <Eyebrow>What you get</Eyebrow>
@@ -97,6 +101,28 @@ export default function ScooterRentalPage() {
           </div>
         </div>
       </Section>
+
+      <section aria-labelledby="steps-title" className="on-dark bg-ink py-14 text-white sm:py-20">
+        <Container>
+          <SectionHeading id="steps-title" eyebrow="How renting works" title="On the road in 3 steps" dark />
+          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            {[
+              { t: "Enquire", d: "Send the form below or WhatsApp us. We'll tell you when a scooter is free." },
+              { t: "Bring your documents", d: "Valid ID, driver's licence and proof of address. We check them in person and you sign the rental agreement." },
+              { t: "Ride and earn", d: `Pay ${r.priceDisplay} a week as set out in your agreement. Servicing and maintenance are on us.` },
+            ].map((step, i) => (
+              <li key={step.t} data-reveal data-reveal-delay={i * 120} className="rounded-2xl border border-white/15 bg-white/5 p-6">
+                <span aria-hidden="true" className="font-heading text-6xl leading-none font-extrabold text-brand-yellow italic">{i + 1}</span>
+                <h3 className="mt-2 text-2xl font-bold uppercase"><span className="sr-only">Step {i + 1}: </span>{step.t}</h3>
+                <p className="mt-2 text-white/85">{step.d}</p>
+              </li>
+            ))}
+          </ol>
+          <p data-reveal className="mt-8 text-center text-lg text-white/90">
+            That&apos;s <strong className="text-brand-yellow">under R{Math.ceil(r.priceWeekly / 7 / 10) * 10} a day</strong> for a maintained, insured scooter.
+          </p>
+        </Container>
+      </section>
 
       <Section bg="muted" labelledBy="specs-title">
         <div className="grid gap-10 md:grid-cols-2">
