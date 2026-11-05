@@ -8,5 +8,6 @@
 [build.environment]
   NODE_VERSION = "22"
   NPM_FLAGS = "--legacy-peer-deps"
-  # NEXT_PUBLIC_ values are built into the public pages on purpose, so they are not secrets.
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_CLARITY_ID"
+  # NEXT_PUBLIC_ values are built into the public pages on purpose, and the Notion database
+  # IDs are only addresses (the token is what grants access), so none of these are secrets.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_CLARITY_ID,NOTION_OUTREACH_DB,NOTION_JOURNAL_DB"
