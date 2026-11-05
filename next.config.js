@@ -89,11 +89,14 @@ const nextConfig = {
 
   images: {
     // ✅ REMOVED: unoptimized: true  ← this was killing LCP
-    formats: ['image/avif', 'image/webp'],
+    // Kept small on purpose: every size × quality × format the optimiser makes counts
+    // towards Vercel's monthly image limit (this team was paused once for going over).
+    formats: ['image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    qualities: [25, 50, 75, 90, 95, 100], // ✅ Added to fix the console warning
-    minimumCacheTTL: 60,
+    imageSizes: [32, 64, 128, 256],
+    qualities: [75], // the default; no <Image> sets its own quality
+    // Our images rarely change, so keep optimised copies for 31 days instead of 60 seconds.
+    minimumCacheTTL: 2678400,
   },
   // ✅ Compress responses
   compress: true,

@@ -1,0 +1,56 @@
+# Outreach jobs on GitHub's scheduler (replaces the cron-job.org calls to /api/hunter,
+# /api/enrich and /api/followup). The work runs on GitHub's machines and writes straight
+# to Supabase, so it no longer counts against the website host's CPU allowance.
+#
+# Times are UTC (South Africa is UTC+2). GitHub may start scheduled runs a few minutes late.
+# Run any job by hand: Actions → Outreach jobs → Run workflow.
+name: Outreach jobs
+
+on:
+  schedule:
+    - cron: '7 1 * * *'    # 03:07 SAST  hunter: find new leads
+    - cron: '47 2 * * *'   # 04:47 SAST  enrich: check websites, find emails
+    - cron: '47 10 * * *'  # 12:47 SAST  enrich again
+    - cron: '13 5 * * *'   # 07:13 SAST  follow-ups + daily digest email
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Which job to run
+        type: choice
+        options: [hunter, enrich, followup]
+        default: enrich
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      JOB: >-
+        ${{ github.event_name == 'workflow_dispatch' && inputs.job
+        || github.event.schedule == '7 1 * * *' && 'hunter'
+        || github.event.schedule == '13 5 * * *' && 'followup'
+        || 'enrich' }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+      PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+      HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      RESEND_OUTREACH_API_KEY: ${{ secrets.RESEND_OUTREACH_API_KEY }}
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_OUTREACH_DB: ${{ secrets.NOTION_OUTREACH_DB }}
+    concurrency:
+      group: outreach-${{ github.event.schedule || inputs.job }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --legacy-peer-deps --no-audit --no-fund
+      # enrich checks 4 leads per pass; 6 passes ≈ 24 leads per run (stops early when done).
+      - run: npx tsx scripts/outreach-job.ts "$JOB" ${{ env.JOB == 'enrich' && '6' || '1' }}

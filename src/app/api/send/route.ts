@@ -1,6 +1,8 @@
 // src/app/api/send/route.ts
 // Quote form → email to Ronnie.
 import { Resend } from 'resend';
+import { createElement } from 'react';
+import { render } from 'react-email';
 import ContactEmail from '@/components/emails/ContactEmail';
 import { NextResponse } from 'next/server';
 
@@ -45,15 +47,18 @@ export async function POST(request: Request) {
       plan: optional(body.package, LIMITS.package),
       receivedAt: new Date(),
     };
-    const emailComponent = await ContactEmail(clean);
+    // Rendered here (HTML plus a plain-text copy, which helps deliverability).
+    const emailComponent = createElement(ContactEmail, clean);
+    const [html, text] = await Promise.all([render(emailComponent), render(emailComponent, { plainText: true })]);
     const who = clean.business ? `${clean.name} (${clean.business})` : clean.name;
 
     const { data, error } = await getResend().emails.send({
       from: 'Coderon Website <onboarding@resend.dev>',
       to: ['ronnie@coderon.co.za'],
       subject: `${flagged ? '[Possible spam] ' : ''}New quote request: ${clean.service} · ${who}`,
-      reply_to: clean.email,
-      react: emailComponent,
+      replyTo: clean.email,
+      html,
+      text,
     });
 
     if (error) {

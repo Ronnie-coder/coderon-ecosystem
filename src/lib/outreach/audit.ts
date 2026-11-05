@@ -51,7 +51,7 @@ async function fetchText(url: string, timeoutMs: number): Promise<{ ok: boolean;
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetch(url, { signal: controller.signal, redirect: 'follow', headers: { 'User-Agent': UA, Accept: 'text/html' } });
-    const html = (await res.text()).slice(0, 1_500_000);
+    const html = (await res.text()).slice(0, 500_000); // the start of the page holds what we check
     return { ok: res.status < 400, status: res.status, url: res.url, html, ms: Date.now() - t0 };
   } catch {
     return null;
@@ -113,7 +113,9 @@ function parseHtml(html: string) {
 
 // ---------- Email discovery ----------------------------------------------------------------
 
-const EMAIL_RE = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+// Bounded lengths keep this linear: with open-ended `+` it re-scanned long runs of letters
+// (minified JS, inline images) from every start position, burning seconds of CPU per page.
+const EMAIL_RE = /[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,253}\.[a-zA-Z]{2,24}/g;
 const FREEMAIL = /^(gmail|googlemail|outlook|hotmail|live|yahoo|icloud|me|aol|proton|protonmail|gmx|zoho|mail|msn|bigpond|btinternet|sky|xtra|optusnet|telkomsa|webmail|vodamail)\./i;
 const JUNK_DOMAINS =
   /(^|\.)(example\.(com|org|net)|domain\.com|email\.com|yourdomain\.com|yoursite\.com|website\.com|company\.com|sentry\.io|sentry-next\.wixpress\.com|wixpress\.com|wix\.com|squarespace\.com|godaddy\.com|mysite\.com|test\.com|placeholder\.com|latofonts\.com|schema\.org|w3\.org|ingest\.sentry\.io|cloudflare\.com|jquery\.com|sentry\.wixpress\.com)$/i;

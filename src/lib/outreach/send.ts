@@ -29,7 +29,7 @@ export async function sendOutreachEmail(args: {
   const { data, error } = await getResend().emails.send({
     from: SENDER,
     to: [args.to],
-    reply_to: REPLY_TO,
+    replyTo: REPLY_TO,
     subject: args.subject,
     text: args.text,
     html: args.html,

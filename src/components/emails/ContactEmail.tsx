@@ -3,7 +3,7 @@
 // to answer them (their preferred way first), the details in a table and their message.
 // Light, plain layout with inline styles, so it reads well in Gmail, Outlook and on phones.
 import * as React from 'react';
-import { Html, Head, Preview, Body, Container, Section, Text, Heading, Button, Link, Hr } from '@react-email/components';
+import { Html, Head, Preview, Body, Container, Section, Text, Heading, Button, Link, Hr } from 'react-email';
 
 interface ContactEmailProps {
   name: string;
