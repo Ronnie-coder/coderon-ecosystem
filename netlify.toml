@@ -1,0 +1,12 @@
+# Netlify hosting (temporary while the Vercel team is paused; Vercel ignores this file).
+# Netlify's Next.js runtime is added automatically. Outreach jobs run on GitHub Actions
+# (.github/workflows/outreach-jobs.yml), not on the host.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--legacy-peer-deps"
+  # NEXT_PUBLIC_ values are built into the public pages on purpose, so they are not secrets.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_CLARITY_ID"

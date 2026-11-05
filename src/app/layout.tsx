@@ -133,7 +133,8 @@ export default function RootLayout({
         </ThemeProvider>
 
         {/* ✅ Vercel analytics deferred */}
-        <Analytics />
+        {/* Vercel Web Analytics only exists on Vercel; elsewhere its script would 404. */}
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );
