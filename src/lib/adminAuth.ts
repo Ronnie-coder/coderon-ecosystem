@@ -1,4 +1,4 @@
-// Signed admin session token, shared by middleware (edge) and API routes (node).
+// Signed admin session token, shared by the proxy (src/proxy.ts) and the API routes.
 // Token format: "<expiresAtMs>.<hex hmac-sha256(expiresAtMs)>"
 
 export const AUTH_COOKIE = 'coderon_auth';
@@ -43,8 +43,8 @@ export function safeEqual(a: string, b: string): boolean {
 }
 
 /**
- * Second check inside admin API routes, on top of middleware. Next.js has had
- * middleware-bypass bugs, so routes that read leads or send email verify the
+ * Second check inside admin API routes, on top of the proxy. Next.js has had
+ * middleware/proxy-bypass bugs, so routes that read leads or send email verify the
  * session themselves. Returns a 401 response, or null when signed in.
  */
 export async function requireAdmin(req: Request): Promise<Response | null> {
