@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase, type Lead } from '@/lib/outreach/db';
-import { cleanCompanyName } from '@/lib/outreach/names';
+import { cleanCompanyName, domainOf } from '@/lib/outreach/names';
+import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 import { buildPitch, renderEmail } from '../../pitch/pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
 
@@ -23,13 +24,24 @@ export async function GET(req: Request) {
     .is('pitched_at', null)
     .is('skipped_at', null)
     .order('opportunity_score', { ascending: false, nullsFirst: false })
-    .limit(limit);
+    .limit(Math.min(limit * 3, 150)); // extra rows, since repeats are dropped below
   if (exclude.length) q = q.not('id', 'in', `(${exclude.join(',')})`);
 
-  const { data, error } = await q;
+  const [{ data, error }, keys] = await Promise.all([q, pitchedKeys()]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  const leads = ((data || []) as Lead[])
+  // One card per business: skip anything already pitched, and later rows with an email or
+  // domain already shown higher up (rows are best-first, so the best one is kept).
+  const shown = { emails: new Set(keys.emails), domains: new Set(keys.domains) };
+  const unique = ((data || []) as Lead[]).filter((lead) => {
+    if (repeatReason(lead, shown)) return false;
+    if (lead.email) shown.emails.add(lead.email.trim().toLowerCase());
+    const d = domainOf(lead.website);
+    if (d) shown.domains.add(d);
+    return true;
+  });
+
+  const leads = unique
     .map((lead) => {
       const pitch = buildPitch(lead);
       if (!pitch) return null;
@@ -55,7 +67,8 @@ export async function GET(req: Request) {
         trigger: pitch.trigger,
       };
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, limit);
 
   return NextResponse.json({ leads });
 }

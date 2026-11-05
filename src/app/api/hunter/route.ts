@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/outreach/db';
 import { isCronAuthorized } from '@/lib/adminAuth';
 import { domainOf } from '@/lib/outreach/names';
+import { savedDomains } from '@/lib/outreach/dedupe';
+
+type Place = { title?: string; website?: string; phoneNumber?: string; rating?: number; address?: string };
 
 export const maxDuration = 60;
 
@@ -82,9 +85,18 @@ export async function GET(req: Request) {
     let totalInserted = 0;
     for (const result of results) {
       if (result.data.error || !result.data.places?.length) continue;
-      const validLeads = result.data.places
-        .filter((place: any) => place.website && !SKIP_DOMAINS.test(domainOf(place.website) || ''))
-        .map((place: any) => ({
+      const places = (result.data.places as Place[]).filter((place) => place.website && !SKIP_DOMAINS.test(domainOf(place.website) || ''));
+      // Skip businesses already saved, even under another form of the URL (www, http, a sub-page).
+      const saved = await savedDomains(places.map((p) => domainOf(p.website) || ''));
+      const seen = new Set<string>();
+      const validLeads = places
+        .filter((place) => {
+          const d = domainOf(place.website) || '';
+          if (!d || saved.has(d) || seen.has(d)) return false;
+          seen.add(d);
+          return true;
+        })
+        .map((place) => ({
           company_name: place.title || 'Unnamed Business',
           website: place.website,
           email: null,
