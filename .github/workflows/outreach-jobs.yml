@@ -46,11 +46,11 @@ jobs:
       group: outreach-${{ github.event.schedule || inputs.job }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
       - run: npm ci --legacy-peer-deps --no-audit --no-fund
-      # enrich checks 4 leads per pass; 6 passes ≈ 24 leads per run (stops early when done).
-      - run: npx tsx scripts/outreach-job.ts "$JOB" ${{ env.JOB == 'enrich' && '6' || '1' }}
+      # enrich checks 4 leads per pass; 12 passes ≈ 48 leads per run (stops early when done).
+      - run: npx tsx scripts/outreach-job.ts "$JOB" ${{ env.JOB == 'enrich' && '12' || '1' }}

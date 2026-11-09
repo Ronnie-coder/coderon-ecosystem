@@ -121,20 +121,29 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+// Matches how coderon.co.za describes the business (homepage and site description).
+const SIGNATURE = [
+  'Ronnie Nyamhute',
+  'Founder, Coderon',
+  'Websites & custom software for growing businesses',
+  'coderon.co.za · WhatsApp +27 67 818 4898',
+];
+
 /** Plain-text-first email; the light HTML version enables Resend open/click tracking. */
 export function renderEmail(body: string, firstName?: string | null): { text: string; html: string } {
   const greeting = firstName ? `Hi ${firstName},` : 'Hi there,';
   const footer = `Not relevant? Just reply "no" and I won't email again.\n${BUSINESS_ADDRESS}`;
 
-  const text = `${greeting}\n\n${body}\n\nRonnie Nyamhute\nCoderon · websites & SEO for service businesses\ncoderon.co.za\n\n--\n${footer}`;
+  const text = `${greeting}\n\n${body}\n\n${SIGNATURE.join('\n')}\n\n--\n${footer}`;
 
   const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;color:#1e293b;line-height:1.6;max-width:600px;">
 ${escapeHtml(greeting)}<br><br>
 ${escapeHtml(body).replace(/\n/g, '<br>')}
 <br><br>
 Ronnie Nyamhute<br>
-Coderon · websites &amp; SEO for service businesses<br>
-<a href="https://coderon.co.za" style="color:#0284c7;text-decoration:none;">coderon.co.za</a>
+Founder, Coderon<br>
+<span style="color:#64748b;">Websites &amp; custom software for growing businesses</span><br>
+<a href="https://www.coderon.co.za" style="color:#0284c7;text-decoration:none;">coderon.co.za</a> · WhatsApp <a href="https://wa.me/27678184898" style="color:#0284c7;text-decoration:none;">+27 67 818 4898</a>
 <hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">
 <span style="font-size:12px;color:#64748b;">${escapeHtml(footer).replace(/\n/g, '<br>')}</span>
 </div>`;

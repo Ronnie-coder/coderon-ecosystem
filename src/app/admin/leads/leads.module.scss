@@ -206,7 +206,15 @@ $radius: 14px;
   gap: 6px;
   border-bottom: 1px solid $border;
   margin-bottom: 24px;
+  // Scroll sideways on small screens only, with no visible scrollbar (Windows showed
+  // arrow buttons beside the tabs).
   overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tab,

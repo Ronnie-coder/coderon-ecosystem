@@ -3,6 +3,7 @@ import { supabase, type Lead } from '@/lib/outreach/db';
 import { isCronAuthorized } from '@/lib/adminAuth';
 import { auditWebsite, hunterLookup, opportunityScore, ratingFromNotes, type Audit } from '@/lib/outreach/audit';
 import { domainOf } from '@/lib/outreach/names';
+import { AUDIT_FRESH_DAYS } from '@/lib/outreach/config';
 
 export const maxDuration = 60;
 
@@ -50,8 +51,8 @@ async function processLead(lead: Lead) {
   return audit;
 }
 
-// Runs every 15 min (cron-job.org). Verifies the existing pitch-ready backlog first, then
-// new leads from the hunter. No email per run any more; see the daily digest.
+// Runs on GitHub Actions (.github/workflows/outreach-jobs.yml). Re-checks pitch-ready leads
+// before their check expires, then verifies the backlog and new leads from the hunter.
 export async function GET(req: Request) {
   if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
@@ -63,8 +64,25 @@ export async function GET(req: Request) {
         .is('pitched_at', null)
         .or('audit_version.is.null,audit_version.lt.2');
 
-    const { data: backlog } = await pending().eq('status', 'audited').not('email', 'is', null).limit(PER_RUN);
-    let leads = (backlog || []) as Lead[];
+    // 1. Pitch-ready leads whose check is getting old (re-checked 4 days before it expires).
+    const recheckBefore = new Date(Date.now() - (AUDIT_FRESH_DAYS - 4) * 864e5).toISOString();
+    const { data: stale } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('status', 'audited')
+      .not('pitch_trigger', 'is', null)
+      .is('pitched_at', null)
+      .is('skipped_at', null)
+      .lt('audit->>checked_at', recheckBefore)
+      .order('opportunity_score', { ascending: false, nullsFirst: false })
+      .limit(PER_RUN);
+    let leads = (stale || []) as Lead[];
+
+    // 2. The unverified backlog, then new leads from the hunter.
+    if (leads.length < PER_RUN) {
+      const { data: backlog } = await pending().eq('status', 'audited').not('email', 'is', null).limit(PER_RUN - leads.length);
+      leads = leads.concat((backlog || []) as Lead[]);
+    }
     if (leads.length < PER_RUN) {
       const { data: fresh } = await pending().in('status', ['new', 'audited']).limit(PER_RUN - leads.length);
       leads = leads.concat((fresh || []) as Lead[]);

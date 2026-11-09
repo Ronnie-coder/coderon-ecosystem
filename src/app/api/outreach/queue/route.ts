@@ -4,6 +4,8 @@ import { cleanCompanyName, domainOf } from '@/lib/outreach/names';
 import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 import { buildPitch, renderEmail } from '../../pitch/pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
+import { auditFreshSinceISO } from '@/lib/outreach/config';
+import { formatLocal, HOME_TZ, leadTimeZone, nextMorningSend, zoneLabel } from '@/lib/outreach/sendTime';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +25,7 @@ export async function GET(req: Request) {
     .eq('email_ok', true)
     .is('pitched_at', null)
     .is('skipped_at', null)
+    .gte('audit->>checked_at', auditFreshSinceISO()) // checked in the last 14 days
     .order('opportunity_score', { ascending: false, nullsFirst: false })
     .limit(Math.min(limit * 3, 150)); // extra rows, since repeats are dropped below
   if (exclude.length) q = q.not('id', 'in', `(${exclude.join(',')})`);
@@ -45,6 +48,8 @@ export async function GET(req: Request) {
     .map((lead) => {
       const pitch = buildPitch(lead);
       if (!pitch) return null;
+      const tz = leadTimeZone(lead);
+      const plan = nextMorningSend(tz, new Date(), { random: () => 0.5 });
       return {
         id: lead.id,
         name: cleanCompanyName(lead.company_name),
@@ -65,6 +70,14 @@ export async function GET(req: Request) {
         subject: pitch.subject,
         preview: renderEmail(pitch.body, lead.first_name).text,
         trigger: pitch.trigger,
+        delivery: {
+          zone: zoneLabel(tz),
+          localNow: formatLocal(new Date(), tz),
+          immediate: plan.immediate,
+          // Approximate: the real send picks a random minute between 08:05 and 09:35.
+          theirTime: formatLocal(plan.at, tz),
+          yourTime: formatLocal(plan.at, HOME_TZ),
+        },
       };
     })
     .filter(Boolean)

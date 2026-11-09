@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/outreach/db';
 import { getBudget } from '@/lib/outreach/budget';
-import { TIMEZONE } from '@/lib/outreach/config';
+import { TIMEZONE, auditFreshSinceISO } from '@/lib/outreach/config';
 import { requireAdmin } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ async function count(build: (q: any) => any): Promise<number> {
 }
 
 const pitchReady = (q: any) =>
-  q.eq('status', 'audited').not('pitch_trigger', 'is', null).eq('email_ok', true).is('pitched_at', null).is('skipped_at', null);
+  q.eq('status', 'audited').not('pitch_trigger', 'is', null).eq('email_ok', true).is('pitched_at', null).is('skipped_at', null).gte('audit->>checked_at', auditFreshSinceISO());
 
 function localDay(iso: string) {
   return new Date(iso).toLocaleDateString('en-CA', { timeZone: TIMEZONE });

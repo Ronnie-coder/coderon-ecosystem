@@ -5,6 +5,8 @@ import { newMessageId, sendOutreachEmail } from '@/lib/outreach/send';
 import { notionCreatePitch } from '@/lib/outreach/notion';
 import { buildPitch, renderEmail } from './pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
+import { auditFreshSinceISO } from '@/lib/outreach/config';
+import { leadTimeZone, nextMorningSend } from '@/lib/outreach/sendTime';
 import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 
 // Sends the pitch for one lead. Everything is loaded server-side from the lead's verified
@@ -27,6 +29,12 @@ export async function POST(req: Request) {
     const repeat = repeatReason(lead, await pitchedKeys());
     if (repeat) return NextResponse.json({ skipped: true, reason: repeat }, { status: 409 });
 
+    // The problem we quote must have been confirmed recently.
+    const checkedAt = lead.audit?.checked_at ? Date.parse(lead.audit.checked_at) : NaN;
+    if (!(checkedAt >= Date.parse(auditFreshSinceISO()))) {
+      return NextResponse.json({ skipped: true, reason: 'This website check is too old; it will be re-checked before you can pitch it' }, { status: 422 });
+    }
+
     const pitch = buildPitch(lead);
     if (!pitch) return NextResponse.json({ skipped: true, reason: 'No verified issue to pitch' }, { status: 422 });
 
@@ -42,7 +50,18 @@ export async function POST(req: Request) {
 
     const content = renderEmail(pitch.body, lead.first_name);
     const messageId = newMessageId();
-    const sent = await sendOutreachEmail({ to: lead.email, subject: pitch.subject, text: content.text, html: content.html, messageId }).catch(
+    // Deliver in the lead's local weekday morning (now, or scheduled with Resend).
+    const tz = leadTimeZone(lead);
+    const plan = nextMorningSend(tz);
+    const deliverAt = plan.at.toISOString();
+    const sent = await sendOutreachEmail({
+      to: lead.email,
+      subject: pitch.subject,
+      text: content.text,
+      html: content.html,
+      messageId,
+      scheduledAt: plan.immediate ? null : deliverAt,
+    }).catch(
       (e: Error) => ({ id: null, error: e.message })
     );
     if (sent.error) {
@@ -56,7 +75,7 @@ export async function POST(req: Request) {
       .from('leads')
       .update({
         status: 'pitched',
-        pitched_at: now,
+        pitched_at: deliverAt, // when it lands; follow-ups count from here
         followup_stage: 0,
         replied: false,
         initial_trigger: pitch.trigger,
@@ -66,14 +85,14 @@ export async function POST(req: Request) {
         notion_page_id: notionPageId,
       })
       .eq('id', lead.id);
-    await logEvent('sent_pitch', lead.id, sent.id, { subject: pitch.subject, trigger: pitch.trigger });
+    await logEvent('sent_pitch', lead.id, sent.id, { subject: pitch.subject, trigger: pitch.trigger, send_at: deliverAt, tz });
 
     if (dbError) {
       console.error('Pitch DB update failed:', dbError);
       return NextResponse.json({ error: `Email sent, but saving failed: ${dbError.message}` }, { status: 500 });
     }
 
-    return NextResponse.json({ sent: true, trigger: pitch.trigger, subject: pitch.subject, pitchesToday: budget.pitchesToday + 1 });
+    return NextResponse.json({ sent: true, scheduled: !plan.immediate, deliverAt, tz, trigger: pitch.trigger, subject: pitch.subject, pitchesToday: budget.pitchesToday + 1 });
   } catch (err) {
     console.error('Pitch Error:', err);
     return NextResponse.json({ error: 'Fatal error during pitching', details: (err as Error).message }, { status: 500 });
