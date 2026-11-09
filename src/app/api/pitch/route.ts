@@ -5,6 +5,7 @@ import { newMessageId, sendOutreachEmail } from '@/lib/outreach/send';
 import { notionCreatePitch } from '@/lib/outreach/notion';
 import { buildPitch, renderEmail } from './pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
+import { auditFreshSinceISO } from '@/lib/outreach/config';
 import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 
 // Sends the pitch for one lead. Everything is loaded server-side from the lead's verified
@@ -26,6 +27,12 @@ export async function POST(req: Request) {
     // One business, one pitch: no repeat email address (any case) or website domain.
     const repeat = repeatReason(lead, await pitchedKeys());
     if (repeat) return NextResponse.json({ skipped: true, reason: repeat }, { status: 409 });
+
+    // The problem we quote must have been confirmed recently.
+    const checkedAt = lead.audit?.checked_at ? Date.parse(lead.audit.checked_at) : NaN;
+    if (!(checkedAt >= Date.parse(auditFreshSinceISO()))) {
+      return NextResponse.json({ skipped: true, reason: 'This website check is too old; it will be re-checked before you can pitch it' }, { status: 422 });
+    }
 
     const pitch = buildPitch(lead);
     if (!pitch) return NextResponse.json({ skipped: true, reason: 'No verified issue to pitch' }, { status: 422 });

@@ -150,33 +150,6 @@ async function api<T>(url: string, init?: RequestInit): Promise<{ ok: boolean; s
 
 // ---------- Small components ----------------------------------------------------------------
 
-function GoalRing({ done, target }: { done: number; target: number }) {
-  const r = 34;
-  const c = 2 * Math.PI * r;
-  const progress = Math.min(1, target ? done / target : 0);
-  const hit = done >= target && target > 0;
-  return (
-    <div className={`${styles.goalRing} ${hit ? styles.goalHit : ''}`} title={`${done} of ${target} pitches today`}>
-      <svg viewBox="0 0 80 80" aria-hidden>
-        <circle cx="40" cy="40" r={r} className={styles.ringTrack} />
-        <circle
-          cx="40"
-          cy="40"
-          r={r}
-          className={styles.ringFill}
-          strokeDasharray={c}
-          strokeDashoffset={c * (1 - progress)}
-          transform="rotate(-90 40 40)"
-        />
-      </svg>
-      <div className={styles.ringLabel}>
-        <strong>{done}</strong>
-        <span>/ {target}</span>
-      </div>
-    </div>
-  );
-}
-
 function Confetti({ burst }: { burst: number }) {
   const pieces = useMemo(
     () =>
@@ -684,7 +657,7 @@ function InsightsView({ stats }: { stats: Stats | null }) {
             ))}
           </div>
           <p className={styles.muted}>
-            Daily target ramps 10 → 15 → 20 → 25 to protect your domain and stay inside Resend&apos;s free plan.
+            No daily quota. Sending is capped at {stats.budget.dailyCap} emails a day (pitches and follow-ups together) to protect coderon.co.za and stay inside Resend&apos;s free plan.
           </p>
         </div>
       </div>
@@ -872,7 +845,6 @@ export default function PitchHQ() {
   const [tab, setTab] = useState<Tab>('queue');
   const [stats, setStats] = useState<Stats | null>(null);
   const [burst, setBurst] = useState(0);
-  const [goalBanner, setGoalBanner] = useState(false);
 
   const refreshStats = useCallback(async () => {
     const { ok, data } = await api<Stats & { error?: string }>('/api/outreach/stats/');
@@ -889,8 +861,6 @@ export default function PitchHQ() {
       setBurst(Date.now());
       setStats((s) => {
         if (!s) return s;
-        const target = s.budget.target;
-        if (pitchesToday === target) setGoalBanner(true);
         return {
           ...s,
           queue: Math.max(0, s.queue - 1),
@@ -909,7 +879,6 @@ export default function PitchHQ() {
   );
 
   const b = stats?.budget;
-  const remaining = b ? Math.max(0, b.target - b.pitchesToday) : 0;
 
   return (
     <div className={styles.dashboard}>
@@ -924,20 +893,23 @@ export default function PitchHQ() {
       <header className={styles.topBar}>
         <div className={styles.brand}>
           <span className={styles.logo}>CODERON</span>
-          <span className={styles.brandSub}>Pitch HQ</span>
+          <span className={styles.brandSub}>Outreach</span>
         </div>
 
         <div className={styles.hello}>
           <h1>
-            {greeting()}, Ron.{' '}
-            {b ? (remaining > 0 ? `${remaining} pitch${remaining === 1 ? '' : 'es'} to go today.` : 'Daily goal done. 🎉') : ''}
+            {greeting()}, Ronnie.{' '}
+            {stats ? `${stats.queue} verified lead${stats.queue === 1 ? '' : 's'} ready.` : ''}
           </h1>
-          <p>Every pitch below is backed by a verified, checkable issue.</p>
+          <p>Every issue is checked twice and re-checked every 14 days. Review each one, then send at your own pace.</p>
         </div>
 
         <div className={styles.topStats}>
-          <GoalRing done={b?.pitchesToday ?? 0} target={b?.target ?? 10} />
           <div className={styles.miniStats}>
+            <div title="Pitches sent today. No quota: send what you can review properly.">
+              <span>📤 Sent today</span>
+              <strong>{b?.pitchesToday ?? 0}</strong>
+            </div>
             <div title="Days in a row with at least one pitch">
               <span>🔥 Streak</span>
               <strong>{stats?.streak ?? 0}d</strong>
@@ -957,11 +929,6 @@ export default function PitchHQ() {
         </div>
       </header>
 
-      {goalBanner && (
-        <div className={styles.goalBanner} onClick={() => setGoalBanner(false)}>
-          🏆 Daily goal smashed: {b?.target} pitches sent. Anything extra today is bonus.
-        </div>
-      )}
 
       <nav className={styles.tabs}>
         {(

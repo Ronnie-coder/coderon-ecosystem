@@ -31,6 +31,11 @@ export function startOfMonthISO(now = new Date()): string {
 
 export const FOLLOW_UP_DAYS = [3, 7];
 
+// A website check is trusted for this long. Older pitch-ready leads leave the queue until the
+// enrich job re-checks them, so a pitch never quotes a problem the business has since fixed.
+export const AUDIT_FRESH_DAYS = 14;
+export const auditFreshSinceISO = (now = Date.now()) => new Date(now - AUDIT_FRESH_DAYS * 864e5).toISOString();
+
 export const SENDER = process.env.OUTREACH_FROM || 'Ronnie <ronnie@coderon.co.za>';
 export const REPLY_TO = process.env.OUTREACH_REPLY_TO || 'ronnie@coderon.co.za';
 export const BUSINESS_ADDRESS =

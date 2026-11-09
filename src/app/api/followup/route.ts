@@ -10,30 +10,47 @@ import { followUpBody, renderEmail } from '../pitch/pitch-templates';
 
 export const maxDuration = 60;
 
-// Runs daily (cron-job.org). Sends follow-up 1 on day 3 and follow-up 2 on day 7 to every
-// pitched lead that hasn't replied, bounced or unsubscribed, opened or not. Then sends
-// Ronnie the daily digest.
+// Runs daily on GitHub Actions. Sends follow-up 1 on day 3 and follow-up 2 on day 7 (each
+// within a 7-day window) to every pitched lead that hasn't replied, bounced or unsubscribed,
+// opened or not. Then sends Ronnie the daily digest.
 export async function GET(req: Request) {
   if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const now = Date.now();
-    const daysAgo = (d: number) => new Date(now - d * 864e5).toISOString();
 
-    const base = () =>
-      supabase
-        .from('leads')
-        .select('*')
-        .not('pitched_at', 'is', null)
-        .is('replied_at', null)
-        .is('bounced_at', null)
-        .not('email', 'is', null)
-        .or('unsubscribed.is.null,unsubscribed.eq.false')
-        .or('replied.is.null,replied.eq.false');
+    // Every pitched lead that can still get a follow-up. The rules are applied in code (not
+    // stacked OR filters) and a database error stops the run instead of reading as "0 due".
+    const { data: pitched, error: pitchedError } = await supabase
+      .from('leads')
+      .select('*')
+      .not('pitched_at', 'is', null)
+      .not('email', 'is', null)
+      .is('replied_at', null)
+      .is('bounced_at', null)
+      .limit(5000);
+    if (pitchedError) throw new Error(`Could not load pitched leads: ${pitchedError.message}`);
 
-    const [{ data: stage1 }, { data: stage2 }] = await Promise.all([
-      base().or('followup_stage.is.null,followup_stage.eq.0').lte('pitched_at', daysAgo(FOLLOW_UP_DAYS[0])).limit(20),
-      base().eq('followup_stage', 1).lte('pitched_at', daysAgo(FOLLOW_UP_DAYS[1])).limit(20),
-    ]);
+    const open = ((pitched || []) as Lead[]).filter((l) => !l.unsubscribed && !(l as Lead & { replied?: boolean | null }).replied && (l.followup_stage ?? 0) < 2);
+    const dueAt = (l: Lead) => {
+      const stage = (l.followup_stage ?? 0) as 0 | 1;
+      return Date.parse(l.pitched_at!) + FOLLOW_UP_DAYS[stage] * 864e5;
+    };
+    // A follow-up only makes sense close to the pitch: each one has a 7-day window
+    // (day 3-10 and day 7-14). Missed windows are listed, never sent weeks late.
+    const WINDOW_MS = 7 * 864e5;
+    const due = open.filter((l) => dueAt(l) <= now && now - dueAt(l) <= WINDOW_MS);
+    const missed = open
+      .filter((l) => now - dueAt(l) > WINDOW_MS)
+      .map((l) => `${l.company_name} (pitched ${l.pitched_at!.slice(0, 10)}, follow-up ${(l.followup_stage ?? 0) + 1} window passed)`);
+    const stage1 = due.filter((l) => (l.followup_stage ?? 0) === 0).slice(0, 20);
+    const stage2 = due.filter((l) => l.followup_stage === 1).slice(0, 20);
+
+    // What's coming, for the run log and the daily digest.
+    const upcoming = open
+      .filter((l) => dueAt(l) > now)
+      .sort((a, b) => dueAt(a) - dueAt(b))
+      .slice(0, 10)
+      .map((l) => `${l.company_name}: follow-up ${(l.followup_stage ?? 0) + 1} on ${new Date(dueAt(l)).toISOString().slice(0, 10)}`);
 
     const budget = await getBudget();
     let left = budget.emailsLeftToday;
@@ -79,6 +96,11 @@ export async function GET(req: Request) {
 
     return NextResponse.json({
       message: `Follow-up engine sent ${sentCount} emails.`,
+      pitched: (pitched || []).length,
+      waiting: open.length,
+      finished: (pitched || []).filter((l) => (l.followup_stage ?? 0) >= 2).length,
+      upcoming,
+      missed,
       skippedForBudget: Math.max(0, queue.length - sentCount - failures.length),
       failures,
     });

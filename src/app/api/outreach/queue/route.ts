@@ -4,6 +4,7 @@ import { cleanCompanyName, domainOf } from '@/lib/outreach/names';
 import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 import { buildPitch, renderEmail } from '../../pitch/pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
+import { auditFreshSinceISO } from '@/lib/outreach/config';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +24,7 @@ export async function GET(req: Request) {
     .eq('email_ok', true)
     .is('pitched_at', null)
     .is('skipped_at', null)
+    .gte('audit->>checked_at', auditFreshSinceISO()) // checked in the last 14 days
     .order('opportunity_score', { ascending: false, nullsFirst: false })
     .limit(Math.min(limit * 3, 150)); // extra rows, since repeats are dropped below
   if (exclude.length) q = q.not('id', 'in', `(${exclude.join(',')})`);

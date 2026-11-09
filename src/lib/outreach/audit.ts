@@ -1,4 +1,5 @@
-// Verified website auditor (v2).
+// Verified website auditor (v2). Every claim is confirmed twice: HTTPS is retried before
+// "not secure" is claimed, and a slow PageSpeed score must be repeated on a second run.
 //
 // Rule: an issue only becomes a pitch trigger when it is (1) confirmed by a second check and
 // (2) something the business owner can verify themselves. Everything else is kept as a
@@ -306,7 +307,21 @@ export async function auditWebsite(
   }
 
   {
-    const psi = await psiPromise;
+    let psi = await psiPromise;
+    // PageSpeed scores move between runs, so a slow score is only claimed when a second
+    // run agrees. The better (higher) of the two is what gets quoted.
+    if (psi && psi.score < 50 && page) {
+      const second = await pageSpeed(page.url);
+      if (!second) {
+        audit.notes.push(`PageSpeed ${psi.score}/100 once, but the re-check failed; not claimed`);
+        psi = null;
+      } else if (second.score >= 50) {
+        audit.notes.push(`PageSpeed varied (${psi.score} then ${second.score}/100); not claimed`);
+        psi = second;
+      } else if (second.score > psi.score) {
+        psi = second;
+      }
+    }
     if (psi) {
       audit.psi_mobile = psi.score;
       audit.psi_lcp_s = psi.lcp;
