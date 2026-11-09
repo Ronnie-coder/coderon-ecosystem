@@ -28,6 +28,7 @@ type QueueLead = {
   subject: string;
   preview: string;
   trigger: string;
+  delivery?: { zone: string; localNow: string; immediate: boolean; theirTime: string; yourTime: string };
 };
 
 type Group = { name: string; sent: number; opened: number; clicked: number; replied: number };
@@ -240,13 +241,18 @@ function QueueView({
   const send = useCallback(async () => {
     if (!lead || busy) return;
     setBusy('send');
-    const { ok, data } = await api<{ sent?: boolean; skipped?: boolean; reason?: string; error?: string; pitchesToday?: number }>(
+    const { ok, data } = await api<{ sent?: boolean; scheduled?: boolean; deliverAt?: string; tz?: string; skipped?: boolean; reason?: string; error?: string; pitchesToday?: number }>(
       '/api/pitch/',
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadId: lead.id }) }
     );
     setBusy(null);
     if (ok && data.sent) {
-      toast.success(`Pitch sent to ${lead.name}`, { icon: '🚀' });
+      if (data.scheduled && data.deliverAt && data.tz) {
+        const lands = new Intl.DateTimeFormat('en-GB', { timeZone: data.tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(data.deliverAt));
+        toast.success(`Scheduled: lands ${lands} their time`, { icon: '🕗' });
+      } else {
+        toast.success(`Pitch sent to ${lead.name}`, { icon: '🚀' });
+      }
       onSent(data.pitchesToday || 0);
       removeCurrent('send');
     } else if (data.skipped) {
@@ -409,6 +415,16 @@ function QueueView({
               <span className={styles.emailKey}>Subject</span>
               <span className={styles.emailSubject}>{lead.subject}</span>
             </div>
+            {lead.delivery && (
+              <div title="Cold emails land on a weekday between 08:00 and 10:00 in the lead's time zone">
+                <span className={styles.emailKey}>Lands</span>
+                <span className={styles.emailSubject}>
+                  {lead.delivery.immediate
+                    ? `Now: it's ${lead.delivery.localNow.split(', ').pop()} in ${lead.delivery.zone}`
+                    : `${lead.delivery.theirTime} in ${lead.delivery.zone} (about ${lead.delivery.yourTime} your time)`}
+                </span>
+              </div>
+            )}
           </div>
           <pre className={styles.emailBody}>{lead.preview}</pre>
 
@@ -423,7 +439,7 @@ function QueueView({
               Not a fit <Kbd>N</Kbd>
             </button>
             <button className={styles.sendBtn} onClick={send} disabled={!!busy}>
-              {busy === 'send' ? 'Sending…' : 'Send pitch'} <Kbd>S</Kbd>
+              {busy === 'send' ? 'Sending…' : lead.delivery && !lead.delivery.immediate ? 'Schedule pitch' : 'Send pitch'} <Kbd>S</Kbd>
             </button>
           </div>
         </section>
@@ -516,7 +532,10 @@ function SentView({ refreshStats }: { refreshStats: () => void }) {
               </div>
               <div className={styles.sentSubject}>{l.initial_subject || '(v1 pitch)'}</div>
               <div className={styles.sentMeta}>
-                {l.email} · {TRIGGER_LABEL[l.initial_trigger || ''] || l.initial_trigger || '–'} · sent {ago(l.pitched_at)}
+                {l.email} · {TRIGGER_LABEL[l.initial_trigger || ''] || l.initial_trigger || '–'} ·{' '}
+                {l.pitched_at && Date.parse(l.pitched_at) > Date.now()
+                  ? `scheduled, lands ${new Date(l.pitched_at).toLocaleString('en-GB', { weekday: 'short', hour: '2-digit', minute: '2-digit' })} your time`
+                  : `sent ${ago(l.pitched_at)}`}
                 {l.followup_stage ? ` · follow-up ${l.followup_stage}/2 sent` : ''}
               </div>
             </div>

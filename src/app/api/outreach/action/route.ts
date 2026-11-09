@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabase, logEvent, type Lead } from '@/lib/outreach/db';
 import { notionUpdateStage } from '@/lib/outreach/notion';
 import { requireAdmin } from '@/lib/adminAuth';
+import { cancelScheduledEmails } from '@/lib/outreach/send';
 
 type Action = 'skip' | 'bad_email' | 'not_fit' | 'replied' | 'call_booked' | 'won' | 'lost' | 'unsubscribed' | 'undo_skip';
 
@@ -48,6 +49,19 @@ export async function POST(req: Request) {
       break;
     default:
       return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
+  }
+
+  // Anything still waiting to be delivered to this lead (a scheduled pitch or follow-up)
+  // is cancelled once they reply, book, opt out, or turn out not to be a lead.
+  if (['replied', 'call_booked', 'won', 'lost', 'unsubscribed', 'bad_email', 'not_fit', 'skip'].includes(action)) {
+    const { data: pending } = await supabase
+      .from('email_events')
+      .select('resend_email_id')
+      .eq('lead_id', leadId)
+      .in('type', ['sent_pitch', 'sent_followup'])
+      .gt('meta->>send_at', new Date().toISOString());
+    const ids = (pending || []).map((e) => e.resend_email_id).filter(Boolean) as string[];
+    if (ids.length) await cancelScheduledEmails(ids).catch((e) => console.error('Cancel scheduled failed:', e));
   }
 
   const { error } = await supabase.from('leads').update(update).eq('id', leadId);
