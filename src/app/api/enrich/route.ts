@@ -32,6 +32,15 @@ async function processLead(lead: Lead) {
     }
   }
 
+  // Only leads with a verified issue are kept. A never-contacted lead with nothing to fix
+  // (or a site that wouldn't load, so nothing could be confirmed) is deleted. Pitched and
+  // skipped leads stay: they're history, and they stop the hunter adding them again.
+  if (!audit.trigger && !lead.pitched_at && !lead.skipped_at) {
+    const { error: deleteError } = await supabase.from('leads').delete().eq('id', lead.id);
+    if (deleteError) throw new Error(deleteError.message);
+    return { ...audit, deleted: true };
+  }
+
   const baseNotes = (lead.notes || '').split(' | Audit:')[0];
   const { error } = await supabase
     .from('leads')
@@ -48,7 +57,23 @@ async function processLead(lead: Lead) {
     })
     .eq('id', lead.id);
   if (error) throw new Error(error.message);
-  return audit;
+  return { ...audit, deleted: false };
+}
+
+/** Removes already-checked leads that had no verified issue (from before this rule). */
+async function deleteCheckedWithoutIssue(): Promise<number> {
+  const { data, error } = await supabase
+    .from('leads')
+    .select('id')
+    .eq('audit_version', 2)
+    .is('pitch_trigger', null)
+    .is('pitched_at', null)
+    .is('skipped_at', null)
+    .limit(500);
+  if (error || !data?.length) return 0;
+  const ids = data.map((r) => r.id);
+  const { error: deleteError } = await supabase.from('leads').delete().in('id', ids);
+  return deleteError ? 0 : ids.length;
 }
 
 // Runs on GitHub Actions (.github/workflows/outreach-jobs.yml). Re-checks pitch-ready leads
@@ -56,6 +81,8 @@ async function processLead(lead: Lead) {
 export async function GET(req: Request) {
   if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
+    const removed = await deleteCheckedWithoutIssue();
+
     const pending = () =>
       supabase
         .from('leads')
@@ -87,18 +114,23 @@ export async function GET(req: Request) {
       const { data: fresh } = await pending().in('status', ['new', 'audited']).limit(PER_RUN - leads.length);
       leads = leads.concat((fresh || []) as Lead[]);
     }
-    if (!leads.length) return NextResponse.json({ message: 'Nothing left to verify.' });
+    if (!leads.length) return NextResponse.json({ message: 'Nothing left to verify.', removedWithoutIssue: removed });
 
     const results = await Promise.allSettled(leads.map(processLead));
     const report = results.map((r, i) => ({
       company: leads[i].company_name,
       ok: r.status === 'fulfilled',
       trigger: r.status === 'fulfilled' ? r.value.trigger : null,
+      deleted: r.status === 'fulfilled' ? r.value.deleted : false,
       email: r.status === 'fulfilled' ? r.value.email : null,
       error: r.status === 'rejected' ? String(r.reason) : undefined,
     }));
 
-    return NextResponse.json({ message: `Verified ${report.filter((r) => r.ok).length} leads.`, report });
+    return NextResponse.json({
+      message: `Verified ${report.filter((r) => r.ok).length} leads; kept ${report.filter((r) => r.ok && !r.deleted).length} with a verified issue.`,
+      removedWithoutIssue: removed + report.filter((r) => r.deleted).length,
+      report,
+    });
   } catch (error) {
     return NextResponse.json({ error: 'Fatal error', details: (error as Error).message }, { status: 500 });
   }
