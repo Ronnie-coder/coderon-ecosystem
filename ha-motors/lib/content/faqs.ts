@@ -31,7 +31,7 @@ export const scooterFaqs: Faq[] = [
 
 export const quadFaqs: Faq[] = [
   { q: "Do you work on sport and utility quads?", a: "Yes. Sport quads and utility quads, all brands." },
-  { q: "Can you fix quad brakes and winches?", a: "Yes. We regularly strip quad front ends for brake work and winch repairs." },
+  { q: "Can you fix quad brakes and wiring?", a: "Yes. We regularly strip quad front ends for brake work and sort out wiring faults." },
   { q: "Can you come to my plot or farm?", a: `We do call-outs anywhere in ${business.area.city}. The call-out fee depends on distance and is included in your quote. Tell us where the quad is when you ask for a quote.` },
   { q: "Do you sell quads or parts?", a: "No. We repair and service quads. Any parts needed are explained in your quote." },
 ];

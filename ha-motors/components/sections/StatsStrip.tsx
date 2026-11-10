@@ -6,7 +6,7 @@ const stats: { icon: IconName; value: string; label: string }[] = [
   { icon: "clock", value: `Since ${business.experience.since}`, label: "Working on bikes" },
   { icon: "wrench", value: "All brands", label: "Motorcycles, scooters, quads" },
   { icon: "van", value: "We come to you", label: "Call-outs anywhere in Bloem" },
-  { icon: "calendar", value: "Open weekends", label: "Sat & Sun, 08:00 to 17:00" },
+  { icon: "calendar", value: "Open weekends", label: "Sat & Sun, 08:00 to 17:00. Weekdays by appointment." },
 ];
 
 /** Quick trust facts directly under the hero. */

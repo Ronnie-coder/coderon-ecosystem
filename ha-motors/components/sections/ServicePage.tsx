@@ -73,7 +73,7 @@ export function ServicePage({
               </div>
             </div>
             <ul className="mt-4 space-y-2 rounded-2xl border-2 border-ink/10 p-5 text-sm">
-              {[`Working on bikes since ${business.experience.since}`, "All brands", "Call-out included in your quote", "Open weekends 08:00 to 17:00"].map((t) => (
+              {[`Working on bikes since ${business.experience.since}`, "All brands", "Call-out included in your quote", "Weekends 08:00 to 17:00, weekdays by appointment"].map((t) => (
                 <li key={t} className="flex gap-2">
                   <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-brand-green-dark" />
                   {t}

@@ -1,7 +1,7 @@
 # H A Motors website
 
 Mobile motorcycle, scooter and quad bike mechanic + delivery scooter rental in Bloemfontein.
-Next.js (App Router, TypeScript strict), Tailwind CSS v4, deployed on Vercel. No CMS, no database, no backend:
+Next.js (App Router, TypeScript strict), Tailwind CSS v4, deployed on Netlify. No CMS, no database, no backend:
 content lives in typed TS files and forms post straight to Web3Forms.
 
 > Home repo: `Ronnie-coder/ha-motors` (this folder is the repo root). An earlier copy also lives in the
@@ -31,16 +31,16 @@ Requires Node 22.18+ (the scripts in `scripts/` are plain TypeScript run directl
 | Name | Required | Notes |
 |---|---|---|
 | `NEXT_PUBLIC_WEB3FORMS_KEY` | No, but forms only email once it's set | Free key from web3forms.com. It's public by design (it only allows sending to the inbox it was created for). Without it, forms show a "Send on WhatsApp instead" button carrying the visitor's details, so no lead is lost. |
-| `NEXT_PUBLIC_SITE_URL` | Yes in production | The live URL with no trailing slash. For now the production `*.vercel.app` URL, later `https://hamotors.co.za`. Every canonical, sitemap, robots, Open Graph and JSON-LD URL comes from this one value. If it's empty, Vercel's own production URL is used as a fallback. |
+| `NEXT_PUBLIC_SITE_URL` | Optional on Netlify | The live URL with no trailing slash. For now the `*.netlify.app` URL, later `https://hamotors.co.za`. Every canonical, sitemap, robots, Open Graph and JSON-LD URL comes from this one value. If it's empty, Vercel's own production URL is used as a fallback. |
 | `NEXT_PUBLIC_GA_ID` | No | GA4 measurement ID (`G-XXXXXXX`). Only loads after a visitor accepts analytics cookies. Leave empty to run with no analytics at all. |
 
-Set them in Vercel under **Project → Settings → Environment Variables** (Production and Preview), then redeploy. `NEXT_PUBLIC_*` values are baked in at build time, so a change always needs a redeploy.
+Set them in Netlify under **Site configuration → Environment variables**, then redeploy. `NEXT_PUBLIC_*` values are baked in at build time, so a change always needs a redeploy.
 
 ### Getting the free Web3Forms key
 
 1. Go to https://web3forms.com and enter **haringwiadrich@gmail.com** under "Create your Access Key".
 2. The key arrives in that Gmail inbox. Copy it.
-3. Add it in Vercel as `NEXT_PUBLIC_WEB3FORMS_KEY` (Production + Preview) and redeploy.
+3. Add it in Netlify as `NEXT_PUBLIC_WEB3FORMS_KEY` and redeploy.
 4. Send a test enquiry from the live site. It lands in Gmail as "New repair quote request - H A Motors" or "New scooter rental enquiry - H A Motors", from "H A Motors Website". Mark the first one "Not spam" if Gmail filters it.
 
 Spam protection is Web3Forms' built-in honeypot (`botcheck`). No CAPTCHA.
@@ -118,22 +118,20 @@ Add **real** reviews only to `reviews` in `lib/business.ts` (`name`, `text`, opt
 - `useConsent()` is exported from `components/consent/ConsentProvider.tsx` for any future script.
 - The privacy policy (POPIA), cookie policy and rental terms are at `/privacy-policy`, `/cookie-policy` and `/rental-terms`. The owner should review them.
 
-## Deploying on Vercel
+## Deploying on Netlify
 
-The Vercel project deploys from this GitHub repo (`Ronnie-coder/ha-motors`). Framework Next.js, Node 24.x, Root Directory: repo root.
+The Netlify site (`hamotors`) deploys from this GitHub repo (`Ronnie-coder/ha-motors`). Netlify detects Next.js by itself; no `netlify.toml` is needed.
 
-- **Live site:** https://ha-motors-eight.vercel.app (this is the `NEXT_PUBLIC_SITE_URL` and the link for Google Business Profile).
-- **`main` = production.** Every push to `main` goes live on the production URL.
-- **Any other branch = preview.** Push work to a branch (e.g. `develop`) to get a preview URL; merge to `main` when approved.
-- Previews are behind Vercel login (Deployment Protection). Use **Share** on a deployment to send a time-limited link.
-- `NEXT_PUBLIC_SITE_URL` must be the production URL (set under Settings → Environment Variables), then redeploy.
+- **`main` = production.** Every push to `main` goes live.
+- **Any other branch = preview**, if branch deploys are switched on (Site configuration → Build & deploy → Branches and deploy contexts). Preview builds serve a `robots.txt` that blocks search engines.
+- `NEXT_PUBLIC_SITE_URL` is optional on Netlify: without it the site uses Netlify's own `URL` value (the primary domain). Set it under Site configuration → Environment variables if you want to force a specific address, then redeploy.
 
 ## Switching to hamotors.co.za later
 
-1. Buy `hamotors.co.za`. In Vercel → Project → Settings → **Domains**, add `hamotors.co.za` and `www.hamotors.co.za`, and set `www` to **redirect** (308) to the apex.
-2. At the registrar, set the DNS records Vercel shows (usually an `A` record for the apex pointing at Vercel's IP and a `CNAME` for `www` → `cname.vercel-dns.com`). Wait for Vercel to show "Valid Configuration".
-3. Change `NEXT_PUBLIC_SITE_URL` to `https://hamotors.co.za` (Production) and **redeploy**.
-4. Make the old `*.vercel.app` production URL **301-redirect** to the new domain: in Settings → Domains, edit the `….vercel.app` domain and set it to redirect to `hamotors.co.za` (permanent).
+1. Buy `hamotors.co.za`. In Netlify → Domain management → **Add a domain**, add `hamotors.co.za`. Netlify adds `www.hamotors.co.za` too; keep `hamotors.co.za` as the **primary domain** so `www` redirects to it.
+2. At the registrar, set the DNS records Netlify shows (or switch the nameservers to Netlify DNS). Wait for the HTTPS certificate to show as active.
+3. Trigger a new deploy (Deploys → Trigger deploy) so every canonical, sitemap and Open Graph URL picks up the new domain. If `NEXT_PUBLIC_SITE_URL` is set, change it to `https://hamotors.co.za` first.
+4. Netlify redirects the old `*.netlify.app` address to the primary domain automatically.
 5. Update the website link on the Google Business Profile to `https://hamotors.co.za/?utm_source=google&utm_medium=organic&utm_campaign=gbp`.
 6. In Google Search Console, add `hamotors.co.za` as a property (DNS verification), submit `https://hamotors.co.za/sitemap.xml`, and use **Change of address** from the old property if it was verified.
 7. Optional: create `adrich@hamotors.co.za` on Zoho Mail's free plan (add its MX/SPF/DKIM records at the registrar), then change `email` in `lib/business.ts`, re-create the Web3Forms key for the new address if wanted, and redeploy.
@@ -146,7 +144,7 @@ The Vercel project deploys from this GitHub repo (`Ronnie-coder/ha-motors`). Fra
 - [ ] Service area: **Bloemfontein**
 - [ ] Phone: **061 104 3739** (same as the site)
 - [ ] Hours: **Sat and Sun 08:00 to 17:00**. Mon to Fri: leave closed and say "by appointment" in the description (or use "Online service hours" / more hours if available)
-- [ ] Website: the production `*.vercel.app` URL for now (the domain later), with `?utm_source=google&utm_medium=organic&utm_campaign=gbp`
+- [ ] Website: the `*.netlify.app` URL for now (the domain later), with `?utm_source=google&utm_medium=organic&utm_campaign=gbp`
 - [ ] Upload the same real photos as the website (cover: Adrich on the bike; then work photos and the SYM Jet 14 rental scooters)
 - [ ] Add services: services and maintenance, electrical fault finding, engine repairs (top-end, carburettor, seals and gaskets), tyres, scooter rental R550/week
 - [ ] Once verified: copy the "Ask for reviews" link into `googleReviewUrl` in `lib/business.ts`, add the profile URL to `sameAs`, redeploy, and share the review link with every happy customer

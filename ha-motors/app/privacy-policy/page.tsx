@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
           inbox. It processes your submission only to deliver it.
         </li>
         <li><strong>Google</strong>, which provides our email (Gmail) and, only if you accept analytics cookies, Google Analytics.</li>
-        <li><strong>Vercel</strong>, which hosts this website.</li>
+        <li><strong>Netlify</strong>, which hosts this website.</li>
         <li><strong>WhatsApp (Meta)</strong>, if you choose to contact us on WhatsApp.</li>
         <li>Our <strong>insurer</strong>, only if there is an insurance claim connected to a rental scooter.</li>
         <li>Authorities such as the police or a court, only when the law requires it.</li>

@@ -8,7 +8,7 @@ import { routes } from "@/lib/site";
 export const metadata: Metadata = {
   title: { absolute: "Quad Bike Repairs Bloemfontein | Quad Service | H A Motors" },
   description:
-    "Quad bike repairs and services in Bloemfontein. Sport and utility quads, brakes, winches, electrics, engines and tyres. All brands, call-outs available. WhatsApp for a quote.",
+    "Quad bike repairs and services in Bloemfontein. Sport and utility quads, brakes, wiring, engines and tyres. All brands, call-outs available. WhatsApp for a quote.",
   alternates: { canonical: routes.quad },
   openGraph: { url: routes.quad, title: "Quad Bike Repairs in Bloemfontein | H A Motors" },
 };
@@ -20,7 +20,7 @@ export default function QuadRepairsPage() {
       path={routes.quad}
       crumb="Quad bike repairs"
       h1={<>Quad Bike Repairs in Bloemfontein, We Come to You</>}
-      intro="Sport quads and utility quads, all brands. Brakes, winches, electrics, engines and tyres. A quad is heavy to move, so Adrich brings the tools to you anywhere in Bloem."
+      intro="Sport quads and utility quads, all brands. Brakes, wiring, engines and tyres. A quad is heavy to move, so Adrich brings the tools to you anywhere in Bloem."
       heroPhoto="quad-front-teardown"
       faqs={quadFaqs}
       faqTitle="Quad bike questions"
@@ -33,11 +33,11 @@ export default function QuadRepairsPage() {
         in the quote and arrange a drop-off.
       </p>
 
-      <h2>Utility quads: brakes, winches and racks</h2>
+      <h2>Utility quads: brakes and wiring</h2>
       <p>
-        Utility quads pull, carry and work hard in dust and mud. That&apos;s tough on brakes, wheel bearings, the rubber boots that protect the drive shafts, and the winch.
-        If your brakes feel spongy, pull to one side or squeal, or the winch is slow or dead, it&apos;s time for a look. We strip the
-        front end, sort out the brakes and winch, and put it back together so it&apos;s ready to work.
+        Utility quads pull, carry and work hard in dust and mud. That&apos;s tough on brakes, wheel bearings, the rubber boots that protect the drive shafts, and the wiring.
+        If your brakes feel spongy, pull to one side or squeal, or the lights and switches play up, it&apos;s time for a look. We strip the
+        front end, sort out the brakes and wiring, and put it back together so it&apos;s ready to work.
       </p>
       <InlinePhotos photos={["utility-quad-workshop"]} />
 
@@ -54,14 +54,13 @@ export default function QuadRepairsPage() {
       <h2>What a quad service covers</h2>
       <p>
         Depending on the quad, a service includes engine oil and filter, air filter clean or replacement, spark plug, chain or
-        shaft drive check, brakes front and rear, steering and suspension, tyre condition and pressures, lights, and the winch on
-        utility models. Quads that sit for months between rides need attention too: old fuel and flat batteries are the most common
+        shaft drive check, brakes front and rear, steering and suspension, tyre condition and pressures, lights and wiring. Quads that sit for months between rides need attention too: old fuel and flat batteries are the most common
         reasons they won&apos;t start.
       </p>
 
       <h2>Electrical and engine warning signs</h2>
       <p>
-        Battery flat after a few days, a starter that clicks, lights that dim when you rev, or the winch draining everything: those
+        Battery flat after a few days, a starter that clicks, lights that dim when you rev, or a fuse that keeps blowing: those
         are charging or wiring faults. Smoke, oil leaks, overheating or a knocking engine need attention before they turn a repair
         into a rebuild.
       </p>

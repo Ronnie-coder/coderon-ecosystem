@@ -24,7 +24,7 @@ import { routes } from "@/lib/site";
 export const metadata: Metadata = {
   title: { absolute: "Motorcycle Repairs Bloemfontein | Mobile Mechanic | H A Motors" },
   description:
-    "Mobile motorcycle, scooter and quad bike repairs anywhere in Bloemfontein. All brands, call-outs, open weekends. Delivery scooter rental R550/week. WhatsApp for a quote.",
+    "Mobile motorcycle, scooter and quad bike repairs anywhere in Bloemfontein. All brands, call-outs, open weekends, weekdays by appointment. Delivery scooter rental R550/week. WhatsApp for a quote.",
   alternates: { canonical: "/" },
   openGraph: { url: "/", title: "H A Motors | Mobile Bike Mechanic in Bloemfontein" },
 };
@@ -72,7 +72,7 @@ export default function HomePage() {
               </ButtonLink>
             </div>
             <ul className="mt-7 flex flex-wrap gap-2" aria-label="Quick facts">
-              {["All brands", "Call-outs anywhere in Bloem", "Open weekends"].map((chip) => (
+              {["All brands", "Call-outs anywhere in Bloem", "Open weekends, weekdays by appointment"].map((chip) => (
                 <li key={chip} className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-3 py-1.5 text-sm font-semibold">
                   <Icon name="check" className="h-4 w-4 text-brand-green-dark" /> {chip}
                 </li>

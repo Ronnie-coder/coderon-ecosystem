@@ -79,8 +79,8 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
   },
   "yamaha-quad": { alt: "Yamaha sport quad bike", caption: "Yamaha sport quad", work: true, category: "quad" },
   "quad-front-teardown": {
-    alt: "Utility quad bike front end stripped for brake and winch repairs",
-    caption: "Quad front end stripped for brake and winch repairs",
+    alt: "Utility quad bike front end stripped for brake and wiring repairs",
+    caption: "Quad front end stripped for brake and wiring repairs",
     work: true, category: "quad",
   },
   "utility-quad-workshop": {
