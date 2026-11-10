@@ -1,3 +1,4 @@
+import { firstReady } from "@/lib/photos";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InlinePhotos, ServicePage } from "@/components/sections/ServicePage";
@@ -84,7 +85,7 @@ export default function MotorcycleRepairsPage() {
       </p>
 
       <div className="not-prose my-12 grid items-center gap-6 rounded-2xl bg-ink p-6 text-white sm:grid-cols-[1fr_1.2fr] sm:p-8 on-dark">
-        <PhotoCard photo="honda-delivery-bike-teardown" sizes="(min-width: 640px) 300px, 85vw" className="w-full" />
+        <PhotoCard photo={firstReady("honda-delivery-bike-teardown", "delivery-bike-finished")} sizes="(min-width: 640px) 300px, 85vw" className="w-full" />
         <div>
           <h2 className="font-heading text-3xl font-extrabold uppercase text-brand-yellow">Delivery riders</h2>
           <p className="mt-3 text-white/90">

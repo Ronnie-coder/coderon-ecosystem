@@ -23,9 +23,17 @@
     "width": 720,
     "height": 1280
   },
+  "delivery-bike-finished": {
+    "width": 1280,
+    "height": 960
+  },
   "electrical-testing": {
     "width": 960,
     "height": 1280
+  },
+  "honda-scooter-finished": {
+    "width": 774,
+    "height": 1032
   },
   "motorcycle-wiring-repair": {
     "width": 1280,

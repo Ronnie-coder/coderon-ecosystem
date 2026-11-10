@@ -1,3 +1,4 @@
+import { firstReady } from "@/lib/photos";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RentalForm } from "@/components/forms/RentalForm";
@@ -163,7 +164,7 @@ export default function ScooterRentalPage() {
 
       <Section bg="paper" labelledBy="delivery-title">
         <div className="grid items-center gap-10 md:grid-cols-[1fr_1.2fr]">
-          <PhotoCard photo="honda-delivery-bike-teardown" stripe sizes="(min-width: 768px) 420px, 92vw" className="mx-auto w-full max-w-sm" />
+          <PhotoCard photo={firstReady("honda-delivery-bike-teardown", "delivery-bike-finished")} stripe sizes="(min-width: 768px) 420px, 92vw" className="mx-auto w-full max-w-sm" />
           <div>
             <Eyebrow>Rent from a mechanic</Eyebrow>
             <H2 id="delivery-title">We keep delivery bikes running</H2>
