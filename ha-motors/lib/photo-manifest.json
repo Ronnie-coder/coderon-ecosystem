@@ -31,6 +31,10 @@
     "width": 1280,
     "height": 720
   },
+  "oil-seal-replacement": {
+    "width": 1032,
+    "height": 581
+  },
   "piston-new-gasket": {
     "width": 780,
     "height": 1040
@@ -50,6 +54,18 @@
   "stator-wiring": {
     "width": 581,
     "height": 1032
+  },
+  "sym-jet14-front": {
+    "width": 780,
+    "height": 1040
+  },
+  "sym-jet14-side": {
+    "width": 780,
+    "height": 1040
+  },
+  "utility-quad-workshop": {
+    "width": 651,
+    "height": 712
   },
   "yamaha-quad": {
     "width": 395,
