@@ -1,1 +1,22 @@
-{}
+{
+  "adrich-bmw-workshop": {
+    "width": 960,
+    "height": 1280
+  },
+  "adrich-kawasaki-ninja": {
+    "width": 1280,
+    "height": 720
+  },
+  "big-boy-cruiser-repair": {
+    "width": 1280,
+    "height": 720
+  },
+  "carburettor-rebuild": {
+    "width": 780,
+    "height": 1040
+  },
+  "cylinder-head-removed": {
+    "width": 720,
+    "height": 1280
+  }
+}

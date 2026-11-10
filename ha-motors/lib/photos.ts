@@ -16,7 +16,8 @@ export type PhotoKey =
   | "quad-front-teardown"
   | "utility-quad-workshop"
   | "sym-jet14-front"
-  | "sym-jet14-side";
+  | "sym-jet14-side"
+  | "big-boy-cruiser-repair";
 
 export type PhotoCategory = "motorcycle" | "scooter" | "quad" | "rental" | "people";
 type PhotoMeta = { alt: string; caption: string; work: boolean; category: PhotoCategory };
@@ -33,7 +34,7 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
     work: false, category: "people",
   },
   "carburettor-rebuild": {
-    alt: "Motorcycle carburettor stripped for a full rebuild",
+    alt: "Motorcycle carburettors stripped into parts on a workbench for a full rebuild",
     caption: "Carburettor stripped for a full rebuild",
     work: true, category: "motorcycle",
   },
@@ -43,8 +44,8 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
     work: true, category: "motorcycle",
   },
   "cylinder-head-removed": {
-    alt: "Cylinder head removed during an engine repair",
-    caption: "Cylinder head off for an engine repair",
+    alt: "Motorcycle engine with the cylinder head off and a new carburettor being fitted",
+    caption: "Cylinder head off, new carburettor going on",
     work: true, category: "motorcycle",
   },
   "piston-new-gasket": {
@@ -87,6 +88,11 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
     alt: "Utility quad bike in for a service",
     caption: "Utility quad in for a service",
     work: true, category: "quad",
+  },
+  "big-boy-cruiser-repair": {
+    alt: "Black Big Boy cruiser motorcycle with the exhaust off during engine repairs",
+    caption: "Big Boy cruiser in for engine work",
+    work: true, category: "motorcycle",
   },
   "sym-jet14-front": {
     alt: "SYM Jet 14 200 rental scooter, front view",
