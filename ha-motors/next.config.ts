@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   turbopack: { root },
   outputFileTracingRoot: root,
-  // Inline the (small) Tailwind CSS into the HTML: removes the render-blocking request on slow mobile data.
-  experimental: { inlineCss: true },
+  // CSS is NOT inlined: inlining pushed <title> and the Open Graph tags 85 KB down the page, and
+  // WhatsApp only reads the start of the HTML, so shared links showed no title or picture.
   images: {
     formats: ["image/avif", "image/webp"],
     // Photos are WhatsApp quality (400 to 1280px). Never generate sizes above that.
