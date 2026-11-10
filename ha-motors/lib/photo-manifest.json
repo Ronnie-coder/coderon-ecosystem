@@ -23,6 +23,10 @@
     "width": 720,
     "height": 1280
   },
+  "electrical-testing": {
+    "width": 960,
+    "height": 1280
+  },
   "motorcycle-wiring-repair": {
     "width": 1280,
     "height": 720
@@ -38,5 +42,17 @@
   "scooter-reassembly": {
     "width": 1032,
     "height": 774
+  },
+  "scooter-stripped": {
+    "width": 1032,
+    "height": 774
+  },
+  "stator-wiring": {
+    "width": 581,
+    "height": 1032
+  },
+  "yamaha-quad": {
+    "width": 395,
+    "height": 354
   }
 }
