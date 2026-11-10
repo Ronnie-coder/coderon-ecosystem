@@ -25,7 +25,7 @@ mkdirSync(outDir, { recursive: true });
 
 async function writeClean(input: string | Buffer, name: string): Promise<void> {
   // sharp drops all metadata unless .withMetadata()/.keepMetadata() is called. We never call it.
-  const base = sharp(input).rotate().resize({ width: MAX_WIDTH, withoutEnlargement: true });
+  const base = sharp(input).rotate().resize({ width: MAX_WIDTH, withoutEnlargement: true }).sharpen({ sigma: 0.5 }); // light sharpen: phone photos arrive soft
   await base.clone().jpeg({ quality: 82, mozjpeg: true }).toFile(join(outDir, `${name}.jpg`));
   await base.clone().webp({ quality: 80 }).toFile(join(outDir, `${name}.webp`));
 }

@@ -18,7 +18,11 @@ export type PhotoKey =
   | "sym-jet14-front"
   | "sym-jet14-side"
   | "big-boy-cruiser-repair"
-  | "clutch-repair";
+  | "clutch-repair"
+  | "engine-strip-down"
+  | "delivery-bike-finished"
+  | "electrical-testing"
+  | "stator-wiring";
 
 export type PhotoCategory = "motorcycle" | "scooter" | "quad" | "rental" | "people";
 type PhotoMeta = { alt: string; caption: string; work: boolean; category: PhotoCategory };
@@ -100,6 +104,26 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
     caption: "Clutch work with the side cover off",
     work: true, category: "motorcycle",
   },
+  "engine-strip-down": {
+    alt: "Motorcycle engine stripped on the workshop floor with the cylinder head and spanners beside it",
+    caption: "Engine stripped for a repair",
+    work: true, category: "motorcycle",
+  },
+  "delivery-bike-finished": {
+    alt: "White Lifan delivery motorcycle with a carrier rack in the workshop",
+    caption: "Lifan delivery bike in the workshop",
+    work: true, category: "motorcycle",
+  },
+  "electrical-testing": {
+    alt: "Hand tracing a wire on a motorcycle with a multimeter on the floor",
+    caption: "Tracing an electrical fault",
+    work: true, category: "motorcycle",
+  },
+  "stator-wiring": {
+    alt: "Close-up of the wiring inside a motorcycle engine cover",
+    caption: "Wiring inside the engine cover",
+    work: true, category: "motorcycle",
+  },
   "sym-jet14-front": {
     alt: "SYM Jet 14 200 rental scooter, front view",
     caption: "SYM Jet 14 200, front",
@@ -133,6 +157,18 @@ export function getPhoto(key: PhotoKey): Photo {
     height: d?.height ?? 900,
     ready: Boolean(d),
   };
+}
+
+/** Photos that have a real file. Falls back to the full list so nothing renders empty. */
+export function readyPhotos(keys: PhotoKey[]): Photo[] {
+  const all = keys.map(getPhoto);
+  const ready = all.filter((p) => p.ready);
+  return ready.length ? ready : all;
+}
+
+/** First key in the list that has a real file (or the first key if none do yet). */
+export function firstReady(...keys: PhotoKey[]): PhotoKey {
+  return keys.find((k) => Boolean(dims[k])) ?? keys[0]!;
 }
 
 export const workPhotoKeys = (Object.keys(photoMeta) as PhotoKey[]).filter((k) => photoMeta[k].work);

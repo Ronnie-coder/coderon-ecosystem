@@ -45,6 +45,18 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Even line lengths in headings and no single-word last lines in text (ignored by older browsers). */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p,
+li,
+figcaption {
+  text-wrap: pretty;
+}
+
 h1,
 h2,
 h3,

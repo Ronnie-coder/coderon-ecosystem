@@ -9,6 +9,7 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { RentalBand } from "@/components/sections/RentalBand";
 import { Reviews } from "@/components/sections/Reviews";
 import { StatsStrip } from "@/components/sections/StatsStrip";
+import { Worries } from "@/components/sections/Worries";
 import { VehicleCards } from "@/components/sections/VehicleCards";
 import { ButtonLink, WhatsAppButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -18,13 +19,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { business } from "@/lib/business";
 import { homeFaqs } from "@/lib/content/faqs";
 import { serviceDetails } from "@/lib/content/services";
-import { getPhoto, type PhotoKey } from "@/lib/photos";
+import { readyPhotos, type PhotoKey } from "@/lib/photos";
 import { routes } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "Motorcycle Repairs Bloemfontein | Mobile Mechanic | H A Motors" },
+  title: { absolute: "H A Motors | Mobile Motorcycle, Scooter & Quad Mechanic in Bloemfontein" },
   description:
-    "Mobile motorcycle, scooter and quad bike repairs anywhere in Bloemfontein. All brands, call-outs, open weekends, weekdays by appointment. Delivery scooter rental R550/week. WhatsApp for a quote.",
+    "Mobile motorcycle, scooter and quad bike mechanic in Bloemfontein. All brands, we come to you. Scooter rental R550/week. WhatsApp for a quote.",
   alternates: { canonical: "/" },
   openGraph: { url: "/", title: "H A Motors | Mobile Bike Mechanic in Bloemfontein" },
 };
@@ -40,10 +41,14 @@ const featuredWork: PhotoKey[] = [
   "quad-front-teardown",
   "piston-new-gasket",
   "honda-delivery-bike-teardown",
+  "big-boy-cruiser-repair",
+  "clutch-repair",
+  "engine-strip-down",
+  "electrical-testing",
 ];
 
 export default function HomePage() {
-  const gallery = featuredWork.map(getPhoto);
+  const gallery = readyPhotos(featuredWork).slice(0, 8);
   const topFaqs = homeFaqs.slice(0, 5);
 
   return (
@@ -156,6 +161,7 @@ export default function HomePage() {
 
       {/* 5. How it works */}
       <HowItWorks />
+      <Worries />
 
       <BrandMarquee />
 

@@ -7,7 +7,7 @@ import { motorcycleFaqs } from "@/lib/content/faqs";
 import { routes } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "Motorcycle Repairs Bloemfontein | Mobile Mechanic | H A Motors" },
+  title: { absolute: "Motorcycle Repairs Bloemfontein | Services, Electrics & Engines | H A Motors" },
   description:
     "Mobile motorcycle repairs and services in Bloemfontein. Electrical faults, carburettor and engine rebuilds, tyres. All brands, we come to you. WhatsApp for a quote.",
   alternates: { canonical: routes.motorcycle },

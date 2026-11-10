@@ -1,3 +1,4 @@
+import { readyPhotos } from "./photos";
 import { business } from "./business";
 import type { Faq } from "./content/faqs";
 import { absoluteUrl, siteUrl } from "./site";
@@ -17,7 +18,7 @@ export function businessSchema() {
     telephone: b.phone.e164,
     email: b.email,
     logo: absoluteUrl("/icon-512.png"),
-    image: absoluteUrl("/opengraph-image.png"),
+    image: [absoluteUrl("/opengraph-image.png"), ...readyPhotos(["adrich-bmw-workshop", "carburettor-rebuild", "quad-front-teardown"]).filter((p) => p.ready).map((p) => absoluteUrl(p.src))],
     priceRange: "Quote only",
     address: {
       "@type": "PostalAddress",

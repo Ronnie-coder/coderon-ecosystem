@@ -4,7 +4,7 @@ import { GalleryGrid } from "@/components/sections/GalleryGrid";
 import { PageHero } from "@/components/sections/PageHero";
 import { WhatsAppButton } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
-import { getPhoto, workPhotoKeys, type PhotoKey } from "@/lib/photos";
+import { readyPhotos, workPhotoKeys, type PhotoKey } from "@/lib/photos";
 import { routes } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const rentalKeys: PhotoKey[] = ["sym-jet14-front", "sym-jet14-side"];
 
 export default function GalleryPage() {
-  const photos = [...workPhotoKeys, ...rentalKeys].map(getPhoto);
+  const photos = readyPhotos([...workPhotoKeys, ...rentalKeys]);
   return (
     <>
       <PageHero

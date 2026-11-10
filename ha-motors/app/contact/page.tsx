@@ -11,7 +11,7 @@ import { routes } from "@/lib/site";
 export const metadata: Metadata = {
   title: { absolute: "Contact | Mobile Motorcycle Mechanic Bloemfontein | H A Motors" },
   description:
-    "Contact H A Motors, the mobile motorcycle mechanic in Bloemfontein. WhatsApp or call 061 104 3739 for a repair quote or scooter rental. Weekends 08:00 to 17:00, weekdays by appointment.",
+    "Contact H A Motors, the mobile motorcycle mechanic in Bloemfontein. WhatsApp or call 061 104 3739 for a repair quote or scooter rental. Open weekends, weekdays by appointment.",
   alternates: { canonical: routes.contact },
   openGraph: { url: routes.contact, title: "Contact H A Motors | Mobile Motorcycle Mechanic Bloemfontein" },
 };

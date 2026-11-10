@@ -1,12 +1,12 @@
 import Link from "next/link";
-import type { PhotoKey } from "@/lib/photos";
+import { firstReady, type PhotoKey } from "@/lib/photos";
 import { routes } from "@/lib/site";
 import { Icon } from "../ui/Icon";
 import { PhotoCard } from "../ui/PhotoCard";
 
 const cards: { href: string; title: string; cta: string; text: string; photo: PhotoKey }[] = [
   { href: routes.motorcycle, title: "Motorcycles", cta: "Motorcycle repairs", text: "Commuters, delivery bikes, cruisers and big adventure bikes.", photo: "carburettor-rebuild" },
-  { href: routes.scooter, title: "Scooters", cta: "Scooter repairs", text: "Won't start, cutting out or due for a service? Sorted.", photo: "honda-scooter-finished" },
+  { href: routes.scooter, title: "Scooters", cta: "Scooter repairs", text: "Won't start, cutting out or due for a service? Sorted.", photo: firstReady("honda-scooter-finished", "scooter-reassembly") },
   { href: routes.quad, title: "Quad bikes", cta: "Quad bike repairs", text: "Sport and utility quads: brakes, wiring and engines.", photo: "quad-front-teardown" },
 ];
 
