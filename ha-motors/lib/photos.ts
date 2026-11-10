@@ -17,7 +17,8 @@ export type PhotoKey =
   | "utility-quad-workshop"
   | "sym-jet14-front"
   | "sym-jet14-side"
-  | "big-boy-cruiser-repair";
+  | "big-boy-cruiser-repair"
+  | "clutch-repair";
 
 export type PhotoCategory = "motorcycle" | "scooter" | "quad" | "rental" | "people";
 type PhotoMeta = { alt: string; caption: string; work: boolean; category: PhotoCategory };
@@ -92,6 +93,11 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
   "big-boy-cruiser-repair": {
     alt: "Black Big Boy cruiser motorcycle with the exhaust off during engine repairs",
     caption: "Big Boy cruiser in for engine work",
+    work: true, category: "motorcycle",
+  },
+  "clutch-repair": {
+    alt: "Close-up of a motorcycle clutch with the engine side cover removed",
+    caption: "Clutch work with the side cover off",
     work: true, category: "motorcycle",
   },
   "sym-jet14-front": {

@@ -15,8 +15,28 @@
     "width": 780,
     "height": 1040
   },
+  "clutch-repair": {
+    "width": 774,
+    "height": 1032
+  },
   "cylinder-head-removed": {
     "width": 720,
     "height": 1280
+  },
+  "motorcycle-wiring-repair": {
+    "width": 1280,
+    "height": 720
+  },
+  "piston-new-gasket": {
+    "width": 780,
+    "height": 1040
+  },
+  "quad-front-teardown": {
+    "width": 581,
+    "height": 1032
+  },
+  "scooter-reassembly": {
+    "width": 1032,
+    "height": 774
   }
 }
