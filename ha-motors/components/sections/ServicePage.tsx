@@ -114,9 +114,16 @@ export function ServicePage({
 /** Inline photo figure for long-form copy (framed, captioned, never upscaled). */
 export function InlinePhotos({ photos, label }: { photos: PhotoKey[]; label?: string }) {
   return (
-    <div className={`not-prose my-8 grid gap-4 ${photos.length > 1 ? "sm:grid-cols-2" : ""}`} aria-label={label} role={label ? "group" : undefined}>
-      {photos.map((p) => (
-        <div key={p} data-reveal="zoom"><PhotoCard photo={p} caption sizes="(min-width: 640px) 360px, 92vw" className="w-full" /></div>
+    <div
+      className={`not-prose my-8 grid gap-4 ${photos.length === 2 ? "grid-cols-2" : photos.length > 2 ? "grid-cols-2 sm:grid-cols-3" : "max-w-xl"}`}
+      aria-label={label}
+      role={label ? "group" : undefined}
+    >
+      {photos.map((p, i) => (
+        <div key={p} data-reveal="zoom" data-reveal-delay={i * 90}>
+          {/* Groups share one shape so the row lines up; a single photo keeps its own shape. */}
+          <PhotoCard photo={p} caption aspect={photos.length > 1 ? "4/5" : undefined} sizes={photos.length > 1 ? "(min-width: 640px) 260px, 46vw" : "(min-width: 640px) 576px, 92vw"} className="w-full" />
+        </div>
       ))}
     </div>
   );

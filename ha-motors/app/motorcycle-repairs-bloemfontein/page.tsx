@@ -23,7 +23,7 @@ export default function MotorcycleRepairsPage() {
       crumb="Motorcycle repairs"
       h1={<>Motorcycle Repairs in Bloemfontein, We Come to You</>}
       intro="Services, electrical faults, engine work and tyres for every make of motorcycle. Adrich does call-outs anywhere in Bloem, so you don't have to push a dead bike anywhere."
-      heroPhoto="carburettor-rebuild"
+      heroPhoto="motorcycle-wiring-repair"
       faqs={motorcycleFaqs}
       faqTitle="Motorcycle repair questions"
       ctaTitle="Bike giving you trouble? WhatsApp Adrich now."
@@ -56,7 +56,7 @@ export default function MotorcycleRepairsPage() {
         charging system (the parts that keep your battery topped up), a corroded connector or damaged wiring. We trace the actual fault
         instead of throwing parts at it.
       </p>
-      <InlinePhotos photos={["motorcycle-wiring-repair"]} />
+      <InlinePhotos photos={["electrical-testing", "stator-wiring"]} />
 
       <h2>Engine and carburettor repairs</h2>
       <p>
@@ -65,7 +65,8 @@ export default function MotorcycleRepairsPage() {
         valves and cylinder head), carburettor rebuilds, and replace seals and gaskets. A carburettor that&apos;s been standing with old fuel is one of the most common reasons a bike
         won&apos;t idle or starts and then stalls; a proper strip, clean and rebuild usually sorts it.
       </p>
-      <InlinePhotos photos={["cylinder-head-removed", "piston-new-gasket"]} />
+      <InlinePhotos photos={["carburettor-rebuild", "cylinder-head-removed"]} />
+      <InlinePhotos photos={["piston-new-gasket", "clutch-repair"]} />
       <InlinePhotos photos={["oil-seal-replacement"]} />
 
       <h2>Dead bikes brought back to life</h2>

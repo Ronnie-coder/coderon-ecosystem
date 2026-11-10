@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Photo, PhotoCategory } from "@/lib/photos";
+import { photoFocus, type Photo, type PhotoCategory } from "@/lib/photos";
 import { closeDialog, openDialog } from "@/lib/dialog";
 import { Icon } from "../ui/Icon";
 
@@ -90,6 +90,7 @@ export function GalleryGrid({ photos: allPhotos, initial, filters = false }: { p
                     fill
                     sizes="(min-width: 1024px) 270px, (min-width: 768px) 33vw, 50vw"
                     className="photo-treat object-cover transition-transform duration-300 group-hover:scale-105"
+                    style={photoFocus[p.key] ? { objectPosition: photoFocus[p.key] } : undefined}
                   />
                 ) : (
                   <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 p-3 text-center text-white">

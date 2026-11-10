@@ -136,6 +136,15 @@ export const photoMeta: Record<PhotoKey, PhotoMeta> = {
   },
 };
 
+/** Where the subject sits, for photos that get cropped into a fixed shape (CSS object-position). */
+export const photoFocus: Partial<Record<PhotoKey, string>> = {
+  "adrich-bmw-workshop": "50% 25%",
+  "sym-jet14-front": "50% 40%",
+  "honda-scooter-finished": "50% 35%",
+  "quad-front-teardown": "50% 35%",
+  "cylinder-head-removed": "50% 45%",
+};
+
 export type Photo = PhotoMeta & {
   key: PhotoKey;
   src: string;

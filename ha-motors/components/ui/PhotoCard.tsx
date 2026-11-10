@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getPhoto, type PhotoKey } from "@/lib/photos";
+import { getPhoto, photoFocus, type PhotoKey } from "@/lib/photos";
 
 /**
  * Framed photo card (never full-bleed). Photos are WhatsApp quality, so `maxWidth` caps
@@ -26,6 +26,7 @@ export function PhotoCard({
   stripe?: boolean;
 }) {
   const p = getPhoto(photo);
+  const focus = aspect ? photoFocus[photo] : undefined;
   const style = aspect ? { aspectRatio: aspect } : { aspectRatio: `${p.width}/${p.height}` };
 
   return (
@@ -47,6 +48,7 @@ export function PhotoCard({
             sizes={sizes}
             priority={priority}
             className={`photo-treat ${aspect ? "object-cover" : "h-auto w-full"}`}
+            style={focus ? { objectPosition: focus } : undefined}
           />
         ) : (
           <div
