@@ -12,7 +12,13 @@ export function cleanCompanyName(raw: string | null | undefined): string {
   let name = parts[0] || raw;
   const extended = parts.slice(1).find((p) => p.toLowerCase().startsWith(name.toLowerCase()) && p.length > name.length);
   if (extended) name = extended;
-  name = name.replace(LEGAL, '').replace(/\s{2,}/g, ' ').replace(/[\s,.-]+$/, '').trim();
+  name = name
+    .replace(/\(\s*(?:pty|proprietary)\s*\)/gi, '') // South African "(Pty)"; \b can't match before "("
+    .replace(LEGAL, '')
+    .replace(/\(\s*\)/g, '') // brackets left empty
+    .replace(/\s{2,}/g, ' ')
+    .replace(/[\s,.-]+$/, '')
+    .trim();
   if (name.length > 45) name = name.slice(0, 45).replace(/\s\S*$/, '');
   return name || raw.trim();
 }
