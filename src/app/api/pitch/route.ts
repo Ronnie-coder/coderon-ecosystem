@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ skipped: true, reason: 'This website check is too old; it will be re-checked before you can pitch it' }, { status: 422 });
     }
 
-    const pitch = buildPitch(lead);
+    const pitch = buildPitch({ ...lead, city: lead.city, country: lead.country });
     if (!pitch) return NextResponse.json({ skipped: true, reason: 'No verified issue to pitch' }, { status: 422 });
 
     const budget = await getBudget();
