@@ -29,7 +29,7 @@ const REPORT_ASK = 'I put together a short free report showing what I found and 
 // South African leads (POPIA section 69): the first email is our one approach, so it ends
 // with a plain request for consent and says exactly what happens after a yes or a no.
 const SA_CONSENT_ASK =
-  'May I send you the free report? If you reply "yes", I\'ll email it to you, and I may follow up once about it. If you\'d rather not hear from me, reply "no" and I won\'t contact you again.';
+  'I\'ve put together a short free report on what I found and how to fix it. May I send it to you? If you reply "yes", I\'ll email it to you, and I may follow up once about it. If you\'d rather not hear from me, reply "no" and I won\'t contact you again.';
 
 // Cape Town metro gets "here in Cape Town"; the Winelands get "here in the Western Cape";
 // other provinces get "based in Cape Town" plus their own city, which is the honest version.
