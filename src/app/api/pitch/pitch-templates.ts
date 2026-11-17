@@ -26,6 +26,11 @@ type PitchInput = {
 // no buttons (a plain reply reads as a real conversation and stays out of spam folders).
 const REPORT_ASK = 'I put together a short free report showing what I found and how I\'d fix it. Want me to send it over? Just reply "yes".';
 
+// South African leads (POPIA section 69): the first email is our one approach, so it ends
+// with a plain request for consent and says exactly what happens after a yes or a no.
+const SA_CONSENT_ASK =
+  'May I send you the free report? If you reply "yes", I\'ll email it to you, and I may follow up once about it. If you\'d rather not hear from me, reply "no" and I won\'t contact you again.';
+
 // Cape Town metro gets "here in Cape Town"; the Winelands get "here in the Western Cape";
 // other provinces get "based in Cape Town" plus their own city, which is the honest version.
 const CAPE_TOWN_METRO = ['Cape Town', 'Bellville', 'Durbanville', 'Brackenfell', 'Kuils River', 'Claremont', 'Sea Point', 'Table View', 'Milnerton'];
@@ -61,14 +66,15 @@ function secondIssueLine(issues: Issue[]): string {
 }
 
 export function buildPitch(lead: PitchInput): Pitch | null {
-  const pitch = buildEvidencePitch(lead);
+  const isSouthAfrica = lead.country === 'South Africa';
+  const pitch = buildEvidencePitch(lead, isSouthAfrica ? SA_CONSENT_ASK : REPORT_ASK);
   if (!pitch) return null;
   const opener = localOpener(cleanCompanyName(lead.company_name), lead.city, lead.country);
   return opener ? { ...pitch, body: `${opener}\n\n${pitch.body}` } : pitch;
 }
 
 /** The evidence-based body; every claim comes from the verified audit. */
-function buildEvidencePitch(lead: PitchInput): Pitch | null {
+function buildEvidencePitch(lead: PitchInput, ask: string): Pitch | null {
   const audit = lead.audit;
   if (!audit || audit.version !== 2 || !audit.trigger || audit.issues.length === 0) return null;
 
@@ -83,7 +89,7 @@ function buildEvidencePitch(lead: PitchInput): Pitch | null {
       return {
         trigger: 'ssl',
         subject: `${name}'s site shows "not secure"`,
-        body: `I opened ${domain} and Chrome shows "Not secure" next to the address. The secure (https) version of the site doesn't load, so every visitor sees that warning before they read a word, and plenty of people won't send a quote request through a page that says it.${extra}\n\n${REPORT_ASK}`,
+        body: `I opened ${domain} and Chrome shows "Not secure" next to the address. The secure (https) version of the site doesn't load, so every visitor sees that warning before they read a word, and plenty of people won't send a quote request through a page that says it.${extra}\n\n${ask}`,
         evidence,
       };
     case 'speed': {
@@ -92,7 +98,7 @@ function buildEvidencePitch(lead: PitchInput): Pitch | null {
       return {
         trigger: 'speed',
         subject: `${name} on mobile`,
-        body: `I ran ${domain} through Google's own PageSpeed test (pagespeed.web.dev, you can try it yourself). It scored ${score}/100 on mobile${lcp}. On a phone, a lot of people back out before a page that slow finishes loading and call the next business instead.${extra}\n\n${REPORT_ASK}`,
+        body: `I ran ${domain} through Google's own PageSpeed test (pagespeed.web.dev, you can try it yourself). It scored ${score}/100 on mobile${lcp}. On a phone, a lot of people back out before a page that slow finishes loading and call the next business instead.${extra}\n\n${ask}`,
         evidence,
       };
     }
@@ -100,7 +106,7 @@ function buildEvidencePitch(lead: PitchInput): Pitch | null {
       return {
         trigger: 'mobile',
         subject: `${name}'s site on phones`,
-        body: `I checked ${domain} and it isn't set up for mobile: there's no mobile viewport tag, so phones load it as a shrunk-down desktop page and visitors have to pinch and zoom to read anything or tap the call button. A lot of people find local businesses on their phone, so that's often the first impression.${extra}\n\n${REPORT_ASK}`,
+        body: `I checked ${domain} and it isn't set up for mobile: there's no mobile viewport tag, so phones load it as a shrunk-down desktop page and visitors have to pinch and zoom to read anything or tap the call button. A lot of people find local businesses on their phone, so that's often the first impression.${extra}\n\n${ask}`,
         evidence,
       };
     case 'snippet': {
@@ -109,8 +115,8 @@ function buildEvidencePitch(lead: PitchInput): Pitch | null {
         trigger: 'snippet',
         subject: `${name} in Google search`,
         body: noTitle
-          ? `I looked at ${domain} and the homepage has no page title, which is the headline Google shows for you in search results. Without it Google has to guess, and that's the first thing people see when comparing you with the next business.${extra}\n\n${REPORT_ASK}`
-          : `I looked at ${domain} and the homepage is missing its meta description, which is the short summary Google shows under your name in search results. Without one, Google grabs random text from the page instead, and that's the first thing people read when comparing you with the next business.${extra}\n\n${REPORT_ASK}`,
+          ? `I looked at ${domain} and the homepage has no page title, which is the headline Google shows for you in search results. Without it Google has to guess, and that's the first thing people see when comparing you with the next business.${extra}\n\n${ask}`
+          : `I looked at ${domain} and the homepage is missing its meta description, which is the short summary Google shows under your name in search results. Without one, Google grabs random text from the page instead, and that's the first thing people read when comparing you with the next business.${extra}\n\n${ask}`,
         evidence,
       };
     }
