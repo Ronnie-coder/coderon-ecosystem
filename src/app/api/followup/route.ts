@@ -12,8 +12,8 @@ import { followUpBody, renderEmail } from '../pitch/pitch-templates';
 export const maxDuration = 60;
 
 // Runs daily on GitHub Actions. Sends follow-up 1 on day 3 and follow-up 2 on day 7 (each
-// within a 7-day window) to every pitched lead that hasn't replied, bounced or unsubscribed,
-// opened or not. Then sends Ronnie the daily digest.
+// within a 7-day window) to overseas leads that haven't replied, bounced or unsubscribed.
+// South African leads get no automatic follow-ups. Then sends Ronnie the daily digest.
 export async function GET(req: Request) {
   if (!isCronAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
@@ -31,7 +31,15 @@ export async function GET(req: Request) {
       .limit(5000);
     if (pitchedError) throw new Error(`Could not load pitched leads: ${pitchedError.message}`);
 
-    const open = ((pitched || []) as Lead[]).filter((l) => !l.unsubscribed && !(l as Lead & { replied?: boolean | null }).replied && (l.followup_stage ?? 0) < 2);
+    // South African leads get one email that asks permission, and no automatic follow-ups
+    // (POPIA: approach once for consent). Overseas leads already in a sequence finish it.
+    const open = ((pitched || []) as Lead[]).filter(
+      (l) =>
+        l.country !== 'South Africa' &&
+        !l.unsubscribed &&
+        !(l as Lead & { replied?: boolean | null }).replied &&
+        (l.followup_stage ?? 0) < 2
+    );
     const dueAt = (l: Lead) => {
       const stage = (l.followup_stage ?? 0) as 0 | 1;
       return Date.parse(l.pitched_at!) + FOLLOW_UP_DAYS[stage] * 864e5;

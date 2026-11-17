@@ -2,18 +2,21 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/outreach/db';
 import { cleanCompanyName } from '@/lib/outreach/names';
 import { requireAdmin } from '@/lib/adminAuth';
+import { HOME_COUNTRY, showAllRegions } from '@/lib/outreach/config';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
   const denied = await requireAdmin(req);
   if (denied) return denied;
-  const { data, error } = await supabase
+  let query = supabase
     .from('leads')
     .select('id, company_name, website, email, niche, country, initial_trigger, initial_subject, pitched_at, delivered_at, opened_at, open_count, clicked_at, replied_at, bounced_at, call_booked_at, won_at, lost_at, deal_value, followup_stage, unsubscribed, notes')
     .not('pitched_at', 'is', null)
     .order('pitched_at', { ascending: false })
     .limit(500);
+  if (!showAllRegions(new URL(req.url))) query = query.eq('country', HOME_COUNTRY);
+  const { data, error } = await query;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ leads: (data || []).map((l) => ({ ...l, name: cleanCompanyName(l.company_name) })) });
 }

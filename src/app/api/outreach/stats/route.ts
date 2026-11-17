@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/outreach/db';
 import { getBudget } from '@/lib/outreach/budget';
-import { TIMEZONE, auditFreshSinceISO } from '@/lib/outreach/config';
+import { TIMEZONE, auditFreshSinceISO, HOME_COUNTRY, showAllRegions } from '@/lib/outreach/config';
 import { requireAdmin } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 
-async function count(build: (q: any) => any): Promise<number> {
-  const { count } = await build(supabase.from('leads').select('id', { count: 'exact', head: true }));
+async function count(build: (q: any) => any, allRegions: boolean): Promise<number> {
+  const base = supabase.from('leads').select('id', { count: 'exact', head: true });
+  const { count } = await build(allRegions ? base : base.eq('country', HOME_COUNTRY));
   return count || 0;
 }
 
@@ -23,18 +24,20 @@ export async function GET(req: Request) {
   const denied = await requireAdmin(req);
   if (denied) return denied;
   try {
+    const all = showAllRegions(new URL(req.url));
+    const pitchedQuery = supabase
+      .from('leads')
+      .select('niche, country, initial_trigger, pitched_at, delivered_at, opened_at, clicked_at, replied_at, bounced_at, call_booked_at, won_at, deal_value, followup_stage')
+      .not('pitched_at', 'is', null)
+      .limit(10000);
     const [total, verified, queue, noIssue, unverifiedBacklog, budget, pitchedRows] = await Promise.all([
-      count((q) => q),
-      count((q) => q.eq('audit_version', 2)),
-      count(pitchReady),
-      count((q) => q.eq('audit_version', 2).is('pitch_trigger', null)),
-      count((q) => q.not('website', 'is', null).is('pitched_at', null).or('audit_version.is.null,audit_version.lt.2')),
-      getBudget(),
-      supabase
-        .from('leads')
-        .select('niche, country, initial_trigger, pitched_at, delivered_at, opened_at, clicked_at, replied_at, bounced_at, call_booked_at, won_at, deal_value, followup_stage')
-        .not('pitched_at', 'is', null)
-        .limit(10000),
+      count((q) => q, all),
+      count((q) => q.eq('audit_version', 2), all),
+      count(pitchReady, all),
+      count((q) => q.eq('audit_version', 2).is('pitch_trigger', null), all),
+      count((q) => q.not('website', 'is', null).is('pitched_at', null).or('audit_version.is.null,audit_version.lt.2'), all),
+      getBudget(), // email budget is account-wide, so it never filters by region
+      all ? pitchedQuery : pitchedQuery.eq('country', HOME_COUNTRY),
     ]);
 
     const rows = pitchedRows.data || [];

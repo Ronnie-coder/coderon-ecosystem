@@ -4,7 +4,7 @@ import { cleanCompanyName, domainOf } from '@/lib/outreach/names';
 import { pitchedKeys, repeatReason } from '@/lib/outreach/dedupe';
 import { buildPitch, renderEmail } from '../../pitch/pitch-templates';
 import { requireAdmin } from '@/lib/adminAuth';
-import { auditFreshSinceISO } from '@/lib/outreach/config';
+import { auditFreshSinceISO, HOME_COUNTRY, showAllRegions } from '@/lib/outreach/config';
 import { formatLocal, HOME_TZ, leadTimeZone, nextMorningSend, zoneLabel } from '@/lib/outreach/sendTime';
 
 export const dynamic = 'force-dynamic';
@@ -29,6 +29,7 @@ export async function GET(req: Request) {
     .order('opportunity_score', { ascending: false, nullsFirst: false })
     .limit(Math.min(limit * 3, 150)); // extra rows, since repeats are dropped below
   if (exclude.length) q = q.not('id', 'in', `(${exclude.join(',')})`);
+  if (!showAllRegions(url)) q = q.eq('country', HOME_COUNTRY);
 
   const [{ data, error }, keys] = await Promise.all([q, pitchedKeys()]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -46,7 +47,7 @@ export async function GET(req: Request) {
 
   const leads = unique
     .map((lead) => {
-      const pitch = buildPitch(lead);
+      const pitch = buildPitch({ ...lead, city: lead.city, country: lead.country });
       if (!pitch) return null;
       const tz = leadTimeZone(lead);
       const plan = nextMorningSend(tz, new Date(), { random: () => 0.5 });

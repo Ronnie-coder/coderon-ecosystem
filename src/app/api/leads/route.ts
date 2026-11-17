@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { requireAdmin } from '@/lib/adminAuth';
+import { HOME_COUNTRY, showAllRegions } from '@/lib/outreach/config';
 
 // Clients are created inside the handlers so `next build` works without the env vars.
 const getSupabase = () =>
@@ -26,6 +27,7 @@ export async function GET(req: NextRequest) {
       .order('created_at', { ascending: false })
       .range(page * size, page * size + size - 1);
 
+    if (!showAllRegions(url)) query = query.eq('country', HOME_COUNTRY);
     if (q) query = query.or(`company_name.ilike.%${q}%,email.ilike.%${q}%,website.ilike.%${q}%`);
     if (filter === 'ready') query = query.eq('status', 'audited').not('pitch_trigger', 'is', null).eq('email_ok', true).is('pitched_at', null).is('skipped_at', null);
     if (filter === 'pitched') query = query.not('pitched_at', 'is', null);

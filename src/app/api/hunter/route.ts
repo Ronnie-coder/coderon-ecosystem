@@ -9,8 +9,27 @@ type Place = { title?: string; website?: string; phoneNumber?: string; rating?: 
 export const maxDuration = 60;
 
 const MODIFIERS = ['', 'Best', 'Commercial', 'Top-rated', 'Affordable', 'Emergency', 'Luxury', 'Custom', 'Local', 'Corporate'];
-const NICHES = ['Solar Installers', 'Commercial Roofing', 'HVAC Contractors', 'Luxury Landscaping', 'Custom Home Builders', 'Pool Builders', 'Plumbing Contractors', 'Electrical Contractors', 'Kitchen Remodeling', 'Custom Cabinetry', 'Paving Contractors', 'Tree Removal Services', 'High-End Auto Detailing', 'Paint Protection Film', 'Marine Electronics', 'Boat Repair', 'Dental Clinics', 'Orthodontists', 'Med Spas', 'Plastic Surgeons', 'Chiropractors', 'Veterinary Clinics', 'Concierge Medicine', 'Fertility Clinics', 'Business Law Firms', 'Family Law Attorneys', 'Personal Injury Lawyers', 'CPA Firms', 'Commercial Cleaning', 'IT Managed Services', 'Security Guard Companies', 'Logistics Companies', 'Event Planners', 'Wedding Photographers', 'High-End Real Estate Brokerages', 'Property Management'];
-const CITIES = ['New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Phoenix, AZ', 'Miami, FL', 'Atlanta, GA', 'Dallas, TX', 'Seattle, WA', 'Denver, CO', 'Austin, TX', 'Boston, MA', 'Nashville, TN', 'Las Vegas, NV', 'San Diego, CA', 'London, UK', 'Manchester, UK', 'Birmingham, UK', 'Leeds, UK', 'Glasgow, UK', 'Liverpool, UK', 'Edinburgh, UK', 'Bristol, UK', 'Sydney, Australia', 'Melbourne, Australia', 'Brisbane, Australia', 'Perth, Australia', 'Adelaide, Australia', 'Auckland, New Zealand', 'Johannesburg, South Africa', 'Cape Town, South Africa', 'Pretoria, South Africa', 'Durban, South Africa', 'Port Elizabeth, South Africa', 'Dubai, UAE', 'Abu Dhabi, UAE', 'Toronto, Canada', 'Vancouver, Canada', 'Singapore'];
+const NICHES = ['Solar Installers', 'Commercial Roofing', 'Air Conditioning Installers', 'Luxury Landscaping', 'Custom Home Builders', 'Pool Builders', 'Plumbing Contractors', 'Electrical Contractors', 'Kitchen Renovations', 'Custom Cabinetry', 'Paving Contractors', 'Tree Removal Services', 'High-End Auto Detailing', 'Paint Protection Film', 'Marine Electronics', 'Boat Repair', 'Dental Clinics', 'Orthodontists', 'Aesthetic Clinics', 'Plastic Surgeons', 'Chiropractors', 'Veterinary Clinics', 'Fertility Clinics', 'Business Law Firms', 'Family Law Attorneys', 'Personal Injury Attorneys', 'Accounting Firms', 'Commercial Cleaning', 'IT Managed Services', 'Security Guard Companies', 'Logistics Companies', 'Event Planners', 'Wedding Photographers', 'Estate Agents', 'Property Management'];
+// South Africa only: local trust (registered company, same time zone, "here in Cape Town").
+const CITIES = [
+  'Cape Town, South Africa',
+  'Bellville, South Africa',
+  'Durbanville, South Africa',
+  'Brackenfell, South Africa',
+  'Kuils River, South Africa',
+  'Somerset West, South Africa',
+  'Stellenbosch, South Africa',
+  'Paarl, South Africa',
+  'Claremont, South Africa',
+  'Sea Point, South Africa',
+  'Table View, South Africa',
+  'Milnerton, South Africa',
+  'Johannesburg, South Africa',
+  'Sandton, South Africa',
+  'Pretoria, South Africa',
+  'Durban, South Africa',
+  'Gqeberha, South Africa',
+];
 
 // Directory / platform listings are not the business's own website.
 const SKIP_DOMAINS = /(^|\.)(facebook|instagram|linkedin|yelp|yell|linktr|linktree|google|business\.site|wa\.me|twitter|x|tiktok|youtube|houzz|angi|homeadvisor|thumbtack|bark|checkatrade|nextdoor|tripadvisor|booksy|fresha|squareup|carrd|wixsite|godaddysites)\.[a-z.]+$/i;
