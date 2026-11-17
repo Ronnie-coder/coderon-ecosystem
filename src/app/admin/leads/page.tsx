@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './leads.module.scss';
+import { classifyPhone, phoneFromNotes, whatsappLink } from '@/lib/outreach/phone';
 
 // ---------- Types ---------------------------------------------------------------------------
 
@@ -89,11 +90,15 @@ type SentLead = {
   lost_at: string | null;
   deal_value: number | null;
   followup_stage: number | null;
+  notes: string | null;
 };
 
 type Tab = 'queue' | 'sent' | 'insights' | 'leads';
 
 // ---------- Helpers -------------------------------------------------------------------------
+
+/** '&region=all' when overseas leads are shown (South Africa only by default). */
+const regionParam = (allRegions: boolean) => (allRegions ? '&region=all' : '');
 
 const TRIGGER_LABEL: Record<string, string> = {
   ssl: 'Not secure',
@@ -193,10 +198,12 @@ function QueueView({
   stats,
   onSent,
   refreshStats,
+  allRegions,
 }: {
   stats: Stats | null;
   onSent: (pitchesToday: number) => void;
   refreshStats: () => void;
+  allRegions: boolean;
 }) {
   const [leads, setLeads] = useState<QueueLead[]>([]);
   const [index, setIndex] = useState(0);
@@ -208,11 +215,13 @@ function QueueView({
   const load = useCallback(async () => {
     setLoading(true);
     const exclude = [...handled.current].join(',');
-    const { data } = await api<{ leads: QueueLead[] }>(`/api/outreach/queue/?limit=20${exclude ? `&exclude=${exclude}` : ''}`);
+    const { data } = await api<{ leads: QueueLead[] }>(
+      `/api/outreach/queue/?limit=20${exclude ? `&exclude=${exclude}` : ''}${regionParam(allRegions)}`
+    );
     setLeads(data.leads || []);
     setIndex(0);
     setLoading(false);
-  }, []);
+  }, [allRegions]);
 
   useEffect(() => {
     load();
@@ -388,7 +397,7 @@ function QueueView({
 
           {lead.loomNotes.length > 0 && (
             <details className={styles.loomNotes}>
-              <summary>🎥 Extra notes for your Loom ({lead.loomNotes.length})</summary>
+              <summary>📝 Extra notes for the report ({lead.loomNotes.length})</summary>
               <ul>
                 {lead.loomNotes.map((n) => (
                   <li key={n}>{n}</li>
@@ -398,6 +407,15 @@ function QueueView({
           )}
 
           {lead.notes && <div className={styles.contactNotes}>{lead.notes.split(' | Audit:')[0]}</div>}
+          {(() => {
+            const phone = classifyPhone(phoneFromNotes(lead.notes));
+            return phone ? (
+              <div className={styles.contactNotes} title="From the number's prefix; people can keep a number when they change networks">
+                {phone.kind === 'mobile' ? '📱' : '☎️'} {phone.raw}: {phone.label}
+                {phone.kind === 'mobile' ? ' (WhatsApp only after they reply)' : ''}
+              </div>
+            ) : null;
+          })()}
         </section>
 
         <section className={`${styles.emailCard} ${leaving ? styles.fadeOut : ''}`}>
@@ -471,13 +489,13 @@ function QueueView({
 
 // ---------- Sent ----------------------------------------------------------------------------
 
-function SentView({ refreshStats }: { refreshStats: () => void }) {
+function SentView({ refreshStats, allRegions }: { refreshStats: () => void; allRegions: boolean }) {
   const [leads, setLeads] = useState<SentLead[] | null>(null);
 
   const load = useCallback(async () => {
-    const { data } = await api<{ leads: SentLead[] }>('/api/outreach/sent/');
+    const { data } = await api<{ leads: SentLead[] }>(`/api/outreach/sent/?${regionParam(allRegions).slice(1)}`);
     setLeads(data.leads || []);
-  }, []);
+  }, [allRegions]);
 
   useEffect(() => {
     load();
@@ -548,6 +566,20 @@ function SentView({ refreshStats }: { refreshStats: () => void }) {
               ))}
             </div>
             <div className={styles.sentActions}>
+              {(() => {
+                // WhatsApp is offered only once they've replied (they said yes to hearing more).
+                const phone = l.replied_at ? classifyPhone(phoneFromNotes(l.notes)) : null;
+                return phone?.kind === 'mobile' ? (
+                  <a
+                    href={whatsappLink(phone.intl)}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={`Opens WhatsApp with a message ready for ${phone.raw}; you press send`}
+                  >
+                    🟢 WhatsApp
+                  </a>
+                ) : null;
+              })()}
               {!l.replied_at && <button onClick={() => act(l, 'replied')}>💬 Replied</button>}
               {!l.call_booked_at && <button onClick={() => act(l, 'call_booked')}>📞 Call</button>}
               {!l.won_at && <button onClick={() => act(l, 'won')}>🏆 Won</button>}
@@ -732,7 +764,7 @@ function rowState(l: LeadRow): { label: string; cls: string } {
   return { label: 'No issue', cls: styles.st_muted };
 }
 
-function LeadsView() {
+function LeadsView({ allRegions }: { allRegions: boolean }) {
   const [rows, setRows] = useState<LeadRow[]>([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -744,13 +776,14 @@ function LeadsView() {
     const t = setTimeout(async () => {
       setLoading(true);
       const params = new URLSearchParams({ page: String(page), size: '50', filter, q });
+      if (allRegions) params.set('region', 'all');
       const { data } = await api<{ leads: LeadRow[]; count: number }>(`/api/leads/?${params}`);
       setRows(data.leads || []);
       setCount(data.count || 0);
       setLoading(false);
     }, 250);
     return () => clearTimeout(t);
-  }, [page, q, filter]);
+  }, [page, q, filter, allRegions]);
 
   const restore = async (id: string) => {
     await api('/api/outreach/action/', {
@@ -863,13 +896,26 @@ function LeadsView() {
 export default function PitchHQ() {
   const [tab, setTab] = useState<Tab>('queue');
   const [stats, setStats] = useState<Stats | null>(null);
+  // South Africa only by default; ?region=all shows overseas leads too (display only).
+  const [allRegions, setAllRegions] = useState(false);
+  useEffect(() => {
+    setAllRegions(new URLSearchParams(window.location.search).get('region') === 'all');
+  }, []);
+  const toggleRegions = () => {
+    const next = !allRegions;
+    setAllRegions(next);
+    const url = new URL(window.location.href);
+    if (next) url.searchParams.set('region', 'all');
+    else url.searchParams.delete('region');
+    window.history.replaceState(null, '', url);
+  };
   const [burst, setBurst] = useState(0);
 
   const refreshStats = useCallback(async () => {
-    const { ok, data } = await api<Stats & { error?: string }>('/api/outreach/stats/');
+    const { ok, data } = await api<Stats & { error?: string }>(`/api/outreach/stats/?${regionParam(allRegions).slice(1)}`);
     if (ok) setStats(data);
     else toast.error(`Stats failed: ${data.error || 'unknown'} (did you run the v2 SQL migration?)`);
-  }, []);
+  }, [allRegions]);
 
   useEffect(() => {
     refreshStats();
@@ -963,13 +1009,17 @@ export default function PitchHQ() {
             {n != null && <span className={styles.tabCount}>{n.toLocaleString()}</span>}
           </button>
         ))}
+        <label className={styles.regionToggle}>
+          <input type="checkbox" checked={allRegions} onChange={toggleRegions} />
+          Show overseas leads
+        </label>
       </nav>
 
       <div className={styles.main}>
-        {tab === 'queue' && <QueueView stats={stats} onSent={onSent} refreshStats={refreshStats} />}
-        {tab === 'sent' && <SentView refreshStats={refreshStats} />}
+        {tab === 'queue' && <QueueView stats={stats} onSent={onSent} refreshStats={refreshStats} allRegions={allRegions} />}
+        {tab === 'sent' && <SentView refreshStats={refreshStats} allRegions={allRegions} />}
         {tab === 'insights' && <InsightsView stats={stats} />}
-        {tab === 'leads' && <LeadsView />}
+        {tab === 'leads' && <LeadsView allRegions={allRegions} />}
       </div>
     </div>
   );

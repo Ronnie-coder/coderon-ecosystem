@@ -40,3 +40,8 @@ export const SENDER = process.env.OUTREACH_FROM || 'Ronnie <ronnie@coderon.co.za
 export const REPLY_TO = process.env.OUTREACH_REPLY_TO || 'ronnie@coderon.co.za';
 export const BUSINESS_ADDRESS =
   process.env.BUSINESS_ADDRESS || 'Coderon (Pty) Ltd · Reg 2025/482790/07 · Cape Town, South Africa';
+
+// The dashboard shows South African leads unless ?region=all is asked for. Display only:
+// overseas leads (and their history) stay in the database.
+export const HOME_COUNTRY = 'South Africa';
+export const showAllRegions = (url: URL) => url.searchParams.get('region') === 'all';
