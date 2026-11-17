@@ -40,8 +40,9 @@ export function classifyPhone(raw: string | null | undefined): PhoneInfo | null 
   return null;
 }
 
+// The button only shows after a lead has replied, so this thanks them instead of pitching.
 export const WHATSAPP_INTRO =
-  'Hi, this is Ronnie from Coderon, a web studio in Cape Town. I had a quick look at your website and noticed something that could be costing you enquiries. Can I send you a short free report?';
+  "Hi, it's Ronnie from Coderon. Thanks for getting back to me about your website. I'll send the free report shortly. Is this the best number to reach you on?";
 
 /** wa.me link with the intro pre-filled. It only opens WhatsApp; you press send yourself. */
 export function whatsappLink(intl: string, text = WHATSAPP_INTRO): string {
